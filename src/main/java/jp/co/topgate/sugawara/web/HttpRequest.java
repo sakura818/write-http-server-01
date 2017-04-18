@@ -9,44 +9,36 @@ import java.io.*;
  * Created by haruka.sugawara on 2017/04/13.
  */
 public class HttpRequest {
-    BufferedReader br = null;
 
+    private BufferedReader bufferedReader;
     private String method;
     private String requestUri;
     private String httpVersion;
-    private String header;
-    private String body;
+    private String requestHeader;
+    private String requestMessageBody;
 
-    HTTPRequest(InputStream inputStream) throws IOException {//コンストラクタ
-        this.setHTTPRequest(inputStream);
+
+
+
+    public String getMethod() {
+        return this.method;
     }
 
-    public
-
-
-
-    public static void httpRequestDataParse(InputStream br) throws IOException{
-        //httpRequestDataを分割していく
-
-        String[] httpRequestParser = new String[3];
-
-        HttpServer httpServer = new HttpServer();
-
-        httpServer.br = null;//cannnot resolve symbol br @解決方法　BufferedReader br = null;をpublicにする
-        String httpRequestLine = null;
-        String httpRequestCRLF = null;
-        String httpRequestHeader = null;
-        String httpRequestMessageBody =null;
-
-        String splittString = br.toString();
-        httpRequestParser = splittString.split("¥n");
-
-        httpRequestLine = httpRequestParser[0];
-        httpRequestHeader = httpRequestParser[1];
-        httpRequestCRLF = httpRequestParser[2];
-        httpRequestMessageBody = httpRequestParser[3];
-
-
+    public String getRequestUri() {
+        return this.requestUri;
     }
+
+    public String getHttpVersion() {
+        return this.httpVersion;
+    }
+
+    public String getHeader() {
+        return this.requestHeader;
+    }
+
+    public String getMessageBody() {
+        return this.requestMessageBody;
+    }
+
+
 }
-

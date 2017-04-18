@@ -11,8 +11,6 @@ import java.net.Socket;
 public class HttpServer {
 
     private static final int PORT = 8080;//privateは自分自身のクラスのみアクセスを許可する　staticは静的フィールド（フィールド変数の実体がクラスに準備される）
-    public static BufferedReader br = null;
-    public static final String FILE_PATH = "./src/main/Document";
     ServerSocket serverSocket = null;
     Socket socket = null;
 
