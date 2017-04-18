@@ -21,7 +21,7 @@ public class HttpResponse {
         String httpResponseMessageBodyChecked = null;
 
         StringBuilder builder = new StringBuilder();
-
+        //画像はbytestream
 
         builder.append(httpResponseStatusLine).append("\n");
         builder.append(httpResponseHeaderChecked).append("\n");
@@ -30,9 +30,8 @@ public class HttpResponse {
 
         //.toString
         System.out.println("response...");
-
         return builder.toString();
-
+        //System.out.println(builder.toString());
     }
 
 }

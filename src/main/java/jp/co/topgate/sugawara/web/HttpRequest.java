@@ -10,6 +10,21 @@ import java.io.*;
  */
 public class HttpRequest {
     BufferedReader br = null;
+
+    private String method;
+    private String requestUri;
+    private String httpVersion;
+    private String header;
+    private String body;
+
+    HTTPRequest(InputStream inputStream) throws IOException {//コンストラクタ
+        this.setHTTPRequest(inputStream);
+    }
+
+    public
+
+
+
     public static void httpRequestDataParse(InputStream br) throws IOException{
         //httpRequestDataを分割していく
 
@@ -23,14 +38,14 @@ public class HttpRequest {
         String httpRequestHeader = null;
         String httpRequestMessageBody =null;
 
-        String splittString = br.toString();//むずい
-        httpRequestParser = splittString.split("¥n");//むずい @解決方法　String[]の宣言を消去
-
+        String splittString = br.toString();
+        httpRequestParser = splittString.split("¥n");
 
         httpRequestLine = httpRequestParser[0];
         httpRequestHeader = httpRequestParser[1];
         httpRequestCRLF = httpRequestParser[2];
         httpRequestMessageBody = httpRequestParser[3];
+
 
     }
 }
