@@ -7,12 +7,9 @@ import java.io.IOException;
  */
 public class Main {
 
-    class main {
-
-        public static void main(String[] args) throws IOException {
-            HttpServer server = new HttpServer();
-            server.socketStart();
-        }
-
+    public static void main(String[] args) throws IOException {
+        HttpServer server = new HttpServer();
+        server.connection();
     }
+
 }
