@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.String;
 import java.io.*;
+import java.util.List;
 
 /**
  * Created by haruka.sugawara on 2017/04/13.
@@ -19,9 +20,8 @@ public class HttpRequest {
 
 
 
-
     public String getMethod() {
-        return this.method;
+        return ("GET");
     }
 
     public String getRequestUri() {
@@ -40,5 +40,9 @@ public class HttpRequest {
         return this.requestMessageBody;
     }
 
+
+    public HttpRequest(List<String> lines) {
+
+    }
 
 }

@@ -56,8 +56,6 @@ public class HttpResponse {
         } else {
             statusLine = "HTTP/1.1 404 Not Found";
         }
-
-
         return statusLine;
     }
 
@@ -67,8 +65,10 @@ public class HttpResponse {
         HashMap<String, String> statusLineMap = new HashMap<String, String>();
 
         statusLineMap.put("200", "HTTP/1.1 200 OK");
-        statusLineMap.put("400", "HTTP/1.1 400 Bad Request");
+        //statusLineMap.put("400", "HTTP/1.1 400 Bad Request");
         statusLineMap.put("404", "HTTP/1.1 404 Not Found");
+
+        return "";
 
     }
 
@@ -78,22 +78,30 @@ public class HttpResponse {
 
         HashMap<String, String> contentTypeExtension = new HashMap<String, String>();
 
-        contentTypeExtension.put("html", "Content-Type: text/");
-        contentTypeExtension.put("css", "Content-Type: text/");
-        contentTypeExtension.put("js", "Content-Type: text/");
-        contentTypeExtension.put("png", "Content-Type: image/");
-        contentTypeExtension.put("jpg", "Content-Type: image/");
-        contentTypeExtension.put("jpeg", "Content-Type: image/");
-        contentTypeExtension.put("gif", "Content-Type: image/");
+        contentTypeExtension.put("html", "Content-Type: text/html");
+        contentTypeExtension.put("css", "Content-Type: text/css");
+        contentTypeExtension.put("js", "Content-Type: text/js");
+        contentTypeExtension.put("png", "Content-Type: image/png");
+        contentTypeExtension.put("jpg", "Content-Type: image/jpeg");
+        contentTypeExtension.put("jpeg", "Content-Type: image/jpeg");
+        contentTypeExtension.put("gif", "Content-Type: image/gif");
+
+        return "";
+
     }
 
 
     public String responseHeader(String contentType) {
 
+        return "";
+
+
     }
 
 
-    public String responseMessageBody(String) {
+    public String responseMessageBody(String messageBody) {
+
+        return "";
 
 
     }
