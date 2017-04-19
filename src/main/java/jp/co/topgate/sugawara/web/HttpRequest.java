@@ -18,52 +18,38 @@ public class HttpRequest {
     private String httpVersion;
     private String requestHeader;
     private String requestMessageBody;
+    private static final String FILE_PATH = "src/main/java/Document/";
+
+    public HttpRequest(String tekito){
+
+    }
 
 
     String setHTTPRequest(InputStream inputStream) throws IOException {
-
-        /*
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            this.requestLine = bufferedReader.readLine();
-            System.out.println("requestLineを出力します" + requestLine);
-        } catch (IOException e) {
-            System.out.println("requestLineの出力に失敗しました");
-        }
-
-        return requestLine;
-        */
-
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        this.requestLine = bufferedReader.readLine();
     }
 
+    //リクエストからmethod,requestUri,httpversionを抜き出す
+    public void requestLineSplit() {
 
+        HttpServer httprequestdata = new HttpServer();
+        httprequestdata.getList();
 
-    public String getMethod() {
-        method = requestLine.split("");//リクエストの最初の文字から１つめの空白の一文字手前まで
-        return this.getMethod;
+        method = getList();
+        requestUri = getList();
+        httpVersion = getList().;
     }
 
-    public String getRequestUri() {
-        requestUri = requestLine.split("");//リクエストの１つめの空白の次の文字から２つめの空白の一文字手前まで
-        return this.requestUri;
+    //リクエストURIとファイルパスから呼び出すファイルを特定する
+    public File getRequestDocument(String requestUri) {
+        File file = new File(FILE_PATH + requestUri);
+        return file;
     }
 
-    public String getHttpVersion()
-    {
-        httpVersion = requestLine.split("");//リクエストの２つめの空白の次の文字からCRLFまで
-        return this.httpVersion;
-    }
-
-
-    public String getHeader() {
-        requestHeader =  bufferedReader.split();//リクエストの１つめのCRLFから２つめのCRLFまで
-        return this.requestHeader;
-    }
-
-    public String getMessageBody() {
-        requestMessageBody =  bufferedReader.split();//リクエストの３つめのCRLFから文字列の末尾まで
-        return this.requestMessageBody;
-    }
+    //リクエストURIからファイルの拡張子を取得する
+    //public String getExtension{
+    //}
 
 
     public HttpRequest(List<String> lines) {

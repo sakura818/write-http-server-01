@@ -88,13 +88,17 @@ public class HttpResponse {
 
         return "";
 
+
+
     }
+
+    String hatena = contentTypeExtension.get("html");
+    System.out.println("htmlのContent-Typeは" + hatena);
 
 
     public String responseHeader(String contentType) {
 
         return "";
-
 
     }
 
@@ -102,7 +106,6 @@ public class HttpResponse {
     public String responseMessageBody(String messageBody) {
 
         return "";
-
 
     }
 

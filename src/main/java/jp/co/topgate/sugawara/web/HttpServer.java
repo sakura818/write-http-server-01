@@ -14,6 +14,11 @@ public class HttpServer {
     private static final int PORT = 8080;//privateは自分自身のクラスのみアクセスを許可する　staticは静的フィールド（フィールド変数の実体がクラスに準備される）
     ServerSocket serverSocket = null;
     Socket socket = null;
+    private List<String> lines;
+
+    public List<String> getList() {
+        return this.lines;
+    }
 
     public void connection() throws IOException {
         System.out.println("start up http server http://localhost:8080");
@@ -30,21 +35,18 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();//?
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
-
-                    List<String> lines = new ArrayList<>();
+                    this.lines = new ArrayList<>();
                     String line;
                     while ((line = br.readLine()) != null) {
                         System.out.println(line);
                         lines.add(line);
                     }
-                    httpRequest = new HttpRequest(lines);
+
                 }
 
                 //response
                 OutputStream outputStream = this.socket.getOutputStream();//?
                 HttpResponse httpResponse = new HttpResponse();
-
-
 
             }
         } catch (IOException e) {
