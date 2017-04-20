@@ -1,8 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.HashMap;
 
 /**
@@ -53,41 +51,6 @@ public class HttpResponse {
         return statusLine;
     }
 
-/*HashMapはいまいち
-    public String statusLine(String statuscode) {
-
-        HashMap<String, String> statusLineMap = new HashMap<String, String>();
-
-        statusLineMap.put("200", "HTTP/1.1 200 OK");
-        //statusLineMap.put("400", "HTTP/1.1 400 Bad Request");
-        statusLineMap.put("404", "HTTP/1.1 404 Not Found");
-
-        return "";
-
-    }
-    */
-
-
-/*HashMapはいまいち
-    public String contentType(String Extension) {
-        String contentType = null;
-
-        HashMap<String, String> contentTypeExtension = new HashMap<String, String>();
-
-        contentTypeExtension.put("html", "Content-Type: text/html");
-        contentTypeExtension.put("css", "Content-Type: text/css");
-        contentTypeExtension.put("js", "Content-Type: text/js");
-        contentTypeExtension.put("png", "Content-Type: image/png");
-        contentTypeExtension.put("jpg", "Content-Type: image/jpeg");
-        contentTypeExtension.put("jpeg", "Content-Type: image/jpeg");
-        contentTypeExtension.put("gif", "Content-Type: image/gif");
-
-        return "";
-
-    }
-
-    */
-
     public String createContentType(String Extension) {
 
         String contentType = null;
@@ -101,10 +64,6 @@ public class HttpResponse {
         }
         return contentType;
     }
-
-
-//    String hatena = contentTypeExtension.get("html");
-//    System.out.println("htmlのContent-Typeは" + hatena);
 
 
     public String responseHeader(String contentType) {

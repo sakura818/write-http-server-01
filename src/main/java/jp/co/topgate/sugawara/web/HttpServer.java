@@ -14,7 +14,7 @@ public class HttpServer {
     private static final int PORT = 8080;
     ServerSocket serverSocket = null;
     Socket socket = null;
-    private  List<String> lines;
+    private List<String> lines;
 
     private List<String> getList() {
         return lines;
@@ -30,8 +30,6 @@ public class HttpServer {
                 this.socket = this.serverSocket.accept();
                 System.out.println("request incoming");
 
-                HttpRequest httpRequest;
-
                 //Request;
                 InputStream inputStream = this.socket.getInputStream();
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -44,7 +42,7 @@ public class HttpServer {
                         lines.add(line);
                     }
                     //HttpRequest httpRequest = new HttpRequest();
-                    httpRequest = new HttpRequest(lines);
+                    HttpRequest httpRequest = new HttpRequest(lines);
 
                 }
                 for (int i = 0; i < lines.size(); i++) {
@@ -61,12 +59,12 @@ public class HttpServer {
         } catch (IOException e) {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
-                this.socket.close();
-                this.serverSocket.close();
-            }
-
+            this.socket.close();
+            this.serverSocket.close();
         }
+
     }
+}
 
 
 

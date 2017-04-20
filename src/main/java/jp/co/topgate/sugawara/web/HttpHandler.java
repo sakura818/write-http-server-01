@@ -12,7 +12,5 @@ public class HttpHandler {
     public HttpHandler(InputStream inputStream, OutputStream outputStream, Integer PORT) throws IOException {
 
 
-
-
     }
 }

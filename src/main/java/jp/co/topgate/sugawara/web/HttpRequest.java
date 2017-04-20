@@ -31,6 +31,7 @@ public class HttpRequest {
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
     //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
+    //いまは上の階層の処理ができてないかつ?が来た場合の処理ができてない
     public String getRequestFile(String requestUri) {
 
         String file = new String();
@@ -43,6 +44,7 @@ public class HttpRequest {
     }
 
     //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
+    //lastIndexOfでnullが来た場合の処理ができていない　nullPointerExceptionになる
     public String getExtension(String requestUri) {
         String fileExtension = new String();
         int lastDotPosition = this.requestUri.lastIndexOf(".");
