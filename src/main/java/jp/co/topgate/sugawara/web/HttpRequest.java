@@ -20,36 +20,34 @@ public class HttpRequest {
     private String requestMessageBody;
     private static final String FILE_PATH = "src/main/java/Document/";
 
-    public HttpRequest(String tekito){
-
-    }
-
-
-    String setHTTPRequest(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        this.requestLine = bufferedReader.readLine();
-    }
-
     //リクエストからmethod,requestUri,httpversionを抜き出す
     public void requestLineSplit() {
 
-        HttpServer httprequestdata = new HttpServer();
-        httprequestdata.getList();
+        HttpServer httRequestData = new HttpServer();
+        httRequestData.getList();
 
-        method = getList();
-        requestUri = getList();
-        httpVersion = getList().;
+        method = getlist(0);
+        requestUri = getList(1);
+        httpVersion = getList(2);
     }
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する
     public File getRequestDocument(String requestUri) {
-        File file = new File(FILE_PATH + requestUri);
+        File file = new File(FILE_PATH + requestUri);//このままだとsrc/main/java/Document/+http://www.w3.org/pub/WWW/TheProject.html になってちがう
         return file;
     }
 
-    //リクエストURIからファイルの拡張子を取得する
-    //public String getExtension{
-    //}
+    //リクエストUriのHostぬきだすのｋｓんｓ
+
+    //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
+    public String getExtension(String requestUri){
+        String fileExtension = new String();
+        int lastDotPosition = requestUri.lastIndexOf(".");
+        if (lastDotPosition != -1) {
+            return requestUri.substring(lastDotPosition + 1);
+        }
+        return null;
+    }
 
 
     public HttpRequest(List<String> lines) {

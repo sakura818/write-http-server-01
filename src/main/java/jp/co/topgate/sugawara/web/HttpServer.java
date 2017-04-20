@@ -30,8 +30,7 @@ public class HttpServer {
                 this.socket = serverSocket.accept();
                 System.out.println("request incoming");
 
-                HttpRequest httpRequest;
-                //request
+                //Request;
                 InputStream inputStream = this.socket.getInputStream();//?
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
@@ -44,7 +43,7 @@ public class HttpServer {
 
                 }
 
-                //response
+                //Response
                 OutputStream outputStream = this.socket.getOutputStream();//?
                 HttpResponse httpResponse = new HttpResponse();
 
@@ -52,15 +51,12 @@ public class HttpServer {
         } catch (IOException e) {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
-            try {
                 socket.close();
                 serverSocket.close();
-            } catch (IOException e) {
-                System.out.println("ソケットを閉じれないエラーが発生しました");
             }
 
         }
     }
-}
+
 
 
