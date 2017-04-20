@@ -17,7 +17,7 @@ public class HttpRequestTest {
     public void testGetMethod() {
         // Unit TestのInputDataの準備
         List<String> requests = new ArrayList<>();//List<データ型> リストの名前 = new ArrayList<データ型>();
-        requests.add("GET /?hoge=hoge HTTP/1.1");
+        requests.add("GET http://localhost:8080 HTTP/1.1");
         requests.add("Host / HTTP/1.1");
 
         // Unit Testしたいクラスの準備

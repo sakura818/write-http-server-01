@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HttpServer {
 
-    private static final int PORT = 8080;//privateは自分自身のクラスのみアクセスを許可する　staticは静的フィールド（フィールド変数の実体がクラスに準備される）
+    private static final int PORT = 8080;
     ServerSocket serverSocket = null;
     Socket socket = null;
     private  List<String> lines;
@@ -30,17 +30,21 @@ public class HttpServer {
                 this.socket = serverSocket.accept();
                 System.out.println("request incoming");
 
+                HttpRequest httpRequest;
+
                 //Request;
                 InputStream inputStream = this.socket.getInputStream();
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
                     //lines = new ArrayList<>();
+                    List<String> lines = new ArrayList<>();
                     String line;
                     while (!(line = br.readLine()).equals("")) {
                         System.out.println(line);
                         lines.add(line);
                     }
                     //HttpRequest httpRequest = new HttpRequest();
+                    httpRequest = new HttpRequest(lines);
 
                 }
                 for (int i = 0; i < lines.size(); i++) {

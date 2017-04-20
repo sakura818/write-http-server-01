@@ -58,7 +58,7 @@ public class HttpResponse {
         return statusLine;
     }
 
-
+/*
     public String statusLine(String statuscode) {
 
         HashMap<String, String> statusLineMap = new HashMap<String, String>();
@@ -70,6 +70,7 @@ public class HttpResponse {
         return "";
 
     }
+    */
 
 
     public String contentType(String Extension) {
