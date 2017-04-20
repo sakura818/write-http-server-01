@@ -21,6 +21,7 @@ public class HttpRequest {
     private static final String FILE_PATH = "src/main/java/Document/";
 
     public HttpRequest() {
+
         String[] requestLine = HttpServer.getList().get(0).split(" ");
 
         method = requestLine[0];
@@ -28,14 +29,17 @@ public class HttpRequest {
         httpVersion = requestLine[2];
     }
 
+
+    /*
+    public List<String> getList(){
+
+
+        return this.lines;
+    }
+    */
+
     //リクエストからmethod,requestUri,httpversionを抜き出す
     public void requestLineSplit() {
-        //requestLineSplit = getList(0);//getlistで1行目を呼び出して空白を基点に3つに分割したい
-        //requestLineSplit = getList().lines(0);//getlistの呼び出しができてないのかも　メソッドの呼び出し方は"メソッド名（引数リスト）"
-        //requestLineSplit = getList(lines).(0);
-        //String[] requestLineSplit = (String[]) getlist.toArray(new String[0]);//listを配列に一旦変換させてからやってみる→失敗
-
-        //String[] requestLine = requestLineSplit(" ");
 
 //        method = requestLine[0];
 //        requestUri = requestLine[1];

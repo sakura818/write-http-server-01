@@ -14,9 +14,9 @@ public class HttpServer {
     private static final int PORT = 8080;//privateは自分自身のクラスのみアクセスを許可する　staticは静的フィールド（フィールド変数の実体がクラスに準備される）
     ServerSocket serverSocket = null;
     Socket socket = null;
-    private static List<String> lines;
+    private  List<String> lines;
 
-    public static List<String> getList() {
+    private List<String> getList() {
         return lines;
     }
 
@@ -40,6 +40,7 @@ public class HttpServer {
                         System.out.println(line);
                         lines.add(line);
                     }
+                    HttpRequest httpRequest = new HttpRequest();
 
                 }
                 for (int i = 0; i < lines.size(); i++) {
@@ -57,14 +58,6 @@ public class HttpServer {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
                 socket.close();
-
-
-
-
-
-
-
-
                 serverSocket.close();
 
 
