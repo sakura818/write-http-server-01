@@ -18,8 +18,6 @@ public class HttpRequest {
     private String requestHeader;
     private String requestMessageBody;
 
-
-
     public String getMethod() {
         return ("GET");
     }
@@ -42,7 +40,9 @@ public class HttpRequest {
 
 
     public HttpRequest(List<String> lines) {
-
+        for (int i = 0; i < lines.size(); i++) {
+            System.out.println(String.valueOf(i) + ":" + lines.get(i));
+        }
     }
 
 }

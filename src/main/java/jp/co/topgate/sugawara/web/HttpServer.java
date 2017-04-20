@@ -15,10 +15,14 @@ public class HttpServer {
     ServerSocket serverSocket = null;
     Socket socket = null;
 
+
+
     public void connection() throws IOException {
         System.out.println("start up http server http://localhost:8080");
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
+
+            BufferedReader br = null;
 
             while (true) {
 
@@ -28,26 +32,34 @@ public class HttpServer {
                 HttpRequest httpRequest;
                 //request
                 InputStream inputStream = this.socket.getInputStream();//?
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+                br = new BufferedReader(new InputStreamReader(
+                        socket.getInputStream()));
 
-
-                    List<String> lines = new ArrayList<>();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        System.out.println(line);
-                        lines.add(line);
-                    }
-                    httpRequest = new HttpRequest(lines);
+                List<String> lines = new ArrayList<>();
+                String line;
+                while (!(line = br.readLine()).equals("")) {
+                    System.out.println(line);
+                    lines.add(line);
                 }
+                httpRequest = new HttpRequest(lines);
 
                 //response
-                OutputStream outputStream = this.socket.getOutputStream();//?
-                HttpResponse httpResponse = new HttpResponse();
+                PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                StringBuilder builder = new StringBuilder();
 
+                builder.append("HTTP/1.1 200 OK").append("\n");
+                builder.append("Content-Type: text/html").append("\n");
+                builder.append("\n");
+                builder.append("<html><head><title>Hello world!</title></head><body><h1>Hello world!</h1>Hi!</body></html>");
 
+                //System.out.println("responce...");
+                //System.out.println(builder.toString() + "\n");
+                writer.println(builder.toString());
 
+                socket.close();
             }
-        } catch (IOException e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
             try {
