@@ -34,13 +34,13 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
-                    lines = new ArrayList<>();
+                    //lines = new ArrayList<>();
                     String line;
                     while (!(line = br.readLine()).equals("")) {
                         System.out.println(line);
                         lines.add(line);
                     }
-                    HttpRequest httpRequest = new HttpRequest();
+                    //HttpRequest httpRequest = new HttpRequest();
 
                 }
                 for (int i = 0; i < lines.size(); i++) {
@@ -59,8 +59,6 @@ public class HttpServer {
         } finally {
                 socket.close();
                 serverSocket.close();
-
-
             }
 
         }

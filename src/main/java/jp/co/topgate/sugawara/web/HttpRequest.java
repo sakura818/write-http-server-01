@@ -1,10 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.String;
 import java.io.*;
-import java.util.List;
 
 /**
  * Created by haruka.sugawara on 2017/04/13.
@@ -20,6 +18,8 @@ public class HttpRequest {
     private String requestMessageBody;
     private static final String FILE_PATH = "src/main/java/Document/";
 
+
+    //リクエストからmethod,requestUri,httpversionを抜き出す
     public HttpRequest() {
 
         String[] requestLine = HttpServer.getList().get(0).split(" ");
@@ -38,23 +38,18 @@ public class HttpRequest {
     }
     */
 
-    //リクエストからmethod,requestUri,httpversionを抜き出す
-    public void requestLineSplit() {
 
-//        method = requestLine[0];
-//        requestUri = requestLine[1];
-//        httpVersion = requestLine[2];
+    //リクエストURIとファイルパスから呼び出すファイルを特定する
+    //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
+    public String getRequestFile(String requestUri) {
+        String file = new String();
+        int lastSlashPosition = requestUri.lastIndexOf("/");
+        if (lastSlashPosition != -1) {
+            return FILE_PATH + requestUri.substring(lastSlashPosition + 1);
+        } else {
+            return null;
+        }
     }
-
-    //リクエストURIとファイルパスから呼び出すファイルを特定する→意図は?　
-    public File getRequestDocument(String requestUri) {
-        File file = new File(FILE_PATH + requestUri);
-        //このままだとsrc/main/java/Document/+http://localhost:8080/hello.html になってちがう
-        //理想はhttp://localhost:8080/hello.html から
-        return file;
-    }
-
-    //リクエストUriのHostぬきだす
 
 
     //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
