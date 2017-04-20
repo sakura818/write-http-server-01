@@ -88,17 +88,18 @@ public class HttpResponse {
 
     */
 
-    public String createcontentType(String Extension) {
+    public String createContentType(String Extension) {
 
         String contentType = null;
 
-
-        if ((Extension.equals("html"))||(Extension.equals("css"))||Extension.equals("js")) {
-            System.out.println("htmlのContent-Typeは" + hatena);
-        } else if(){
-            statusLine = "HTTP/1.1 404 Not Found";
-        }else{}
-        return statusLine;
+        if ((Extension.equals("html")) || (Extension.equals("css")) || Extension.equals("js")) {
+            contentType = "Content-Type: text/" + Extension;
+        } else if ((Extension.equals("png")) || Extension.equals("jpeg") || Extension.equals("gif")) {
+            contentType = "Content-Type: image/" + Extension;
+        } else {
+            contentType = "Content-Type: text/plain";
+        }
+        return contentType;
     }
 
 
