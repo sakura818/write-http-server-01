@@ -26,8 +26,9 @@ public class HttpRequest {
         HttpServer httRequestData = new HttpServer();
         httRequestData.getList();
         //requestLineSplit = getList(0);//getlistで1行目を呼び出して空白を基点に3つに分割したい
-
-        //String[] requestLineSplit = (String[]) getlist.toArray(new String[0]);
+        //requestLineSplit = getList().lines(0);//getlistの呼び出しができてないのかも　メソッドの呼び出し方は"メソッド名（引数リスト）"
+        //requestLineSplit = getList(lines).(0);
+        //String[] requestLineSplit = (String[]) getlist.toArray(new String[0]);//listを配列に一旦変換させてからやってみる→失敗
 
         String[] requestLine = requestLineSplit(" ");
 
@@ -36,7 +37,7 @@ public class HttpRequest {
         httpVersion = requestLine[2];
     }
 
-    //リクエストURIとファイルパスから呼び出すファイルを特定する
+    //リクエストURIとファイルパスから呼び出すファイルを特定する→意図は?　
     public File getRequestDocument(String requestUri) {
         File file = new File(FILE_PATH + requestUri);//このままだとsrc/main/java/Document/+http://www.w3.org/pub/WWW/TheProject.html になってちがう
         return file;
@@ -44,8 +45,9 @@ public class HttpRequest {
 
     //リクエストUriのHostぬきだす
 
+
     //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
-    public String getExtension(String requestUri){
+    public String getExtension(String requestUri) {
         String fileExtension = new String();
         int lastDotPosition = requestUri.lastIndexOf(".");
         if (lastDotPosition != -1) {
