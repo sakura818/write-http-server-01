@@ -27,7 +27,7 @@ public class HttpServer {
 
             while (true) {
 
-                this.socket = serverSocket.accept();
+                this.socket = this.serverSocket.accept();
                 System.out.println("request incoming");
 
                 HttpRequest httpRequest;
@@ -61,8 +61,8 @@ public class HttpServer {
         } catch (IOException e) {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
-                socket.close();
-                serverSocket.close();
+                this.socket.close();
+                this.serverSocket.close();
             }
 
         }

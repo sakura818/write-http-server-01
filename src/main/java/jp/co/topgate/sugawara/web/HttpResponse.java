@@ -10,10 +10,6 @@ import java.util.HashMap;
  */
 public class HttpResponse {
 
-    Socket socket = null;
-    PrintWriter writer = null;
-
-
     public static String httpResponseGenerate() {
 
         String httpResponseData = null;
@@ -34,7 +30,6 @@ public class HttpResponse {
         return builder.toString();
 
     }
-
 
     public boolean FileExistsCheck(File file) {
         if (file.exists()) {
@@ -58,7 +53,7 @@ public class HttpResponse {
         return statusLine;
     }
 
-/*
+/*HashMapはいまいち
     public String statusLine(String statuscode) {
 
         HashMap<String, String> statusLineMap = new HashMap<String, String>();
@@ -73,6 +68,7 @@ public class HttpResponse {
     */
 
 
+/*HashMapはいまいち
     public String contentType(String Extension) {
         String contentType = null;
 
@@ -89,6 +85,22 @@ public class HttpResponse {
         return "";
 
     }
+
+    */
+
+    public String createcontentType(String Extension) {
+
+        String contentType = null;
+
+
+        if ((Extension.equals("html"))||(Extension.equals("css"))||Extension.equals("js")) {
+            System.out.println("htmlのContent-Typeは" + hatena);
+        } else if(){
+            statusLine = "HTTP/1.1 404 Not Found";
+        }else{}
+        return statusLine;
+    }
+
 
 //    String hatena = contentTypeExtension.get("html");
 //    System.out.println("htmlのContent-Typeは" + hatena);

@@ -24,19 +24,19 @@ public class HttpRequest {
 
         String[] requestLine = HttpServer.getList().get(0).split(" ");
 
-        method = requestLine[0];
-        requestUri = requestLine[1];
-        httpVersion = requestLine[2];
+        this.method = requestLine[0];
+        this.requestUri = requestLine[1];
+        this.httpVersion = requestLine[2];
     }
-    
+
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
     //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
     public String getRequestFile(String requestUri) {
 
         String file = new String();
-        int lastSlashPosition = requestUri.lastIndexOf("/");
+        int lastSlashPosition = this.requestUri.lastIndexOf("/");
         if (lastSlashPosition != -1) {
-            return FILE_PATH + requestUri.substring(lastSlashPosition + 1);
+            return FILE_PATH + this.requestUri.substring(lastSlashPosition + 1);
         } else {
             return null;
         }
@@ -45,9 +45,9 @@ public class HttpRequest {
     //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
     public String getExtension(String requestUri) {
         String fileExtension = new String();
-        int lastDotPosition = requestUri.lastIndexOf(".");
+        int lastDotPosition = this.requestUri.lastIndexOf(".");
         if (lastDotPosition != -1) {
-            return requestUri.substring(lastDotPosition + 1);
+            return this.requestUri.substring(lastDotPosition + 1);
         } else {
             return null;
         }
