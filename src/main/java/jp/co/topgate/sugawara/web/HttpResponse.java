@@ -14,7 +14,7 @@ public class HttpResponse {
     PrintWriter writer = null;
 
 
-    public static String httpResponseGenerate() {//Invalid method declaration = 無効なメソッド宣言 @解決方法 public voidをpublic staticに
+    public static String httpResponseGenerate() {
 
         String httpResponseData = null;
 
@@ -29,7 +29,6 @@ public class HttpResponse {
         builder.append(responseHeader).append("\n");
         builder.append("\n");
         builder.append(responseMessageBody);
-
 
         System.out.println("response...");
         return builder.toString();
@@ -87,8 +86,6 @@ public class HttpResponse {
         contentTypeExtension.put("gif", "Content-Type: image/gif");
 
         return "";
-
-
 
     }
 

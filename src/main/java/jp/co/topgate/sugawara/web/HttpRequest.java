@@ -25,10 +25,15 @@ public class HttpRequest {
 
         HttpServer httRequestData = new HttpServer();
         httRequestData.getList();
+        //requestLineSplit = getList(0);//getlistで1行目を呼び出して空白を基点に3つに分割したい
 
-        method = getlist(0);
-        requestUri = getList(1);
-        httpVersion = getList(2);
+        //String[] requestLineSplit = (String[]) getlist.toArray(new String[0]);
+
+        String[] requestLine = requestLineSplit(" ");
+
+        method = requestLine[0];
+        requestUri = requestLine[1];
+        httpVersion = requestLine[2];
     }
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する
@@ -37,7 +42,7 @@ public class HttpRequest {
         return file;
     }
 
-    //リクエストUriのHostぬきだすのｋｓんｓ
+    //リクエストUriのHostぬきだす
 
     //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
     public String getExtension(String requestUri){
@@ -47,11 +52,6 @@ public class HttpRequest {
             return requestUri.substring(lastDotPosition + 1);
         }
         return null;
-    }
-
-
-    public HttpRequest(List<String> lines) {
-
     }
 
 }

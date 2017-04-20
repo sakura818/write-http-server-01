@@ -31,7 +31,7 @@ public class HttpServer {
                 System.out.println("request incoming");
 
                 //Request;
-                InputStream inputStream = this.socket.getInputStream();//?
+                InputStream inputStream = this.socket.getInputStream();
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
                     this.lines = new ArrayList<>();
@@ -44,7 +44,7 @@ public class HttpServer {
                 }
 
                 //Response
-                OutputStream outputStream = this.socket.getOutputStream();//?
+                OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
 
             }
