@@ -14,10 +14,10 @@ public class HttpServer {
     private static final int PORT = 8080;//privateは自分自身のクラスのみアクセスを許可する　staticは静的フィールド（フィールド変数の実体がクラスに準備される）
     ServerSocket serverSocket = null;
     Socket socket = null;
-    private List<String> lines;
+    private static List<String> lines;
 
-    public List<String> getList() {
-        return this.lines;
+    public static List<String> getList() {
+        return lines;
     }
 
     public void connection() throws IOException {
@@ -34,14 +34,19 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
-                    this.lines = new ArrayList<>();
+                    lines = new ArrayList<>();
                     String line;
-                    while ((line = br.readLine()) != null) {
+                    while (!(line = br.readLine()).equals("")) {
                         System.out.println(line);
                         lines.add(line);
                     }
 
                 }
+                for (int i = 0; i < lines.size(); i++) {
+                    System.out.println(String.valueOf(i) + ":" + lines.get(i));
+                }
+
+                HttpRequest request = new HttpRequest();
 
                 //Response
                 OutputStream outputStream = this.socket.getOutputStream();
@@ -52,7 +57,17 @@ public class HttpServer {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
                 socket.close();
+
+
+
+
+
+
+
+
                 serverSocket.close();
+
+
             }
 
         }

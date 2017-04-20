@@ -89,8 +89,8 @@ public class HttpResponse {
 
     }
 
-    String hatena = contentTypeExtension.get("html");
-    System.out.println("htmlのContent-Typeは" + hatena);
+//    String hatena = contentTypeExtension.get("html");
+//    System.out.println("htmlのContent-Typeは" + hatena);
 
 
     public String responseHeader(String contentType) {
