@@ -29,7 +29,7 @@ public class HttpResponse {
 
     }
 
-    public boolean FileExistsCheck(File file) {
+    public boolean fileExistsCheck(File file) {
         if (file.exists()) {
             System.out.println("ファイルは存在しています");
             return true;
@@ -39,11 +39,11 @@ public class HttpResponse {
         }
     }
 
-    public String createStatusLine(boolean FileExistsCheck) {
+    public String createStatusLine(boolean fileExistsCheck) {
 
         String statusLine;
 
-        if (FileExistsCheck == true) {
+        if (fileExistsCheck == true) {
             statusLine = "HTTP/1.1 200 OK";
         } else {
             statusLine = "HTTP/1.1 404 Not Found";

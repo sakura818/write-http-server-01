@@ -14,31 +14,68 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpRequestTest {
 
+
     @Test
-    public void testGetMethod() {
+    public void testHttpRequest() {
+
+    }
+
+
+    @Test
+    public void testGetRequestFile() {
         // Unit TestのInputDataの準備
         List<String> requests = new ArrayList<>();//List<データ型> リストの名前 = new ArrayList<データ型>();
-        requests.add("GET http://localhost:8080 HTTP/1.1");
-        requests.add("Host / HTTP/1.1");
+        requests.add("http://localhost:8080/hello.html");
+        requests.add("http://localhost:8080/cream.png");
+        requests.add("http://localhost:8080/cream.gif");
+        requests.add("http://localhost:8080/cream.jpeg");
+        requests.add("http://localhost:8080/date.js");
+        requests.add("http://localhost:8080/.css");
+        requests.add("http://localhost:8080/honyarara.html");
+        requests.add("http://localhost:8080/");
 
         // Unit Testしたいクラスの準備
-        HttpRequest r = new HttpRequest(requests);
+        HttpRequest requestData = new HttpRequest();
 
         // Testした結果が正しいかの確認
-        assertThat(r.getMethod(), is("GET"));//assertThat("実際の値", is("期待値"));
-        assertThat(r.getHttpVersion(), is("1.1"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("hello.html"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("cream.png"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("cream.gif"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("cream.jpeg"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("date.js"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("red.css"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is(null));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is(null));//assertThat("実際の値", is("期待値"));
+
     }
 
     @Test
-    public void testPostMethod() {
-        List<String> requests = new ArrayList<>();
-        requests.add("POST /?hoge=hoge HTTP/1.1");
-        requests.add("Host / HTTP/1.1");
+    public void testConvertRequestUriToExtension() {
+        // Unit TestのInputDataの準備
+        List<String> requests = new ArrayList<>();//List<データ型> リストの名前 = new ArrayList<データ型>();
+        requests.add("http://localhost:8080/hello.html");
+        requests.add("http://localhost:8080/cream.png");
+        requests.add("http://localhost:8080/cream.gif");
+        requests.add("http://localhost:8080/cream.jpeg");
+        requests.add("http://localhost:8080/date.js");
+        requests.add("http://localhost:8080/.css");
+        requests.add("http://localhost:8080/honyarara.html");
+        requests.add("http://localhost:8080/");
 
-        HttpRequest r = new HttpRequest(requests);
-        assertThat(r.getMethod(), is("POST"));
+        // Unit Testしたいクラスの準備
+        HttpRequest requestData = new HttpRequest();
+
+        // Testした結果が正しいかの確認
+        assertThat(requestData.getRequestFile(), is("html"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("png"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("gif"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("jpeg"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("js"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is("css"));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is(null));//assertThat("実際の値", is("期待値"));
+        assertThat(requestData.getRequestFile(), is(null));//assertThat("実際の値", is("期待値"));
+
     }
-
 
 }
 

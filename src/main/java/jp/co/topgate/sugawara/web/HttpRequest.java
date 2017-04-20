@@ -20,7 +20,7 @@ public class HttpRequest {
 
 
     //リクエストからmethod,requestUri,httpversionを抜き出す
-    public HttpRequest() {
+    public HttpRequest() {//rename
 
         String[] requestLine = HttpServer.getList().get(0).split(" ");
 
@@ -43,9 +43,9 @@ public class HttpRequest {
         }
     }
 
-    //リクエストURIからファイルの拡張子を取得する　responseのcontent-typeのため
+    //リクエストURIから拡張子を取得する　
     //lastIndexOfでnullが来た場合の処理ができていない　nullPointerExceptionになる
-    public String getExtension(String requestUri) {
+    public String convertRequestUriToExtension(String requestUri) {
         String fileExtension = new String();
         int lastDotPosition = this.requestUri.lastIndexOf(".");
         if (lastDotPosition != -1) {
