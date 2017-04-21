@@ -61,8 +61,12 @@ public class HttpServer {
         } catch (IOException e) {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
-            this.socket.close();
-            this.serverSocket.close();
+            try {
+                this.socket.close();
+                this.serverSocket.close();
+            }catch(IOException e){
+
+            }
         }
 
     }

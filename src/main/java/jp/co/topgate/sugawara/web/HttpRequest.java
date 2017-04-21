@@ -35,12 +35,14 @@ public class HttpRequest {
     public String getRequestFile(String requestUri) {
 
         String file = new String();
+        String fileName = null;
         int lastSlashPosition = this.requestUri.lastIndexOf("/");
         if (lastSlashPosition != -1) {
-            return FILE_PATH + this.requestUri.substring(lastSlashPosition + 1);
+            fileName = FILE_PATH + this.requestUri.substring(lastSlashPosition + 1);
         } else {
-            return null;
+            fileName = null;
         }
+        return fileName;
     }
 
     //リクエストURIから拡張子を取得する　

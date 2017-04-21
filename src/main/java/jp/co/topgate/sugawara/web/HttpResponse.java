@@ -90,7 +90,8 @@ public class HttpResponse {
         FileReader fr = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
         System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");
         try {
-            fr = new FileReader("c://rpgsave.dat");//textfile読み込み
+            String fileName = getRequestFile();
+            fr = new FileReader(getRequestFileメソッドのfileName);//textfile読み込み
             int i = fr.read();
             {
                 while (i != -1) {
@@ -120,7 +121,7 @@ public class HttpResponse {
         FileInputStream fis = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
         System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");
         try {
-            fis = new FileInputStream("c://rpgsave.dat");//textfile読み込み
+            fis = new FileInputStream(getRequestFileメソッドのfileName);//textfile読み込み
             int i = fis.read();
             {
                 while (i != -1) {
@@ -147,11 +148,11 @@ public class HttpResponse {
     /* Java入門実践編　p274のサンプルコード
     * バイナリファイルを読み込んで表示するコード
     STEP1:ファイル出力ストリームをfosを生成
-    FIleOutputStream fos = new FIleOutputStream("data.txt);
+    FIleInputStream fis = new FIleInputStream("data.txt");
     STEP2:このストリームを下流に持つ暗号化ストリームcosを接続　フィルタ1
-    CipherOutputStream cos = new CipherOutputStream(fos,algo);//algoにも暗号化方式の指定が格納されているものとする
+    CipherInputStream cis = new CipherInputStream(fis,algo);//algoにも暗号化方式の指定が格納されているものとする
     STEP3:さらに文字バイトからバイトに変換するストリームoswを接続
-    CipherStreamWriter osw = new OutputStreamWriter(cos);
+    CipherStreamWriter osw = new InputStreamWriter(cis);
     STEP4:oswに文字を書き込めば、バイト変換＆暗号化されファイルに流されていく
     osw.write("AB");//これを実行すれば接続されているcosやfosのcloseも連鎖的に実行される
     */
