@@ -15,21 +15,21 @@ public class HttpResponseTest {
 
 
     @Test
-    public void testHttpResponseGenerate() {
+    public void メソッドHttpResponseGenerateがステータスラインとヘッダーとメッセージボディの３つを順序にならべてレスポンスを組み立てる() {
     }
 
     @Test
-    public void testFileExistsCheck() {
-
-    }
-
-    @Test
-    public void testCreateStatusLine() {
+    public void メソッドFileExistsCheckがリクエストされたファイルがローカルファイルに存在するかしないかの真偽() {
 
     }
 
     @Test
-    public void testcreateContentType() {
+    public void メソッドCreateStatusLineが条件に応じてステータスコードを生成する() {
+
+    }
+
+    @Test
+    public void メソッドcreateContentTypeが条件に応じてコンテントタイプを生成する() {
 
     }
 }

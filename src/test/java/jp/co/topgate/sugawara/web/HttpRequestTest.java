@@ -16,13 +16,13 @@ public class HttpRequestTest {
 
 
     @Test
-    public void testHttpRequest() {
+    public void メソッドHttpRequestがリクエストからmethodとrequestUriとhttpversionを抜き出す() {
 
     }
 
 
     @Test
-    public void testGetRequestFile() {
+    public void メソッドGetRequestFileがリクエストURIとファイルパスから呼び出すファイルを特定する() {
         // Unit TestのInputDataの準備
         List<String> requests = new ArrayList<>();//List<データ型> リストの名前 = new ArrayList<データ型>();
         requests.add("http://localhost:8080/hello.html");
@@ -50,7 +50,7 @@ public class HttpRequestTest {
     }
 
     @Test
-    public void testConvertRequestUriToExtension() {
+    public void メソッドConvertRequestUriToExtensionがURLからファイルの拡張子を判別する() {
         // Unit TestのInputDataの準備
         List<String> requests = new ArrayList<>();//List<データ型> リストの名前 = new ArrayList<データ型>();
         requests.add("http://localhost:8080/hello.html");

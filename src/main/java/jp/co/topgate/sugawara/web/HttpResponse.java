@@ -144,6 +144,26 @@ public class HttpResponse {
         }
     }
 
+    /* Java入門実践編　p274のサンプルコード
+    * バイナリファイルを読み込んで表示するコード
+    STEP1:ファイル出力ストリームをfosを生成
+    FIleOutputStream fos = new FIleOutputStream("data.txt);
+    STEP2:このストリームを下流に持つ暗号化ストリームcosを接続　フィルタ1
+    CipherOutputStream cos = new CipherOutputStream(fos,algo);//algoにも暗号化方式の指定が格納されているものとする
+    STEP3:さらに文字バイトからバイトに変換するストリームoswを接続
+    CipherStreamWriter osw = new OutputStreamWriter(cos);
+    STEP4:oswに文字を書き込めば、バイト変換＆暗号化されファイルに流されていく
+    osw.write("AB");//これを実行すれば接続されているcosやfosのcloseも連鎖的に実行される
+    */
+
+    /*
+    * ファイルを呼び出すときまたはリクエストを送信するとき、どちらの場合でバイト変換をしたほうがよいのか
+    * すべてバイトに変換して対応する場合、プログラムは書きやすいが実際の処理の効率がすごく悪い
+    * */
+
+
+
+
 
 }
 

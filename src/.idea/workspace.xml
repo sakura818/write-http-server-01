@@ -37,7 +37,14 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1492745876000" expanded="false" signature="44:170" ph="..." />
+                <marker date="1492745876000" expanded="true" signature="847:1062" ph="{...}" />
+                <marker date="1492745876000" expanded="true" signature="1121:1342" ph="{...}" />
+                <marker date="1492745876000" expanded="true" signature="1403:1879" ph="{...}" />
+                <marker date="1492745876000" expanded="true" signature="1938:2036" ph="{...}" />
+                <marker date="1492745876000" expanded="true" signature="2095:2132" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -355,7 +362,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1492745876000" expanded="false" signature="44:170" ph="..." />
+            <marker date="1492745876000" expanded="true" signature="847:1062" ph="{...}" />
+            <marker date="1492745876000" expanded="true" signature="1121:1342" ph="{...}" />
+            <marker date="1492745876000" expanded="true" signature="1403:1879" ph="{...}" />
+            <marker date="1492745876000" expanded="true" signature="1938:2036" ph="{...}" />
+            <marker date="1492745876000" expanded="true" signature="2095:2132" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

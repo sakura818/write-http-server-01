@@ -55,6 +55,7 @@ public class HttpServer {
                 //Response
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
+                //outputStream.write((byte)"http response data");
 
             }
         } catch (IOException e) {

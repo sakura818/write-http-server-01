@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpServerTest {
     @Test
-    public void testConnectionMethod() {
+    public void メソッドConnectionMethodでクライアントとサーバーが正常にコネクションできたかを判別する() {
 
     }
 
