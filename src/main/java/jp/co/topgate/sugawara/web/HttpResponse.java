@@ -1,6 +1,9 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -70,14 +73,75 @@ public class HttpResponse {
         String entityField;
         entityField = contentType;
         return entityField;
+    }
+
+
+    public String createMessageBody(String messageBody) {
+
+        return messageBody;
 
     }
 
 
-    public String responseMessageBody(String messageBody) {
+    /* Java入門実践編　p254,p263のサンプルコードを参考に書いたコード
+    * http://book.impress.co.jp/books/1114101003_4
+    * テキストファイルを読み込んで表示するコード*/
+    public static void textFileCat(String[] args) throws IOException {
+        FileReader fr = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
+        System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");
+        try {
+            fr = new FileReader("c://rpgsave.dat");//textfile読み込み
+            int i = fr.read();
+            {
+                while (i != -1) {
+                    char c = (char) i;
+                    System.out.println(c);
+                    i = fr.read();
+                }
+                System.out.println("ファイルの末尾に到達しました");
+            }
+        } catch (IOException e) {
+            System.out.println("ファイルの書き込みに失敗しました");
+        } finally {
+            if (fr != null) {
+                try {//closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
+                    fr.close();//必ずcloseされることが保証されなければならないためfinallyブロックに記述する
+                } catch (IOException e2) {
+                }
 
-        return "";
+            }
 
+        }
+    }
+
+    /* Java入門実践編　p257,p263を参考に書いたコード
+    * バイナリファイルを読み込んで表示するコード*/
+    public static void binaryFileCat(String[] args) throws IOException {
+        FileInputStream fis = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
+        System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");
+        try {
+            fis = new FileInputStream("c://rpgsave.dat");//textfile読み込み
+            int i = fis.read();
+            {
+                while (i != -1) {
+                    char c = (char) i;
+                    System.out.println(c);
+                    i = fis.read();
+                }
+                System.out.println("ファイルの末尾に到達しました");
+            }
+        } catch (IOException e) {
+            System.out.println("ファイルの書き込みに失敗しました");
+        } finally {
+            if (fis != null) {
+                try {//closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
+                    fis.close();//必ずcloseされることが保証されなければならないためfinallyブロックに記述する
+                } catch (IOException e2) {
+                }
+
+            }
+
+        }
     }
 
 
