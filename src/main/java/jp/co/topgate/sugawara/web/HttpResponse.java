@@ -29,21 +29,21 @@ public class HttpResponse {
 
     }
 
-    public boolean fileExistsCheck(File file) {
+    public boolean isFileExists(File file) {
         if (file.exists()) {
-            System.out.println("ファイルは存在しています");
+            //System.out.println("ファイルは存在しています");
             return true;
         } else {
-            System.out.println("ファイルは存在していません");
+            //System.out.println("ファイルは存在していません");
             return false;
         }
     }
 
-    public String createStatusLine(boolean fileExistsCheck) {
+    public String createStatusLine(boolean isFileExists) {
 
         String statusLine;
 
-        if (fileExistsCheck == true) {
+        if (isFileExists == true) {
             statusLine = "HTTP/1.1 200 OK";
         } else {
             statusLine = "HTTP/1.1 404 Not Found";
@@ -51,7 +51,7 @@ public class HttpResponse {
         return statusLine;
     }
 
-    public String createContentType(String Extension) {
+    public String distinguishContentType(String Extension) {
 
         String contentType = null;
 
@@ -66,9 +66,10 @@ public class HttpResponse {
     }
 
 
-    public String responseHeader(String contentType) {
-
-        return "";
+    public String createEntityField(String contentType) {
+        String entityField;
+        entityField = contentType;
+        return entityField;
 
     }
 

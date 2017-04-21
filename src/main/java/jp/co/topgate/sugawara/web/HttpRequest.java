@@ -22,7 +22,7 @@ public class HttpRequest {
     //リクエストからmethod,requestUri,httpversionを抜き出す
     public HttpRequest() {//rename
 
-        String[] requestLine = HttpServer.getList().get(0).split(" ");
+        String[] requestLine = lines.getList().get(0).split(" ");
 
         this.method = requestLine[0];
         this.requestUri = requestLine[1];

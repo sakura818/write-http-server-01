@@ -17,6 +17,7 @@ public class HttpServer {
     private List<String> lines;
 
     private List<String> getList() {
+
         return lines;
     }
 
