@@ -33,7 +33,7 @@ public class HttpServer {
 
                 //Request;
                 InputStream inputStream = this.socket.getInputStream();
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {//BufferedReaderだとバイト列は処理できない
 
                     //lines = new ArrayList<>();
                     List<String> lines = new ArrayList<>();

@@ -32,6 +32,7 @@ public class HttpRequest {
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
     //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
     //いまは上の階層の処理ができてないかつ?が来た場合の処理ができてない
+    //URIの特別なクラスがあるらしい（独習Java）→https://docs.oracle.com/javase/jp/8/docs/api/java/net/URI.html
     public String getRequestFile(String requestUri) {
 
         String file = new String();
