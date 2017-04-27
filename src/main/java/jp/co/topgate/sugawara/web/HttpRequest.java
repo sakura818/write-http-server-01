@@ -11,7 +11,7 @@ import java.io.*;
 public class HttpRequest {
 
     private BufferedReader bufferedReader;
-    private String requestLine;
+    //private String requestLine;
     private String method;
     private String requestUri;
     private String httpVersion;
@@ -23,42 +23,24 @@ public class HttpRequest {
     HttpServer httpServer = new HttpServer();
     BufferedReader reqdata = httpServer.getReqdata();
 
-    //private String[] requestLine;
-
-    public String getRequestLine() {
-        return this.requestLine;
-    }
 
     /*
-    空白文字を区切り文字としてリクエストを分割する
+    空白文字または改行文字を区切り文字としてリクエストを分割する
      */
 
     public String[] reqDataDivide() throws IOException {
         reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
         String reqCRLF[] = reqdata.toString().split("\\r?\\n|\\s") ;// mac,windows crlf
 
-        requestLine = reqCRLF[0];//　1つめの改行終端文字までを変数reqlineにいれる処理
-        requestHeader = reqCRLF[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
-        emptyLine = reqCRLF[2];//　3つめの改行終端文字までを変数emptylineにいれる処理
-        requestMessageBody = reqCRLF[3];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
+        this.method = reqCRLF[0];//　1つめの空白文字までを変数reqlineにいれる処理
+        this.requestUri = reqCRLF[1];//　2つめの空白文字までを変数reqlineにいれる処理
+        this.httpVersion = reqCRLF[2];//　3つめの空白文字までを変数reqlineにいれる処理
+        this.requestHeader = reqCRLF[3];//　2つめの改行終端文字までを変数reqheaderにいれる処理
+        this.emptyLine = reqCRLF[4];//　3つめの改行終端文字までを変数emptylineにいれる処理
+        this.requestMessageBody = reqCRLF[5];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
 
         return reqCRLF;
     }
-
-    /*
-    requestlineをmethod,requestUri,httpversionに分割する
-    2重分割になってうまくいかない　
-     */
-
-    public String requestLineDivide(HttpRequest.requestLine()) {
-
-        String requestLine = lines.getList().get(0).split(" ");
-
-        this.method = requestLine[0];
-        this.requestUri = requestLine[1];
-        this.httpVersion = requestLine[2];
-    }
-
 
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
