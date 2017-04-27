@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class HttpServer {
 
-    private static final int PORT = 8080;
-    ServerSocket serverSocket = null;
-    Socket socket = null;
+    private static final int PORT = 8080;// Httpサーバでは一般的にポート番号として80番もしくは8080番を仕様する
+    private ServerSocket serverSocket;
+    private Socket socket;
     private List<String> lines;
 
     private List<String> getList() {
@@ -21,41 +21,23 @@ public class HttpServer {
         return lines;
     }
 
-    public void connection() throws IOException {
-        System.out.println("start up http server http://localhost:8080");
-        try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
 
+    public void connection() throws IOException {
+        System.out.println("start up http server http://localhost:" + PORT);
+        try {
+            this.serverSocket = new ServerSocket(PORT);
             while (true) {
 
                 this.socket = this.serverSocket.accept();
                 System.out.println("request incoming");
 
-                //Request;
+                // Request
                 InputStream inputStream = this.socket.getInputStream();
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {//BufferedReaderだとバイト列は処理できない
-
-                    //lines = new ArrayList<>();
-                    List<String> lines = new ArrayList<>();
-                    String line;
-                    while (!(line = br.readLine()).equals("")) {
-                        System.out.println(line);
-                        lines.add(line);
-                    }
-                    //HttpRequest httpRequest = new HttpRequest();
-                    HttpRequest httpRequest = new HttpRequest(lines);
-
-                }
-                for (int i = 0; i < lines.size(); i++) {
-                    System.out.println(String.valueOf(i) + ":" + lines.get(i));
-                }
-
                 HttpRequest request = new HttpRequest();
 
-                //Response
+                // Response
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
-                //outputStream.write((byte)"http response data");
 
             }
         } catch (IOException e) {
@@ -64,7 +46,7 @@ public class HttpServer {
             try {
                 this.socket.close();
                 this.serverSocket.close();
-            }catch(IOException e){
+            } catch (IOException e) {
 
             }
         }

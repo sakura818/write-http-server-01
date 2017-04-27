@@ -20,7 +20,6 @@ public class HttpResponse {
         String responseMessageBody = null;
 
         StringBuilder builder = new StringBuilder();
-        //画像はbytestream
 
         builder.append(statusLine).append("\n");
         builder.append(responseHeader).append("\n");
@@ -34,10 +33,8 @@ public class HttpResponse {
 
     public boolean isFileExists(File file) {
         if (file.exists()) {
-            //System.out.println("ファイルは存在しています");
             return true;
         } else {
-            //System.out.println("ファイルは存在していません");
             return false;
         }
     }
@@ -86,6 +83,7 @@ public class HttpResponse {
     /* Java入門実践編　p254,p263のサンプルコードを参考に書いたコード
     * http://book.impress.co.jp/books/1114101003_4
     * テキストファイルを読み込んで表示するコード*/
+    /*
     public static void textFileCat(String[] args) throws IOException {
         FileReader fr = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
         System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");
@@ -117,6 +115,7 @@ public class HttpResponse {
 
     /* Java入門実践編　p257,p263を参考に書いたコード
     * バイナリファイルを読み込んで表示するコード*/
+    /*
     public static void binaryFileCat(String[] args) throws IOException {
         FileInputStream fis = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
         System.out.println("テキストファイルのすべてのデータを一文字ずつ読んで表示します");

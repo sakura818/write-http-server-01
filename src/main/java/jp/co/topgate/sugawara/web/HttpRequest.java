@@ -16,10 +16,10 @@ public class HttpRequest {
     private String httpVersion;
     private String requestHeader;
     private String requestMessageBody;
-    private static final String FILE_PATH = "src/main/java/Document/";
+    private static final String FILE_PATH = "src/main/java/resources/";
 
 
-    //リクエストからmethod,requestUri,httpversionを抜き出す
+    /*リクエストからmethod,requestUri,httpversionを抜き出す
     public HttpRequest() {//rename
 
         String[] requestLine = lines.getList().get(0).split(" ");
@@ -28,6 +28,7 @@ public class HttpRequest {
         this.requestUri = requestLine[1];
         this.httpVersion = requestLine[2];
     }
+    */
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
     //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
