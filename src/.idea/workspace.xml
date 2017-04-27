@@ -16,10 +16,9 @@
         <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
-              <caret line="32" column="8" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+              <caret line="58" column="8" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="false" />
-                <marker date="1493261490000" expanded="true" signature="575:781" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -362,7 +361,6 @@
           <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261490000" expanded="true" signature="575:781" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -403,7 +401,6 @@
           <caret line="31" column="8" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261490000" expanded="true" signature="575:781" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -441,10 +438,9 @@
     <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="32" column="8" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+          <caret line="58" column="8" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261490000" expanded="true" signature="575:781" ph="{...}" />
           </folding>
         </state>
       </provider>

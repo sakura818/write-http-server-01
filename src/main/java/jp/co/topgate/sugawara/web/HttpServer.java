@@ -11,33 +11,42 @@ import java.util.List;
  */
 public class HttpServer {
 
-    private static final int PORT = 8080;// Httpサーバでは一般的にポート番号として80番もしくは8080番を仕様する
+    private static final int PORT = 80;// Httpサーバでは一般的にポート番号として80番もしくは8080番を仕様する
     private ServerSocket serverSocket;
     private Socket socket;
-    private List<String> lines;
+    private BufferedReader br;
 
-    private List<String> getList() {
-
-        return lines;
+    public BufferedReader getReqdata() {
+        return this.br;
     }
 
 
     public void connection() throws IOException {
-        System.out.println("start up http server http://localhost:" + PORT);
+        System.out.println("start up http server http://localhost:" + HttpServer.PORT);
         try {
-            this.serverSocket = new ServerSocket(PORT);
+            this.serverSocket = new ServerSocket(HttpServer.PORT);
             while (true) {
 
                 this.socket = this.serverSocket.accept();
                 System.out.println("request incoming");
 
+                /*
+                クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringなどの文字列に変換して操作する
+                 */
                 // Request
-                InputStream inputStream = this.socket.getInputStream();
-                HttpRequest request = new HttpRequest();
+                InputStream is = this.socket.getInputStream();// データを読み込んで
+                BufferedInputStream bis = new BufferedInputStream(is);// データをバッファリングしながらバイト列でもってきて
+                BufferedReader br = new BufferedReader(new InputStreamReader(bis));// バイト列をStringに変換して
+                System.out.println(br);// Stringに変換されたリクエストデータを出力します
+
 
                 // Response
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();
+                HttpResponse httpResponse = new HttpResponse();// HttpResponse.javaからメソッドを呼び出して
+                System.out.println();// Stringのレスポンスデータを出力します
+                //　// Stringをバイト列に変換するコード
+                //BufferedOutputStream bos = new BufferedOutputStream();  // データをバッファリングしながらバイト列でもっていって
+                //OutputStream os = this.socket.getOutputStream(bos);  // データを出力する
 
             }
         } catch (IOException e) {
