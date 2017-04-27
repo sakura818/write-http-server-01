@@ -16,45 +16,50 @@ public class HttpRequest {
     private String requestUri;
     private String httpVersion;
     private String requestHeader;
+    private String emptyLine;
     private String requestMessageBody;
     private static final String FILE_DIR = "src/main/java/resources/";
 
     HttpServer httpServer = new HttpServer();
-
     BufferedReader reqdata = httpServer.getReqdata();
 
-    public String reqDataDivide() throws IOException{
-        reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
+    //private String[] requestLine;
 
-        //　1つめの改行終端文字までを変数reqlineにいれる処理
-        //　2つめの改行終端文字までを変数reqheaderにいれる処理
-        //　3つめの改行終端文字までを変数emptylineにいれる処理
-        //　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
-
-
-        return "neko";
+    public String getRequestLine() {
+        return this.requestLine;
     }
 
+    /*
+    空白文字を区切り文字としてリクエストを分割する
+     */
 
+    public String[] reqDataDivide() throws IOException {
+        reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
+        String reqCRLF[] = reqdata.toString().split("\\r?\\n|\\s") ;// mac,windows crlf
 
-    /*requestlineからmethod,requestUri,httpversionを抜き出す
-    public HttpRequest() {//rename
+        requestLine = reqCRLF[0];//　1つめの改行終端文字までを変数reqlineにいれる処理
+        requestHeader = reqCRLF[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
+        emptyLine = reqCRLF[2];//　3つめの改行終端文字までを変数emptylineにいれる処理
+        requestMessageBody = reqCRLF[3];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
 
-        String[] requestLine = lines.getList().get(0).split(" ");
+        return reqCRLF;
+    }
+
+    /*
+    requestlineをmethod,requestUri,httpversionに分割する
+    2重分割になってうまくいかない　
+     */
+
+    public String requestLineDivide(HttpRequest.requestLine()) {
+
+        String requestLine = lines.getList().get(0).split(" ");
 
         this.method = requestLine[0];
         this.requestUri = requestLine[1];
         this.httpVersion = requestLine[2];
     }
 
-                if(reqStr !=null)
-    {
-        //　Content-Typeはいらないかも
-    }
 
-
-
-    */
 
     //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
     //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
@@ -81,7 +86,7 @@ public class HttpRequest {
         if (lastDotPosition != -1) {
             return this.requestUri.substring(lastDotPosition + 1);
         } else {
-            return null;
+            return "拡張子を取得できませんでした";
         }
 
     }
