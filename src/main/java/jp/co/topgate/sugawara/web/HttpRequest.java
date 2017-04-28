@@ -21,7 +21,7 @@ public class HttpRequest {
     private static final String FILE_DIR = "src/main/java/resources/";
 
     HttpServer httpServer = new HttpServer();
-    BufferedReader reqdata = httpServer.getReqdata();
+    BufferedReader reqdata = httpServer.getReqdata();// rename
 
 
     /*
@@ -30,16 +30,66 @@ public class HttpRequest {
 
     public String[] reqDataDivide() throws IOException {
         reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
-        String reqCRLF[] = reqdata.toString().split("\\r?\\n|\\s") ;// mac,windows crlf
+        String reqDelimiterDivide[] = reqdata.toString().split("\\r?\\n|\\s");// mac,windows crlf
+        //reqDelimiterDivide= new String[];
 
-        this.method = reqCRLF[0];//　1つめの空白文字までを変数reqlineにいれる処理
-        this.requestUri = reqCRLF[1];//　2つめの空白文字までを変数reqlineにいれる処理
-        this.httpVersion = reqCRLF[2];//　3つめの空白文字までを変数reqlineにいれる処理
-        this.requestHeader = reqCRLF[3];//　2つめの改行終端文字までを変数reqheaderにいれる処理
-        this.emptyLine = reqCRLF[4];//　3つめの改行終端文字までを変数emptylineにいれる処理
-        this.requestMessageBody = reqCRLF[5];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
+        this.method = reqDelimiterDivide[0];//　1つめの空白文字までを変数reqlineにいれる処理
+        this.requestUri = reqDelimiterDivide[1];//　2つめの空白文字までを変数reqlineにいれる処理
+        this.httpVersion = reqDelimiterDivide[2];//　3つめの空白文字までを変数reqlineにいれる処理
+        this.requestHeader = reqDelimiterDivide[3];//　2つめの改行終端文字までを変数reqheaderにいれる処理
+        this.emptyLine = reqDelimiterDivide[4];//　3つめの改行終端文字までを変数emptylineにいれる処理
+        this.requestMessageBody = reqDelimiterDivide[5];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
 
-        return reqCRLF;
+        return reqDelimiterDivide;
+    }
+
+    /*
+    methodの処理 getter
+     */
+
+    public String getMethod() {
+        return this.method;
+    }
+
+    /*
+    requestUriの処理 getter
+     */
+
+    public String getRequestUri() {
+        return this.requestUri;
+    }
+
+
+    /*
+    HTTPVersionの処理 getter
+     */
+
+    public String getHttpVersion() {
+        return this.httpVersion;
+    }
+
+    /*
+    requestHeaderの処理 getter
+     */
+
+    public String getRequestHeader() {
+        return this.requestHeader;
+    }
+
+    /*
+    EmptyLineの処理 getter
+     */
+
+    public String getEmptyLine() {
+        return this.emptyLine;
+    }
+
+    /*
+    RequestMessageBodyの処理 getter
+     */
+
+    public String getRequestMessageBody() {
+        return this.requestMessageBody;
     }
 
 
