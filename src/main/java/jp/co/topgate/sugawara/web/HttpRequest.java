@@ -3,9 +3,9 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
-import java.net.URLDecoder;
 import java.net.URI;
-import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 
 
 /**
@@ -21,8 +21,6 @@ public class HttpRequest {
     private String requestHeader;
     private String emptyLine;
     private String requestMessageBody;
-    private String decodeUri;
-    private String pathUri;
     private static final String FILE_DIR = "src/main/java/resources/";
 
     HttpServer httpServer = new HttpServer();
@@ -121,7 +119,6 @@ public class HttpRequest {
         this.requestUri = reqUriDelimiterDivide[1];//　2つめの空白文字までを変数reqlineにいれる処理
         this.httpVersion = reqUriDelimiterDivide[2];//　3つめの空白文字までを変数reqlineにいれる処理
         return reqUriDelimiterDivide;
-
     }
 
 
@@ -129,7 +126,7 @@ public class HttpRequest {
     もし、Request-URI に "% HEX HEX" エンコード [42] が使用されていたら、オリジンサーバはそのリクエストを適切に解釈するためにその
     Request-URI をデコードし*なければならない*。
      */
-    public String requestUriDecode() throws UnsupportedEncodingException {
+    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException {
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
         return decodeUri;
     }
@@ -137,22 +134,22 @@ public class HttpRequest {
     /*
     Request-URIからパス名を抜き出す
      */
-    public String requestUriPath() {
-        //URI u = new URI(this.decodeUri);
-        String pathUri = this.decodeUri.getPath();//?
-        return pathUri;
+    private String requestUriPath(String decodeUri) throws URISyntaxException {
+        URI uriPath = new URI(decodeUri);
+        return uriPath.getPath();
     }
 
-
-    //リクエストURIから拡張子を取得する　
-    //lastIndexOfでnullが来た場合の処理ができていない　nullPointerExceptionになる
-    public String convertPathUriToExtension() {
-        int lastDotPosition = this.pathUri.lastIndexOf(".");
-        if (lastDotPosition != -1) {
-            return this.requestUri.substring(lastDotPosition + 1);
-        } else {
-            return "拡張子を取得できませんでした";
-        }
-
+    /*
+    Request-URIをdecodeしてパス名抜き出す
+     */
+    public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
+        String decodeUri = requestUriDecode(requestUri);
+        return requestUriPath(decodeUri);
     }
+
+    /*
+    content typeの処理
+     */
+
+
 }
