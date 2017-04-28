@@ -16,9 +16,10 @@
         <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="283">
-              <caret line="134" column="5" lean-forward="false" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+              <caret line="125" column="5" lean-forward="false" selection-start-line="125" selection-start-column="5" selection-end-line="125" selection-end-column="5" />
               <folding>
-                <marker date="1493364899000" expanded="true" signature="1659:2251" ph="{...}" />
+                <marker date="1493380548000" expanded="false" signature="44:107" ph="..." />
+                <marker date="1493380548000" expanded="true" signature="1439:1987" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -43,8 +44,8 @@
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="false" />
-                <marker date="1493261087000" expanded="true" signature="2212:3176" ph="{...}" />
-                <marker date="1493261087000" expanded="true" signature="3323:4255" ph="{...}" />
+                <marker date="1493383044000" expanded="true" signature="1176:1587" ph="{...}" />
+                <marker date="1493383044000" expanded="true" signature="1819:2739" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -477,7 +478,8 @@
         <state relative-caret-position="435">
           <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding>
-            <marker date="1493364899000" expanded="true" signature="1659:2251" ph="{...}" />
+            <marker date="1493380548000" expanded="false" signature="44:107" ph="..." />
+            <marker date="1493380548000" expanded="true" signature="1439:1987" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -488,8 +490,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261087000" expanded="true" signature="2212:3176" ph="{...}" />
-            <marker date="1493261087000" expanded="true" signature="3323:4255" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1176:1587" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1819:2739" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -517,7 +519,8 @@
         <state relative-caret-position="435">
           <caret line="31" column="8" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding>
-            <marker date="1493364899000" expanded="true" signature="1659:2251" ph="{...}" />
+            <marker date="1493380548000" expanded="false" signature="44:107" ph="..." />
+            <marker date="1493380548000" expanded="true" signature="1439:1987" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -528,8 +531,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261087000" expanded="true" signature="2212:3176" ph="{...}" />
-            <marker date="1493261087000" expanded="true" signature="3323:4255" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1176:1587" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1819:2739" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -568,8 +571,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <marker date="1493261087000" expanded="true" signature="2212:3176" ph="{...}" />
-            <marker date="1493261087000" expanded="true" signature="3323:4255" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1176:1587" ph="{...}" />
+            <marker date="1493383044000" expanded="true" signature="1819:2739" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -577,9 +580,10 @@
     <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
-          <caret line="134" column="5" lean-forward="false" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+          <caret line="125" column="5" lean-forward="false" selection-start-line="125" selection-start-column="5" selection-end-line="125" selection-end-column="5" />
           <folding>
-            <marker date="1493364899000" expanded="true" signature="1659:2251" ph="{...}" />
+            <marker date="1493380548000" expanded="false" signature="44:107" ph="..." />
+            <marker date="1493380548000" expanded="true" signature="1439:1987" ph="{...}" />
           </folding>
         </state>
       </provider>

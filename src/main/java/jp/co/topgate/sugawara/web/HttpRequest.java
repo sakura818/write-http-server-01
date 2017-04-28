@@ -24,8 +24,7 @@ public class HttpRequest {
     private String requestHeader;
     private String emptyLine;
     private String requestMessageBody;
-    private String contentType;
-    private static final String FILE_DIR = "src/main/java/resources/";
+
 
     HttpServer httpServer = new HttpServer();
     BufferedReader reqdata = httpServer.getReqdata();// rename
@@ -70,13 +69,6 @@ public class HttpRequest {
         return this.requestMessageBody;
     }
 
-    /*
-    ContentTypeの処理 getter
-     */
-
-    public String getContentType() {
-        return this.contentType;
-    }
 
     /*
     改行文字を区切り文字としてリクエストを分割する
@@ -85,7 +77,6 @@ public class HttpRequest {
     public String[] reqDataDivide() throws IOException {
         reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
         String reqDelimiterDivide[] = reqdata.toString().split("\\r?\\n");// mac,windows crlf　
-        //reqDelimiterDivide= new String[];
 
         this.requestLine = reqDelimiterDivide[0];//　1つめの改行終端文字までを変数reqheaderにいれる処理
         this.requestHeader = reqDelimiterDivide[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
@@ -155,30 +146,6 @@ public class HttpRequest {
         return contentType;
     }
     */
-
-
-    /*
-    content-typeの一覧
-     */
-
-    public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
-        {
-            // specifications
-            put("html", "text/html");
-            put("htm", "text/html");
-            put("css", "text/css");
-            put("js", "application/javascript");
-            put("jpg", "image/jpeg");
-            put("jpeg", "image/jpeg");
-            put("png", "image/png");
-            put("gif", "image/gif");
-
-            // option
-            put("txt", "text/plain");
-            put("pdf", "application/pdf");
-            put("mp4", "video/mp4");
-        }
-    };
 
 
 }
