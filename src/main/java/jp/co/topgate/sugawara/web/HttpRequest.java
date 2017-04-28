@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.net.URLDecoder;
 
 
 /**
@@ -59,7 +60,6 @@ public class HttpRequest {
         return this.requestUri;
     }
 
-
     /*
     HTTPVersionの処理 getter
      */
@@ -90,6 +90,16 @@ public class HttpRequest {
 
     public String getRequestMessageBody() {
         return this.requestMessageBody;
+    }
+
+
+    /*
+    もし、Request-URI に "% HEX HEX" エンコード [42] が使用されていたら、オリジンサーバはそのリクエストを適切に解釈するためにその
+    Request-URI をデコードし*なければならない*。
+     */
+    public String requestUriDecode() throws UnsupportedEncodingException{
+        String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
+        return decodeUri;
     }
 
 
