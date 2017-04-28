@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.String;
 import java.io.*;
 import java.net.URLDecoder;
+import java.net.URI;
+import java.io.File;
 
 
 /**
@@ -20,6 +22,7 @@ public class HttpRequest {
     private String emptyLine;
     private String requestMessageBody;
     private String decodeUri;
+    private String pathUri;
     private static final String FILE_DIR = "src/main/java/resources/";
 
     HttpServer httpServer = new HttpServer();
@@ -27,7 +30,7 @@ public class HttpRequest {
 
 
     /*
-    空白文字または改行文字を区切り文字としてリクエストを分割する
+    改行文字を区切り文字としてリクエストを分割する
      */
 
     public String[] reqDataDivide() throws IOException {
@@ -42,6 +45,10 @@ public class HttpRequest {
 
         return reqDelimiterDivide;
     }
+
+    /*
+    空白文字を区切り文字としてリクエストuriを分割する
+     */
 
     public String[] requestLineDivide() {
         String reqUriDelimiterDivide[] = requestLine.split("\\s");
@@ -101,6 +108,15 @@ public class HttpRequest {
         return this.requestMessageBody;
     }
 
+    /*
+    UriDecodeの処理 getter
+     */
+
+    public String getDecodeUri() {
+        return this.decodeUri;
+    }
+
+
 
     /*
     もし、Request-URI に "% HEX HEX" エンコード [42] が使用されていたら、オリジンサーバはそのリクエストを適切に解釈するためにその
@@ -111,29 +127,21 @@ public class HttpRequest {
         return decodeUri;
     }
 
-
-    //リクエストURIとファイルパスから呼び出すファイルを特定する responseのfileExistCheckのため
-    //理想はhttp://localhost:8080/hello.html からsrc/main/java/Document/hello.htmlをよびだすこと
-    //いまは上の階層の処理ができてないかつ?が来た場合の処理ができてない
-    //URIの特別なクラスがあるらしい（独習Java）→https://docs.oracle.com/javase/jp/8/docs/api/java/net/URI.html
-    public String getRequestFile(String requestUri) {
-
-        String file = new String();
-        String fileName = null;
-        int lastSlashPosition = this.requestUri.lastIndexOf("/");
-        if (lastSlashPosition != -1) {
-            fileName = FILE_DIR + this.requestUri.substring(lastSlashPosition + 1);
-        } else {
-            fileName = null;
-        }
-        return fileName;
+    /*
+    Request-URIからパス名を抜き出す
+     */
+    public String requestUriPath() {
+        //URI u = new URI(this.decodeUri);
+        String pathUri = decodeUri.getPath();//?
+        return pathUri;
     }
+    
 
     //リクエストURIから拡張子を取得する　
     //lastIndexOfでnullが来た場合の処理ができていない　nullPointerExceptionになる
-    public String convertRequestUriToExtension(String requestUri) {
-        String fileExtension = new String();
-        int lastDotPosition = this.requestUri.lastIndexOf(".");
+    public String convertPathUriToExtension(String requestUri) {
+        //String fileExtension = new String();
+        int lastDotPosition = this.pathUri.lastIndexOf(".");
         if (lastDotPosition != -1) {
             return this.requestUri.substring(lastDotPosition + 1);
         } else {
