@@ -12,13 +12,14 @@ import java.net.URLDecoder;
 public class HttpRequest {
 
     private BufferedReader bufferedReader;
-    //private String requestLine;
+    private String requestLine;
     private String method;
     private String requestUri;
     private String httpVersion;
     private String requestHeader;
     private String emptyLine;
     private String requestMessageBody;
+    private String decodeUri;
     private static final String FILE_DIR = "src/main/java/resources/";
 
     HttpServer httpServer = new HttpServer();
@@ -31,17 +32,25 @@ public class HttpRequest {
 
     public String[] reqDataDivide() throws IOException {
         reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
-        String reqDelimiterDivide[] = reqdata.toString().split("\\r?\\n|\\s");// mac,windows crlf
+        String reqDelimiterDivide[] = reqdata.toString().split("\\r?\\n");// mac,windows crlf　
         //reqDelimiterDivide= new String[];
 
-        this.method = reqDelimiterDivide[0];//　1つめの空白文字までを変数reqlineにいれる処理
-        this.requestUri = reqDelimiterDivide[1];//　2つめの空白文字までを変数reqlineにいれる処理
-        this.httpVersion = reqDelimiterDivide[2];//　3つめの空白文字までを変数reqlineにいれる処理
-        this.requestHeader = reqDelimiterDivide[3];//　2つめの改行終端文字までを変数reqheaderにいれる処理
-        this.emptyLine = reqDelimiterDivide[4];//　3つめの改行終端文字までを変数emptylineにいれる処理
-        this.requestMessageBody = reqDelimiterDivide[5];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
+        this.requestLine = reqDelimiterDivide[0];//　1つめの改行終端文字までを変数reqheaderにいれる処理
+        this.requestHeader = reqDelimiterDivide[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
+        this.emptyLine = reqDelimiterDivide[2];//　3つめの改行終端文字までを変数emptylineにいれる処理
+        this.requestMessageBody = reqDelimiterDivide[3];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
 
         return reqDelimiterDivide;
+    }
+
+    public String[] requestLineDivide() {
+        String reqUriDelimiterDivide[] = requestLine.split("\\s");
+
+        this.method = reqUriDelimiterDivide[0];//　1つめの空白文字までを変数reqlineにいれる処理
+        this.requestUri = reqUriDelimiterDivide[1];//　2つめの空白文字までを変数reqlineにいれる処理
+        this.httpVersion = reqUriDelimiterDivide[2];//　3つめの空白文字までを変数reqlineにいれる処理
+        return reqUriDelimiterDivide;
+
     }
 
     /*
