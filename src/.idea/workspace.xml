@@ -16,8 +16,10 @@
         <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="313">
-              <caret line="137" column="4" lean-forward="false" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
-              <folding />
+              <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+              <folding>
+                <marker date="1493353268000" expanded="true" signature="1805:2397" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -474,7 +476,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
-          <folding />
+          <folding>
+            <marker date="1493353268000" expanded="true" signature="1805:2397" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -512,7 +516,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="31" column="8" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
-          <folding />
+          <folding>
+            <marker date="1493353268000" expanded="true" signature="1805:2397" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -571,8 +577,10 @@
     <entry file="file://$PROJECT_DIR$/main/java/jp/co/topgate/sugawara/web/HttpRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
-          <caret line="137" column="4" lean-forward="false" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
-          <folding />
+          <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+          <folding>
+            <marker date="1493353268000" expanded="true" signature="1805:2397" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
