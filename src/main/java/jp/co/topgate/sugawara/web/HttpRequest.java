@@ -73,23 +73,7 @@ public class HttpRequest {
     public String getRequestMessageBody() {
         return this.requestMessageBody;
     }
-
-    /*
-    UriDecodeの処理 getter
-     */
-
-    public String getDecodeUri() {
-        return this.decodeUri;
-    }
-
-    /*
-   PathUriの処理 getter
-     */
-
-    public String getPathUri() {
-        return this.pathUri;
-    }
-
+    
 
     /*
     改行文字を区切り文字としてリクエストを分割する
