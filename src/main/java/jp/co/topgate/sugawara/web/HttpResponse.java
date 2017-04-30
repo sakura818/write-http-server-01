@@ -22,7 +22,6 @@ public class HttpResponse {
     public String getFilepath() {
         return this.filepath;
     }
-
     public String getStatusLine() {
         return this.statusLine;
     }
@@ -32,15 +31,12 @@ public class HttpResponse {
 
         String httpResponseData;
 
-        String responseHeader = "";
-        String responseMessageBody = "";
-
         StringBuilder builder = new StringBuilder();
 
         builder.append(statusLine).append("\n");
-        builder.append(responseHeader).append("\n");
+        builder.append(generateResponseMessageHeader()).append("\n");
         builder.append("\n");
-        builder.append(responseMessageBody);
+        builder.append(generateResponseMessageBody());
 
         System.out.println("response...");
         return builder.toString();
@@ -61,20 +57,13 @@ public class HttpResponse {
     }
 
 
-    public String createMessageBody(String messageBody) {
-
-        return messageBody;
-
-    }
-
-
 
     /* Java入門実践編　p257,p263を参考に書いたコード
     * バイナリファイルを読み込んで表示するコード*/
 
-    public void binaryFileCat(String[] args) throws IOException {
+    public void binaryFileShow(String[] args) throws IOException {
         FileInputStream fis = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
-        System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します");
+        System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
         try {
             fis = new FileInputStream(this.filepath);//binaryfile読み込み
             int i = fis.read();
@@ -84,10 +73,10 @@ public class HttpResponse {
                     System.out.println(c);
                     i = fis.read();
                 }
-                System.out.println("ファイルの末尾に到達しました");
+                System.out.println("ファイルの末尾に到達しました" + "¥n");
             }
         } catch (IOException e) {
-            System.out.println("ファイルの書き込みに失敗しました");
+            System.out.println("ファイルの書き込みに失敗しました" + "¥n");
         } finally {
             if (fis != null) {
                 try {//closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
@@ -99,18 +88,6 @@ public class HttpResponse {
 
         }
     }
-
-    /* Java入門実践編　p274のサンプルコード
-    * バイナリファイルを読み込んで表示するコード
-    STEP1:ファイル出力ストリームをfosを生成
-    FIleInputStream fis = new FIleInputStream("data.txt");
-    STEP2:このストリームを下流に持つ暗号化ストリームcosを接続　フィルタ1
-    CipherInputStream cis = new CipherInputStream(fis,algo);//algoにも暗号化方式の指定が格納されているものとする
-    STEP3:さらに文字バイトからバイトに変換するストリームoswを接続
-    CipherStreamWriter osw = new InputStreamWriter(cis);
-    STEP4:oswに文字を書き込めば、バイト変換＆暗号化されファイルに流されていく
-    osw.write("AB");//これを実行すれば接続されているcosやfosのcloseも連鎖的に実行される
-    */
 
      /*
     content-typeの一覧
@@ -140,7 +117,7 @@ public class HttpResponse {
 
 
     /*
-    ファイルの拡張子を取得する　もしかしたらファイルから拡張子を推測するほうを使ったほうがいいかもしれない
+    ファイルの拡張子を取得する　もしかしたらファイルのデータの中身から拡張子を推測するほうを使ったほうがよいかも
      */
     public String findExtension() {
         int lastDotPosition = this.filepath.lastIndexOf(".");
@@ -171,7 +148,7 @@ public class HttpResponse {
     /*
     HTTP-dateを生成する
      */
-    public String getHttpDateTime() {
+    public String generateHttpDateTime() {
         SimpleDateFormat rfc1123DateFormat =
                 new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss zzz", java.util.Locale.US);
         rfc1123DateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -188,15 +165,15 @@ public class HttpResponse {
     public String generateGeneralHeader() {
 
         StringBuilder sb = new StringBuilder();
-        //sb.append("Cache-Control: " + "¥n");// cacheに関することなので今回は使用しない
-        //sb.append("Connection: " + "¥n");// 永続的接続Keep-AliveがHTTP/1.1ではデフォルトである。これを無効にしたいときにConnection: closeとする　今回は使用しない
-        sb.append("Date: " + getHttpDateTime() + "¥n");// メッセージが生成された日付・時刻を表す。ィールド値は、section 3.3.1 にて示される HTTP-date であり、RFC 1123 [8] の時刻フォーマット
-        //sb.append("Pragma: " + "¥n");// cacheに関することなので今回は使用しない
-        //sb.append("Trailer: " + "¥n");// チャンク形式で今回は送らないので無視する
-        //sb.append("Transfer-Encoding: " + "¥n");// 転送エンコーディングchunkなどを今回は使用しないので無視する
-        //sb.append("Upgrade: " + "¥n");// Upgrade 一般ヘッダは、クライアントが他にどんな通信プロトコルをサポートするかを表し、サーバがプロトコルを切り換えた方がいいと判断した場合に使わせたいものを指定させる。ex:Upgrade: HTTP/2.0, SHTTP/1.3 今回はHTTP/1.1しか想定していないため無視する
-        //sb.append("Via: " + "¥n");// proxyに関することなので今回は無視する
-        //sb.append("Warning: " + "¥n");// キャッシュの処理やメッセージのエンティティボディに適用される変化から意味的透過性が欠けている可能性がある事を警告する。今回は無視する
+        //sb.append("Cache-Control: " + "¥n");
+        //sb.append("Connection: " + "¥n");
+        sb.append("Date: " + generateHttpDateTime() + "¥n");// メッセージが生成された日付・時刻を表す。RFC 1123 の時刻フォーマット
+        //sb.append("Pragma: " + "¥n");
+        //sb.append("Trailer: " + "¥n");
+        //sb.append("Transfer-Encoding: " + "¥n");
+        //sb.append("Upgrade: " + "¥n");
+        //sb.append("Via: " + "¥n");
+        //sb.append("Warning: " + "¥n");
 
         String generalHeader = new String(sb);
         return generalHeader;
@@ -210,12 +187,16 @@ public class HttpResponse {
     public String generateResponseHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Accept-Ranges:" + "none" + "¥n");// リソースへのいかなる範囲リクエストも受け入れない
-        //sb.append("Age: " + "age-value");// Age レスポンスヘッダは、オリジンサーバがレスポンスを生成した (あるいは再検証した) 時点からの送信者の推定経過時間を示す。キャッシュエントリが新鮮かどうかを知るために、キャッシュは経過時間が その有効期間を超えているかどうかを知る必要がある。
-        sb.append("hoge" + "¥n");
-        sb.append("Server: " + "sakura818uuu" + "¥n");// Serverレスポンスヘッダフィールドは、リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
-        sb.append("hoge" + "¥n");
-        sb.append("hoge" + "¥n");
+        //sb.append("Accept-Ranges:" + "none" + "¥n");
+        //sb.append("Age: " + "¥n");
+        //sb.append("ETag: " + "¥n");
+        //sb.append("Location: " + "¥n");
+        //sb.append("Proxy-Authenticate: " + "¥n");
+        //sb.append("Retry-After:" + "¥n");// 503(Service Unavailable) レスポンスと共に使われる。
+        sb.append("Server: " + "sakura818uuu" + "¥n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
+        //sb.append("Vary: " + "¥n");
+        //sb.append("WWW-Authenticate: " + "¥n");
+
 
         String responseHeader = new String(sb);
         return responseHeader;
@@ -228,9 +209,16 @@ public class HttpResponse {
     public String generateEntityHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(extensionToContentType() + "¥n");
-        sb.append("def" + "¥n");
-        sb.append("ghi" + "¥n");
+        sb.append("Allow: " + "GET, HEAD" + "¥n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
+        //sb.append("Content-Encoding: " + "¥n");
+        sb.append("Content-Language: " + "ja, en" + "¥n");
+        sb.append("Content-Length: " + "3495" + "¥n");// entity body size
+        //sb.append("Content-Location:" + "¥n");
+        //sb.append("Content-MD5: " + "¥n");
+        //sb.append("Content-Range: " + "¥n");
+        sb.append("Content-Type: " + extensionToContentType() + "¥n");
+        //sb.append("Expires: " + "¥n");
+        //sb.append("Last-Modified: " + "¥n");
 
         String entityHeader = new String(sb);
         return entityHeader;
@@ -249,8 +237,20 @@ public class HttpResponse {
         sb.append(generateResponseHeader() + "¥n");
         sb.append(generateEntityHeader() + "¥n");
 
-        String str = new String(sb);
-        return str;
+        String responseMessageHeader = new String(sb);
+        return responseMessageHeader;
+    }
+
+
+
+    /*
+    ResponseMessageBodyを生成する
+     */
+
+    public String generateResponseMessageBody() {
+
+        return "messageBody";
+
     }
 
 

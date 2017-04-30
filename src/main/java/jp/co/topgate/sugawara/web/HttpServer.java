@@ -22,13 +22,13 @@ public class HttpServer {
 
 
     public void connection() throws IOException {
-        System.out.println("start up http server http://localhost:" + HttpServer.PORT);
+        System.out.println("start up http server http://localhost:" + HttpServer.PORT + "¥n");
         try {
             this.serverSocket = new ServerSocket(HttpServer.PORT);
             while (true) {
 
                 this.socket = this.serverSocket.accept();
-                System.out.println("request incoming");
+                System.out.println("request incoming" + "¥n");
 
                 /*
                 クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringなどの文字列に変換して操作する
@@ -50,7 +50,7 @@ public class HttpServer {
 
             }
         } catch (IOException e) {
-            System.out.println("正常にコネクションできないエラーが発生しました");
+            System.out.println("正常にコネクションできないエラーが発生しました" + "¥n");
         } finally {
             try {
                 this.socket.close();
