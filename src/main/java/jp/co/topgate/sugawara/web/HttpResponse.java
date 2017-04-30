@@ -24,17 +24,16 @@ public class HttpResponse {
     public String getFilepath() {
         return this.filepath;
     }
+
     public String getStatusLine() {
         return this.statusLine;
     }
 
     /**
      * レスポンスの部品を集めて組み立て生成
-     *
-     *
      */
 
-    public void httpResponseGenerate()throws IOException{
+    public void httpResponseGenerate() throws IOException {
 
         String httpResponseData;
 
@@ -51,8 +50,6 @@ public class HttpResponse {
 
     /**
      * ファイルの存在有無を確認し、ステータスコードを返す。
-     *
-     *
      */
 
     public String fileExistsStatusLine() throws IOException, URISyntaxException {
@@ -74,10 +71,10 @@ public class HttpResponse {
     * バイナリファイルを読み込んで表示するコード*/
 
     public void binaryFileShow(String[] args) throws IOException {
-        FileInputStream fis = null;//tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
+        FileInputStream fis = null;// tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
         System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
         try {
-            fis = new FileInputStream(this.filepath);//binaryfile読み込み
+            fis = new FileInputStream(this.filepath);// binaryfile読み込み
             int i = fis.read();
             {
                 while (i != -1) {
@@ -91,8 +88,8 @@ public class HttpResponse {
             System.out.println("ファイルの書き込みに失敗しました" + "¥n");
         } finally {
             if (fis != null) {
-                try {//closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
-                    fis.close();//必ずcloseされることが保証されなければならないためfinallyブロックに記述する
+                try {// closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
+                    fis.close();// 必ずcloseされることが保証されなければならないためfinallyブロックに記述する
                 } catch (IOException e2) {
                 }
 
@@ -103,8 +100,6 @@ public class HttpResponse {
 
     /**
      * content-typeの一覧のmap
-     *
-     *
      */
 
     public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
@@ -132,8 +127,6 @@ public class HttpResponse {
 
     /**
      * ファイルの拡張子を取得する。TODO:ファイルのデータの中身から拡張子を推測するほうがよさそう
-     *
-     *
      */
 
     public String findExtension() {
@@ -148,8 +141,6 @@ public class HttpResponse {
 
     /**
      * entityheaderに使われるcontent-type行を生成
-     *
-     *
      */
     public String extensionToContentType() {
 
@@ -166,7 +157,6 @@ public class HttpResponse {
     /**
      * generalheaderに使われるメッセージが生成された日付・時刻を表すDate行を生成
      * RFC 1123 の時刻フォーマット
-     *
      */
     public String generateHttpDateTime() {
         SimpleDateFormat HttpDateFormat =
@@ -180,22 +170,20 @@ public class HttpResponse {
 
     /**
      * generalheaderの部品を集めて組み立て生成
-     *
-     *
      */
 
     public String generateGeneralHeader() {
 
         StringBuilder sb = new StringBuilder();
-        //sb.append("Cache-Control: " ).append("\n");
-        //sb.append("Connection: " ).append("\n");
+        // sb.append("Cache-Control: " ).append("\n");
+        // sb.append("Connection: " ).append("\n");
         sb.append("Date: " + generateHttpDateTime()).append("\n");
-        //sb.append("Pragma: " ).append("\n");
-        //sb.append("Trailer: " ).append("\n");
-        //sb.append("Transfer-Encoding: " ).append("\n");
-        //sb.append("Upgrade: " ).append("\n");
-        //sb.append("Via: " ).append("\n");
-        //sb.append("Warning: " ).append("\n");
+        // sb.append("Pragma: " ).append("\n");
+        // sb.append("Trailer: " ).append("\n");
+        // sb.append("Transfer-Encoding: " ).append("\n");
+        // sb.append("Upgrade: " ).append("\n");
+        // sb.append("Via: " ).append("\n");
+        // sb.append("Warning: " ).append("\n");
 
         String generalHeader = new String(sb);
         return generalHeader;
@@ -204,22 +192,20 @@ public class HttpResponse {
 
     /**
      * responseheaderの部品を集めて組み立て生成
-     *
-     *
      */
 
     public String generateResponseHeader() {
 
         StringBuilder sb = new StringBuilder();
-        //sb.append("Accept-Ranges:" + "none" ).append("\n");
-        //sb.append("Age: " ).append("\n");
-        //sb.append("ETag: " ).append("\n");
-        //sb.append("Location: " ).append("\n");
-        //sb.append("Proxy-Authenticate: " ).append("\n");
-        //sb.append("Retry-After:" ).append("\n");// 503(Service Unavailable) レスポンスと共に使われる。
-        sb.append("Server: " + "sakura818uuu").append("\n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
-        //sb.append("Vary: " ).append("\n");
-        //sb.append("WWW-Authenticate: " ).append("\n");
+        // sb.append("Accept-Ranges:" + "none" ).append("\n");
+        // sb.append("Age: " ).append("\n");
+        // sb.append("ETag: " ).append("\n");
+        // sb.append("Location: " ).append("\n");
+        // sb.append("Proxy-Authenticate: " ).append("\n");
+        // sb.append("Retry-After:" ).append("\n");
+        sb.append("Server: " + "sakura818uuu").append("\n");
+        // sb.append("Vary: " ).append("\n");
+        // sb.append("WWW-Authenticate: " ).append("\n");
 
 
         String responseHeader = new String(sb);
@@ -228,23 +214,21 @@ public class HttpResponse {
 
     /**
      * entityheaderの部品を集めて組み立て生成
-     *
-     *
      */
 
     public String generateEntityHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Allow: " + "GET, HEAD").append("\n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
-        //sb.append("Content-Encoding: " ).append("\n");
+        sb.append("Allow: " + "GET, HEAD").append("\n");
+        // sb.append("Content-Encoding: " ).append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
-        sb.append("Content-Length: " + "3495").append("\n");// entity body size
-        //sb.append("Content-Location:" ).append("\n");
-        //sb.append("Content-MD5: " ).append("\n");
-        //sb.append("Content-Range: ).append("\n");
+        sb.append("Content-Length: " + "3495").append("\n");// TODO: Content-Lengthを計算するメソッドを作成して呼び出す
+        // sb.append("Content-Location:" ).append("\n");
+        // sb.append("Content-MD5: " ).append("\n");
+        // sb.append("Content-Range: ).append("\n");
         sb.append("Content-Type: " + extensionToContentType()).append("\n");
-        //sb.append("Expires: " ).append("\n");
-        //sb.append("Last-Modified: " ).append("\n");
+        // sb.append("Expires: " ).append("\n");
+        // sb.append("Last-Modified: " ).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;
@@ -253,7 +237,6 @@ public class HttpResponse {
     /**
      * ResponseMessageHeaderを生成
      * ResponseMessageHeader = generalHeader + responseHeader + entityHeader
-     *
      */
 
     public String generateResponseMessageHeader() {
@@ -268,11 +251,8 @@ public class HttpResponse {
     }
 
 
-
     /**
      * ResponseMessageBodyを生成
-     *
-     *
      */
     public String generateResponseMessageBody() {
 

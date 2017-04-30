@@ -72,26 +72,22 @@ public class HttpRequest {
         return this.requestMessageBody;
     }
 
-
-    /*
-    改行文字を区切り文字としてリクエストを分割する
+    /**
+     * 改行文字を区切り文字としてリクエストを4つに分割する
      */
-
     public String[] reqDataDivide() throws IOException {
-        //requestData.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
         String reqDelimiterDivide[] = requestData.toString().split("\\r?\\n");// mac,windows crlf　
 
-        this.requestLine = reqDelimiterDivide[0];//　1つめの改行終端文字までを変数reqheaderにいれる処理
-        this.requestHeader = reqDelimiterDivide[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
-        this.emptyLine = reqDelimiterDivide[2];//　3つめの改行終端文字までを変数emptylineにいれる処理
-        this.requestMessageBody = reqDelimiterDivide[3];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
-        //System.out.println(reqDelimiterDivide);
+        this.requestLine = reqDelimiterDivide[0];
+        this.requestHeader = reqDelimiterDivide[1];
+        this.emptyLine = reqDelimiterDivide[2];
+        this.requestMessageBody = reqDelimiterDivide[3];
 
         return reqDelimiterDivide;
     }
 
-    /*
-    空白文字を区切り文字としてリクエストuriを分割する
+    /**
+     * 空白文字を区切り文字としてrequestLineを3つに分割する
      */
 
     public String[] requestLineDivide() {
@@ -105,52 +101,29 @@ public class HttpRequest {
     }
 
 
-    /*
-    もし、Request-URI に "% HEX HEX" エンコード [42] が使用されていたら、オリジンサーバはそのリクエストを適切に解釈するためにその
-    Request-URI をデコードし*なければならない*。
+    /**
+     * Request-URI に "% HEX HEX" エンコードが使用されていたらデコードする
      */
     private String requestUriDecode(String requestUri) throws UnsupportedEncodingException {
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
         return decodeUri;
     }
 
-    /*
-    Request-URIからパス名を抜き出す
+    /**
+     * Request-URIからパス名を抜き出す
      */
     private String requestUriPath(String decodeUri) throws URISyntaxException {
         URI uriPath = new URI(decodeUri);
         return uriPath.getPath();
     }
 
-    /*
-    Request-URIをdecodeしてパス名抜き出す
+    /**
+     * dexodeされたRequest-URIからパス名を抜き出す
      */
     public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
         String decodeUri = requestUriDecode(requestUri);
         return requestUriPath(decodeUri);
     }
-
-    /*
-    header content typeの処理
-
-
-    public String contentTypeFind() throws IOException {// rename
-        String decodeUri = URLConnection.guessContentTypeFromStream();
-
-        return contentType;
-    }
-    */
-
-    /*
-    content lengthの処理
-
-
-    public String contentTypeFind() throws IOException {// rename
-        String decodeUri = URLConnection.guessContentTypeFromStream();
-
-        return contentType;
-    }
-    */
 
 
 }

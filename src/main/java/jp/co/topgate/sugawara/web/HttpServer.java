@@ -34,31 +34,11 @@ public class HttpServer {
                 this.socket = serverSocket.accept();
                 System.out.println("request incoming");
 
-                /*
-                クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringに変換して操作する
+                /**
+                 * Requestの処理
+                 * クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringに変換して操作する
+                 *
                  */
-                // Request
-                /*
-                InputStream is = this.socket.getInputStream();// データを読み込んで
-                BufferedInputStream bis = new BufferedInputStream(is);// データをバッファリングしながらバイト列でもってきて
-                BufferedReader br = new BufferedReader(new InputStreamReader(bis));// バイト列をStringに変換
-                System.out.println(br);// Stringに変換されたリクエストデータを出力
-                */
-                /*
-
-
-                br = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
-                String str;
-                while (!(str = br.readLine()).equals("")) {
-                    System.out.println(str);
-                }
-                */
-                /*
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(InputStream is, "UTF-8"));
-                String str = br.readLine();
-                */
                 System.out.println("request...");
                 InputStream is = this.socket.getInputStream();
                 BufferedInputStream bis = new BufferedInputStream(is);
@@ -67,34 +47,21 @@ public class HttpServer {
                 while (!(request = br.readLine()).equals("")) {
                     System.out.println(request);
                 }
+                System.out.println("---------------------------------------");
 
 
-                /*
-                InputStreamReader isr = this.socket.getInputStream();
-                BufferedReader br = new BufferedInputStream(isr);
-                String str;
-                while (!(str = br.readLine()).equals("")) {
-                    System.out.println(str);
-                }
-                */
-
-
-                // HttpRequest honya = new HttpRequest();
-                // honya.reqDataDivide();
-
-
-                // Response
+                /**
+                 * Responseの処理
+                 * クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringに変換して操作する
+                 *
+                 */
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();// HttpResponse.javaからメソッドを呼び出し
-                System.out.println("yagi");// Stringのレスポンスデータを出力
+
                 httpResponse.httpResponseGenerate();
-                //　// Stringをバイト列に変換するコード
-                //BufferedOutputStream bos = new BufferedOutputStream();  // データをバッファリングしながらバイト列でもっていって
-                //OutputStream os = this.socket.getOutputStream(bos);  // データを出力
-
-                 //HttpRequest honya = new HttpRequest();
-                //honya.reqDataDivide();
-
+                // Stringをバイト列に変換するコード
+                // BufferedOutputStream bos = new BufferedOutputStream();  // データをバッファリングしながらバイト列でもっていって
+                // OutputStream os = this.socket.getOutputStream(bos);  // データを出力
 
             }
         } catch (IOException e) {
