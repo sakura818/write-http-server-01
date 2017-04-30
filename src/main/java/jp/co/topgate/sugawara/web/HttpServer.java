@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HttpServer {
 
-    private static final int PORT = 80;// Httpサーバでは一般的にポート番号として80番もしくは8080番を仕様する
+    private static final int PORT = 80;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
     private ServerSocket serverSocket;
     private Socket socket;
     private BufferedReader br;
@@ -22,35 +22,35 @@ public class HttpServer {
 
 
     public void connection() throws IOException {
-        System.out.println("start up http server http://localhost:" + HttpServer.PORT + "¥n");
+        System.out.println("start up http server http://localhost:" + this.PORT);
         try {
-            this.serverSocket = new ServerSocket(HttpServer.PORT);
+            this.serverSocket = new ServerSocket(this.PORT);
             while (true) {
 
                 this.socket = this.serverSocket.accept();
-                System.out.println("request incoming" + "¥n");
+                System.out.println("request incoming");
 
                 /*
-                クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringなどの文字列に変換して操作する
+                クライアントとの入出力の時点ではバイト列として扱い、内部処理ではStringに変換して操作する
                  */
                 // Request
                 InputStream is = this.socket.getInputStream();// データを読み込んで
                 BufferedInputStream bis = new BufferedInputStream(is);// データをバッファリングしながらバイト列でもってきて
-                BufferedReader br = new BufferedReader(new InputStreamReader(bis));// バイト列をStringに変換して
-                System.out.println(br);// Stringに変換されたリクエストデータを出力します
+                BufferedReader br = new BufferedReader(new InputStreamReader(bis));// バイト列をStringに変換
+                System.out.println(br);// Stringに変換されたリクエストデータを出力
 
 
                 // Response
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();// HttpResponse.javaからメソッドを呼び出して
-                System.out.println();// Stringのレスポンスデータを出力します
+                HttpResponse httpResponse = new HttpResponse();// HttpResponse.javaからメソッドを呼び出し
+                System.out.println("yagi");// Stringのレスポンスデータを出力
                 //　// Stringをバイト列に変換するコード
                 //BufferedOutputStream bos = new BufferedOutputStream();  // データをバッファリングしながらバイト列でもっていって
-                //OutputStream os = this.socket.getOutputStream(bos);  // データを出力する
+                //OutputStream os = this.socket.getOutputStream(bos);  // データを出力
 
             }
         } catch (IOException e) {
-            System.out.println("正常にコネクションできないエラーが発生しました" + "¥n");
+            System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
             try {
                 this.socket.close();
