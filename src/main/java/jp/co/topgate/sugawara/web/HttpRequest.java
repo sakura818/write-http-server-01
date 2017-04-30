@@ -7,8 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -48,13 +46,6 @@ public class HttpRequest {
         return this.requestUri;
     }
 
-    /*
-    HTTPVersionの処理 getter
-     */
-
-    public String getHttpVersion() {
-        return this.httpVersion;
-    }
 
     /*
     requestHeaderの処理 getter
@@ -73,36 +64,38 @@ public class HttpRequest {
     }
 
     /**
-     * 改行文字を区切り文字としてリクエストを4つに分割する
+     * 改行文字を区切り文字としてrequestを4つに分割する
+     * request = requestLine + requestHeader + (emptyLine) + requestMessageBody
      */
-    public String[] reqDataDivide() throws IOException {
-        String reqDelimiterDivide[] = requestData.toString().split("\\r?\\n");// mac,windows crlf　
+    public String[] requestDataDivide() throws IOException {
+        String requestDelimiterDivide[] = requestData.toString().split("\\r?\\n");// mac,windows crlf　
 
-        this.requestLine = reqDelimiterDivide[0];
-        this.requestHeader = reqDelimiterDivide[1];
-        this.emptyLine = reqDelimiterDivide[2];
-        this.requestMessageBody = reqDelimiterDivide[3];
+        this.requestLine = requestDelimiterDivide[0];
+        this.requestHeader = requestDelimiterDivide[1];
+        this.emptyLine = requestDelimiterDivide[2];
+        this.requestMessageBody = requestDelimiterDivide[3];
 
-        return reqDelimiterDivide;
+        return requestDelimiterDivide;
     }
 
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
+     * requestLine = method + requestUri + httpVersion
      */
 
     public String[] requestLineDivide() {
 
-        String reqUriDelimiterDivide[] = requestLine.split("\\s");
+        String requestUriDelimiterDivide[] = requestLine.split("\\s");
 
-        this.method = reqUriDelimiterDivide[0];//　1つめの空白文字までを変数reqlineにいれる処理
-        this.requestUri = reqUriDelimiterDivide[1];//　2つめの空白文字までを変数reqlineにいれる処理
-        this.httpVersion = reqUriDelimiterDivide[2];//　3つめの空白文字までを変数reqlineにいれる処理
-        return reqUriDelimiterDivide;
+        this.method = requestUriDelimiterDivide[0];
+        this.requestUri = requestUriDelimiterDivide[1];
+        this.httpVersion = requestUriDelimiterDivide[2];
+        return requestUriDelimiterDivide;
     }
 
 
     /**
-     * Request-URI に "% HEX HEX" エンコードが使用されていたらデコードする
+     * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
      */
     private String requestUriDecode(String requestUri) throws UnsupportedEncodingException {
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
@@ -110,15 +103,16 @@ public class HttpRequest {
     }
 
     /**
-     * Request-URIからパス名を抜き出す
+     * requestUriからパス名を抜き出す
      */
-    private String requestUriPath(String decodeUri) throws URISyntaxException {
-        URI uriPath = new URI(decodeUri);
-        return uriPath.getPath();
+    public String requestUriPath(String decodeUri) throws URISyntaxException {
+        URI requestUriPath = new URI(decodeUri);
+        return requestUriPath.getPath();
     }
+    
 
     /**
-     * dexodeされたRequest-URIからパス名を抜き出す
+     * decodeされたrequestUriからパス名を抜き出す
      */
     public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
         String decodeUri = requestUriDecode(requestUri);

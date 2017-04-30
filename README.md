@@ -26,7 +26,6 @@ HTTPサーバ
 ## Anything Else
 
 ポートは8080番を使用しています。
-write-http-server-01/src/main/java/Documentに表示できるデータが入っています。
 HTTP/1.1しか想定していないためHTTP/1.0やHTTP/2には応答しない可能性があります。
 簡易的な機能しかありません。
 

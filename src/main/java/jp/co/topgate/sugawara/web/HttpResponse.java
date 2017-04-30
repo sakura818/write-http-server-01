@@ -203,7 +203,7 @@ public class HttpResponse {
         // sb.append("Location: " ).append("\n");
         // sb.append("Proxy-Authenticate: " ).append("\n");
         // sb.append("Retry-After:" ).append("\n");
-        sb.append("Server: " + "sakura818uuu").append("\n");
+        sb.append("Server: " + "sakura818").append("\n");
         // sb.append("Vary: " ).append("\n");
         // sb.append("WWW-Authenticate: " ).append("\n");
 
