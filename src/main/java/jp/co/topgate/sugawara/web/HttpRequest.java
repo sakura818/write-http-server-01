@@ -27,7 +27,7 @@ public class HttpRequest {
 
 
     HttpServer httpServer = new HttpServer();
-    BufferedReader reqdata = httpServer.getReqdata();// rename
+    String requestData = httpServer.getRequest();// rename
 
     /*
     methodの処理 getter
@@ -75,13 +75,14 @@ public class HttpRequest {
      */
 
     public String[] reqDataDivide() throws IOException {
-        reqdata.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
-        String reqDelimiterDivide[] = reqdata.toString().split("\\r?\\n");// mac,windows crlf　
+        //requestData.readLine();// 文字ストリームから改行終端文字を読み取るのがreadLineメソッド
+        String reqDelimiterDivide[] = requestData.toString().split("\\r?\\n");// mac,windows crlf　
 
         this.requestLine = reqDelimiterDivide[0];//　1つめの改行終端文字までを変数reqheaderにいれる処理
         this.requestHeader = reqDelimiterDivide[1];//　2つめの改行終端文字までを変数reqheaderにいれる処理
         this.emptyLine = reqDelimiterDivide[2];//　3つめの改行終端文字までを変数emptylineにいれる処理
         this.requestMessageBody = reqDelimiterDivide[3];//　4つめの改行終端文字までを変数reqmessagebodyにいれる処理
+        //System.out.println(reqDelimiterDivide);
 
         return reqDelimiterDivide;
     }

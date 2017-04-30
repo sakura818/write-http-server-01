@@ -12,13 +12,13 @@ import java.io.InputStreamReader;
  */
 public class HttpServer {
 
-    private static final int PORT = 8081;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
+    private static final int PORT = 8082;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
     private ServerSocket serverSocket = null;
     private Socket socket = null;
-    private BufferedReader br;
+    private String request;
 
-    public BufferedReader getReqdata() {
-        return this.br;
+    public String getRequest() {
+        return this.request;
     }
 
 
@@ -76,15 +76,29 @@ public class HttpServer {
                 }
                 */
 
+                /*
+                /tmp
+
+
+                 */
+
+                // HttpRequest honya = new HttpRequest();
+                // honya.reqDataDivide();
 
 
                 // Response
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();// HttpResponse.javaからメソッドを呼び出し
                 System.out.println("yagi");// Stringのレスポンスデータを出力
+                httpResponse.neko();
+                httpResponse.httpResponseGenerate();
                 //　// Stringをバイト列に変換するコード
                 //BufferedOutputStream bos = new BufferedOutputStream();  // データをバッファリングしながらバイト列でもっていって
                 //OutputStream os = this.socket.getOutputStream(bos);  // データを出力
+
+                 //HttpRequest honya = new HttpRequest();
+                //honya.reqDataDivide();
+
 
             }
         } catch (IOException e) {

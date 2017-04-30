@@ -26,20 +26,24 @@ public class HttpResponse {
         return this.statusLine;
     }
 
+    public void neko(){
+        System.out.println("nekoneko");
+    }
 
-    public String httpResponseGenerate() {
+
+    public void httpResponseGenerate() {
 
         String httpResponseData;
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(statusLine).append("\n");
+        builder.append("statusLine").append("\n");
         builder.append(generateResponseMessageHeader()).append("\n");
         builder.append("\n");
         builder.append(generateResponseMessageBody());
 
         System.out.println("response...");
-        return builder.toString();
+        System.out.println(builder.toString());
 
     }
 
@@ -167,7 +171,7 @@ public class HttpResponse {
         StringBuilder sb = new StringBuilder();
         //sb.append("Cache-Control: " + "¥n");
         //sb.append("Connection: " + "¥n");
-        sb.append("Date: " + generateHttpDateTime() + "¥n");// メッセージが生成された日付・時刻を表す。RFC 1123 の時刻フォーマット
+        sb.append("Date: " + generateHttpDateTime()).append("\n");// メッセージが生成された日付・時刻を表す。RFC 1123 の時刻フォーマット
         //sb.append("Pragma: " + "¥n");
         //sb.append("Trailer: " + "¥n");
         //sb.append("Transfer-Encoding: " + "¥n");
@@ -193,7 +197,7 @@ public class HttpResponse {
         //sb.append("Location: " + "¥n");
         //sb.append("Proxy-Authenticate: " + "¥n");
         //sb.append("Retry-After:" + "¥n");// 503(Service Unavailable) レスポンスと共に使われる。
-        sb.append("Server: " + "sakura818uuu" + "¥n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
+        sb.append("Server: " + "sakura818uuu" ).append("\n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
         //sb.append("Vary: " + "¥n");
         //sb.append("WWW-Authenticate: " + "¥n");
 
@@ -209,14 +213,14 @@ public class HttpResponse {
     public String generateEntityHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Allow: " + "GET, HEAD" + "¥n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
+        sb.append("Allow: " + "GET, HEAD" ).append("\n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
         //sb.append("Content-Encoding: " + "¥n");
-        sb.append("Content-Language: " + "ja, en" + "¥n");
-        sb.append("Content-Length: " + "3495" + "¥n");// entity body size
+        sb.append("Content-Language: " + "ja, en" ).append("\n");
+        sb.append("Content-Length: " + "3495" ).append("\n");// entity body size
         //sb.append("Content-Location:" + "¥n");
         //sb.append("Content-MD5: " + "¥n");
         //sb.append("Content-Range: " + "¥n");
-        sb.append("Content-Type: " + extensionToContentType() + "¥n");
+        sb.append("Content-Type: " + extensionToContentType() ).append("\n");
         //sb.append("Expires: " + "¥n");
         //sb.append("Last-Modified: " + "¥n");
 
@@ -233,9 +237,9 @@ public class HttpResponse {
     public String generateResponseMessageHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(generateGeneralHeader() + "¥n");
-        sb.append(generateResponseHeader() + "¥n");
-        sb.append(generateEntityHeader() + "¥n");
+        sb.append(generateGeneralHeader() ).append("\n");
+        sb.append(generateResponseHeader()).append("\n");
+        sb.append(generateEntityHeader() ).append("\n");
 
         String responseMessageHeader = new String(sb);
         return responseMessageHeader;
@@ -249,7 +253,7 @@ public class HttpResponse {
 
     public String generateResponseMessageBody() {
 
-        return "messageBody";
+        return "responseMessageBody";
 
     }
 
