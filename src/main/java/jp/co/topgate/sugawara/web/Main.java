@@ -3,7 +3,9 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 
 /**
- * Created by haruka.sugawara on 2017/04/18.
+ * Main class
+ * HttpServer classを呼び出す
+ * @author sakura818
  */
 public class Main {
 

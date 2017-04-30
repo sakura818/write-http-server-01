@@ -9,7 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by haruka.sugawara on 2017/04/13.
+ * HttpResponse class
+ * レスポンスを生成する
+ *
+ * @author sakura818
  */
 public class HttpResponse {
 
@@ -18,7 +21,6 @@ public class HttpResponse {
     private String statusLine;
     private String extension;
 
-
     public String getFilepath() {
         return this.filepath;
     }
@@ -26,26 +28,32 @@ public class HttpResponse {
         return this.statusLine;
     }
 
-    public void neko(){
-        System.out.println("nekoneko");
-    }
+    /**
+     * レスポンスの部品を集めて組み立て生成
+     *
+     *
+     */
 
-
-    public void httpResponseGenerate() {
+    public void httpResponseGenerate()throws IOException{
 
         String httpResponseData;
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-        builder.append("statusLine").append("\n");
-        builder.append(generateResponseMessageHeader()).append("\n");
-        builder.append("\n");
-        builder.append(generateResponseMessageBody());
+        sb.append("fileExistsStatusLine").append("\n");
+        sb.append(generateResponseMessageHeader()).append("\n");
+        sb.append(generateResponseMessageBody());
 
         System.out.println("response...");
-        System.out.println(builder.toString());
+        System.out.println(sb.toString());
 
     }
+
+    /**
+     * ファイルの存在有無を確認し、ステータスコードを返す。
+     *
+     *
+     */
 
     public String fileExistsStatusLine() throws IOException, URISyntaxException {
         HttpRequest requestPath = new HttpRequest();
@@ -93,8 +101,10 @@ public class HttpResponse {
         }
     }
 
-     /*
-    content-typeの一覧
+    /**
+     * content-typeの一覧のmap
+     *
+     *
      */
 
     public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
@@ -120,9 +130,12 @@ public class HttpResponse {
     };
 
 
-    /*
-    ファイルの拡張子を取得する　もしかしたらファイルのデータの中身から拡張子を推測するほうを使ったほうがよいかも
+    /**
+     * ファイルの拡張子を取得する。TODO:ファイルのデータの中身から拡張子を推測するほうがよさそう
+     *
+     *
      */
+
     public String findExtension() {
         int lastDotPosition = this.filepath.lastIndexOf(".");
         if (lastDotPosition != -1) {
@@ -133,15 +146,16 @@ public class HttpResponse {
         }
     }
 
-    /*
-    ContentTypeを生成する
+    /**
+     * entityheaderに使われるcontent-type行を生成
+     *
+     *
      */
-
     public String extensionToContentType() {
 
         if (CONTENT_TYPE.containsKey(extension)) {
-            System.out.print("extensionのContent-Typeは");
-            System.out.println(CONTENT_TYPE.get(extension));
+            //System.out.print("extensionのContent-Typeは");
+            //System.out.println(CONTENT_TYPE.get(extension));
             return "ContentType: " + CONTENT_TYPE.get(extension);
         } else {
             return "指定したCONTENT_TYPEのキーは存在しません";
@@ -149,97 +163,105 @@ public class HttpResponse {
 
     }
 
-    /*
-    HTTP-dateを生成する
+    /**
+     * generalheaderに使われるメッセージが生成された日付・時刻を表すDate行を生成
+     * RFC 1123 の時刻フォーマット
+     *
      */
     public String generateHttpDateTime() {
-        SimpleDateFormat rfc1123DateFormat =
+        SimpleDateFormat HttpDateFormat =
                 new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss zzz", java.util.Locale.US);
-        rfc1123DateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        HttpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         Date httpDateTime = Calendar.getInstance().getTime();
-        return rfc1123DateFormat.format(httpDateTime);
+        return HttpDateFormat.format(httpDateTime);
     }
 
 
-    /*
-    generalHeaderを生成する
+    /**
+     * generalheaderの部品を集めて組み立て生成
+     *
+     *
      */
 
     public String generateGeneralHeader() {
 
         StringBuilder sb = new StringBuilder();
-        //sb.append("Cache-Control: " + "¥n");
-        //sb.append("Connection: " + "¥n");
-        sb.append("Date: " + generateHttpDateTime()).append("\n");// メッセージが生成された日付・時刻を表す。RFC 1123 の時刻フォーマット
-        //sb.append("Pragma: " + "¥n");
-        //sb.append("Trailer: " + "¥n");
-        //sb.append("Transfer-Encoding: " + "¥n");
-        //sb.append("Upgrade: " + "¥n");
-        //sb.append("Via: " + "¥n");
-        //sb.append("Warning: " + "¥n");
+        //sb.append("Cache-Control: " ).append("\n");
+        //sb.append("Connection: " ).append("\n");
+        sb.append("Date: " + generateHttpDateTime()).append("\n");
+        //sb.append("Pragma: " ).append("\n");
+        //sb.append("Trailer: " ).append("\n");
+        //sb.append("Transfer-Encoding: " ).append("\n");
+        //sb.append("Upgrade: " ).append("\n");
+        //sb.append("Via: " ).append("\n");
+        //sb.append("Warning: " ).append("\n");
 
         String generalHeader = new String(sb);
         return generalHeader;
     }
 
 
-    /*
-    responseHeaderを生成する
+    /**
+     * responseheaderの部品を集めて組み立て生成
+     *
+     *
      */
 
     public String generateResponseHeader() {
 
         StringBuilder sb = new StringBuilder();
-        //sb.append("Accept-Ranges:" + "none" + "¥n");
-        //sb.append("Age: " + "¥n");
-        //sb.append("ETag: " + "¥n");
-        //sb.append("Location: " + "¥n");
-        //sb.append("Proxy-Authenticate: " + "¥n");
-        //sb.append("Retry-After:" + "¥n");// 503(Service Unavailable) レスポンスと共に使われる。
-        sb.append("Server: " + "sakura818uuu" ).append("\n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
-        //sb.append("Vary: " + "¥n");
-        //sb.append("WWW-Authenticate: " + "¥n");
+        //sb.append("Accept-Ranges:" + "none" ).append("\n");
+        //sb.append("Age: " ).append("\n");
+        //sb.append("ETag: " ).append("\n");
+        //sb.append("Location: " ).append("\n");
+        //sb.append("Proxy-Authenticate: " ).append("\n");
+        //sb.append("Retry-After:" ).append("\n");// 503(Service Unavailable) レスポンスと共に使われる。
+        sb.append("Server: " + "sakura818uuu").append("\n");// リクエストを処理するオリジンサーバが使っているソフトウェアについての情報を含んでいる。ex:Server: Apache[Ver]
+        //sb.append("Vary: " ).append("\n");
+        //sb.append("WWW-Authenticate: " ).append("\n");
 
 
         String responseHeader = new String(sb);
         return responseHeader;
     }
 
-    /*
-    entityHeaderを生成する
+    /**
+     * entityheaderの部品を集めて組み立て生成
+     *
+     *
      */
 
     public String generateEntityHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Allow: " + "GET, HEAD" ).append("\n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
-        //sb.append("Content-Encoding: " + "¥n");
-        sb.append("Content-Language: " + "ja, en" ).append("\n");
-        sb.append("Content-Length: " + "3495" ).append("\n");// entity body size
-        //sb.append("Content-Location:" + "¥n");
-        //sb.append("Content-MD5: " + "¥n");
-        //sb.append("Content-Range: " + "¥n");
-        sb.append("Content-Type: " + extensionToContentType() ).append("\n");
-        //sb.append("Expires: " + "¥n");
-        //sb.append("Last-Modified: " + "¥n");
+        sb.append("Allow: " + "GET, HEAD").append("\n");// Request-URI によって識別されるリソースがサポートするメソッドの一覧
+        //sb.append("Content-Encoding: " ).append("\n");
+        sb.append("Content-Language: " + "ja, en").append("\n");
+        sb.append("Content-Length: " + "3495").append("\n");// entity body size
+        //sb.append("Content-Location:" ).append("\n");
+        //sb.append("Content-MD5: " ).append("\n");
+        //sb.append("Content-Range: ).append("\n");
+        sb.append("Content-Type: " + extensionToContentType()).append("\n");
+        //sb.append("Expires: " ).append("\n");
+        //sb.append("Last-Modified: " ).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;
     }
 
-
-    /*
-    ResponseMessageHeaderを生成する
-    ResponseMessageHeader = generalHeader + responseHeader + entityHeader
+    /**
+     * ResponseMessageHeaderを生成
+     * ResponseMessageHeader = generalHeader + responseHeader + entityHeader
+     *
      */
 
     public String generateResponseMessageHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(generateGeneralHeader() ).append("\n");
-        sb.append(generateResponseHeader()).append("\n");
-        sb.append(generateEntityHeader() ).append("\n");
+        sb.append(generateGeneralHeader());
+        sb.append(generateResponseHeader());
+        sb.append(generateEntityHeader());
 
         String responseMessageHeader = new String(sb);
         return responseMessageHeader;
@@ -247,10 +269,11 @@ public class HttpResponse {
 
 
 
-    /*
-    ResponseMessageBodyを生成する
+    /**
+     * ResponseMessageBodyを生成
+     *
+     *
      */
-
     public String generateResponseMessageBody() {
 
         return "responseMessageBody";

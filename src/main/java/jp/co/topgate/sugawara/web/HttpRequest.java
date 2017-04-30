@@ -12,7 +12,10 @@ import java.util.Map;
 
 
 /**
- * Created by haruka.sugawara on 2017/04/13.
+ * HttpRequest class
+ * リクエストを分解する
+ *
+ * @author sakura818
  */
 public class HttpRequest {
 
