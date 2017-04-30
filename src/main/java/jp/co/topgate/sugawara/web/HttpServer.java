@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class HttpServer {
 
-    private static final int PORT = 80;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
-    private ServerSocket serverSocket;
-    private Socket socket;
+    private static final int PORT = 8080;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
+    private ServerSocket serverSocket = null;
+    private Socket socket = null;
     private BufferedReader br;
 
     public BufferedReader getReqdata() {
@@ -23,11 +23,12 @@ public class HttpServer {
 
     public void connection() throws IOException {
         System.out.println("start up http server http://localhost:" + this.PORT);
-        try {
-            this.serverSocket = new ServerSocket(this.PORT);
+        try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
+
+            System.out.println("try start up http server http://localhost:" + this.PORT);
             while (true) {
 
-                this.socket = this.serverSocket.accept();
+                this.socket = serverSocket.accept();
                 System.out.println("request incoming");
 
                 /*
@@ -52,16 +53,14 @@ public class HttpServer {
         } catch (IOException e) {
             System.out.println("正常にコネクションできないエラーが発生しました");
         } finally {
-            try {
-                this.socket.close();
-                this.serverSocket.close();
-            } catch (IOException e) {
+            this.socket.close();
+            serverSocket.close();
 
-            }
         }
-
     }
+
 }
+
 
 
 

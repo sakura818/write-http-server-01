@@ -96,8 +96,8 @@ public class HttpResponse {
     public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
         {
             // specifications
-            put("html", "text/html");
-            put("htm", "text/html");
+            put("html", "text/html; charset=utf-8");
+            put("htm", "text/html; charset=utf-8");
             put("css", "text/css");
             put("js", "application/javascript");
             put("jpg", "image/jpeg");

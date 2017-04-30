@@ -91,6 +91,7 @@ public class HttpRequest {
      */
 
     public String[] requestLineDivide() {
+
         String reqUriDelimiterDivide[] = requestLine.split("\\s");
 
         this.method = reqUriDelimiterDivide[0];//　1つめの空白文字までを変数reqlineにいれる処理
