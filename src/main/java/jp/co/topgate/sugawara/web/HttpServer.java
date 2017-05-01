@@ -27,6 +27,12 @@ public class HttpServer {
     public String getAppendRequest() {return this.appendRequest;}
 
 
+    /**
+     * ソケット開閉やリクエストの入力、レスポンスの出力を行う
+     *
+     *
+     */
+
     public void connection() throws IOException {
         System.out.println("start up http server http://localhost:" + this.PORT);
         try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
@@ -73,7 +79,6 @@ public class HttpServer {
             e.printStackTrace();
         } finally {
             this.socket.close();
-
 
         }
     }

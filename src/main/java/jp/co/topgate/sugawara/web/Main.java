@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Main class
- * HttpServer classを呼び出す
+ * HttpServer classのconnectionメソッドを呼び出す
  *
  * @author sakura818
  */

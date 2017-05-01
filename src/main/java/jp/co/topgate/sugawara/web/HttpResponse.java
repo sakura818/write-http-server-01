@@ -78,17 +78,20 @@ public class HttpResponse {
         }
     }
 
-
-
-
-    /* Java入門実践編　p257,p263を参考に書いたコード
-    * バイナリファイルを読み込んで表示するコード*/
+    /**
+     * Java入門実践編　p257,p263を参考にた
+     * バイナリファイルを読み込んで表示するコード
+     *
+     * tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
+     * closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空
+     * 必ずcloseされることが保証されなければならないためfinallyブロックに記述する
+     */
 
     public void binaryFileShow(String[] args) throws IOException {
-        FileInputStream fis = null;// tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
+        FileInputStream fis = null;
         System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
         try {
-            fis = new FileInputStream(this.filepath);// binaryfile読み込み
+            fis = new FileInputStream(this.filepath);
             int i = fis.read();
             {
                 while (i != -1) {
@@ -102,8 +105,8 @@ public class HttpResponse {
             System.out.println("ファイルの書き込みに失敗しました" + "¥n");
         } finally {
             if (fis != null) {
-                try {// closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空。
-                    fis.close();// 必ずcloseされることが保証されなければならないためfinallyブロックに記述する
+                try {
+                    fis.close();
                 } catch (IOException e2) {
                 }
 
@@ -118,7 +121,7 @@ public class HttpResponse {
 
     public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
         {
-            // specifications
+
             put("html", "text/html; charset=utf-8");
             put("htm", "text/html; charset=utf-8");
             put("css", "text/css");
@@ -127,13 +130,9 @@ public class HttpResponse {
             put("jpeg", "image/jpeg");
             put("png", "image/png");
             put("gif", "image/gif");
-
-            // option
             put("txt", "text/plain");
             put("pdf", "application/pdf");
             put("mp4", "video/mp4");
-
-            //default
             put("octet-stream", "application/octet-stream");
         }
     };
@@ -226,6 +225,7 @@ public class HttpResponse {
 
     /**
      * entityheaderの部品を集めて組み立て生成
+     * TODO: Content-Lengthを計算するメソッドを作成して呼び出す
      */
 
     public String generateEntityHeader() {
@@ -234,7 +234,7 @@ public class HttpResponse {
         sb.append("Allow: " + "GET, HEAD").append("\n");
         // sb.append("Content-Encoding: " ).append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
-        sb.append("Content-Length: " + "3495").append("\n");// TODO: Content-Lengthを計算するメソッドを作成して呼び出す
+        sb.append("Content-Length: " + "3495").append("\n");
         // sb.append("Content-Location:" ).append("\n");
         // sb.append("Content-MD5: " ).append("\n");
         // sb.append("Content-Range: ).append("\n");
