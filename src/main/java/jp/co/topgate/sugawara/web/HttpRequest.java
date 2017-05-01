@@ -66,6 +66,8 @@ public class HttpRequest {
      * 改行文字を区切り文字としてrequestを4つに分割する
      * request = requestLine + requestHeader + (emptyLine) + requestMessageBody
      */
+
+    /*
     public String[] requestDataDivide() throws IOException {
         String requestDelimiterDivide[] = requestData.split("\n");// mac,windows crlf　
 
@@ -76,21 +78,22 @@ public class HttpRequest {
 
         return requestDelimiterDivide;
     }
+    */
 
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri + httpVersion
      */
 
-    public String[] requestLineDivide() throws IOException {
-        requestDataDivide();
+    public void requestLineDivide(String statusLine) throws IOException {
+        //HttpServer httpServer = new HttpServer();
 
-        String requestUriDelimiterDivide[] = requestLine.split(" ");
+        String requestUriDelimiterDivide[] = (statusLine.split(" "));
 
         this.method = requestUriDelimiterDivide[0];
         this.requestUri = requestUriDelimiterDivide[1];
         this.httpVersion = requestUriDelimiterDivide[2];
-        return requestUriDelimiterDivide;
+        //return requestUriDelimiterDivide;
     }
 
 
@@ -98,7 +101,7 @@ public class HttpRequest {
      * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
      */
     private String requestUriDecode(String requestUri) throws UnsupportedEncodingException,IOException {
-        requestLineDivide();
+        //requestLineDivide();
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
         return decodeUri;
     }
@@ -115,6 +118,8 @@ public class HttpRequest {
      * decodeされたrequestUriからパス名を抜き出す
      */
     public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
+
+
         String decodeUri = requestUriDecode(requestUri);
         return requestUriPath(decodeUri);
     }

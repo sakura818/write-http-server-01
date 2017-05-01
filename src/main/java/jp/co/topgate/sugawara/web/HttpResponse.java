@@ -32,10 +32,11 @@ public class HttpResponse {
      * レスポンスの部品を集めて組み立て生成
      */
 
-    public void generateHttpResponse() throws IOException {
+    public void generateHttpResponse(String statusLine) throws IOException {
 
         String httpResponseData;
         HttpRequest httpRequest = new HttpRequest();
+        httpRequest.requestLineDivide(statusLine);
 
         StringBuilder sb = new StringBuilder();
 
