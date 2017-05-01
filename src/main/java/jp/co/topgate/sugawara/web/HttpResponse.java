@@ -207,16 +207,7 @@ public class HttpResponse {
     public String generateResponseHeader() {
 
         StringBuilder sb = new StringBuilder();
-        // sb.append("Accept-Ranges:" + "none" ).append("\n");
-        // sb.append("Age: " ).append("\n");
-        // sb.append("ETag: " ).append("\n");
-        // sb.append("Location: " ).append("\n");
-        // sb.append("Proxy-Authenticate: " ).append("\n");
-        // sb.append("Retry-After:" ).append("\n");
         sb.append("Server: " + "sakura818").append("\n");
-        // sb.append("Vary: " ).append("\n");
-        // sb.append("WWW-Authenticate: " ).append("\n");
-
 
         String responseHeader = new String(sb);
         return responseHeader;
@@ -231,15 +222,9 @@ public class HttpResponse {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Allow: " + "GET, HEAD").append("\n");
-        // sb.append("Content-Encoding: " ).append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
         sb.append("Content-Length: " + "3495").append("\n");
-        // sb.append("Content-Location:" ).append("\n");
-        // sb.append("Content-MD5: " ).append("\n");
-        // sb.append("Content-Range: ).append("\n");
         sb.append("Content-Type: " + extensionToContentType()).append("\n");
-        // sb.append("Expires: " ).append("\n");
-        // sb.append("Last-Modified: " ).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;
