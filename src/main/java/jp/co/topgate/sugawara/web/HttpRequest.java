@@ -28,7 +28,7 @@ public class HttpRequest {
 
 
     HttpServer httpServer = new HttpServer();
-    String requestData = httpServer.getRequest();// rename
+    String requestData = httpServer.getAppendRequest();// rename
 
     /*
     methodの処理 getter
@@ -68,7 +68,7 @@ public class HttpRequest {
      * request = requestLine + requestHeader + (emptyLine) + requestMessageBody
      */
     public String[] requestDataDivide() throws IOException {
-        String requestDelimiterDivide[] = requestData.toString().split("\\r?\\n");// mac,windows crlf　
+        String requestDelimiterDivide[] = requestData.split("\n");// mac,windows crlf　
 
         this.requestLine = requestDelimiterDivide[0];
         this.requestHeader = requestDelimiterDivide[1];
@@ -83,9 +83,10 @@ public class HttpRequest {
      * requestLine = method + requestUri + httpVersion
      */
 
-    public String[] requestLineDivide() {
+    public String[] requestLineDivide() throws IOException {
+        requestDataDivide();
 
-        String requestUriDelimiterDivide[] = requestLine.split("\\s");
+        String requestUriDelimiterDivide[] = requestLine.split(" ");
 
         this.method = requestUriDelimiterDivide[0];
         this.requestUri = requestUriDelimiterDivide[1];
@@ -97,7 +98,8 @@ public class HttpRequest {
     /**
      * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
      */
-    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException {
+    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException,IOException {
+        requestLineDivide();
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
         return decodeUri;
     }
@@ -109,7 +111,6 @@ public class HttpRequest {
         URI requestUriPath = new URI(decodeUri);
         return requestUriPath.getPath();
     }
-    
 
     /**
      * decodeされたrequestUriからパス名を抜き出す

@@ -33,15 +33,18 @@ public class HttpResponse {
      * レスポンスの部品を集めて組み立て生成
      */
 
-    public void httpResponseGenerate() throws IOException {
+    public void generateHttpResponse() throws IOException {
 
         String httpResponseData;
+        HttpRequest httpRequest = new HttpRequest();
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("fileExistsStatusLine").append("\n");
+        sb.append(fileExistsStatusLine()).append("\n");
         sb.append(generateResponseMessageHeader()).append("\n");
+        if(httpRequest.getMethod() == "GET"){
         sb.append(generateResponseMessageBody());
+        }
 
         System.out.println("response...");
         System.out.println(sb.toString());
@@ -52,18 +55,29 @@ public class HttpResponse {
      * ファイルの存在有無を確認し、ステータスコードを返す。
      */
 
-    public String fileExistsStatusLine() throws IOException, URISyntaxException {
+    public String fileExistsStatusLine()  { // rename
         HttpRequest requestPath = new HttpRequest();
-        String filepath = FILE_DIR + requestPath.requestUriDecodeAndPath();
-        File file = new File(filepath);
-        if (file.exists() == true) {
-            String statusLine = "HTTP/1.1 200 OK";
+        try {
+            String filepath = FILE_DIR + requestPath.requestUriDecodeAndPath();
+            File file = new File(filepath);
+            if (file.exists()) {
+                String statusLine = "HTTP/1.1 200 OK";
+                return statusLine;
+            } else {
+                String statusLine = "HTTP/1.1 404 Not Found";
+                return statusLine;
+            }
+        } catch (IOException e) {
+            //throw new IOException();
+            String statusLine = "HTTP/1.1 500 Internal Server Error";
             return statusLine;
-        } else {
-            String statusLine = "HTTP/1.1 404 Not Found";
+        } catch (URISyntaxException e) {
+            //throw new URISyntaxException();
+            String statusLine = "HTTP/1.1 400 Bad Request";
             return statusLine;
         }
     }
+
 
 
 
@@ -126,10 +140,10 @@ public class HttpResponse {
 
 
     /**
-     * ファイルの拡張子を取得する。TODO:ファイルのデータの中身から拡張子を推測するほうがよさそう
+     * ファイルの拡張子を取得する
      */
 
-    public String findExtension() {
+    public String determineFileExtension() {
         int lastDotPosition = this.filepath.lastIndexOf(".");
         if (lastDotPosition != -1) {
             extension = this.filepath.substring(lastDotPosition + 1);
@@ -145,8 +159,6 @@ public class HttpResponse {
     public String extensionToContentType() {
 
         if (CONTENT_TYPE.containsKey(extension)) {
-            //System.out.print("extensionのContent-Typeは");
-            //System.out.println(CONTENT_TYPE.get(extension));
             return "ContentType: " + CONTENT_TYPE.get(extension);
         } else {
             return "指定したCONTENT_TYPEのキーは存在しません";
