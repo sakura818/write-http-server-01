@@ -54,13 +54,13 @@ public class HttpServer {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (socket != null) {
                     this.socket.close();
                 }catch(IOException e){
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
                 System.out.println("正常にコネクションできないエラーが発生しました");
 

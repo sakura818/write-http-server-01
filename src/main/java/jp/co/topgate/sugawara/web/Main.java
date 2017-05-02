@@ -27,9 +27,7 @@ public class Main {
                 server.connection();
             }
         } catch (IOException e) {
-            System.out.println("正常にコネクションできないエラーが発生しました");
-            e.printStackTrace();
-
+            throw new RuntimeException(e);
         }
     }
 }

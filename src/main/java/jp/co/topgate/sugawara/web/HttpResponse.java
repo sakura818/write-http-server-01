@@ -75,12 +75,13 @@ public class HttpResponse {
                 System.out.println("ファイルの末尾に到達しました" + "¥n");
             }
         } catch (IOException e) {
-            System.out.println("ファイルの書き込みに失敗しました" + "¥n");
+            throw new RuntimeException(e);
         } finally {
             if (fis != null) {
                 try {
                     fis.close();
-                } catch (IOException e2) {
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
             }
