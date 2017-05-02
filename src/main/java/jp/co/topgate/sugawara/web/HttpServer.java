@@ -1,10 +1,11 @@
 package jp.co.topgate.sugawara.web;
 
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * HttpServer class
@@ -21,81 +22,91 @@ public class HttpServer {
     private String appendRequest;
 
     private Socket socket = null;
-    private static final int PORT = 8080;
+    private int PORT = 8080;
     private static final String FILE_DIR = "src/main/resources/";
 
     public String getRequest() {
         return this.request;
     }
 
-    public String getAppendRequest() {
-        return this.appendRequest;
+    /**
+     * コンストラクタを作る
+     */
+
+    public HttpServer(Socket socket, int PORT){
+        this.PORT = PORT;
+        this.socket = socket;
     }
 
 
+
     /**
-     * ソケット開閉やリクエストの入力、レスポンスの出力を行う
+     * リクエストのことを行う
      */
 
     public void connection() throws IOException {
         try {
-
             System.out.println("request...");
             InputStream is = this.socket.getInputStream();
-            OutputStream outputStream = this.socket.getOutputStream();
+            OutputStream os = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
             System.out.println("request incoming");
             System.out.println("---------------------------------------");
 
+            File file = new File(FILE_DIR, httpRequest.requestUriDecodeAndPath());
+            ResponseHandler responseHandler = new ResponseHandler();
 
-            HttpResponse httpResponse = new HttpResponse();
-            httpResponse.generateHttpResponse(this.appendRequest);
-
-
+            int statusCode = distinguishStatusCode(httpRequest, file);
+            switch (httpRequest.getMethod()) {
+                case "GET":
+                    responseHandler.handlerGet(statusCode, file, os);
+                    break;
+                case "HEAD":
+                    responseHandler.handleError(statusCode, os);
+                    break;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
             try {
                 if (socket != null) {
                     this.socket.close();
-                }catch(IOException e){
-                    throw new RuntimeException(e);
                 }
-                System.out.println("正常にコネクションできないエラーが発生しました");
-
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-        }
-
-        /**
-         * ファイルの存在有無を確認し、ステータスコードを返す。
-         */
-
-    public String fileExistsStatusLine() { // rename
-        HttpRequest requestPath = new HttpRequest();
-        try {
-            String filepath = FILE_DIR + requestPath.requestUriDecodeAndPath();
-            File file = new File(filepath);
-            if (file.exists()) {
-                String statusLine = "HTTP/1.1 200 OK";
-                return statusLine;
-            } else {
-                String statusLine = "HTTP/1.1 404 Not Found";
-                return statusLine;
-            }
-        } catch (IOException e) {
-            //throw new IOException();
-            String statusLine = "HTTP/1.1 500 Internal Server Error";
-            return statusLine;
-        } catch (URISyntaxException e) {
-            //throw new URISyntaxException();
-            String statusLine = "HTTP/1.1 400 Bad Request";
-            return statusLine;
+            System.out.println("正常にコネクションできないエラーが発生しました");
         }
     }
-}
 
+
+    /**
+     * 適切なステータスコードを返す
+     */
+
+    public int distinguishStatusCode(HttpRequest httpRequest, File file) throws IOException {
+        if (httpRequest.getMethod() == null) {
+            return 400;
+        }
+        if (!file.exists()) {
+            return 404;
+        }
+        return 200;
+    }
+
+    /**
+     * statuscodeに対応するreason-phraseの一覧表
+     */
+
+    public final Map<Integer, String> STATUSCODE = new HashMap<Integer, String>() {
+        {
+            put(200, "OK");
+            put(400, "Bad Request");
+            put(404, "Not Found");
+        }
+    };
+}
 
 
 

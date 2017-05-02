@@ -1,8 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,12 +16,25 @@ public class HttpResponse {
     private String statusLine;
     private String extension;
 
+
+    private String responseMessageBodyText;
+    private File responseMessageBodyFile;
+
+
     public String getFilepath() {
         return this.filepath;
     }
 
     public String getStatusLine() {
         return this.statusLine;
+    }
+
+    public void setResponseMessageBody(String text) {
+        this.responseMessageBodyText = text;
+    }
+
+    public void setResponseMessageBodyFile(File file) {
+        this.responseMessageBodyFile = file;
     }
 
     /**
@@ -38,10 +49,13 @@ public class HttpResponse {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(fileExistsStatusLine()).append("\n");
+        sb.append(responseLine()).append("\n");
         sb.append(generateResponseMessageHeader()).append("\n");
-        if(httpRequest.getMethod() == "GET"){
-        sb.append(generateResponseMessageBody());
+        if (
+
+
+        if (httpRequest.getMethod() == "GET") {
+            sb.append(generateResponseMessageBody());
         }
 
         System.out.println("response...");
@@ -50,71 +64,70 @@ public class HttpResponse {
     }
 
 
-
     /**
      * Java入門実践編　p257,p263を参考にた
      * バイナリファイルを読み込んで表示するコード
-     *
-     * tryブロックの外でnullで初期化しないとfinallyブロックでcloseを呼べない
-     * closeがIOExceptionを発生させる可能性があるため再度try-catch文が必要。ただし失敗しても何もできないためcatchブロックは空
-     * 必ずcloseされることが保証されなければならないためfinallyブロックに記述する
      */
 
     public void binaryFileShow(String[] args) throws IOException {
-        FileInputStream fis = null;
+        PrintWriter writer = new PrintWriter(out, true);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("HTTP/1.1 " + statusCode() +).append("\n");
+        sb.append(responseMessageHeader()).append("¥n");
+
+
         System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
-        try {
-            fis = new FileInputStream(this.filepath);
-            int i = fis.read();
+        if (this.responseMessageBodyFile ! = null){
+            FileInputStream fis = new FileInputStream(this, responseMessageBodyFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+
+            try {
+                int i = fis.read();
+                {
+                    while (i != -1) {
+                        char c = (char) i;
+                        System.out.println(c);
+                        i = fis.read();
+                    }
+                    System.out.println("ファイルの末尾に到達しました" + "¥n");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+
+            }
+        }
+
+        /**
+         * ファイルの拡張子に対するcontent-typeの一覧表
+         */
+
+        public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
             {
-                while (i != -1) {
-                    char c = (char) i;
-                    System.out.println(c);
-                    i = fis.read();
-                }
-                System.out.println("ファイルの末尾に到達しました" + "¥n");
+
+                put("html", "text/html; charset=utf-8");
+                put("htm", "text/html; charset=utf-8");
+                put("css", "text/css");
+                put("js", "application/javascript");
+                put("jpg", "image/jpeg");
+                put("jpeg", "image/jpeg");
+                put("png", "image/png");
+                put("gif", "image/gif");
+                put("txt", "text/plain");
+                put("pdf", "application/pdf");
+                put("mp4", "video/mp4");
+                put("octet-stream", "application/octet-stream");
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-
-        }
-    }
-
-    /**
-     * content-typeの一覧のmap
-     */
-
-    public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
-        {
-
-            put("html", "text/html; charset=utf-8");
-            put("htm", "text/html; charset=utf-8");
-            put("css", "text/css");
-            put("js", "application/javascript");
-            put("jpg", "image/jpeg");
-            put("jpeg", "image/jpeg");
-            put("png", "image/png");
-            put("gif", "image/gif");
-            put("txt", "text/plain");
-            put("pdf", "application/pdf");
-            put("mp4", "video/mp4");
-            put("octet-stream", "application/octet-stream");
-        }
-    };
+        };
 
 
-    /**
-     * ファイルの拡張子を取得する
-     */
+        /**
+         * ファイルの拡張子を取得する
+         */
 
     public String determineFileExtension() {
         int lastDotPosition = this.filepath.lastIndexOf(".");
@@ -160,15 +173,7 @@ public class HttpResponse {
     public String generateGeneralHeader() {
 
         StringBuilder sb = new StringBuilder();
-        // sb.append("Cache-Control: " ).append("\n");
-        // sb.append("Connection: " ).append("\n");
         sb.append("Date: " + generateHttpDateTime()).append("\n");
-        // sb.append("Pragma: " ).append("\n");
-        // sb.append("Trailer: " ).append("\n");
-        // sb.append("Transfer-Encoding: " ).append("\n");
-        // sb.append("Upgrade: " ).append("\n");
-        // sb.append("Via: " ).append("\n");
-        // sb.append("Warning: " ).append("\n");
 
         String generalHeader = new String(sb);
         return generalHeader;

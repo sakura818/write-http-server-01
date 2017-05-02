@@ -1,5 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,7 +27,7 @@ public class ResponseHandler {
 
         sb.append(fileExistsStatusLine()).append("\n");
         sb.append(generateResponseMessageHeader()).append("\n");
-        if(httpRequest.getMethod() == "GET"){
+        if (httpRequest.getMethod() == "GET") {
             sb.append(generateResponseMessageBody());
         }
 
@@ -34,4 +35,18 @@ public class ResponseHandler {
         System.out.println(sb.toString());
 
     }
-}
+
+    /**
+     * エラーのページを生成
+     */
+    public void handleError(int statusCode, OutputStream out) throws IOException {
+        HttpResponse response = new HttpResponse();
+        Status status = new Status();
+        status.setStatus(statusCode);
+        File errorfile = new File(Server, FILE_DIR, statusCode + ".html");
+        if (rrorFile.exists() && errorFile.isFile() && errorFile.canRead()) {
+
+        } else {
+        }
+
+    }

@@ -62,8 +62,12 @@ public class HttpRequest {
     BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
     StringBuilder sb = new StringBuilder();
     this.appendRequest =br.readLine();
-    while(!(request =br.readLine()).equals(""))
-    {if (request == null) {
+    while(!(request =br.readLine()).
+
+    equals(""))
+
+    {
+        if (request == null) {
             System.out.println("requestはnullです");
         }
         System.out.println(request);
@@ -132,10 +136,12 @@ public class HttpRequest {
      * decodeされたrequestUriからパス名を抜き出す
      */
     public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
-
-
-        String decodeUri = requestUriDecode(requestUri);
-        return requestUriPath(decodeUri);
+        try {
+            String decodeUri = requestUriDecode(requestUri);
+            return requestUriPath(decodeUri);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

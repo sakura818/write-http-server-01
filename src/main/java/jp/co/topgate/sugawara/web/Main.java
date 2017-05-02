@@ -11,11 +11,7 @@ import java.net.Socket;
  * @author sakura818
  */
 public class Main {
-
-    // private ServerSocket serverSocket = null;
-    // private Socket socket = null;
-
-
+    
     private static final int PORT = 8080;
 
     public static void main(String[] args) throws IOException {
@@ -23,8 +19,8 @@ public class Main {
             System.out.println("start up http server http://localhost:" + PORT);
             while (true) {
                 Socket socket = serverSocket.accept();
-                HttpServer server = new HttpServer();
-                server.connection();
+                HttpServer httpServer = new HttpServer(socket, PORT);
+                httpServer.connection();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
