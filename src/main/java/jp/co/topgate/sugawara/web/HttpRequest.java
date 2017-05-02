@@ -118,30 +118,37 @@ public class HttpRequest {
     /**
      * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
      */
-    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException, IOException {
+    private String requestUriDecode(String requestUri)  {
         //requestLineDivide();
-        String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
-        return decodeUri;
+        try {
+            String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
+            return decodeUri;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+
+        }
     }
 
     /**
      * requestUriからパス名を抜き出す
      */
-    public String requestUriPath(String decodeUri) throws URISyntaxException {
-        URI requestUriPath = new URI(decodeUri);
-        return requestUriPath.getPath();
+    public String requestUriPath(String decodeUri) {
+        try {
+            URI requestUriPath = new URI(decodeUri);
+            return requestUriPath.getPath();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+
+        }
     }
 
     /**
      * decodeされたrequestUriからパス名を抜き出す
      */
-    public String requestUriDecodeAndPath() throws IOException, URISyntaxException {// rename
-        try {
+    public String requestUriDecodeAndPath() {// rename
             String decodeUri = requestUriDecode(requestUri);
             return requestUriPath(decodeUri);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
 

@@ -25,7 +25,7 @@ public class HttpServer {
      * コンストラクタ
      */
 
-    public HttpServer(Socket socket, int PORT){
+    public HttpServer(Socket socket, int PORT) {
         this.PORT = PORT;
         this.socket = socket;
     }
@@ -37,8 +37,8 @@ public class HttpServer {
     public void connection() {
         try {
             System.out.println("request...");
-            InputStream is = this.socket.getInputStream();
-            OutputStream os = this.socket.getOutputStream();
+            InputStream inputStream = this.socket.getInputStream();
+            OutputStream outputStream = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
             System.out.println("request incoming");
@@ -50,10 +50,10 @@ public class HttpServer {
             int statusCode = distinguishStatusCode(httpRequest, file);
             switch (httpRequest.getMethod()) {
                 case "GET":
-                    responseHandler.handlerGet(statusCode, file, os);
+                    responseHandler.handlerGet(statusCode, file, outputStream);
                     break;
                 case "HEAD":
-                    responseHandler.handleError(statusCode, os);
+                    responseHandler.handleError(statusCode, outputStream);
                     break;
             }
         } catch (IOException e) {
