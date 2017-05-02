@@ -12,6 +12,20 @@ import java.io.OutputStream;
  */
 public class ResponseHandler {
 
+    public void handlerGET(int statusCode,File file,OutputStream outputStream){
+        HttpResponse httpResponse = new HttpResponse();
+        HttpServer httpServer = new HttpServer();
+        httpServer.getStatusCode();
+        "status" + "reason phrase";
+        if(statusCode == 200) {
+
+        }
+
+    }
+
+    }
+
+
 
     /**
      * レスポンスの部品を集めて組み立て生成
@@ -39,6 +53,31 @@ public class ResponseHandler {
     /**
      * エラーのページを生成
      */
+
+
+    private String getErrorMessageBody(int statusCode) {
+        String errorPageHtml;
+        switch (statusCode) {
+            case 400:
+                errorPageHtml = "<html><head><title>400 Bad Request</title></head>" +
+                        "<body><h1>Bad Request</h1>" +
+                        "<p>リクエストにエラーがあります。<br /></p></body></html>";
+                break;
+
+            case 404:
+                errorPageHtml = "<html><head><title>404 Not Found</title></head>" +
+                        "<body><h1>Not Found</h1>" +
+                        "<p>該当のページは見つかりませんでした。</p></body></html>";
+                break;
+
+            default:
+                errorPageHtml = "<html><head><title>500 Internal Server Error</title></head>" +
+                        "<body><h1>Internal Server Error</h1>" +
+                        "<p>サーバー内部のエラーにより表示できません。</p></body></html>";
+        }
+        return errorPageHtml;
+    }
+
     public void handleError(int statusCode, OutputStream out) {
         HttpResponse response = new HttpResponse();
         Status status = new Status();
