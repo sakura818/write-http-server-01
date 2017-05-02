@@ -14,7 +14,7 @@ import java.util.*;
  * @author sakura818
  */
 public class HttpResponse {
-    
+
     private String statusLine;
     private String extension;
 
