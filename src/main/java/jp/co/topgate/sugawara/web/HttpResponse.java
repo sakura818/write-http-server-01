@@ -66,15 +66,16 @@ public class HttpResponse {
 
 
     /**
-     * Java入門実践編　p257,p263を参考にた
+     * レスポンスの部品を集めて組み立て生成
      * バイナリファイルを読み込んで表示するコード
      */
 
     public void generateHttpResponse(OutputStream outputStream, int getStatusCode) {
         PrintWriter writer = new PrintWriter(outputStream, true);
+        //HttpServer httpServer = new HttpServer();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + "statuscodeをよびだす" + " reason-phraseをよびだす").append("\n");
+        sb.append("HTTP/1.1 " + getStatusCode + " reason-phraseをよびだす").append("\n");
         sb.append ("generateResponseMessageHeaderをよびだす").append("¥n");
 
 
@@ -124,7 +125,6 @@ public class HttpResponse {
                 put("octet-stream", "application/octet-stream");
             }
         };
-
 
         /**
          * ファイルの拡張子を取得する

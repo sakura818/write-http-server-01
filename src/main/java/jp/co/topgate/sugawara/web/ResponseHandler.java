@@ -17,11 +17,7 @@ public class ResponseHandler {
         HttpServer httpServer = new HttpServer();
         httpServer.getStatusCode();
         "status" + "reason phrase";
-        if(statusCode == 200) {
 
-        }
-
-    }
 
     }
 

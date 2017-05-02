@@ -48,6 +48,11 @@ public class HttpServer {
             File file = new File(FILE_DIR, httpRequest.requestUriDecodeAndPath());
             ResponseHandler responseHandler = new ResponseHandler();
 
+            HttpResponse response = new HttpResponse();
+            int statusCode = distinguishStatusCode(httpRequest,file);
+            response.generateHttpResponse(outputStream, statusCode);
+
+
             int statusCode = distinguishStatusCode(httpRequest, file);
             switch (httpRequest.getMethod()) {
                 case "GET":
@@ -73,7 +78,7 @@ public class HttpServer {
 
 
     /**
-     * 適切なステータスコードを返す
+     * レスポンスの適切なステータスコードを返す
      */
 
     public int distinguishStatusCode(HttpRequest httpRequest, File file)  {
@@ -90,13 +95,19 @@ public class HttpServer {
      * statuscodeに対応するreason-phraseの一覧表
      */
 
-    public final Map<Integer, String> STATUSCODE = new HashMap<Integer, String>() {
+    public final Map<Integer, String> STATUS_CODE = new HashMap<Integer, String>() {
         {
             put(200, "OK");
             put(400, "Bad Request");
             put(404, "Not Found");
         }
     };
+
+
+    /**
+     * statuscodeに対応するreason-phraseの一覧表に200を投げたときにOKがかえってくるメソッド
+     */
+
 
     private int statusCode;
 

@@ -126,7 +126,6 @@ public class HttpRequest {
             return decodeUri;
         } catch (IOException e) {
             throw new RuntimeException(e);
-
         }
     }
 
