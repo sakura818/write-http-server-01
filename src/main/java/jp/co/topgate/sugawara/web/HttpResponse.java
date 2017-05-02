@@ -51,32 +51,7 @@ public class HttpResponse {
 
     }
 
-    /**
-     * ファイルの存在有無を確認し、ステータスコードを返す。
-     */
 
-    public String fileExistsStatusLine()  { // rename
-        HttpRequest requestPath = new HttpRequest();
-        try {
-            String filepath = FILE_DIR + requestPath.requestUriDecodeAndPath();
-            File file = new File(filepath);
-            if (file.exists()) {
-                String statusLine = "HTTP/1.1 200 OK";
-                return statusLine;
-            } else {
-                String statusLine = "HTTP/1.1 404 Not Found";
-                return statusLine;
-            }
-        } catch (IOException e) {
-            //throw new IOException();
-            String statusLine = "HTTP/1.1 500 Internal Server Error";
-            return statusLine;
-        } catch (URISyntaxException e) {
-            //throw new URISyntaxException();
-            String statusLine = "HTTP/1.1 400 Bad Request";
-            return statusLine;
-        }
-    }
 
     /**
      * Java入門実践編　p257,p263を参考にた
