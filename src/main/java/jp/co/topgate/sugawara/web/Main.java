@@ -11,10 +11,10 @@ import java.net.Socket;
  * @author sakura818
  */
 public class Main {
-    
+
     private static final int PORT = 8080;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("start up http server http://localhost:" + PORT);
             while (true) {

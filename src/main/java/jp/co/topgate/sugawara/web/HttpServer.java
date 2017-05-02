@@ -17,20 +17,12 @@ import java.util.Map;
  */
 public class HttpServer {
 
-    private ServerSocket serverSocket = null;
-    private String request;
-    private String appendRequest;
-
-    private Socket socket = null;
-    private int PORT = 8080;
+    private Socket socket;
+    int PORT = 8080;
     private static final String FILE_DIR = "src/main/resources/";
 
-    public String getRequest() {
-        return this.request;
-    }
-
     /**
-     * コンストラクタを作る
+     * コンストラクタ
      */
 
     public HttpServer(Socket socket, int PORT){
@@ -38,13 +30,11 @@ public class HttpServer {
         this.socket = socket;
     }
 
-
-
     /**
-     * リクエストのことを行う
+     * リクエスト
      */
 
-    public void connection() throws IOException {
+    public void connection() {
         try {
             System.out.println("request...");
             InputStream is = this.socket.getInputStream();
