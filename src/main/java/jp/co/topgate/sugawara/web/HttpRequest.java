@@ -58,15 +58,16 @@ public class HttpRequest {
     RequestMessageBodyの処理 getter
      */
 
-    //BufferedInputStream bis = new BufferedInputStream(is);
-    BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
+    public void readRequest(InputStream inputStream){
+    BufferedInputStream bis = new BufferedInputStream(inputStream);
+    BufferedReader br = new BufferedReader(new InputStreamReader(bis));
     StringBuilder sb = new StringBuilder();
-    this.appendRequest =br.readLine();
-    while(!(request =br.readLine()).
+    //this.appendRequest =br.readLine();
 
-    equals(""))
+        String line = br.readLine();
 
-    {
+
+    while(!(request =br.readLine()).equals("")) {
         if (request == null) {
             System.out.println("requestはnullです");
         }
@@ -103,10 +104,10 @@ public class HttpRequest {
      * requestLine = method + requestUri + httpVersion
      */
 
-    public void requestLineDivide(String statusLine) throws IOException {
+    public void requestLineDivide(String statusLine)  {
         //HttpServer httpServer = new HttpServer();
 
-        String requestUriDelimiterDivide[] = (statusLine.split(" "));
+        String requestUriDelimiterDivide[] = (requestLine.split(" "));
 
         this.method = requestUriDelimiterDivide[0];
         this.requestUri = requestUriDelimiterDivide[1];

@@ -17,7 +17,7 @@ public class ResponseHandler {
      * レスポンスの部品を集めて組み立て生成
      */
 
-    public void generateHttpResponse(String statusLine) throws IOException {
+    public void generateHttpResponse(String statusLine)  {
 
         String httpResponseData;
         HttpRequest httpRequest = new HttpRequest();
@@ -39,7 +39,7 @@ public class ResponseHandler {
     /**
      * エラーのページを生成
      */
-    public void handleError(int statusCode, OutputStream out) throws IOException {
+    public void handleError(int statusCode, OutputStream out) {
         HttpResponse response = new HttpResponse();
         Status status = new Status();
         status.setStatus(statusCode);

@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SplittableRandom;
 
 /*
  * HttpServer class
@@ -75,7 +76,7 @@ public class HttpServer {
      * 適切なステータスコードを返す
      */
 
-    public int distinguishStatusCode(HttpRequest httpRequest, File file) throws IOException {
+    public int distinguishStatusCode(HttpRequest httpRequest, File file)  {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
@@ -96,6 +97,12 @@ public class HttpServer {
             put(404, "Not Found");
         }
     };
+
+    private int statusCode;
+
+    public int getStatusCode(){
+        return this.statusCode;
+    }
 }
 
 

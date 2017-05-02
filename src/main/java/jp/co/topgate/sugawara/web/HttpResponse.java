@@ -41,6 +41,7 @@ public class HttpResponse {
      * レスポンスの部品を集めて組み立て生成
      */
 
+    /*
     public void generateHttpResponse(String statusLine) throws IOException {
 
         String httpResponseData;
@@ -69,12 +70,12 @@ public class HttpResponse {
      * バイナリファイルを読み込んで表示するコード
      */
 
-    public void binaryFileShow(String[] args) throws IOException {
-        PrintWriter writer = new PrintWriter(out, true);
+    public void generateHttpResponse(OutputStream outputStream, int getStatusCode) {
+        PrintWriter writer = new PrintWriter(outputStream, true);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + statusCode() +).append("\n");
-        sb.append(responseMessageHeader()).append("¥n");
+        sb.append("HTTP/1.1 " + "statuscodeをよびだす" + " reason-phraseをよびだす").append("\n");
+        sb.append ("generateResponseMessageHeaderをよびだす").append("¥n");
 
 
         System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
