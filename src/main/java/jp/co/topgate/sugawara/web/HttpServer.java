@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
  */
 public class HttpServer {
 
-    private static final int PORT = 8080;// Httpサーバでは一般的にポート番号として80番もしくは8080番を使用する
+
     private ServerSocket serverSocket = null;
     private Socket socket = null;
     private String request;
@@ -49,22 +49,7 @@ public class HttpServer {
                  */
                 System.out.println("request...");
                 InputStream is = this.socket.getInputStream();
-                //BufferedInputStream bis = new BufferedInputStream(is);
-                BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
-                StringBuilder sb = new StringBuilder();
-                this.appendRequest = br.readLine();
 
-
-
-                while (!(request = br.readLine()).equals("")) {
-                    if (request == null) {
-                        System.out.println("requestはnullです");
-                    }
-                    System.out.println(request);
-                    sb.append(request);
-                    //String appendRequest = new String(sb);
-                }
-                //appendRequest = sb.toString();
                 System.out.println("---------------------------------------");
 
 

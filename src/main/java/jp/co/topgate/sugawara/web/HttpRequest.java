@@ -58,6 +58,20 @@ public class HttpRequest {
     RequestMessageBodyの処理 getter
      */
 
+    //BufferedInputStream bis = new BufferedInputStream(is);
+    BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
+    StringBuilder sb = new StringBuilder();
+    this.appendRequest =br.readLine();
+    while(!(request =br.readLine()).equals(""))
+    {if (request == null) {
+            System.out.println("requestはnullです");
+        }
+        System.out.println(request);
+        sb.append(request);
+        //String appendRequest = new String(sb);
+    }
+    //appendRequest = sb.toString();
+
     public String getRequestMessageBody() {
         return this.requestMessageBody;
     }
@@ -100,7 +114,7 @@ public class HttpRequest {
     /**
      * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
      */
-    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException,IOException {
+    private String requestUriDecode(String requestUri) throws UnsupportedEncodingException, IOException {
         //requestLineDivide();
         String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
         return decodeUri;
