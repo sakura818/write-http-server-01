@@ -14,9 +14,7 @@ import java.util.*;
  * @author sakura818
  */
 public class HttpResponse {
-
-    private static final String FILE_DIR = "src/main/java/resources/";
-    private String filepath;
+    
     private String statusLine;
     private String extension;
 
