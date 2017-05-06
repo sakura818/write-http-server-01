@@ -12,7 +12,7 @@ import java.io.OutputStream;
  */
 public class ResponseHandler {
 
-    public void handlerGET(int statusCode,File file,OutputStream outputStream){
+    public void handlerGET(int statusCode, File file, OutputStream outputStream) {
         HttpResponse httpResponse = new HttpResponse();
         HttpServer httpServer = new HttpServer();
         httpServer.getStatusCode();
@@ -22,12 +22,11 @@ public class ResponseHandler {
     }
 
 
-
     /**
      * レスポンスの部品を集めて組み立て生成
      */
 
-    public void generateHttpResponse(String statusLine)  {
+    public void generateHttpResponse(String statusLine) {
 
         String httpResponseData;
         HttpRequest httpRequest = new HttpRequest();

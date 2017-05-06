@@ -27,7 +27,7 @@ public class HttpRequest {
 
 
     HttpServer httpServer = new HttpServer();
-    String requestData = httpServer.getAppendRequest();// rename
+    //String requestData = httpServer.getAppendRequest();// rename
 
     /*
     methodの処理 getter
