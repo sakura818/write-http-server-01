@@ -42,15 +42,11 @@ public class HttpRequest {
     }
 
 
-    /*
-    requestHeaderの処理 getter
+    /**
+     * HttpRequestを行ごとに分割し読み込む
+     *
+     * @param inputStream
      */
-
-    public String getRequestHeader() {
-        return this.requestHeader;
-    }
-
-
 
     public void readRequest(InputStream inputStream) {
         try {
@@ -64,86 +60,27 @@ public class HttpRequest {
             while (!(requestLine).equals("")) {
                 sb.append(requestLine).append("¥n");
             }
-            this.requestHeader = sb.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-
-
-    /**
-     * 改行文字を区切り文字としてrequestを4つに分割する
-     * request = requestLine + requestHeader + (emptyLine) + requestMessageBody
-     */
-
-    /*
-    public String[] requestDataDivide() throws IOException {
-        String requestDelimiterDivide[] = requestData.split("\n");// mac,windows crlf　
-
-        this.requestLine = requestDelimiterDivide[0];
-        this.requestHeader = requestDelimiterDivide[1];
-        this.emptyLine = requestDelimiterDivide[2];
-        this.requestMessageBody = requestDelimiterDivide[3];
-
-        return requestDelimiterDivide;
-    }
-
-
-
-
-    /**
-     * 空白文字を区切り文字としてrequestLineを3つに分割する
-     * requestLine = method + requestUri + httpVersion
-     * /
-
-
-    public void requestLineDivide(String statusLine) {
-        //HttpServer httpServer = new HttpServer();
-
-        String requestUriDelimiterDivide[] = (requestLine.split(" "));
-
-        this.method = requestUriDelimiterDivide[0];
-        this.requestUri = requestUriDelimiterDivide[1];
-        this.httpVersion = requestUriDelimiterDivide[2];
-        //return requestUriDelimiterDivide;
-    }
-
-
-    /**
-     * HTTPジェネラルヘッダを読み込み、整理します.
-     *
-     * @param line
-     * @param host
-     */
-    private void readRequestLine(String line, String host) throws IOException {
-        HTTPRequestLine header = new HTTPRequestLine(line);
-        this.method = header.getMethod();
-        this.filePath = uriQuerySplitter(urlDivider(header.getFilePath(), host));
-        if (this.filePath.endsWith("/")) {
-            this.filePath += "index.html";
-        }
-        this.protocolVer = ProtocolVer(header.getProtocol());
-    }
-
-
+    
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri + httpVersion
      *
-     * @param line
-     * @param host
+     * @param requestLine
      */
     public void requestLineDivide(String requestLine) {
-        RequestLine requestLine = new RequestLine(line);
-
         String requestUriDelimiterDivide[] = (requestLine.split(" "));
 
         this.method = requestUriDelimiterDivide[0];
         this.requestUri = requestUriDelimiterDivide[1];
+        if (this.requestUri.endsWith("/")) {
+            this.requestUri += "hello.html";
+        }
         this.httpVersion = requestUriDelimiterDivide[2];
-        //return requestUriDelimiterDivide;
     }
 
 
