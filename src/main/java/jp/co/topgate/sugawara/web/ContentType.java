@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * ContentType Class
+ * ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
+ *
  * Created by haruka.sugawara on 2017/05/08.
  */
 public class ContentType {
-    /**
-     * ファイルの拡張子に対するcontent-typeの一覧表
-     *
-     * @param filename
-     * @return content-type
-     */
     private static final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
         {
             put("html", "text/html; charset=utf-8");
@@ -53,9 +50,9 @@ public class ContentType {
      * Content-Typeを返します.
      *
      * @param fileName ファイル名
-     * @return Content-Type
+     * @return CONTENT_TYPE
      */
-    public static String getContentType(String fileName) {
+    public static String determineContentType(String fileName) {
         fileName = determineFileExtension(fileName);
         if (fileName == null) {
             return null;
