@@ -20,6 +20,7 @@ public class HttpServer {
 
     private Socket socket;
     int PORT = 8080;
+    // private final String HOST_NAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
 
     /**
@@ -42,6 +43,7 @@ public class HttpServer {
             OutputStream outputStream = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
+            httpRequest.readRequest(inputStream);
             System.out.println("request incoming");
             System.out.println("---------------------------------------");
 
@@ -49,11 +51,11 @@ public class HttpServer {
             ResponseHandler responseHandler = new ResponseHandler();
 
             HttpResponse response = new HttpResponse();
-            int statusCode = distinguishStatusCode(httpRequest,file);
+            int statusCode = distinguishStatusCode(httpRequest, file);
             response.generateHttpResponse(outputStream, statusCode);
 
 
-            int statusCode = distinguishStatusCode(httpRequest, file);
+            statusCode = distinguishStatusCode(httpRequest, file);
             switch (httpRequest.getMethod()) {
                 case "GET":
                     responseHandler.handlerGet(statusCode, file, outputStream);
@@ -81,7 +83,7 @@ public class HttpServer {
      * レスポンスの適切なステータスコードを返す
      */
 
-    public int distinguishStatusCode(HttpRequest httpRequest, File file)  {
+    public int distinguishStatusCode(HttpRequest httpRequest, File file) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
@@ -102,19 +104,20 @@ public class HttpServer {
             put(404, "Not Found");
         }
     };
+}
 
 
-    /**
-     * statuscodeに対応するreason-phraseの一覧表に200を投げたときにOKがかえってくるメソッド
-     */
+/**
+ * statuscodeに対応するreason-phraseの一覧表に200を投げたときにOKがかえってくるメソッド
+ */
 
 
-    private int statusCode;
+    /*private int statusCode;
 
     public int getStatusCode(){
         return this.statusCode;
     }
-}
+}*/
 
 
 
