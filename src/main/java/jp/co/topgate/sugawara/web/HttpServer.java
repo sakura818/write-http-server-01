@@ -3,6 +3,9 @@ package jp.co.topgate.sugawara.web;
 
 import java.io.*;
 import java.net.Socket;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 
 /*
  * HttpServer class
@@ -12,11 +15,11 @@ import java.net.Socket;
  * @author sakura818
  *
  */
-public class HttpServer {
+public class HttpServer extends Thread {
 
     private Socket socket;
     int PORT = 8080;
-    // private final String HOST_NAME = "localhost";
+    private final String HOST_NAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
 
     /**
@@ -39,18 +42,15 @@ public class HttpServer {
             OutputStream outputStream = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
-            httpRequest.readRequest(inputStream);
-            System.out.println("request incoming");
+            httpRequest.readRequest(inputStream, this.HOST_NAME + ":" + this.PORT);
+            System.out.println("request incoming" + Thread.currentThread().getName());
             System.out.println("---------------------------------------");
 
             File file = new File(FILE_DIR, httpRequest.getFilePath());
             HttpHandler httpHandler = new HttpHandler();
 
-            HttpResponse response = new HttpResponse();
-            int statusCode = distinguishStatusCode(httpRequest, file);
-            response.generateHttpResponse(outputStream, distinguishStatusCode(httpRequest, file));
+            int statusCode = selectedStatusCode(httpRequest, file);
 
-            statusCode = distinguishStatusCode(httpRequest, file);
             switch (httpRequest.getMethod()) {
                 case "GET":
                     httpHandler.handlerGet(statusCode, file, outputStream);
@@ -69,7 +69,7 @@ public class HttpServer {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("正常にコネクションできないエラーが発生しました");
+            System.out.println("正常にコネクションできないエラーが発生しました" + Thread.currentThread().getName());
         }
     }
 
@@ -78,7 +78,7 @@ public class HttpServer {
      * レスポンスの適切なステータスコードを返す
      */
 
-    private int distinguishStatusCode(HttpRequest httpRequest, File file) {
+    private int selectedStatusCode(HttpRequest httpRequest, File file) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }

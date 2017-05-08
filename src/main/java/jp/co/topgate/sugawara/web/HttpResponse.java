@@ -46,7 +46,7 @@ public class HttpResponse {
         sb.append(generateResponseMessageBody()).append("\n");
 
     }
-    
+
 
     /**
      * generalheaderに使われるメッセージが生成された日付・時刻を表すDate行を生成
@@ -127,14 +127,14 @@ public class HttpResponse {
     /**
      * ResponseMessageBodyを生成
      */
-    public String generateResponseMessageBody() {
+    public String generateResponseMessageBody(StatusCode status) {
 
         return "responseMessageBody";
 
 
         if (this.responseMessageBodyFile != null) {
             String errorPageHtml;
-            switch (statusCode) {
+            switch (status.getStatus()) {
                 case 200:
                     try {
                         FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
