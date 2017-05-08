@@ -33,7 +33,7 @@ public class StatusCode {
      *
      * @param i ステータスコード　例えば200
      */
-    public void setStatus(int i) {
+    public void setStatusCode(int i) {
         this.statusCode = i;
         this.statusCodeAndReasonPhrase = mappingStatusCode(i);
     }
@@ -57,7 +57,7 @@ public class StatusCode {
     }
 
     /**
-     * 現在設定されているstatusCodeとreasonPhraseを取得する。
+     * テストのために現在設定されているstatusCodeとreasonPhraseを取得する。
      *
      * @return statusCode and reasonPhrase
      */
