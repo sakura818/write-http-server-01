@@ -21,14 +21,14 @@ public class StatusCode {
         };
         if (requestLine_status.containsKey(statusCode)) {
             reasonPhrase = requestLine_status.get(statusCode);
-            return statusCode + " " + reasonPhrase;
+            return this.statusCode + " " + reasonPhrase;
         } else {
-            return statusCode + "Unknown";
+            return this.statusCode + "Unknown";
         }
     }
 
     /**
-     * 現在設定されているステータスコードを取得します.
+     * 現在設定されているステータスコードを取得する。
      *
      * @return ステータス
      */
