@@ -12,18 +12,12 @@ import java.util.*;
  * @author sakura818
  */
 public class HttpResponse {
+    private String responseMessageBodyText;
+    private File responseMessageBodyFile;
 
     private String statusLine;
     private String extension;
 
-
-    private String responseMessageBodyText;
-    private File responseMessageBodyFile;
-
-
-    public String getFilepath() {
-        return this.filepath;
-    }
 
     public String getStatusLine() {
         return this.statusLine;
@@ -69,21 +63,17 @@ public class HttpResponse {
      * レスポンスの部品を集めて組み立て生成
      * バイナリファイルを読み込んで表示するコード
      */
-
     public void generateHttpResponse(OutputStream outputStream, int getStatusCode) {
         PrintWriter writer = new PrintWriter(outputStream, true);
         //HttpServer httpServer = new HttpServer();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + getStatusCode + " reason-phraseをよびだす").append("\n");
-        sb.append ("generateResponseMessageHeaderをよびだす").append("¥n");
+        sb.append("HTTP/1.1 " + statusCodeMap()).append("\n");
+        sb.append(generateResponseMessageHeader()).append("\n");
 
-
-        System.out.println("バイナリファイルのすべてのデータを一文字ずつ読んで表示します" + "¥n");
-        if (this.responseMessageBodyFile ! = null){
-            FileInputStream fis = new FileInputStream(this, responseMessageBodyFile);
+        if (this.responseMessageBodyFile != null) {
+            FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
             BufferedInputStream bis = new BufferedInputStream(fis);
-
             try {
                 int i = fis.read();
                 {
@@ -92,7 +82,6 @@ public class HttpResponse {
                         System.out.println(c);
                         i = fis.read();
                     }
-                    System.out.println("ファイルの末尾に到達しました" + "¥n");
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -103,14 +92,18 @@ public class HttpResponse {
 
             }
         }
+    }
 
-        /**
-         * ファイルの拡張子に対するcontent-typeの一覧表
-         */
-
-        public final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
+    /**
+     * ファイルの拡張子に対するcontent-typeの一覧表
+     * @param filename
+     * @return content-type
+     *
+     */
+    public String contentTypeMap(String filename) {
+        filename = determineFileExtension(filename);
+        final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
             {
-
                 put("html", "text/html; charset=utf-8");
                 put("htm", "text/html; charset=utf-8");
                 put("css", "text/css");
@@ -126,32 +119,31 @@ public class HttpResponse {
             }
         };
 
-        /**
-         * ファイルの拡張子を取得する
-         */
-
-    public String determineFileExtension() {
-        int lastDotPosition = this.filepath.lastIndexOf(".");
-        if (lastDotPosition != -1) {
-            extension = this.filepath.substring(lastDotPosition + 1);
-            return extension;
+        if (CONTENT_TYPE.containsKey(extension)) {
+            return "Content-Type: " + CONTENT_TYPE.get(extension);
         } else {
-            return "neko";
+            return "Content-Type: " + "Unknown";
         }
     }
+
 
     /**
-     * entityheaderに使われるcontent-type行を生成
+     * ファイルの拡張子を取得する
+     * @param filename
+     * @return ファイルの拡張子
      */
-    public String extensionToContentType() {
 
-        if (CONTENT_TYPE.containsKey(extension)) {
-            return "ContentType: " + CONTENT_TYPE.get(extension);
-        } else {
-            return "指定したCONTENT_TYPEのキーは存在しません";
+    public String determineFileExtension(String filename) {
+        if (filename == null) {
+            return null;
         }
-
+        int lastDotPosition = filename.lastIndexOf(".");
+        if (lastDotPosition != -1) {
+            return filename.substring(lastDotPosition + 1);
+        }
+        return null;
     }
+
 
     /**
      * generalheaderに使われるメッセージが生成された日付・時刻を表すDate行を生成
@@ -196,7 +188,7 @@ public class HttpResponse {
 
     /**
      * entityheaderの部品を集めて組み立て生成
-     * TODO: Content-Lengthを計算するメソッドを作成して呼び出す
+     * // TODO: Content-Lengthを計算するメソッドを作成して呼び出す
      */
 
     public String generateEntityHeader() {
@@ -204,8 +196,8 @@ public class HttpResponse {
         StringBuilder sb = new StringBuilder();
         sb.append("Allow: " + "GET, HEAD").append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
-        sb.append("Content-Length: " + "3495").append("\n");
-        sb.append("Content-Type: " + extensionToContentType()).append("\n");
+        // sb.append("Content-Length: " + "3495").append("\n");
+        sb.append(contentTypeMap(filename)).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;

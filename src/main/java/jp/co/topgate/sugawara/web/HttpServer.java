@@ -106,10 +106,9 @@ public class HttpServer {
                 put(404, "Not Found");
             }
         };
-        if (STATUS_CODE.containsKey(status)){
-            reasonPhrase = STATUS_CODE.get(status);
-            return  status+" "+ reasonPhrase;
-        }else{
+        if (STATUS_CODE.containsKey(status)) {
+            return STATUS_CODE + " " + STATUS_CODE.get(status);
+        } else {
             return STATUS_CODE + "Unknown";
         }
     }
