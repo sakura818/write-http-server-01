@@ -1,10 +1,9 @@
 package jp.co.topgate.sugawara.web;
 
 /**
- * Created by haruka.sugawara on 2017/05/02.
+ * Created by haruka.sugawara on 2017/05/08.
  */
-public class test {
-
+public class test2 {
 
     public int five() {
 
@@ -16,14 +15,9 @@ public class test {
     }
 
     public int plus(int a, int b) {
-        return a + b;
-    }
 
-    public void 足し算やるぞ() {
-        plus(five(), seven());
+        return five()+seven();
     }
 
 
 }
-
-

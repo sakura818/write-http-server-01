@@ -20,6 +20,7 @@ public class HttpRequest {
     private String method;
     private String requestUri;
     private String httpVersion;
+    private String filePath;
 
     /*
     methodの処理 getter
@@ -33,8 +34,8 @@ public class HttpRequest {
     requestUriの処理 getter
      */
 
-    public String getRequestUri() {
-        return this.requestUri;
+    public String getFilePath() {
+        return this.filePath;
     }
 
 
@@ -72,9 +73,9 @@ public class HttpRequest {
         String requestUriDelimiterDivide[] = (requestLine.split(" "));
 
         this.method = requestUriDelimiterDivide[0];
-        this.requestUri = requestUriDelimiterDivide[1];
-        if (this.requestUri.endsWith("/")) {
-            this.requestUri += "hello.html";
+        this.filePath = requestUriPath(requestUriDelimiterDivide[1]);
+        if (this.filePath.endsWith("/")) {
+            this.filePath += "hello.html";
         }
         this.httpVersion = requestUriDelimiterDivide[2];
     }

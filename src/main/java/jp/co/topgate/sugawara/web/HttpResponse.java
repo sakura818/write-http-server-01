@@ -14,6 +14,7 @@ import java.util.*;
 public class HttpResponse {
     private String responseMessageBodyText;
     private File responseMessageBodyFile;
+    BufferedInputStream bis = null;
 
     private String statusLine;
     private String extension;
@@ -31,50 +32,23 @@ public class HttpResponse {
         this.responseMessageBodyFile = file;
     }
 
-    /**
-     * レスポンスの部品を集めて組み立て生成
-     */
-
-    /*
-    public void generateHttpResponse(String statusLine) throws IOException {
-
-        String httpResponseData;
-        HttpRequest httpRequest = new HttpRequest();
-        httpRequest.requestLineDivide(statusLine);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(responseLine()).append("\n");
-        sb.append(generateResponseMessageHeader()).append("\n");
-        if (
-
-
-        if (httpRequest.getMethod() == "GET") {
-            sb.append(generateResponseMessageBody());
-        }
-
-        System.out.println("response...");
-        System.out.println(sb.toString());
-
-    }
-
 
     /**
      * レスポンスの部品を集めて組み立て生成
      * バイナリファイルを読み込んで表示するコード
      */
-    public void generateHttpResponse(OutputStream outputStream, int getStatusCode) {
+    public void generateHttpResponse(OutputStream outputStream, int statusCode) {
         PrintWriter writer = new PrintWriter(outputStream, true);
-        //HttpServer httpServer = new HttpServer();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + statusCodeMap()).append("\n");
+        sb.append("HTTP/1.1 " + statusCodeMap(statusCode)).append("\n");
         sb.append(generateResponseMessageHeader()).append("\n");
 
         if (this.responseMessageBodyFile != null) {
-            FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
-            BufferedInputStream bis = new BufferedInputStream(fis);
             try {
+                FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
+                bis = new BufferedInputStream(fis);
+
                 int i = fis.read();
                 {
                     while (i != -1) {
@@ -86,19 +60,38 @@ public class HttpResponse {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
-                if (bis != null) {
+                if (bis != null) try {
                     bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
             }
         }
     }
 
+
+    public String statusCodeMap(int status) {
+        final Map<Integer, String> STATUS_CODE = new HashMap<Integer, String>() {
+            {
+                put(200, "OK");
+                put(400, "Bad Request");
+                put(404, "Not Found");
+            }
+        };
+        if (STATUS_CODE.containsKey(status)) {
+            return STATUS_CODE + " " + STATUS_CODE.get(status);
+        } else {
+            return STATUS_CODE + "Unknown";
+        }
+    }
+
+
     /**
      * ファイルの拡張子に対するcontent-typeの一覧表
+     *
      * @param filename
      * @return content-type
-     *
      */
     public String contentTypeMap(String filename) {
         filename = determineFileExtension(filename);
@@ -129,6 +122,7 @@ public class HttpResponse {
 
     /**
      * ファイルの拡張子を取得する
+     *
      * @param filename
      * @return ファイルの拡張子
      */
@@ -197,7 +191,7 @@ public class HttpResponse {
         sb.append("Allow: " + "GET, HEAD").append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
         // sb.append("Content-Length: " + "3495").append("\n");
-        sb.append(contentTypeMap(filename)).append("\n");
+        sb.append(contentTypeMap(getFilePath)).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;
@@ -229,6 +223,33 @@ public class HttpResponse {
 
     }
 
+    /**
+     * エラーのページを生成
+     */
+
+
+    private String generateResponseErrorMessageBody(int statusCode) {
+        String errorPageHtml;
+        switch (statusCode) {
+            case 400:
+                errorPageHtml = "<html><head><title>400 Bad Request</title></head>" +
+                        "<body><h1>Bad Request</h1>" +
+                        "<p>リクエストにエラーがあります。<br /></p></body></html>";
+                break;
+
+            case 404:
+                errorPageHtml = "<html><head><title>404 Not Found</title></head>" +
+                        "<body><h1>Not Found</h1>" +
+                        "<p>該当のページは見つかりませんでした。</p></body></html>";
+                break;
+
+            default:
+                errorPageHtml = "<html><head><title>500 Internal Server Error</title></head>" +
+                        "<body><h1>Internal Server Error</h1>" +
+                        "<p>サーバー内部のエラーにより表示できません。</p></body></html>";
+        }
+        return errorPageHtml;
+    }
 
 }
 

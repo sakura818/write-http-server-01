@@ -2,11 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SplittableRandom;
 
 /*
  * HttpServer class
@@ -47,21 +43,20 @@ public class HttpServer {
             System.out.println("request incoming");
             System.out.println("---------------------------------------");
 
-            File file = new File(FILE_DIR, httpRequest.getRequestUri());
-            ResponseHandler responseHandler = new ResponseHandler();
+            File file = new File(FILE_DIR, httpRequest.getFilePath());
+            HttpHandler httpHandler = new HttpHandler();
 
             HttpResponse response = new HttpResponse();
             int statusCode = distinguishStatusCode(httpRequest, file);
-            response.generateHttpResponse(outputStream, statusCode);
-
+            response.generateHttpResponse(outputStream, distinguishStatusCode(httpRequest, file));
 
             statusCode = distinguishStatusCode(httpRequest, file);
             switch (httpRequest.getMethod()) {
                 case "GET":
-                    responseHandler.handlerGet(statusCode, file, outputStream);
+                    httpHandler.handlerGet(statusCode, file, outputStream);
                     break;
                 case "HEAD":
-                    responseHandler.handleError(statusCode, outputStream);
+                    httpHandler.handlerError(statusCode, outputStream);
                     break;
             }
         } catch (IOException e) {
@@ -83,7 +78,7 @@ public class HttpServer {
      * レスポンスの適切なステータスコードを返す
      */
 
-    public int distinguishStatusCode(HttpRequest httpRequest, File file) {
+    private int distinguishStatusCode(HttpRequest httpRequest, File file) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
@@ -92,40 +87,8 @@ public class HttpServer {
         }
         return 200;
     }
-
-    /**
-     * statuscodeに対応するreason-phraseの一覧表
-     */
-    private String reasonPhrase;
-
-    public String statusCodeMap(int status) {
-        final Map<Integer, String> STATUS_CODE = new HashMap<Integer, String>() {
-            {
-                put(200, "OK");
-                put(400, "Bad Request");
-                put(404, "Not Found");
-            }
-        };
-        if (STATUS_CODE.containsKey(status)) {
-            return STATUS_CODE + " " + STATUS_CODE.get(status);
-        } else {
-            return STATUS_CODE + "Unknown";
-        }
-    }
 }
 
-
-/**
- * statuscodeに対応するreason-phraseの一覧表に200を投げたときにOKがかえってくるメソッド
- */
-
-
-    /*private int statusCode;
-
-    public int getStatusCode(){
-        return this.statusCode;
-    }
-}*/
 
 
 

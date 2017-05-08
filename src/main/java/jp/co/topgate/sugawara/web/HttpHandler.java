@@ -4,21 +4,31 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * レスポンスを生成
  *
  * @author sakura818
  */
-public class ResponseHandler {
+public class HttpHandler {
 
-    public void handlerGET(int statusCode, File file, OutputStream outputStream) {
+    public void handlerGET(int statusCode, File file, OutputStream outputStream) throws IOException {
         HttpResponse httpResponse = new HttpResponse();
-        HttpServer httpServer = new HttpServer();
-        httpServer.getStatusCode();
-        "status" + "reason phrase";
+        Status status = new Status();
+        status.setStatus(statusCode);
 
-
+        if (statusCode == 200) {
+            if (Arrays.asList("html", "txt").contains(ContentTypeUtil.getFileExtension(file.toString()))) {
+                httpResponse.addResponseHeader("Content-Type", ContentTypeUtil.getContentType(file.toString()) + "; charset=" + detectFileEncoding(file));
+            } else {
+                httpResponse.addResponseHeader("Content-Type", ContentTypeUtil.getContentType(file.toString()));
+            }
+            httpResponse.setResponseBody(file);
+            httpResponse.writeTo(outputStream, status);
+        } else {
+            this.handlerError(statusCode, outputStream);
+        }
     }
 
 
@@ -45,12 +55,13 @@ public class ResponseHandler {
 
     }
 
+
     /**
      * エラーのページを生成
      */
 
 
-    private String getErrorMessageBody(int statusCode) {
+    private String generateResponseErrorMessageBody(int statusCode) {
         String errorPageHtml;
         switch (statusCode) {
             case 400:
@@ -73,14 +84,6 @@ public class ResponseHandler {
         return errorPageHtml;
     }
 
-    public void handleError(int statusCode, OutputStream out) {
-        HttpResponse response = new HttpResponse();
-        Status status = new Status();
-        status.setStatus(statusCode);
-        File errorfile = new File(Server, FILE_DIR, statusCode + ".html");
-        if (rrorFile.exists() && errorFile.isFile() && errorFile.canRead()) {
 
-        } else {
-        }
 
-    }
+}
