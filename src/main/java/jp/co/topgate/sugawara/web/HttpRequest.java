@@ -16,14 +16,10 @@ import java.net.URLDecoder;
  */
 public class HttpRequest {
 
-    private BufferedReader bufferedReader;
     private String requestLine;
     private String method;
     private String requestUri;
     private String httpVersion;
-    private String requestHeader;
-    private String emptyLine;
-    private String requestMessageBody;
 
     /*
     methodの処理 getter
@@ -65,7 +61,7 @@ public class HttpRequest {
         }
     }
 
-    
+
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri + httpVersion

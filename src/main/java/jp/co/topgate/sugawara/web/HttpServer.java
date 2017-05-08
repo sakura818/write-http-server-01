@@ -47,7 +47,7 @@ public class HttpServer {
             System.out.println("request incoming");
             System.out.println("---------------------------------------");
 
-            File file = new File(FILE_DIR, httpRequest.requestUriDecodeAndPath());
+            File file = new File(FILE_DIR, httpRequest.getRequestUri());
             ResponseHandler responseHandler = new ResponseHandler();
 
             HttpResponse response = new HttpResponse();
@@ -96,14 +96,23 @@ public class HttpServer {
     /**
      * statuscodeに対応するreason-phraseの一覧表
      */
+    private String reasonPhrase;
 
-    public final Map<Integer, String> STATUS_CODE = new HashMap<Integer, String>() {
-        {
-            put(200, "OK");
-            put(400, "Bad Request");
-            put(404, "Not Found");
+    public String statusCodeMap(int status) {
+        final Map<Integer, String> STATUS_CODE = new HashMap<Integer, String>() {
+            {
+                put(200, "OK");
+                put(400, "Bad Request");
+                put(404, "Not Found");
+            }
+        };
+        if (STATUS_CODE.containsKey(status)){
+            reasonPhrase = STATUS_CODE.get(status);
+            return  status+" "+ reasonPhrase;
+        }else{
+            return STATUS_CODE + "Unknown";
         }
-    };
+    }
 }
 
 
