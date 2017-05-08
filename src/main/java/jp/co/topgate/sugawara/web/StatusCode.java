@@ -10,17 +10,18 @@ public class StatusCode {
 
     private int statusCode;
     private String reasonPhrase;
+    private String statusCodeAndReasonPhrase;
 
-    public String statusCodeMap(int statusCode) {
-        final Map<Integer, String> requestLine_status = new HashMap<Integer, String>() {
+    public String mappingStatusCode(int statusCode) {
+        final Map<Integer, String> mapStatusCode = new HashMap<Integer, String>() {
             {
                 put(200, "OK");
                 put(400, "Bad Request");
                 put(404, "Not Found");
             }
         };
-        if (requestLine_status.containsKey(statusCode)) {
-            reasonPhrase = requestLine_status.get(statusCode);
+        if (mapStatusCode.containsKey(statusCode)) {
+            reasonPhrase = mapStatusCode.get(statusCode);
             return this.statusCode + " " + reasonPhrase;
         } else {
             return this.statusCode + "Unknown";
@@ -28,12 +29,40 @@ public class StatusCode {
     }
 
     /**
-     * 現在設定されているステータスコードを取得する。
+     * テストのためにステータスコードを設定する。
      *
-     * @return ステータス
+     * @param i ステータスコード　例えば200
+     */
+    public void setStatus(int i) {
+        this.statusCode = i;
+        this.statusCodeAndReasonPhrase = mappingStatusCode(i);
+    }
+
+    /**
+     * テストのために現在設定されているstatusCodeを取得する。
+     *
+     * @return statusCode
      */
     public int getStatusCode() {
         return this.statusCode;
+    }
+
+    /**
+     * テストのために現在設定されているreasonPhraseを取得する。
+     *
+     * @return reasonPhrase
+     */
+    public String getReasonPhrase() {
+        return this.reasonPhrase;
+    }
+
+    /**
+     * 現在設定されているstatusCodeとreasonPhraseを取得する。
+     *
+     * @return statusCode and reasonPhrase
+     */
+    public String getStatusCodeAndReasonPhrase() {
+        return this.statusCodeAndReasonPhrase;
     }
 
 }
