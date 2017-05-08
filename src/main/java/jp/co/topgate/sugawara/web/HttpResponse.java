@@ -87,56 +87,6 @@ public class HttpResponse {
     }
 
 
-    /**
-     * ファイルの拡張子に対するcontent-typeの一覧表
-     *
-     * @param filename
-     * @return content-type
-     */
-    public String contentTypeMap(String filename) {
-        filename = determineFileExtension(filename);
-        final Map<String, String> CONTENT_TYPE = new HashMap<String, String>() {
-            {
-                put("html", "text/html; charset=utf-8");
-                put("htm", "text/html; charset=utf-8");
-                put("css", "text/css");
-                put("js", "application/javascript");
-                put("jpg", "image/jpeg");
-                put("jpeg", "image/jpeg");
-                put("png", "image/png");
-                put("gif", "image/gif");
-                put("txt", "text/plain");
-                put("pdf", "application/pdf");
-                put("mp4", "video/mp4");
-                put("octet-stream", "application/octet-stream");
-            }
-        };
-
-        if (CONTENT_TYPE.containsKey(extension)) {
-            return "Content-Type: " + CONTENT_TYPE.get(extension);
-        } else {
-            return "Content-Type: " + "Unknown";
-        }
-    }
-
-
-    /**
-     * ファイルの拡張子を取得する
-     *
-     * @param filename
-     * @return ファイルの拡張子
-     */
-
-    public String determineFileExtension(String filename) {
-        if (filename == null) {
-            return null;
-        }
-        int lastDotPosition = filename.lastIndexOf(".");
-        if (lastDotPosition != -1) {
-            return filename.substring(lastDotPosition + 1);
-        }
-        return null;
-    }
 
 
     /**
