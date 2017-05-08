@@ -25,10 +25,6 @@ public class HttpRequest {
     private String emptyLine;
     private String requestMessageBody;
 
-
-    HttpServer httpServer = new HttpServer();
-    //String requestData = httpServer.getAppendRequest();// rename
-
     /*
     methodの処理 getter
      */
@@ -54,52 +50,28 @@ public class HttpRequest {
         return this.requestHeader;
     }
 
-    /*
-    RequestMessageBodyの処理 getter
-     */
+
 
     public void readRequest(InputStream inputStream) {
-        BufferedInputStream bis = new BufferedInputStream(inputStream);
-        BufferedReader br = new BufferedReader(new InputStreamReader(bis));
-        String requestline = br.readLine();
-        //this.appendRequest =br.readLine();
+        try {
+            BufferedInputStream bis = new BufferedInputStream(inputStream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(bis));
+            String requestLine = br.readLine();
 
-        this.readRequestLine(requestline);
-        StringBuilder sb = new StringBuilder();
+            this.requestLineDivide(requestLine);
+            StringBuilder sb = new StringBuilder();
 
-
-        while (!(requestLine).equals("")) {
-            sb.append(requestLine).append("¥n");
-            String[] headerLineData = line.split(":", 2);
-            /**
-             * 空白文字を区切り文字としてrequestLineを3つに分割する
-             * requestLine = method + requestUri + httpVersion
-             */
-
-            public void requestLineDivide(String statusLine) {
-                //HttpServer httpServer = new HttpServer();
-
-                String requestUriDelimiterDivide[] = (requestLine.split(" "));
-
-                this.method = requestUriDelimiterDivide[0];
-                this.requestUri = requestUriDelimiterDivide[1];
-                this.httpVersion = requestUriDelimiterDivide[2];
-                //return requestUriDelimiterDivide;
+            while (!(requestLine).equals("")) {
+                sb.append(requestLine).append("¥n");
             }
-
-            if (headerLineData.length == 2) {
-                this.addRequestData(headerLineData[0].toUpperCase(), headerLineData[1].trim());
-            }
-            requestline = br.readLine();
-
-            //String appendRequest = new String(sb);
+            this.requestHeader = sb.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        this.requestHeader = sb.toString();
-        //appendRequest = sb.toString();
-
-    public String getRequestMessageBody() {
-        return this.requestMessageBody;
     }
+
+
+
 
     /**
      * 改行文字を区切り文字としてrequestを4つに分割する
@@ -117,43 +89,75 @@ public class HttpRequest {
 
         return requestDelimiterDivide;
     }
-    */
+
 
 
 
     /**
-     * requestUriに "% HEX HEX" エンコードが使用されていたらデコードする
-     */
-    private String requestUriDecode(String requestUri) {
-        //requestLineDivide();
-        try {
-            String decodeUri = URLDecoder.decode(this.requestUri, "UTF-8");
-            return decodeUri;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+     * 空白文字を区切り文字としてrequestLineを3つに分割する
+     * requestLine = method + requestUri + httpVersion
+     * /
+
+
+    public void requestLineDivide(String statusLine) {
+        //HttpServer httpServer = new HttpServer();
+
+        String requestUriDelimiterDivide[] = (requestLine.split(" "));
+
+        this.method = requestUriDelimiterDivide[0];
+        this.requestUri = requestUriDelimiterDivide[1];
+        this.httpVersion = requestUriDelimiterDivide[2];
+        //return requestUriDelimiterDivide;
     }
+
+
+    /**
+     * HTTPジェネラルヘッダを読み込み、整理します.
+     *
+     * @param line
+     * @param host
+     */
+    private void readRequestLine(String line, String host) throws IOException {
+        HTTPRequestLine header = new HTTPRequestLine(line);
+        this.method = header.getMethod();
+        this.filePath = uriQuerySplitter(urlDivider(header.getFilePath(), host));
+        if (this.filePath.endsWith("/")) {
+            this.filePath += "index.html";
+        }
+        this.protocolVer = ProtocolVer(header.getProtocol());
+    }
+
+
+    /**
+     * 空白文字を区切り文字としてrequestLineを3つに分割する
+     * requestLine = method + requestUri + httpVersion
+     *
+     * @param line
+     * @param host
+     */
+    public void requestLineDivide(String requestLine) {
+        RequestLine requestLine = new RequestLine(line);
+
+        String requestUriDelimiterDivide[] = (requestLine.split(" "));
+
+        this.method = requestUriDelimiterDivide[0];
+        this.requestUri = requestUriDelimiterDivide[1];
+        this.httpVersion = requestUriDelimiterDivide[2];
+        //return requestUriDelimiterDivide;
+    }
+
 
     /**
      * requestUriからパス名を抜き出す
      */
-    public String requestUriPath(String decodeUri) {
+    public String requestUriPath(String requestUri) {
         try {
-            URI requestUriPath = new URI(decodeUri);
+            URI requestUriPath = new URI(requestUri);
             return requestUriPath.getPath();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
 
         }
-    }
-
-    /**
-     * decodeされたrequestUriからパス名を抜き出す
-     */
-    public String requestUriDecodeAndPath() {// rename
-        String decodeUri = requestUriDecode(requestUri);
-        return requestUriPath(decodeUri);
-
     }
 
 
