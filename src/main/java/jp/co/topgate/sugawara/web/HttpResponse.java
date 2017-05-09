@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * HttpResponse class
- * レスポンス　クライアントにまつわる部分
+ * レスポンスのクライアントにまつわる部分をとり扱う
  * TODO:ファイルの読み込みがわかってない
  *
  * @author sakura818

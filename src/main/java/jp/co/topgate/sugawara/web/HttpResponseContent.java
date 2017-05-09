@@ -7,11 +7,9 @@ import java.io.OutputStream;
 import java.util.*;
 
 /**
- *
  * レスポンスのコンテンツを生成するクラス
  *
  * @author sakura818
- *
  */
 
 public class HttpResponseContent {
@@ -20,18 +18,103 @@ public class HttpResponseContent {
     /**
      * レスポンスの部品を集めて組み立て生成
      */
-    public void createHttpResponse(OutputStream outputStream, int currentStatusCode) {
-        // PrintWriter writer = new PrintWriter(outputStream, true);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1" + " " + statusCode.mappingStatusCode(currentStatusCode)).append("\n");
-        sb.append(createResponseMessageHeader()).append("\n");
-        sb.append(createResponseMessageBody(statusCode)).append("\n");
-
+    public String createHttpResponseContent(OutputStream outputStream, int currentStatusCode) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("HTTP/1.1" + " " + statusCode.mappingStatusCode(currentStatusCode)).append("\n");
+        stringBuilder.append(createResponseMessageHeader()).append("\n");
+        stringBuilder.append(createResponseMessageBody(statusCode)).append("\n");
+        String httpResponseContent = new String(stringBuilder);
+        return httpResponseContent;
     }
 
 
-    private static final Map<String, String> parseExtension = new HashMap<String, String>() {
+    /**
+     * ResponseMessageHeaderを生成する
+     * ResponseMessageHeader = GeneralHeader + ResponseHeader + EntityHeader
+     */
+
+    public String createResponseMessageHeader() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(createGeneralHeader());
+        stringBuilder.append(createResponseHeader());
+        stringBuilder.append(createEntityHeader());
+        String responseMessageHeaderContent = new String(stringBuilder);
+        return responseMessageHeaderContent;
+    }
+
+    /**
+     * GeneralHeaderを生成する
+     * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
+     * 今回はなにもここに追加しないが、本当はCache-ControlやDateなどがある
+     */
+
+    public String createGeneralHeader() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String generalHeaderContent = new String(stringBuilder);
+        return generalHeaderContent;
+    }
+
+    /**
+     * ResponseHeaderを生成する
+     * ResponseHeaderとはサーバについてや、Request-URI によって識別されるリソースへの更なるアクセスに関する情報を与える。
+     */
+
+    public String createResponseHeader() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Server: " + "sakura818").append("\n");
+        String responseHeaderContent = new String(stringBuilder);
+        return responseHeaderContent;
+    }
+
+    /**
+     * EntityHeaderを生成する
+     * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
+     */
+
+    public String createEntityHeader() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Allow: " + "GET").append("\n");
+        stringBuilder.append("Content-Language: " + "ja, en").append("\n");
+        stringBuilder.append(createContentType(filePath)).append("\n");
+        String entityHeaderContent = new String(stringBuilder);
+        return entityHeaderContent;
+    }
+
+    /**
+     * ContentTypeを生成する
+     * ContentTypeとは元のデータのメディアタイプ
+     *
+     * @param filePath
+     * @return ContentType
+     */
+
+    public String createContentType(String filePath) {
+        if (extensionToContentType.containsKey(extractExtension(filePath))) {
+            return extensionToContentType.get(extractExtension(filePath));
+        }
+    }
+
+    /**
+     * ファイルパスから拡張子を抜き出す。なぜならContentTypeはファイルパスの拡張子によって判別されるから。
+     * @param filePath
+     * @return ファイルパスの拡張子　例えばhtmlやtxt
+     */
+
+    public static String extractExtension(String filePath) {
+        if (filePath == null) {
+            return null;
+        }
+        int lastDotPosition = filePath.lastIndexOf(".");
+        if (lastDotPosition != -1) {
+            return filePath.substring(lastDotPosition + 1);
+        }
+        return null;
+    }
+
+    /**
+     * 拡張子とContentTypeの写像
+     */
+    private static final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
             put("html", "text/html");
             put("htm", "text/html");
@@ -48,102 +131,11 @@ public class HttpResponseContent {
         }
     };
 
-    /**
-     * ファイルから拡張子を取得する
-     *
-     * @param file
-     * @return ファイルの拡張子
-     */
-
-    public static String parseFileExtension(String file) {
-        if (file == null) {
-            return null;
-        }
-        int lastDotPosition = file.lastIndexOf(".");
-        if (lastDotPosition != -1) {
-            return file.substring(lastDotPosition + 1);
-        }
-        return null;
-    }
-
-    /**
-     * ファイルの拡張子に対応するContentTypeを返す
-     * DefaultMIME = octet-stream
-     *
-     * @param fileName ファイル名
-     * @return CONTENT_TYPE
-     */
-
-    public static String selectContentType(String fileName) {
-        String fileExtension = partFileExtension(fileName);
-        if (fileExtension == null) {
-            return null;
-        }
-        if (mapMIME.containsKey(fileExtension)) {
-            return mapMIME.get(fileExtension);
-        } else {
-            return mapMIME.get("octet-stream");
-        }
-    }
 
 
 
-    /**
-     * generalheaderの部品を集めて組み立て生成
-     * 今回はなにもここに追加しないが、本当はCache-ControlやDateなどがある
-     */
-
-    public String createGeneralHeader() {
-
-        StringBuilder sb = new StringBuilder();
-        String generalHeader = new String(sb);
-        return generalHeader;
-    }
 
 
-    /**
-     * responseheaderの部品を集めて組み立て生成
-     */
-
-    public String createResponseHeader() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Server: " + "sakura818").append("\n");
-
-        String responseHeader = new String(sb);
-        return responseHeader;
-    }
-
-    /**
-     * entityheaderの部品を集めて組み立て生成
-     */
-
-    public String createEntityHeader() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Allow: " + "GET, HEAD").append("\n");
-        sb.append("Content-Language: " + "ja, en").append("\n");
-        sb.append(ContentType.selectContentType(".html")).append("\n");
-
-        String entityHeader = new String(sb);
-        return entityHeader;
-    }
-
-    /**
-     * ResponseMessageHeaderを生成
-     * ResponseMessageHeader = generalHeader + responseHeader + entityHeader
-     */
-
-    public String createResponseMessageHeader() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(createGeneralHeader());
-        sb.append(createResponseHeader());
-        sb.append(createEntityHeader());
-
-        String responseMessageHeader = new String(sb);
-        return responseMessageHeader;
-    }
 
     public String statusCode200(int currentStatusCode) {
         if (statusCode.getStatusCode() == 200) {
@@ -182,7 +174,8 @@ public class HttpResponseContent {
     }
 
     public String statusCode404(int currentStatusCode) {
-        if (statusCode.getStatusCode() == 404) {}
+        if (statusCode.getStatusCode() == 404) {
+        }
         String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
                 "<body><h1>Not Found</h1>" +
                 "<p>該当のページは見つかりませんでした。</p></body></html>";
