@@ -11,7 +11,6 @@ import java.io.OutputStream;
  * HttpServer class
  * connectionを管理する
  *
- *
  * @author sakura818
  *
  */

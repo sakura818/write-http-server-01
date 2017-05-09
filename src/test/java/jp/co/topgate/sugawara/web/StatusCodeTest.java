@@ -6,7 +6,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by haruka.sugawara on 2017/05/08.
+ * StatusCodeTest Class
+ * リクエストに応じて適切なステータスコードを判断するのをテストするクラス
+ * @author sakura818
  */
 public class StatusCodeTest {
 

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * StatusCode Class
+ * リクエストに応じて適切なステータスコードを判断するクラス
  * @author sakura818
  */
 public class StatusCode {

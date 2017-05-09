@@ -10,7 +10,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by haruka.sugawara on 2017/04/20.
+ * HttpServerTest Class
+ * connectionを管理するのをテストするクラス
+ * @author sakura818
  */
 public class HttpServerTest {
     @Test

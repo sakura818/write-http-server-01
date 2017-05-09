@@ -6,6 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
+ * MIMETest Class
+ * ファイルの拡張子に応じてContentTypeを判断するのをテストするクラス
  * @author sakura818
  */
 public class MIMETest {
