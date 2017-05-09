@@ -11,12 +11,14 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Created by haruka.sugawara on 2017/04/19.
+ *
+ * TODO:requestLineを3つに分割できたかのテストを追加する　最終的にはmethodとrequestUriをきちんとした形で受け取ることができていれば良い
  */
 public class HttpRequestTest {
     HttpRequest httpRequest = new HttpRequest();
 
     @Test
-    public void requestUriから正しくパス名を抜き出せるかのテスト() {
+    public void requestUriから正しくfilePathを抜き出せるかのテスト() {
         // requestUriがnullのとき
         assertThat(null, is(httpRequest.partRequestUriPath(null)));
 
@@ -32,15 +34,7 @@ public class HttpRequestTest {
 
 
     @Test
-    public void 空白文字を区切り文字としてrequestLineを3つに分割することができるかのテスト() {
-        // requestUriがnullのとき
-        assertThat(null, is(httpRequest.spaceSeparateRequestLine(null)));
-
-        // requestUriがGET hello.html HTTP/1.1のとき
-        assertThat(null, is(httpRequest.spaceSeparateRequestLine("GET hello.html HTTP/1.1")));
-
-        // requestUriがGET hello.html HTTP/1.1 のとき
-        assertThat(null, is(httpRequest.spaceSeparateRequestLine("GET hello.html HTTP/1.1 ")));
+    public void 空白文字を区切り文字としてrequestLineを3つに分割できたかのテスト() {
 
 
     }

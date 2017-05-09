@@ -16,24 +16,23 @@ import java.net.URLDecoder;
  */
 public class HttpRequest {
 
-    private String requestLine;
     private String method;
-    private String requestUri;
-    private String httpVersion;
     private String filePath;
 
-    /*
-    methodの処理 getter
+    /**
+     * methodをかえすgetter
+     *
+     * @return method
      */
-
     public String getMethod() {
         return this.method;
     }
 
-    /*
-    requestUriの処理 getter
+    /**
+     * filePathをかえすgetter
+     *
+     * @return filePath
      */
-
     public String getFilePath() {
         return this.filePath;
     }
@@ -66,12 +65,11 @@ public class HttpRequest {
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri(→filePath) + httpVersion
      * TODO:リクエストUriをdecodeする
-     * TODO:分け方と配列で返すの良くないかもしれない　methodとfilePathを戻り値としてほしい
      *
      * @param requestLine
      */
 
-    public String[] spaceSeparateRequestLine(String requestLine) {
+    public void spaceSeparateRequestLine(String requestLine) {
         String spaceSeparateRequestLineArray[] = (requestLine.split(" "));
 
         this.method = spaceSeparateRequestLineArray[0];
@@ -79,9 +77,8 @@ public class HttpRequest {
         if (this.filePath.endsWith("/")) {
             this.filePath += "hello.html";
         }
-        this.httpVersion = spaceSeparateRequestLineArray[2];
+        String httpVersion = spaceSeparateRequestLineArray[2];
 
-        return spaceSeparateRequestLineArray;
     }
 
     /**
