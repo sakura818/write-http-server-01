@@ -29,7 +29,6 @@ public class MIME {
         }
     };
 
-
     /**
      * ファイルの拡張子を取得する
      *
@@ -54,8 +53,8 @@ public class MIME {
      *
      * @param fileName ファイル名
      * @return CONTENT_TYPE
-     *
      */
+
     public static String selectContentType(String fileName) {
         String fileExtension = partFileExtension(fileName);
         if (fileExtension == null) {
@@ -67,6 +66,5 @@ public class MIME {
             return mapMIME.get("octet-stream");
         }
     }
-
 
 }

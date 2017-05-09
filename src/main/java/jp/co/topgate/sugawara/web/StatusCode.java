@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * StatusCode Class
  * リクエストに応じて適切なステータスコードを判断するクラス
+ *
  * @author sakura818
  */
 public class StatusCode {
@@ -33,7 +34,8 @@ public class StatusCode {
             reasonPhrase = mapStatusCode.get(statusCode);
             return this.statusCode + " " + reasonPhrase;
         } else {
-            return this.statusCode + "Unknown";
+            reasonPhrase = "Unknown";
+            return this.statusCode + " " + "Unknown";
         }
     }
 

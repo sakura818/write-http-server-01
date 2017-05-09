@@ -41,4 +41,14 @@ public class StatusCodeTest {
         assertThat("Not Found", is(status.getReasonPhrase()));
         assertThat("404 Not Found", is(status.getStatusCodeAndReasonPhrase()));
     }
+
+    @Test
+    public void 想定していないStatusCodeのときのテスト() {
+        StatusCode status = new StatusCode();
+
+        status.setStatusCode(500);
+        assertThat(500, is(status.getStatusCode()));
+        assertThat("Unknown", is(status.getReasonPhrase()));
+        assertThat("500 Unknown", is(status.getStatusCodeAndReasonPhrase()));
+    }
 }
