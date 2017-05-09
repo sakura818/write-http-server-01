@@ -11,6 +11,8 @@ import java.net.URLDecoder;
 /**
  * HttpRequest class
  * リクエストを分解する
+ * TODO:あとの課題のためにheaderとかmessagebody読み込むのも必要かもしれない
+ * TODO：テスト作っててホスト必要かもしれないと思った
  *
  * @author sakura818
  */
