@@ -8,12 +8,12 @@ import java.io.OutputStream;
 
 
 /*
- * HttpServer class
  * HttpRequestの処理をする
  *
  * @author sakura818
  *
  */
+
 public class HttpServer {
 
     private Socket socket;
