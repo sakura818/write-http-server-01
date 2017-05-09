@@ -63,30 +63,15 @@ public class HttpRequest {
     }
 
     /**
-     * requestUriからパス名を抜き出す
-     *
-     * @param requestUri
-     * @return requestUriのパスだけを抜き取ったもの
-     */
-    
-    public String partRequestUriPath(String requestUri) {
-        try {
-            URI requestUriPath = new URI(requestUri);
-            return requestUriPath.getPath();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri(→filePath) + httpVersion
+     * TODO:リクエストUriをdecodeする
+     * TODO:分け方と配列で返すの良くないかもしれない　methodとfilePathを戻り値としてほしい
      *
      * @param requestLine
      */
 
-    public void spaceSeparateRequestLine(String requestLine) {
+    public String[] spaceSeparateRequestLine(String requestLine) {
         String spaceSeparateRequestLineArray[] = (requestLine.split(" "));
 
         this.method = spaceSeparateRequestLineArray[0];
@@ -95,8 +80,25 @@ public class HttpRequest {
             this.filePath += "hello.html";
         }
         this.httpVersion = spaceSeparateRequestLineArray[2];
+
+        return spaceSeparateRequestLineArray;
     }
 
+    /**
+     * requestUriからパス名を抜き出す
+     *
+     * @param requestUri
+     * @return requestUriのパスだけを抜き取ったもの
+     */
+
+    public String partRequestUriPath(String requestUri) {
+        try {
+            URI requestUriPath = new URI(requestUri);
+            return requestUriPath.getPath();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 
