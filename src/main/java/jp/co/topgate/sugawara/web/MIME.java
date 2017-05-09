@@ -5,8 +5,7 @@ import java.util.Map;
 
 /**
  * MIME Class
- * MIME ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
- * <p>
+ * MIMEtype ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
  * Created by haruka.sugawara on 2017/05/08.
  */
 public class MIME {
@@ -53,6 +52,7 @@ public class MIME {
      *
      * @param fileName ファイル名
      * @return CONTENT_TYPE
+     * DefaultMIME = octet-stream
      */
     public String determineContentType(String fileName) {
         fileExtension = partFileExtension(fileName);
@@ -62,7 +62,6 @@ public class MIME {
         if (mapMIME.containsKey(fileExtension)) {
             return mapMIME.get(fileExtension);
         } else {
-            // DefaultMIME
             return mapMIME.get("octet-stream");
         }
     }
