@@ -51,7 +51,7 @@ public class HttpRequest {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             String requestLine = bufferedReader.readLine();
 
-            this.requestLineDivide(requestLine);
+            this.spaceSeparateRequestLine(requestLine);
             StringBuilder stringBuilder = new StringBuilder();
 
             while (!(requestLine).equals("")) {
@@ -68,7 +68,8 @@ public class HttpRequest {
      * @param requestUri
      * @return requestUriのパスだけを抜き取ったもの
      */
-    public String requestUriPath(String requestUri) {
+    
+    public String partRequestUriPath(String requestUri) {
         try {
             URI requestUriPath = new URI(requestUri);
             return requestUriPath.getPath();
@@ -80,19 +81,20 @@ public class HttpRequest {
 
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
-     * requestLine = method + requestUri + httpVersion
+     * requestLine = method + requestUri(→filePath) + httpVersion
      *
      * @param requestLine
      */
-    public void requestLineDivide(String requestLine) {
-        String requestUriDelimiterDivide[] = (requestLine.split(" "));
 
-        this.method = requestUriDelimiterDivide[0];
-        this.filePath = requestUriPath(requestUriDelimiterDivide[1]);
+    public void spaceSeparateRequestLine(String requestLine) {
+        String spaceSeparateRequestLineArray[] = (requestLine.split(" "));
+
+        this.method = spaceSeparateRequestLineArray[0];
+        this.filePath = partRequestUriPath(spaceSeparateRequestLineArray[1]);
         if (this.filePath.endsWith("/")) {
             this.filePath += "hello.html";
         }
-        this.httpVersion = requestUriDelimiterDivide[2];
+        this.httpVersion = spaceSeparateRequestLineArray[2];
     }
 
 
