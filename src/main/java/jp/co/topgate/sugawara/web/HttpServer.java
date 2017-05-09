@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * @author sakura818
  *
  */
-public class HttpServer extends Thread {
+public class HttpServer {
 
     private Socket socket;
     int PORT = 8080;
@@ -38,7 +38,7 @@ public class HttpServer extends Thread {
 
             HttpRequest httpRequest = new HttpRequest();
             httpRequest.readRequest(inputStream);
-            System.out.println("request incoming" + Thread.currentThread().getName());
+            System.out.println("request incoming");
             System.out.println("---------------------------------------");
 
             File file = new File(FILE_DIR, httpRequest.getFilePath());
@@ -64,7 +64,7 @@ public class HttpServer extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("正常にコネクションできないエラーが発生しました" + Thread.currentThread().getName());
+            System.out.println("正常にコネクションできないエラーが発生しました");
         }
     }
 

@@ -1,13 +1,13 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * HttpResponse class
  * レスポンスを生成する
+ * TODO:ネスト深すぎ　ファイルの読み込みがいまいちわかっていなさそう
  *
  * @author sakura818
  */
@@ -35,7 +35,7 @@ public class HttpResponse {
 
     /**
      * レスポンスの部品を集めて組み立て生成
-     * 
+     *
      */
     public void createHttpResponse(OutputStream outputStream, StatusCode statusCode) {
         // PrintWriter writer = new PrintWriter(outputStream, true);
