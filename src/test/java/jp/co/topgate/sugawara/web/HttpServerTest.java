@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpServerTest {
     @Test
-    public void 正常にコネクションできたかを判別するHttpServerのテスト() {
+    public void 正常にコネクションできたかを判断するHttpServerのテスト() {
         try {
             File htmlFile = new File("src/test/resources/hello.html");
             InputStream inputStream = new FileInputStream(htmlFile);

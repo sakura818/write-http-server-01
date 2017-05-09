@@ -45,19 +45,34 @@ public class HttpRequest {
      * @param inputStream
      */
 
-    public void readRequest(InputStream inputStream,String host ) {
+    public void readRequest(InputStream inputStream) {
         try {
-            BufferedInputStream bis = new BufferedInputStream(inputStream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(bis));
-            String requestLine = br.readLine();
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+            String requestLine = bufferedReader.readLine();
 
             this.requestLineDivide(requestLine);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (!(requestLine).equals("")) {
-                sb.append(requestLine).append("¥n");
+                stringBuilder.append(requestLine).append("\n");
             }
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * requestUriからパス名を抜き出す
+     *
+     * @param requestUri
+     * @return requestUriのパスだけを抜き取ったもの
+     */
+    public String requestUriPath(String requestUri) {
+        try {
+            URI requestUriPath = new URI(requestUri);
+            return requestUriPath.getPath();
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -81,18 +96,7 @@ public class HttpRequest {
     }
 
 
-    /**
-     * requestUriからパス名を抜き出す
-     */
-    public String requestUriPath(String requestUri) {
-        try {
-            URI requestUriPath = new URI(requestUri);
-            return requestUriPath.getPath();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-
-        }
-    }
-
-
 }
+
+
+

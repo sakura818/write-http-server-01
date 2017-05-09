@@ -19,7 +19,7 @@ public class HttpServer extends Thread {
 
     private Socket socket;
     int PORT = 8080;
-    private final String HOSTNAME = "localhost";
+    // private final String HOSTNAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
 
     public HttpServer(Socket socket, int PORT) {
@@ -38,7 +38,7 @@ public class HttpServer extends Thread {
             OutputStream outputStream = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
-            httpRequest.readRequest(inputStream, this.HOSTNAME + ":" + this.PORT);
+            httpRequest.readRequest(inputStream);
             System.out.println("request incoming" + Thread.currentThread().getName());
             System.out.println("---------------------------------------");
 
