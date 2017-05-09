@@ -13,48 +13,24 @@ import java.util.Arrays;
  */
 public class HttpHandler {
 
-    public void handlerGET(int statusCode, File file, OutputStream outputStream) throws IOException {
+    public void handlerGET(int status, File file, OutputStream outputStream) throws IOException {
         HttpResponse httpResponse = new HttpResponse();
-        Status status = new Status();
-        status.setStatus(statusCode);
+        StatusCode statusCode = new StatusCode();
+        statusCode.setStatusCode(status);
 
-        if (statusCode == 200) {
-            if (Arrays.asList("html", "txt").contains(ContentTypeUtil.getFileExtension(file.toString()))) {
-                httpResponse.addResponseHeader("Content-Type", ContentTypeUtil.getContentType(file.toString()) + "; charset=" + detectFileEncoding(file));
+        if (status == 200) {
+            if (Arrays.asList("html", "txt").contains(MIME.partFileExtension((file.toString())))) {
+                httpResponse.addResponseHeader("Content-Type", MIME.selectContentType(file.toString()) + "; charset=" + detectFileEncoding(file));
             } else {
-                httpResponse.addResponseHeader("Content-Type", ContentTypeUtil.getContentType(file.toString()));
+                httpResponse.addResponseHeader("Content-Type", MIME.selectContentType(file.toString()));
             }
-            httpResponse.setResponseBody(file);
+            httpResponse.setResponseMessageBody(file);
             httpResponse.writeTo(outputStream, status);
         } else {
             this.handlerError(statusCode, outputStream);
         }
     }
-
-
-    /**
-     * レスポンスの部品を集めて組み立て生成
-     */
-
-    public void generateHttpResponse(String statusLine) {
-
-        String httpResponseData;
-        HttpRequest httpRequest = new HttpRequest();
-        httpRequest.requestLineDivide(statusLine);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(fileExistsStatusLine()).append("\n");
-        sb.append(generateResponseMessageHeader()).append("\n");
-        if (httpRequest.getMethod() == "GET") {
-            sb.append(generateResponseMessageBody());
-        }
-
-        System.out.println("response...");
-        System.out.println(sb.toString());
-
-    }
-
+    
 
     /**
      * エラーのページを生成
