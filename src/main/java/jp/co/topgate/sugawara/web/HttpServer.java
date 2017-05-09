@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
+
 
 /*
  * HttpServer class
@@ -18,13 +18,9 @@ import java.net.Socket;
 public class HttpServer extends Thread {
 
     private Socket socket;
-    int PORT = 8080;
-    private final String HOST_NAME = "localhost";
+    final int PORT = 8080;
+    private final String HOSTNAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
-
-    /**
-     * コンストラクタ
-     */
 
     public HttpServer(Socket socket, int PORT) {
         this.PORT = PORT;
@@ -42,14 +38,14 @@ public class HttpServer extends Thread {
             OutputStream outputStream = this.socket.getOutputStream();
 
             HttpRequest httpRequest = new HttpRequest();
-            httpRequest.readRequest(inputStream, this.HOST_NAME + ":" + this.PORT);
+            httpRequest.readRequest(inputStream, this.HOSTNAME + ":" + this.PORT);
             System.out.println("request incoming" + Thread.currentThread().getName());
             System.out.println("---------------------------------------");
 
             File file = new File(FILE_DIR, httpRequest.getFilePath());
             HttpHandler httpHandler = new HttpHandler();
 
-            int statusCode = selectedStatusCode(httpRequest, file);
+            int statusCode = selectStatusCode(httpRequest, file);
 
             switch (httpRequest.getMethod()) {
                 case "GET":
@@ -75,10 +71,10 @@ public class HttpServer extends Thread {
 
 
     /**
-     * レスポンスの適切なステータスコードを返す
+     * リクエストに対応して適切なステータスコードを返す
      */
 
-    private int selectedStatusCode(HttpRequest httpRequest, File file) {
+    private int selectStatusCode(HttpRequest httpRequest, File file) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
