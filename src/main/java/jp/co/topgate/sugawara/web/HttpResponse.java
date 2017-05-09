@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * HttpResponse class
  * レスポンスを生成する
- * TODO:ネスト深すぎ　ファイルの読み込みがいまいちわかっていなさそう
+ * TODO:ネスト深すぎ　ファイルの読み込みがわかってない
  *
  * @author sakura818
  */
@@ -15,6 +15,7 @@ public class HttpResponse {
     private String responseMessageBodyText;
     private File responseMessageBodyFile;
     BufferedInputStream bis = null;
+    StatusCode statusCode = new StatusCode();
 
     private String statusLine;
     private String extension;
@@ -35,13 +36,12 @@ public class HttpResponse {
 
     /**
      * レスポンスの部品を集めて組み立て生成
-     *
      */
-    public void createHttpResponse(OutputStream outputStream, StatusCode statusCode) {
+    public void createHttpResponse(OutputStream outputStream, int currentstatusCode) {
         // PrintWriter writer = new PrintWriter(outputStream, true);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode()).append("\n");
+        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode(currentstatusCode)).append("\n");
         sb.append(createResponseMessageHeader()).append("\n");
         sb.append(createResponseMessageBody(statusCode)).append("\n");
 
@@ -91,7 +91,6 @@ public class HttpResponse {
 
     /**
      * entityheaderの部品を集めて組み立て生成
-     *
      */
 
     public String createEntityHeader() {
@@ -99,7 +98,6 @@ public class HttpResponse {
         StringBuilder sb = new StringBuilder();
         sb.append("Allow: " + "GET, HEAD").append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
-        MIME mime = new MIME();
         sb.append(MIME.selectContentType(".html")).append("\n");
 
         String entityHeader = new String(sb);
@@ -122,6 +120,50 @@ public class HttpResponse {
         return responseMessageHeader;
     }
 
+    public String statusCode200(int currentstatusCode) {
+        if (statusCode.getStatusCode() == 200) {
+            try {
+                FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
+                bis = new BufferedInputStream(fis);
+
+                int i = fis.read();
+                {
+                    while (i != -1) {
+                        char c = (char) i;
+                        System.out.println(c);
+                        i = fis.read();
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (bis != null) try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "200 Response Message Body";
+    }
+
+    public String statusCode400(int status) {
+        if (statusCode.getStatusCode() == 400) {
+        }
+        String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
+                "<body><h1>Bad Request</h1>" +
+                "<p>リクエストにエラーがあります。</p></body></html>";
+        return errorPageHtml400;
+    }
+
+    public String statusCode404(int status) {
+        if (statusCode.getStatusCode() == 404) {}
+            String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
+                    "<body><h1>Not Found</h1>" +
+                    "<p>該当のページは見つかりませんでした。</p></body></html>";
+        return errorPageHtml404;
+    }
+
 
     /**
      * ResponseMessageBodyを生成
@@ -129,52 +171,6 @@ public class HttpResponse {
     public String createResponseMessageBody(StatusCode statusCode) {
 
         return "responseMessageBody";
-
-        if (this.responseMessageBodyFile != null) {
-            switch (statusCode.getStatusCode()) {
-                case 200:
-                    try {
-                        FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
-                        bis = new BufferedInputStream(fis);
-
-                        int i = fis.read();
-                        {
-                            while (i != -1) {
-                                char c = (char) i;
-                                System.out.println(c);
-                                i = fis.read();
-                            }
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        if (bis != null) try {
-                            bis.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    return "200 Response Message Body";
-
-                case 400:
-                    String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
-                            "<body><h1>Bad Request</h1>" +
-                            "<p>リクエストにエラーがあります。<br /></p></body></html>";
-                    break;
-
-                case 404:
-                    String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
-                            "<body><h1>Not Found</h1>" +
-                            "<p>該当のページは見つかりませんでした。</p></body></html>";
-                    break;
-
-                default:
-                    String errorPageHtmlDefault = "<html><head><title>500 Internal Server Error</title></head>" +
-                            "<body><h1>Internal Server Error</h1>" +
-                            "<p>サーバー内部のエラーにより表示できません。</p></body></html>";
-            }
-        }
 
     }
 }

@@ -18,7 +18,6 @@ public class HttpServer {
 
     private Socket socket;
     int PORT = 8080;
-    // private final String HOSTNAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
 
     public HttpServer(Socket socket, int PORT) {
@@ -42,18 +41,19 @@ public class HttpServer {
             System.out.println("---------------------------------------");
 
             File file = new File(FILE_DIR, httpRequest.getFilePath());
-            HttpHandler httpHandler = new HttpHandler();
+            Method method = new Method();
 
-            int statusCode = selectStatusCode(httpRequest, file);
-
+            int currentStatusCode = selectStatusCode(httpRequest, file);
+            /*
             switch (httpRequest.getMethod()) {
                 case "GET":
-                    httpHandler.handlerGet(statusCode, file, outputStream);
+                    method.methodGET(currentStatusCode, file, outputStream);
                     break;
                 case "HEAD":
-                    httpHandler.handlerError(statusCode, outputStream);
+                    method.methodHEAD(currentStatusCode, outputStream);
                     break;
             }
+            */
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
