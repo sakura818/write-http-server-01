@@ -17,20 +17,35 @@ public class HttpResponseContent {
 
     /**
      * レスポンスの部品を集めて組み立て生成
+     *
      */
     public String createHttpResponseContent(OutputStream outputStream, int currentStatusCode) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("HTTP/1.1" + " " + statusCode.mappingStatusCode(currentStatusCode)).append("\n");
+        stringBuilder.append(createResponseStatusLine()).append("\n");
         stringBuilder.append(createResponseMessageHeader()).append("\n");
         stringBuilder.append(createResponseMessageBody(statusCode)).append("\n");
         String httpResponseContent = new String(stringBuilder);
         return httpResponseContent;
     }
 
+    /**
+     * ResponseStatusLineを生成する
+     * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
+     */
+
+    public String createResponseStatusLine() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("HTTP/1.1").append(" ");;
+        stringBuilder.append(statusCode).append(" ");
+        stringBuilder.append(reasonPhrase);
+        String responseStatusLineContent = new String(stringBuilder);
+        return responseStatusLineContent;
+    }
+
 
     /**
      * ResponseMessageHeaderを生成する
-     * ResponseMessageHeader = GeneralHeader + ResponseHeader + EntityHeader
+     * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      */
 
     public String createResponseMessageHeader() {
