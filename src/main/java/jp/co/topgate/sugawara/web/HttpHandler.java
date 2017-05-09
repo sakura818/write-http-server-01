@@ -13,6 +13,11 @@ import java.util.Arrays;
  */
 public class HttpHandler {
 
+
+    /**
+     * hogehoge
+     */
+
     public void handlerGET(int status, File file, OutputStream outputStream) throws IOException {
         HttpResponse httpResponse = new HttpResponse();
         StatusCode statusCode = new StatusCode();
@@ -30,12 +35,11 @@ public class HttpHandler {
             this.handlerError(statusCode, outputStream);
         }
     }
-    
+
 
     /**
      * エラーのページを生成
      */
-
 
     private String generateResponseErrorMessageBody(int statusCode) {
         String errorPageHtml;
@@ -59,7 +63,6 @@ public class HttpHandler {
         }
         return errorPageHtml;
     }
-
 
 
 }

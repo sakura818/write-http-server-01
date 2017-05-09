@@ -13,23 +13,13 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpResponseTest {
 
-
     @Test
-    public void メソッドHttpResponseGenerateがステータスラインとヘッダーとメッセージボディの３つを順序にならべてレスポンスを組み立てる() {
-    }
-
-    @Test
-    public void メソッドFileExistsCheckがリクエストされたファイルがローカルファイルに存在するかしないかの真偽() {
+    public void createResponseMessageBodyのテストのメソッド() {
 
     }
 
     @Test
-    public void メソッドCreateStatusLineが条件に応じてステータスコードを生成する() {
-
-    }
-
-    @Test
-    public void メソッドcreateContentTypeが条件に応じてコンテントタイプを生成する() {
+    public void メソッド() {
 
     }
 }
