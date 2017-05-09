@@ -45,7 +45,7 @@ public class HttpRequest {
      * @param inputStream
      */
 
-    public void readRequest(InputStream inputStream) {
+    public void readRequest(InputStream inputStream,String host ) {
         try {
             BufferedInputStream bis = new BufferedInputStream(inputStream);
             BufferedReader br = new BufferedReader(new InputStreamReader(bis));

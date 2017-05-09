@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public class HttpServer extends Thread {
 
     private Socket socket;
-    final int PORT = 8080;
+    int PORT = 8080;
     private final String HOSTNAME = "localhost";
     private static final String FILE_DIR = "src/main/resources/";
 
