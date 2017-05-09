@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by haruka.sugawara on 2017/05/08.
+ * @author sakura818
  */
 public class StatusCode {
 

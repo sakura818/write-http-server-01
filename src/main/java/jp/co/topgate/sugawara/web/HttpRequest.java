@@ -65,6 +65,7 @@ public class HttpRequest {
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri(→filePath) + httpVersion
      * TODO:リクエストUriをdecodeする
+     * TODO:3つに分割できなかった場合の条件分岐 nullにする
      *
      * @param requestLine
      */
@@ -78,7 +79,6 @@ public class HttpRequest {
             this.filePath += "hello.html";
         }
         String httpVersion = spaceSeparateRequestLineArray[2];
-
     }
 
     /**

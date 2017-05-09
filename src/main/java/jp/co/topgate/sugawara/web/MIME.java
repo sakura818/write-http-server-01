@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * MIME Class
  * MIMEtype ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
- * Created by haruka.sugawara on 2017/05/08.
+ * @author sakura818
  */
 public class MIME {
     private static final Map<String, String> mapMIME = new HashMap<String, String>() {

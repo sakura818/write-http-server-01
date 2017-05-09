@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by haruka.sugawara on 2017/05/08.
+ * @author sakura818
  */
 public class MIMETest {
     @Test
