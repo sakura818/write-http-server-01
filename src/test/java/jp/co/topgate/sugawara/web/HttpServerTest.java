@@ -12,6 +12,7 @@ import static org.junit.Assert.assertThat;
 /**
  * HttpServerTest Class
  * connectionを管理するのをテストするクラス
+ *
  * @author sakura818
  */
 public class HttpServerTest {
@@ -25,7 +26,7 @@ public class HttpServerTest {
             OutputStream outputStream = new FileOutputStream(pngFile);
 
             HttpRequest request = new HttpRequest();
-            request.readRequest(inputStream, "localhost:8080");
+            request.readRequest(inputStream);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

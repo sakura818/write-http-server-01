@@ -14,6 +14,12 @@ public class StatusCode {
     private String reasonPhrase;
     private String statusCodeAndReasonPhrase;
 
+    /**
+     * ステータスコードを引数にstatuscode+空白+reasonPhraseを戻り値とする
+     *
+     * @param statusCode 例えば200
+     */
+
     public String mappingStatusCode(int statusCode) {
         final Map<Integer, String> mapStatusCode = new HashMap<Integer, String>() {
             {
@@ -31,7 +37,7 @@ public class StatusCode {
     }
 
     /**
-     * テストのためにステータスコードを設定する。
+     * テストのためにステータスコードを設定する
      *
      * @param i ステータスコード　例えば200
      */
@@ -41,7 +47,7 @@ public class StatusCode {
     }
 
     /**
-     * テストのために現在設定されているstatusCodeを取得する。
+     * テストのために現在設定されているstatusCodeを取得する
      *
      * @return statusCode
      */
@@ -59,7 +65,7 @@ public class StatusCode {
     }
 
     /**
-     * テストのために現在設定されているstatusCodeとreasonPhraseを取得する。
+     * テストのために現在設定されているstatusCodeとreasonPhraseを取得する
      *
      * @return statusCode and reasonPhrase
      */

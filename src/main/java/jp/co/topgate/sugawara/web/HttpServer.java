@@ -27,7 +27,7 @@ public class HttpServer extends Thread {
     }
 
     /**
-     * リクエスト
+     * 入出力の管理を行う
      */
 
     public void connection() {

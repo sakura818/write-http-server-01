@@ -35,24 +35,24 @@ public class HttpResponse {
 
     /**
      * レスポンスの部品を集めて組み立て生成
-     * バイナリファイルを読み込んで表示するコード
+     * 
      */
-    public void generateHttpResponse(OutputStream outputStream, StatusCode status) {
+    public void createHttpResponse(OutputStream outputStream, StatusCode statusCode) {
         // PrintWriter writer = new PrintWriter(outputStream, true);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + status.getStatus()).append("\n");
-        sb.append(generateResponseMessageHeader()).append("\n");
-        sb.append(generateResponseMessageBody()).append("\n");
+        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode()).append("\n");
+        sb.append(createResponseMessageHeader()).append("\n");
+        sb.append(createResponseMessageBody(statusCode)).append("\n");
 
     }
 
 
     /**
      * generalheaderに使われるメッセージが生成された日付・時刻を表すDate行を生成
-     * RFC 1123 の時刻フォーマット
+     * RFC1123 の時刻フォーマット
      */
-    public String generateHttpDateTime() {
+    public String createHttpDateTime() {
         SimpleDateFormat HttpDateFormat =
                 new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss zzz", java.util.Locale.US);
         HttpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -66,10 +66,10 @@ public class HttpResponse {
      * generalheaderの部品を集めて組み立て生成
      */
 
-    public String generateGeneralHeader() {
+    public String createGeneralHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Date: " + generateHttpDateTime()).append("\n");
+        sb.append("Date: " + createHttpDateTime()).append("\n");
 
         String generalHeader = new String(sb);
         return generalHeader;
@@ -80,7 +80,7 @@ public class HttpResponse {
      * responseheaderの部品を集めて組み立て生成
      */
 
-    public String generateResponseHeader() {
+    public String createResponseHeader() {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Server: " + "sakura818").append("\n");
@@ -91,17 +91,16 @@ public class HttpResponse {
 
     /**
      * entityheaderの部品を集めて組み立て生成
-     * // TODO: Content-Lengthを計算するメソッドを作成して呼び出す
+     *
      */
 
-    public String generateEntityHeader() {
+    public String createEntityHeader() {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Allow: " + "GET, HEAD").append("\n");
         sb.append("Content-Language: " + "ja, en").append("\n");
-        // sb.append("Content-Length: " + "3495").append("\n");
-        ContentType contentType = new ContentType();
-        sb.append(contentType.determineContentType(".html")).append("\n");
+        MIME mime = new MIME();
+        sb.append(MIME.selectContentType(".html")).append("\n");
 
         String entityHeader = new String(sb);
         return entityHeader;
@@ -112,12 +111,12 @@ public class HttpResponse {
      * ResponseMessageHeader = generalHeader + responseHeader + entityHeader
      */
 
-    public String generateResponseMessageHeader() {
+    public String createResponseMessageHeader() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(generateGeneralHeader());
-        sb.append(generateResponseHeader());
-        sb.append(generateEntityHeader());
+        sb.append(createGeneralHeader());
+        sb.append(createResponseHeader());
+        sb.append(createEntityHeader());
 
         String responseMessageHeader = new String(sb);
         return responseMessageHeader;
@@ -127,14 +126,12 @@ public class HttpResponse {
     /**
      * ResponseMessageBodyを生成
      */
-    public String generateResponseMessageBody(StatusCode status) {
+    public String createResponseMessageBody(StatusCode statusCode) {
 
         return "responseMessageBody";
 
-
         if (this.responseMessageBodyFile != null) {
-            String errorPageHtml;
-            switch (status.getStatus()) {
+            switch (statusCode.getStatusCode()) {
                 case 200:
                     try {
                         FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
@@ -161,23 +158,22 @@ public class HttpResponse {
                     return "200 Response Message Body";
 
                 case 400:
-                    errorPageHtml = "<html><head><title>400 Bad Request</title></head>" +
+                    String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
                             "<body><h1>Bad Request</h1>" +
                             "<p>リクエストにエラーがあります。<br /></p></body></html>";
                     break;
 
                 case 404:
-                    errorPageHtml = "<html><head><title>404 Not Found</title></head>" +
+                    String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
                             "<body><h1>Not Found</h1>" +
                             "<p>該当のページは見つかりませんでした。</p></body></html>";
                     break;
 
                 default:
-                    errorPageHtml = "<html><head><title>500 Internal Server Error</title></head>" +
+                    String errorPageHtmlDefault = "<html><head><title>500 Internal Server Error</title></head>" +
                             "<body><h1>Internal Server Error</h1>" +
                             "<p>サーバー内部のエラーにより表示できません。</p></body></html>";
             }
-            return errorPageHtml;
         }
 
     }
