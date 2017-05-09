@@ -5,14 +5,17 @@ import java.util.Map;
 
 /**
  * MIME Class
- * MIMEtype ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
+ * ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
+ *
  * @author sakura818
+ * TODO:rename
  */
+
 public class MIME {
     private static final Map<String, String> mapMIME = new HashMap<String, String>() {
         {
-            put("html", "text/html; charset=utf-8");
-            put("htm", "text/html; charset=utf-8");
+            put("html", "text/html");
+            put("htm", "text/html");
             put("css", "text/css");
             put("js", "application/javascript");
             put("jpg", "image/jpeg");
@@ -47,10 +50,11 @@ public class MIME {
 
     /**
      * ファイルの拡張子に対応するContentTypeを返す
+     * DefaultMIME = octet-stream
      *
      * @param fileName ファイル名
      * @return CONTENT_TYPE
-     * DefaultMIME = octet-stream
+     *
      */
     public static String selectContentType(String fileName) {
         String fileExtension = partFileExtension(fileName);

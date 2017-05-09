@@ -19,15 +19,11 @@ public class Method {
     /**
      * hogehoge
      */
-
     public void managerMethod(int currentStatusCode, File file, OutputStream outputStream) throws IOException {
         HttpResponse httpResponse = new HttpResponse();
         StatusCode statusCode = new StatusCode();
         statusCode.setStatusCode(currentStatusCode);
 
     }
-
-
-
 
 }

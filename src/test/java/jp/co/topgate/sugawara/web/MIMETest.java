@@ -20,16 +20,14 @@ public class MIMETest {
         assertThat("html", is(MIME.partFileExtension("hoge.html")));
 
         // 拡張子がtxtのファイル
-        assertThat("text/plain", is(MIME.partFileExtension("hoge.txt")));
+        assertThat("txt", is(MIME.partFileExtension("hoge.txt")));
 
         // 拡張子のないファイル
         assertThat(null, is(MIME.partFileExtension("hoge")));
 
-        // ファイルに二重に連続に'.'がある
+        // ファイルのなかに連続して"."がある
         assertThat("html", is(MIME.partFileExtension("hoge..html")));
-
-        // ファイル名の終わりに拡張子がない
-        assertThat("octet-stream", is(MIME.partFileExtension("hoge.")));
+        
     }
 
     @Test
@@ -49,11 +47,9 @@ public class MIMETest {
         // 拡張子のないファイル
         assertThat(null, is(MIME.selectContentType("hoge")));
 
-        // ファイルに二重に連続に'.'がある
+        // ファイルのなかに連続して"."がある
         assertThat("text/html", is(MIME.selectContentType("hoge..html")));
 
-        // ファイル名の終わりに拡張子がない
-        assertThat("application/octet-stream", is(MIME.selectContentType("hoge.")));
     }
 
 

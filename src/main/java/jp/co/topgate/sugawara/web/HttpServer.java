@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 /*
  * HttpServer class
- * connectionを管理する
+ * HttpRequestの処理をする
  *
  * @author sakura818
  *

@@ -7,12 +7,11 @@ import java.util.*;
 /**
  * HttpResponse class
  * レスポンスを生成する
- * TODO:ネスト深すぎ　ファイルの読み込みがわかってない
+ * TODO:ファイルの読み込みがわかってない
  *
  * @author sakura818
  */
 public class HttpResponse {
-    private String responseMessageBodyText;
     private File responseMessageBodyFile;
     BufferedInputStream bis = null;
     StatusCode statusCode = new StatusCode();
@@ -20,28 +19,21 @@ public class HttpResponse {
     private String statusLine;
     private String extension;
 
-
     public String getStatusLine() {
         return this.statusLine;
     }
-
-    public void setResponseMessageBody(String text) {
-        this.responseMessageBodyText = text;
-    }
-
     public void setResponseMessageBodyFile(File file) {
         this.responseMessageBodyFile = file;
     }
 
-
     /**
      * レスポンスの部品を集めて組み立て生成
      */
-    public void createHttpResponse(OutputStream outputStream, int currentstatusCode) {
+    public void createHttpResponse(OutputStream outputStream, int currentStatusCode) {
         // PrintWriter writer = new PrintWriter(outputStream, true);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode(currentstatusCode)).append("\n");
+        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode(currentStatusCode)).append("\n");
         sb.append(createResponseMessageHeader()).append("\n");
         sb.append(createResponseMessageBody(statusCode)).append("\n");
 
@@ -120,7 +112,7 @@ public class HttpResponse {
         return responseMessageHeader;
     }
 
-    public String statusCode200(int currentstatusCode) {
+    public String statusCode200(int currentStatusCode) {
         if (statusCode.getStatusCode() == 200) {
             try {
                 FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
@@ -147,7 +139,7 @@ public class HttpResponse {
         return "200 Response Message Body";
     }
 
-    public String statusCode400(int status) {
+    public String statusCode400(int currentStatusCode) {
         if (statusCode.getStatusCode() == 400) {
         }
         String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
@@ -156,7 +148,7 @@ public class HttpResponse {
         return errorPageHtml400;
     }
 
-    public String statusCode404(int status) {
+    public String statusCode404(int currentStatusCode) {
         if (statusCode.getStatusCode() == 404) {}
             String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +

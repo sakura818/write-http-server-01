@@ -15,7 +15,8 @@ public class StatusCode {
     private String statusCodeAndReasonPhrase;
 
     /**
-     * ステータスコードを引数にstatuscode+空白+reasonPhraseを戻り値とする
+     * ステータスコードを引数にstatusCode+空白+reasonPhraseを戻り値とする
+     * 戻り値は例えば200 OK
      *
      * @param statusCode 例えば200
      */
