@@ -9,7 +9,6 @@ import java.util.Map;
  * Created by haruka.sugawara on 2017/05/08.
  */
 public class MIME {
-    String fileExtension;
     private static final Map<String, String> mapMIME = new HashMap<String, String>() {
         {
             put("html", "text/html; charset=utf-8");
@@ -35,14 +34,13 @@ public class MIME {
      * @return ファイルの拡張子
      */
 
-    public String partFileExtension(String fileName) {
+    public static String partFileExtension(String fileName) {
         if (fileName == null) {
             return null;
         }
         int lastDotPosition = fileName.lastIndexOf(".");
         if (lastDotPosition != -1) {
-            fileExtension = fileName.substring(lastDotPosition + 1);
-            return fileExtension;
+            return fileName.substring(lastDotPosition + 1);
         }
         return null;
     }
@@ -54,8 +52,8 @@ public class MIME {
      * @return CONTENT_TYPE
      * DefaultMIME = octet-stream
      */
-    public String determineContentType(String fileName) {
-        fileExtension = partFileExtension(fileName);
+    public static String selectContentType(String fileName) {
+        String fileExtension = partFileExtension(fileName);
         if (fileExtension == null) {
             return null;
         }
