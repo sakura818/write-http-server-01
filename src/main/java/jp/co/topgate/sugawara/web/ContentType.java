@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * MIME Class
- * ファイル名から拡張子を取得し、それに応じたContentTypeをかえす
+ * ファイル名から拡張子を取得しContentTypeを返す
  *
  * @author sakura818
  * TODO:rename
