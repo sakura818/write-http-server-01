@@ -13,6 +13,8 @@ public class HttpResponse {
 
     /**
      * レスポンスを出力ストリームOutputStreamに送信する
+     * @param HttpResponseContent.javaのcreateHttpResponseContentメソッドの戻り値
+     * @return バイト型のデータ
      */
     public void sendHttpResponseToOutputStream(OutputStream outputStream) {
         //PrintWriter writer = new PrintWriter(outputStream, true);
@@ -25,9 +27,9 @@ public class HttpResponse {
         */
         HttpResponseContent httpResponseContent = new HttpResponseContent();
         byte[] byteHttpResponse = httpResponseContent.getHttpResponseContent().getBytes();
-        FileOutputStream fileOutputStream = new FileOutputStream(outputStream);
-        fileOutputStream.write(byteHttpResponse);
-        fileOutputStream.close();
+        //FileOutputStream fileOutputStream = new FileOutputStream(outputStream);
+        //fileOutputStream.write(byteHttpResponse);
+       // fileOutputStream.close();
 
 
     }

@@ -18,6 +18,7 @@ public class HttpRequest {
      * HttpRequestを行ごとに読み込む
      *
      * @param inputStream
+     * @return readLine リクエストの1行目
      */
 
     public String readHttpRequest(InputStream inputStream) {
@@ -41,7 +42,8 @@ public class HttpRequest {
      * requestLine = method + requestUri(→filePath) + httpVersion
      * methodとhttpVersionは使用しないため配列の要素に追加しない
      *
-     * @param
+     * @param inputStream
+     * @return file 例えばindex.html
      */
 
     public String spaceSeparateRequestLine(InputStream inputStream) {
@@ -61,7 +63,7 @@ public class HttpRequest {
      * requestUriからファイル名を抜き出す
      *
      * @param requestUri 　例えばhttp://localhost:8080/index.html
-     * @return file index.html
+     * @return file 例えばindex.html
      */
 
     public String parseFile(String requestUri) {

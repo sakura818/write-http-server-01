@@ -17,13 +17,15 @@ public class HttpResponseContent {
     }
 
     /**
-     * レスポンスの部品を集めて組み立て生成
-     * response = createResponseStatusLine + createResponseMessageHeader + createResponseMessageBody
+     * レスポンスのコンテンツを生成
+     * createHttpResponseContent = createResponseStatusLine + createResponseMessageHeader + createResponseMessageBody
+     * @param statusCode
+     * @return httpResponseContent
      */
-    public String createHttpResponseContent(int statusCode, String filePath) {
+    public String createHttpResponseContent(int statusCode, String file) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(createResponseStatusLine(statusCode)).append("\n");
-        stringBuilder.append(createResponseMessageHeader(filePath)).append("\n");
+        stringBuilder.append(createResponseMessageHeader(file)).append("\n");
         stringBuilder.append(createResponseMessageBody()).append("\n");
         String httpResponseContent = new String(stringBuilder);
         return httpResponseContent;
@@ -32,6 +34,8 @@ public class HttpResponseContent {
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
+     * @param statusCode
+     * @return responseStatusLineContent
      */
 
     public String createResponseStatusLine(int statusCode) {
@@ -47,13 +51,15 @@ public class HttpResponseContent {
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
+     * @param file
+     * @return  responseMessageHeaderContent
      */
 
-    public String createResponseMessageHeader(String filePath) {
+    public String createResponseMessageHeader(String file) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(createGeneralHeader());
         stringBuilder.append(createResponseHeader());
-        stringBuilder.append(createEntityHeader(filePath));
+        stringBuilder.append(createEntityHeader(file));
         String responseMessageHeaderContent = new String(stringBuilder);
         return responseMessageHeaderContent;
     }
@@ -62,6 +68,7 @@ public class HttpResponseContent {
      * GeneralHeaderを生成する
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
      * 今回はなにもここに追加しないが、Cache-ControlやDateなどを追加するときここに記述する
+     * @param generalHeaderContent
      */
 
     public String createGeneralHeader() {
@@ -73,6 +80,7 @@ public class HttpResponseContent {
     /**
      * ResponseHeaderを生成する
      * ResponseHeaderとはサーバについてや、Request-URI によって識別されるリソースへの更なるアクセスに関する情報を与える。
+     * @return ResponseHeader
      */
 
     public String createResponseHeader() {
@@ -85,13 +93,15 @@ public class HttpResponseContent {
     /**
      * EntityHeaderを生成する
      * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
+     * @param file
+     * @return EntityHeader
      */
 
-    public String createEntityHeader(String filePath) {
+    public String createEntityHeader(String file) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Allow: " + "GET").append("\n");
         stringBuilder.append("Content-Language: " + "en").append("\n");
-        stringBuilder.append(createContentType(filePath)).append("\n");
+        stringBuilder.append(createContentType(file)).append("\n");
         String entityHeaderContent = new String(stringBuilder);
         return entityHeaderContent;
     }
@@ -100,13 +110,13 @@ public class HttpResponseContent {
      * ContentTypeを生成する
      * ContentTypeとは元のデータのメディアタイプ
      *
-     * @param filePath
-     * @return ContentType
+     * @param file ex:index.html
+     * @return ContentType ex:text/html
      */
 
-    public String createContentType(String filePath) {
-        if (extensionToContentType.containsKey(extractExtension(filePath))) {
-            return extensionToContentType.get(extractExtension(filePath));
+    public String createContentType(String file) {
+        if (extensionToContentType.containsKey(extractExtension(file))) {
+            return extensionToContentType.get(extractExtension(file));
         }
         return null;
     }
@@ -114,17 +124,17 @@ public class HttpResponseContent {
     /**
      * ファイルパスから拡張子を抜き出す。なぜならContentTypeはファイルパスの拡張子によって判別されるから。
      *
-     * @param filePath
-     * @return ファイルパスの拡張子　例えばhtmlやtxt
+     * @param file
+     * @return ファイルの拡張子　ex:html
      */
 
-    public static String extractExtension(String filePath) {
-        if (filePath == null) {
+    public static String extractExtension(String file) {
+        if (file == null) {
             return null;
         }
-        int lastDotPosition = filePath.lastIndexOf(".");
+        int lastDotPosition = file.lastIndexOf(".");
         if (lastDotPosition != -1) {
-            return filePath.substring(lastDotPosition + 1);
+            return file.substring(lastDotPosition + 1);
         }
         return null;
     }
@@ -151,6 +161,7 @@ public class HttpResponseContent {
 
     /**
      * ResponseMessageBodyを生成する
+     * @return ResponseMessageBody
      */
 
     public String createResponseMessageBody() {
@@ -195,7 +206,7 @@ public class HttpResponseContent {
     }
 
     /**
-     * テストのために現在設定されているreasonPhraseを取得する。
+     * テストのために現在設定されているreasonPhraseを取得する
      *
      * @return reasonPhrase
      */
@@ -206,16 +217,16 @@ public class HttpResponseContent {
 
 
     /**
-     * リクエストに対応して適切なステータスコードを返す
+     * リクエストに応じて適切なステータスコードを返す
      */
 
-    public int selectStatusCode(String method, File filePath) {
+    public int selectStatusCode(String method, File file) {
         int statusCode;
         if (method == null) {
             statusCode = 400;
             return statusCode;
         }
-        if (!filePath.exists()) {
+        if (!file.exists()) {
             statusCode = 404;
             return statusCode;
         }
@@ -227,14 +238,19 @@ public class HttpResponseContent {
     // private static final String FILE_DIR = "src/main/resources/";
     // File file = new File(FILE_DIR, httpRequest.getFilePath());
 
+    /**
+     * ステータスコードに応じて適切なファイルやhtmlを返す
+     * 名前がひどい　分け方よくない
+     */
 
-    public String statusCode200(int statusCode, File file) {
+
+    public String readBinaryFile(int statusCode, File file) {
         FileInputStream fileInputStream = null;
         /*
 
         バイト型のファイルを読み込み、それをStringBuilderにいれるためString型に変換する。
         1. FileInputStreamでバイト型のファイルを読み込む
-        2. 1で生成したバイト型のファイルをString型に変換する .toChar();
+        2. 1で生成したバイト型のファイルをString型に変換する .toCharArray();
         */
         if (statusCode == 200) {
             try {
@@ -243,7 +259,9 @@ public class HttpResponseContent {
                 while ((i = fileInputStream.read()) != -1) {
                     System.out.print((char) i);
                 }
-                i = Char(i);
+                byte b = (byte)i;
+                String str = Byte.toString(b);
+                return str;
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -259,7 +277,7 @@ public class HttpResponseContent {
         return "200 Response Message Body";
     }
 
-    public String statusCode400(int statusCode) {
+    public String badRequest(int statusCode) {
         if (statusCode == 400) {
         }
         String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
@@ -268,7 +286,7 @@ public class HttpResponseContent {
         return errorPageHtml400;
     }
 
-    public String statusCode404(int statusCode) {
+    public String notFound(int statusCode) {
         if (statusCode == 404) {
         }
         String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
