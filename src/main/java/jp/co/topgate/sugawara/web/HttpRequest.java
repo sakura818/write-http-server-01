@@ -86,7 +86,7 @@ public class HttpRequest {
     /**
      * requestUriからパス名を抜き出す
      *
-     * @param requestUri
+     * @param requestUri　例えば
      * @return requestUriのパスだけを抜き取ったもの
      */
 

@@ -17,13 +17,12 @@ public class HttpResponseContent {
 
     /**
      * レスポンスの部品を集めて組み立て生成
-     *
      */
-    public String createHttpResponseContent(OutputStream outputStream, int currentStatusCode) {
+    public String createHttpResponseContent(OutputStream outputStream) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(createResponseStatusLine()).append("\n");
         stringBuilder.append(createResponseMessageHeader()).append("\n");
-        stringBuilder.append(createResponseMessageBody(statusCode)).append("\n");
+        stringBuilder.append(createResponseMessageBody()).append("\n");
         String httpResponseContent = new String(stringBuilder);
         return httpResponseContent;
     }
@@ -35,7 +34,8 @@ public class HttpResponseContent {
 
     public String createResponseStatusLine() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("HTTP/1.1").append(" ");;
+        stringBuilder.append("HTTP/1.1").append(" ");
+        ;
         stringBuilder.append(statusCode).append(" ");
         stringBuilder.append(reasonPhrase);
         String responseStatusLineContent = new String(stringBuilder);
@@ -111,6 +111,7 @@ public class HttpResponseContent {
 
     /**
      * ファイルパスから拡張子を抜き出す。なぜならContentTypeはファイルパスの拡張子によって判別されるから。
+     *
      * @param filePath
      * @return ファイルパスの拡張子　例えばhtmlやtxt
      */
@@ -146,10 +147,14 @@ public class HttpResponseContent {
         }
     };
 
+    /**
+     * ResponseMessageBodyを生成する
+     */
+    public String createResponseMessageBody() {
 
+        return "responseMessageBody";
 
-
-
+    }
 
 
     public String statusCode200(int currentStatusCode) {
@@ -197,14 +202,5 @@ public class HttpResponseContent {
         return errorPageHtml404;
     }
 
-
-    /**
-     * ResponseMessageBodyを生成
-     */
-    public String createResponseMessageBody(StatusCode statusCode) {
-
-        return "responseMessageBody";
-
-    }
 
 }

@@ -27,17 +27,45 @@ public class HttpResponse {
     }
 
     /**
-     * レスポンスの部品を集めて組み立て生成
+     * レスポンスをクライアントに送信する
      */
-    public void createHttpResponse(OutputStream outputStream, int currentStatusCode) {
-        // PrintWriter writer = new PrintWriter(outputStream, true);
+    public void sendHttpResponse(createHttpResponseContentの戻り値) {
+        PrintWriter writer = new PrintWriter(outputStream, true);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("HTTP/1.1 " + statusCode.mappingStatusCode(currentStatusCode)).append("\n");
-        sb.append(createResponseMessageHeader()).append("\n");
-        sb.append(createResponseMessageBody(statusCode)).append("\n");
+
 
     }
+
+    public void ResponseWriter(OutputStream outputStream, String statusLine, String responseHeader, byte[] byteContents)
+            throws IOException {
+
+
+        try {
+
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+
+            // PrintWriter:テキスト出力ストリームに出力する
+            PrintWriter writer = new PrintWriter(outputStream, true);
+
+            // Stringに変えて、出力ストリームに送信
+            writer.print(builder.toString());
+
+            System.out.println("bsの中身は" + byteContents);
+
+            dataOutputStream.write(byteContents, 0, byteContents.length);
+
+            dataOutputStream.flush();
+
+            dataOutputStream.close();
+
+        } catch (IOException e) {
+            System.out.println("送信エラーです");
+            e.printStackTrace();
+        }
+    }
+
+}
 
 }
 
