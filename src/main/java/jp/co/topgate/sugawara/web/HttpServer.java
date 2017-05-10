@@ -32,7 +32,6 @@ public class HttpServer {
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("request incoming");
-                System.out.println("---------------------------------------");
 
                 InputStream inputStream = socket.getInputStream();
                 // HttpRequest httpRequest = new HttpRequest();
