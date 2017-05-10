@@ -45,18 +45,16 @@ public class HttpRequest {
      * requestLine = method + requestUri(→filePath) + httpVersion
      * methodとhttpVersionは使用しないため配列の要素に追加しない
      *
-     * TODO:リクエストUriをdecodeする
-     * TODO:3つに分割できなかった場合の条件分岐 nullにする
-     *
-     * @param requestLine
+     * @param
      */
 
     public String spaceSeparateRequestLine(InputStream inputStream) {
         String[] spaceSeparateRequestLineArray = new String[2];
 
-        spaceSeparateRequestLineArray =(readHttpRequest(inputStream).split(" ", 3));
+        spaceSeparateRequestLineArray = (readHttpRequest(inputStream).split(" ", 3));
+        String requestUri = spaceSeparateRequestLineArray[1]
 
-        String filePath = parseFilePath(spaceSeparateRequestLineArray[1]);
+        String filePath = parseFile(requestUri);
         if (filePath.endsWith("/")) {
             filePath += "hello.html";
         }
@@ -66,17 +64,16 @@ public class HttpRequest {
     /**
      * requestUriからファイル名を抜き出す
      *
-     * @param requestUri 　例えば
-     * @return requestUriのパスを抜き取ったもの
+     * @param requestUri 　例えばhttp://localhost:8080/index.html
+     * @return requestUriのパスを抜き取ったもの index.html
      */
 
-    public String parseFilePath(String requestUri) {
-        try {
-            URI requestUriPath = new URI(requestUri);
-            return requestUriPath.getPath();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+    public String parseFile(String requestUri) {
+        int lastDotPosition = requestUri.lastIndexOf("/");
+        if (lastDotPosition != -1) {
+            return requestUri.substring(lastDotPosition + 1);
         }
+        return null;
     }
 
 }

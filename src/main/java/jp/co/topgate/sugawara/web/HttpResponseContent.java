@@ -56,7 +56,7 @@ public class HttpResponseContent {
     /**
      * GeneralHeaderを生成する
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
-     * 今回はなにもここに追加しないが、本当はCache-ControlやDateなどがある
+     * 今回はなにもここに追加しないが、Cache-ControlやDateなどを追加するときここに記述する
      */
 
     public String createGeneralHeader() {
