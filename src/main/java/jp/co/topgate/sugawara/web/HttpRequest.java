@@ -3,15 +3,11 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
 
 
 /**
  * HttpRequest class
- * リクエストを読み込んでmethodとfilepathを抜き出すのとステータスコードを決定する
+ * リクエストを読み込んでfileを抜き出す
  *
  * @author sakura818
  */
@@ -52,20 +48,20 @@ public class HttpRequest {
         String[] spaceSeparateRequestLineArray = new String[2];
 
         spaceSeparateRequestLineArray = (readHttpRequest(inputStream).split(" ", 3));
-        String requestUri = spaceSeparateRequestLineArray[1]
+        String requestUri = spaceSeparateRequestLineArray[1];
 
-        String filePath = parseFile(requestUri);
-        if (filePath.endsWith("/")) {
-            filePath += "hello.html";
+        String file = parseFile(requestUri);
+        if (file.endsWith("/")) {
+            file += "hello.html";
         }
-        return filePath;
+        return file;
     }
 
     /**
      * requestUriからファイル名を抜き出す
      *
      * @param requestUri 　例えばhttp://localhost:8080/index.html
-     * @return requestUriのパスを抜き取ったもの index.html
+     * @return file index.html
      */
 
     public String parseFile(String requestUri) {

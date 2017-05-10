@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 
 /*
- * HttpRequestの処理をする
+ * クライアントとサーバのデータの入出力を行う
  *
  * @author sakura818
  *
@@ -17,12 +17,11 @@ import java.io.OutputStream;
 
 public class HttpServer {
 
-    private ServerSocket serverSocket = null;
     private Socket socket;
-    int PORT = 8080;
+    final int PORT = 8080;
 
     /**
-     * クライアントとサーバのデータの入出力をを行う
+     * クライアントとサーバのデータの入出力を行う
      */
 
     public void connection() {
@@ -31,15 +30,15 @@ public class HttpServer {
             ServerSocket serverSocket = new ServerSocket(PORT);
             System.out.println("start up http server http://localhost:" + PORT);
             while (true) {
-                this.socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 System.out.println("request incoming");
                 System.out.println("---------------------------------------");
 
-                InputStream inputStream = this.socket.getInputStream();
-                HttpRequest httpRequest = new HttpRequest();
+                InputStream inputStream = socket.getInputStream();
+                // HttpRequest httpRequest = new HttpRequest();
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();
+                // HttpResponse httpResponse = new HttpResponse();
 
                 inputStream.close();
                 outputStream.close();

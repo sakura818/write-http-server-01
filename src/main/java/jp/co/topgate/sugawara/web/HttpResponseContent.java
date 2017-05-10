@@ -10,6 +10,11 @@ import java.util.*;
  */
 
 public class HttpResponseContent {
+    private String httpResponseContent;
+
+    public String getHttpResponseContent() {
+        return this.httpResponseContent;
+    }
 
     /**
      * レスポンスの部品を集めて組み立て生成
@@ -199,12 +204,6 @@ public class HttpResponseContent {
         return this.reasonPhrase;
     }
 
-    /**
-     * テストのために現在設定されているstatusCodeとreasonPhraseを取得する
-     *
-     * @return statusCode and reasonPhrase
-     */
-
 
     /**
      * リクエストに対応して適切なステータスコードを返す
@@ -225,32 +224,36 @@ public class HttpResponseContent {
     }
 
 
-    private static final String FILE_DIR = "src/main/resources/";
-    File file = new File(FILE_DIR, httpRequest.getFilePath());
+    // private static final String FILE_DIR = "src/main/resources/";
+    // File file = new File(FILE_DIR, httpRequest.getFilePath());
 
 
-    public String statusCode200(int statusCode) {
+    public String statusCode200(int statusCode, File file) {
+        FileInputStream fileInputStream = null;
+        /*
+
+        バイト型のファイルを読み込み、それをStringBuilderにいれるためString型に変換する。
+        1. FileInputStreamでバイト型のファイルを読み込む
+        2. 1で生成したバイト型のファイルをString型に変換する .toChar();
+        */
         if (statusCode == 200) {
             try {
-                FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
-                BufferedInputStream bis = new BufferedInputStream(fis);
-
-                int i = fis.read();
-                {
-                    while (i != -1) {
-                        char c = (char) i;
-                        System.out.println(c);
-                        i = fis.read();
-                    }
+                fileInputStream = new FileInputStream(file);
+                int i;
+                while ((i = fileInputStream.read()) != -1) {
+                    System.out.print((char) i);
                 }
+                i = Char(i);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
-                if (bis != null) try {
-                    bis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                if (fileInputStream != null)
+                    try {
+                        fileInputStream.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
             }
         }
         return "200 Response Message Body";
