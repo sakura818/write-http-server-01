@@ -1,9 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -14,14 +11,14 @@ import java.util.*;
 
 public class HttpResponseContent {
 
-
     /**
      * レスポンスの部品を集めて組み立て生成
+     * response = createResponseStatusLine + createResponseMessageHeader + createResponseMessageBody
      */
-    public String createHttpResponseContent(OutputStream outputStream) {
+    public String createHttpResponseContent(int statusCode, String filePath) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(createResponseStatusLine()).append("\n");
-        stringBuilder.append(createResponseMessageHeader()).append("\n");
+        stringBuilder.append(createResponseStatusLine(statusCode)).append("\n");
+        stringBuilder.append(createResponseMessageHeader(filePath)).append("\n");
         stringBuilder.append(createResponseMessageBody()).append("\n");
         String httpResponseContent = new String(stringBuilder);
         return httpResponseContent;
@@ -32,12 +29,11 @@ public class HttpResponseContent {
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      */
 
-    public String createResponseStatusLine() {
+    public String createResponseStatusLine(int statusCode) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("HTTP/1.1").append(" ");
-        ;
         stringBuilder.append(statusCode).append(" ");
-        stringBuilder.append(reasonPhrase);
+        stringBuilder.append(getReasonPhrase());
         String responseStatusLineContent = new String(stringBuilder);
         return responseStatusLineContent;
     }
@@ -48,11 +44,11 @@ public class HttpResponseContent {
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      */
 
-    public String createResponseMessageHeader() {
+    public String createResponseMessageHeader(String filePath) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(createGeneralHeader());
         stringBuilder.append(createResponseHeader());
-        stringBuilder.append(createEntityHeader());
+        stringBuilder.append(createEntityHeader(filePath));
         String responseMessageHeaderContent = new String(stringBuilder);
         return responseMessageHeaderContent;
     }
@@ -86,10 +82,10 @@ public class HttpResponseContent {
      * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
      */
 
-    public String createEntityHeader() {
+    public String createEntityHeader(String filePath) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Allow: " + "GET").append("\n");
-        stringBuilder.append("Content-Language: " + "ja, en").append("\n");
+        stringBuilder.append("Content-Language: " + "en").append("\n");
         stringBuilder.append(createContentType(filePath)).append("\n");
         String entityHeaderContent = new String(stringBuilder);
         return entityHeaderContent;
@@ -107,6 +103,7 @@ public class HttpResponseContent {
         if (extensionToContentType.containsKey(extractExtension(filePath))) {
             return extensionToContentType.get(extractExtension(filePath));
         }
+        return null;
     }
 
     /**
@@ -150,18 +147,93 @@ public class HttpResponseContent {
     /**
      * ResponseMessageBodyを生成する
      */
+
     public String createResponseMessageBody() {
-
         return "responseMessageBody";
+    }
 
+    private int statusCode;
+    private String reasonPhrase;
+    private String statusCodeAndReasonPhrase;
+
+    /**
+     * statusCodeとreasonPhraseの写像
+     */
+
+    private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+        {
+            put(200, "OK");
+            put(400, "Bad Request");
+            put(404, "Not Found");
+        }
+    };
+
+
+    /**
+     * テストのためにステータスコードを設定する
+     *
+     * @param i ステータスコード　例えば200
+     */
+
+    public void setStatusCode(int i) {
+        this.statusCode = i;
+    }
+
+    /**
+     * テストのために現在設定されているstatusCodeを取得する
+     *
+     * @return statusCode
+     */
+
+    public int getStatusCode() {
+        return this.statusCode;
+    }
+
+    /**
+     * テストのために現在設定されているreasonPhraseを取得する。
+     *
+     * @return reasonPhrase
+     */
+
+    public String getReasonPhrase() {
+        return this.reasonPhrase;
+    }
+
+    /**
+     * テストのために現在設定されているstatusCodeとreasonPhraseを取得する
+     *
+     * @return statusCode and reasonPhrase
+     */
+
+
+    /**
+     * リクエストに対応して適切なステータスコードを返す
+     */
+
+    public int selectStatusCode(String method, File filePath) {
+        int statusCode;
+        if (method == null) {
+            statusCode = 400;
+            return statusCode;
+        }
+        if (!filePath.exists()) {
+            statusCode = 404;
+            return statusCode;
+        }
+        statusCode = 200;
+        return statusCode;
     }
 
 
-    public String statusCode200(int currentStatusCode) {
-        if (statusCode.getStatusCode() == 200) {
+    private static final String FILE_DIR = "src/main/resources/";
+    File file = new File(FILE_DIR, httpRequest.getFilePath());
+
+
+    public String statusCode200(int statusCode) {
+        if (statusCode == 200) {
             try {
                 FileInputStream fis = new FileInputStream(this.responseMessageBodyFile);
-                bis = new BufferedInputStream(fis);
+                BufferedInputStream bis = new BufferedInputStream(fis);
 
                 int i = fis.read();
                 {
@@ -184,8 +256,8 @@ public class HttpResponseContent {
         return "200 Response Message Body";
     }
 
-    public String statusCode400(int currentStatusCode) {
-        if (statusCode.getStatusCode() == 400) {
+    public String statusCode400(int statusCode) {
+        if (statusCode == 400) {
         }
         String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
                 "<body><h1>Bad Request</h1>" +
@@ -193,8 +265,8 @@ public class HttpResponseContent {
         return errorPageHtml400;
     }
 
-    public String statusCode404(int currentStatusCode) {
-        if (statusCode.getStatusCode() == 404) {
+    public String statusCode404(int statusCode) {
+        if (statusCode == 404) {
         }
         String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
                 "<body><h1>Not Found</h1>" +

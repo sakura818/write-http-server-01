@@ -11,19 +11,9 @@ import java.net.Socket;
  * @author sakura818
  */
 public class Main {
-    private static final int PORT = 8080;
-
-    public static void main(String[] args)  {
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("start up http server http://localhost:" + PORT);
-            while (true) {
-                Socket socket = serverSocket.accept();
-                HttpServer httpServer = new HttpServer(socket, PORT);
-                httpServer.connection();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public static void main(String[] args) {
+        HttpServer httpServer = new HttpServer();
+        httpServer.connection();
     }
 }
 

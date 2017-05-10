@@ -2,6 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,44 +17,34 @@ import java.io.OutputStream;
 
 public class HttpServer {
 
+    private ServerSocket serverSocket = null;
     private Socket socket;
     int PORT = 8080;
-    private static final String FILE_DIR = "src/main/resources/";
-
-    public HttpServer(Socket socket, int PORT) {
-        this.PORT = PORT;
-        this.socket = socket;
-    }
 
     /**
-     * 入出力の管理を行う
+     * クライアントとサーバのデータの入出力をを行う
      */
 
     public void connection() {
+
         try {
-            System.out.println("request...");
-            InputStream inputStream = this.socket.getInputStream();
-            OutputStream outputStream = this.socket.getOutputStream();
+            ServerSocket serverSocket = new ServerSocket(PORT);
+            System.out.println("start up http server http://localhost:" + PORT);
+            while (true) {
+                this.socket = serverSocket.accept();
+                System.out.println("request incoming");
+                System.out.println("---------------------------------------");
 
-            HttpRequest httpRequest = new HttpRequest();
-            httpRequest.readRequest(inputStream);
-            System.out.println("request incoming");
-            System.out.println("---------------------------------------");
+                InputStream inputStream = this.socket.getInputStream();
+                HttpRequest httpRequest = new HttpRequest();
 
-            File file = new File(FILE_DIR, httpRequest.getFilePath());
-            Method method = new Method();
+                OutputStream outputStream = this.socket.getOutputStream();
+                HttpResponse httpResponse = new HttpResponse();
 
-            int currentStatusCode = selectStatusCode(httpRequest, file);
-            /*
-            switch (httpRequest.getMethod()) {
-                case "GET":
-                    method.methodGET(currentStatusCode, file, outputStream);
-                    break;
-                case "HEAD":
-                    method.methodHEAD(currentStatusCode, outputStream);
-                    break;
+                inputStream.close();
+                outputStream.close();
+
             }
-            */
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -66,21 +57,6 @@ public class HttpServer {
             }
             System.out.println("正常にコネクションできないエラーが発生しました");
         }
-    }
-
-
-    /**
-     * リクエストに対応して適切なステータスコードを返す
-     */
-
-    private int selectStatusCode(HttpRequest httpRequest, File file) {
-        if (httpRequest.getMethod() == null) {
-            return 400;
-        }
-        if (!file.exists()) {
-            return 404;
-        }
-        return 200;
     }
 }
 

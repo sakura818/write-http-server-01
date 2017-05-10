@@ -6,58 +6,35 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 
 
 /**
  * HttpRequest class
- * リクエストを分解する
- * TODO:あとの課題のためにheaderとかmessagebody読み込むのも必要かもしれない
- * TODO：テスト作っててホスト必要かもしれないと思った
+ * リクエストを読み込んでmethodとfilepathを抜き出すのとステータスコードを決定する
  *
  * @author sakura818
  */
 public class HttpRequest {
 
-    private String method;
-    private String filePath;
 
     /**
-     * methodをかえすgetter
-     *
-     * @return method
-     */
-    public String getMethod() {
-        return this.method;
-    }
-
-    /**
-     * filePathをかえすgetter
-     *
-     * @return filePath
-     */
-    public String getFilePath() {
-        return this.filePath;
-    }
-
-
-    /**
-     * HttpRequestを行ごとに分割し読み込む
+     * HttpRequestを行ごとに読み込む
      *
      * @param inputStream
      */
 
-    public void readRequest(InputStream inputStream) {
+    public String readHttpRequest(InputStream inputStream) {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            String requestLine = bufferedReader.readLine();
-
-            this.spaceSeparateRequestLine(requestLine);
+            String readLine = bufferedReader.readLine();
             StringBuilder stringBuilder = new StringBuilder();
-
-            while (!(requestLine).equals("")) {
-                stringBuilder.append(requestLine).append("\n");
+            while (!(readLine).equals(null)) {
+                stringBuilder.append(readLine).append("\n");
             }
+            System.out.println(stringBuilder);
+            return readLine;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,31 +43,34 @@ public class HttpRequest {
     /**
      * 空白文字を区切り文字としてrequestLineを3つに分割する
      * requestLine = method + requestUri(→filePath) + httpVersion
+     * methodとhttpVersionは使用しないため配列の要素に追加しない
+     *
      * TODO:リクエストUriをdecodeする
      * TODO:3つに分割できなかった場合の条件分岐 nullにする
      *
      * @param requestLine
      */
 
-    public void spaceSeparateRequestLine(String requestLine) {
-        String spaceSeparateRequestLineArray[] = (requestLine.split(" "));
+    public String spaceSeparateRequestLine(InputStream inputStream) {
+        String[] spaceSeparateRequestLineArray = new String[2];
 
-        this.method = spaceSeparateRequestLineArray[0];
-        this.filePath = partRequestUriPath(spaceSeparateRequestLineArray[1]);
-        if (this.filePath.endsWith("/")) {
-            this.filePath += "hello.html";
+        spaceSeparateRequestLineArray =(readHttpRequest(inputStream).split(" ", 3));
+
+        String filePath = parseFilePath(spaceSeparateRequestLineArray[1]);
+        if (filePath.endsWith("/")) {
+            filePath += "hello.html";
         }
-        String httpVersion = spaceSeparateRequestLineArray[2];
+        return filePath;
     }
 
     /**
-     * requestUriからパス名を抜き出す
+     * requestUriからファイル名を抜き出す
      *
-     * @param requestUri　例えば
-     * @return requestUriのパスだけを抜き取ったもの
+     * @param requestUri 　例えば
+     * @return requestUriのパスを抜き取ったもの
      */
 
-    public String partRequestUriPath(String requestUri) {
+    public String parseFilePath(String requestUri) {
         try {
             URI requestUriPath = new URI(requestUri);
             return requestUriPath.getPath();
