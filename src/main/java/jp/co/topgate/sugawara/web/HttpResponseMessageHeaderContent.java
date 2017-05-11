@@ -43,6 +43,7 @@ public class HttpResponseMessageHeaderContent {
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
      * Cache-ControlやDateなどを追加するときここに記述する
      * 今回は簡易的な機能のみを提供するためGeneralHeaderになにも記載していない
+     *
      * @return generalHeader
      */
 
@@ -135,5 +136,6 @@ public class HttpResponseMessageHeaderContent {
             put("octet-stream", "application/octet-stream");
         }
     };
+
 
 }
