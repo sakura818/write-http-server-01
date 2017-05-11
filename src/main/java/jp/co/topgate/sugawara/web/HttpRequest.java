@@ -53,7 +53,7 @@ public class HttpRequest {
      */
 
     public String spaceSeparateRequestLine(InputStream inputStream) {
-        String[] spaceSeparateRequestLineArray = new String[2];
+        String[] spaceSeparateRequestLineArray;
 
         spaceSeparateRequestLineArray = (readHttpRequest(inputStream).split(" ", 3));
         String requestUri = spaceSeparateRequestLineArray[1];

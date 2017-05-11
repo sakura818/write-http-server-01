@@ -1,6 +1,5 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 

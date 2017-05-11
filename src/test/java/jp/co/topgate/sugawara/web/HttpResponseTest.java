@@ -21,8 +21,5 @@ public class HttpResponseTest {
 
     }
 
-    @Test
-    public void メソッド() {
 
-    }
 }
