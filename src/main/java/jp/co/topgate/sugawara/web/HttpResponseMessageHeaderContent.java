@@ -86,13 +86,13 @@ public class HttpResponseMessageHeaderContent {
     }
 
     /**
-     * ファイルパスから拡張子を抜き出す。なぜならContentTypeはファイルパスの拡張子によって判別されるから。
+     * ファイルから拡張子を抜き出す。なぜならContentTypeはファイルの拡張子によって判別されるから。
      *
-     * @param file
+     * @param file ex:index.html
      * @return ファイルの拡張子　ex:html
      */
 
-    public static String extractExtension(String file) {
+    public String extractExtension(String file) {
         if (file == null) {
             return null;
         }

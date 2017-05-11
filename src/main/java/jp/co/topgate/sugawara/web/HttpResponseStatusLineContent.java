@@ -7,7 +7,6 @@ import java.io.File;
  */
 public class HttpResponseStatusLineContent {
 
-
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
