@@ -3,12 +3,21 @@ package jp.co.topgate.sugawara.web;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created by haruka.sugawara on 2017/05/11.
+ * HttpResponseMessageHeaderContent Class
+ * HttpResponseのMessageHeaderを生成する
+ * MessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
+ * HttpResponseのContentを3つに分けたうちの1つである。
+ *
+ * @author sakura818
  */
 public class HttpResponseMessageHeaderContent {
     private String responseMessageHeaderContent;
-    public String getResponseMessageHeaderContent() {return this.responseMessageHeaderContent;}
+
+    public String getResponseMessageHeaderContent() {
+        return this.responseMessageHeaderContent;
+    }
 
     /**
      * ResponseMessageHeaderを生成する
@@ -32,7 +41,6 @@ public class HttpResponseMessageHeaderContent {
      * GeneralHeaderを生成する
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
      * 今回はなにもここに追加しないが、Cache-ControlやDateなどを追加するときここに記述する
-     *
      */
 
     public String createGeneralHeader() {

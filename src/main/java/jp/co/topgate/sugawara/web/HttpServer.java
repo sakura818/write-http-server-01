@@ -1,6 +1,5 @@
 package jp.co.topgate.sugawara.web;
 
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,11 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-/*
+/**
+ * HttpServer class
  * クライアントとサーバのデータの入出力を行う
  *
  * @author sakura818
- *
  */
 
 public class HttpServer {

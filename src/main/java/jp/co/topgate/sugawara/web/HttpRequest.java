@@ -7,7 +7,9 @@ import java.io.*;
 
 /**
  * HttpRequest class
- * リクエストを読み込んでfileを抜き出す
+ * HttpRequestを読み込む処理を行う
+ * HttpRequest = Request-Line + MessageHeader + MessageBody
+ * しかし、今回の課題では簡易的な機能しか提供しないためheaderやbodyは読み込んでいない
  *
  * @author sakura818
  */

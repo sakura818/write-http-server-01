@@ -6,13 +6,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created by haruka.sugawara on 2017/05/11.
+ * HttpResponseMessageBodyContent Class
+ * HttpResponseのMessageBodyを生成する
+ * MessageBodyはファイルのデータの中身
+ * HttpResponseのContentを3つに分けたうちの1つである。
+ *
+ * @author sakura818
  */
 public class HttpResponseMessageBodyContent {
 
     /**
      * ResponseMessageBodyを生成する
+     * TODO:メモに記載
      *
      * @return ResponseMessageBody
      */
@@ -22,9 +29,8 @@ public class HttpResponseMessageBodyContent {
     }
 
 
-
     /**
-     * statusCodeとreasonPhraseの写像
+     * statusCodeとreasonPhraseのMap
      */
 
     private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
@@ -42,6 +48,7 @@ public class HttpResponseMessageBodyContent {
     /**
      * ステータスコードに応じて適切なファイルやhtmlを返す
      * 名前がひどい　分け方よくない
+     * TODO:
      */
 
 

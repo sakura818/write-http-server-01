@@ -1,9 +1,16 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by haruka.sugawara on 2017/05/11.
+ * HttpResponseStatusLineContent Class
+ * HttpResponseのStatusLineを生成する
+ * StatusLineとはHTTP-Version SP Status-Code SP Reason-Phrase CRLF
+ * HttpResponseのContentを3つに分けたうちの1つである。
+ *
+ * @author sakura818
  */
 public class HttpResponseStatusLineContent {
 
@@ -19,7 +26,10 @@ public class HttpResponseStatusLineContent {
     private String reasonPhrase;
     private String statusCodeAndReasonPhrase;
     private String responseStatusLineContent;
-    public String getResponseStatusLineContent(){return this.responseStatusLineContent;}
+
+    public String getResponseStatusLineContent() {
+        return this.responseStatusLineContent;
+    }
 
     public String createResponseStatusLine(int statusCode) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -31,9 +41,21 @@ public class HttpResponseStatusLineContent {
     }
 
     /**
+     * statusCodeとreasonPhraseのMap
+     */
+
+    private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+        {
+            put(200, "OK");
+            put(400, "Bad Request");
+            put(404, "Not Found");
+        }
+    };
+
+    /**
      * テストのためにステータスコードを設定する
      *
-     * @param i ステータスコード　例えば200
+     * @param i ステータスコード　ex:200
      */
 
     public void setStatusCode(int i) {
@@ -43,7 +65,7 @@ public class HttpResponseStatusLineContent {
     /**
      * テストのために現在設定されているstatusCodeを取得する
      *
-     * @return statusCode
+     * @return statusCode ex:200
      */
 
     public int getStatusCode() {
@@ -53,7 +75,7 @@ public class HttpResponseStatusLineContent {
     /**
      * テストのために現在設定されているreasonPhraseを取得する
      *
-     * @return reasonPhrase
+     * @return reasonPhrase ex:OK
      */
 
     public String getReasonPhrase() {
@@ -63,6 +85,10 @@ public class HttpResponseStatusLineContent {
 
     /**
      * リクエストに応じて適切なステータスコードを返す
+     *
+     * @param method ex:GET
+     * @param file   ex:hello.html
+     * @return statusCode ex:200
      */
 
     public int selectStatusCode(String method, File file) {

@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  * Main class
- * HttpServerを起動する
+ * HttpServerを呼び出す
  *
  * @author sakura818
  */

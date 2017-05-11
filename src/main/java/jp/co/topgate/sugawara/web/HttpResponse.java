@@ -6,8 +6,10 @@ import java.util.Map;
 
 /**
  * HttpResponse class
- * レスポンスを出力ストリームOutputStreamに送信する
- * TODO:ファイルの読み込みがわかってない
+ * HttpResponseを出力ストリームOutputStreamに送信する
+ * HttpResponse = HttpResponseStatusLineContent Class
+ * + HttpResponseMessageHeaderContent Class
+ * + HttpResponseBodyContent Class
  *
  * @author sakura818
  */
@@ -40,7 +42,7 @@ public class HttpResponse {
      * 生成したレスポンスのコンテンツ　= HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
      * @param outputStream 書き込み先データストリーム
-     * @param statusCode      ステータスクラス
+     * @param statusCode   ステータスクラス
      * @throws IOException 書き込みエラー
      */
     public void writeResponseOutputStream(OutputStream outputStream, int statusCode) throws IOException {
@@ -53,7 +55,7 @@ public class HttpResponse {
         stringBuilder.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
 
         if (this.responseBodyText != null) {
-            stringBuilder.append("\n").append(this.responseBodyText + "\n");
+            stringBuilder.append(this.responseBodyText).append("\n");
         }
         writer.println(stringBuilder.toString());
 
