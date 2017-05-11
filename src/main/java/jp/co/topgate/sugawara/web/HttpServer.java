@@ -39,7 +39,7 @@ public class HttpServer {
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
-                httpResponse.writeResponseOutputStream(outputStream,statuscode);
+                httpResponse.writeResponseOutputStream(outputStream);
 
                 inputStream.close();
                 outputStream.close();

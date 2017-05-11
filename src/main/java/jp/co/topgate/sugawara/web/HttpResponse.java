@@ -41,10 +41,9 @@ public class HttpResponse {
      * 生成したレスポンスのコンテンツ　= HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
      * @param outputStream 書き込み先データストリーム
-     * @param statusCode   ex:200
      * @throws IOException
      */
-    public void writeResponseOutputStream(OutputStream outputStream, int statusCode) throws IOException {
+    public void writeResponseOutputStream(OutputStream outputStream) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
