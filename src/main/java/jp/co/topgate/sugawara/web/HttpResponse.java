@@ -13,27 +13,28 @@ import java.util.Map;
  *
  * @author sakura818
  */
+
 public class HttpResponse {
 
-    private String responseBodyText;
-    private File responseBodyFile;
+    private String responseBodyTextFile;
+    private File responseBodyBinaryFile;
 
     /**
      * テストのためにHTTPレスポンスボディを設定する
      *
-     * @param text テキスト
+     * @param text ex:index.html
      */
     public void setResponseBodyText(String text) {
-        this.responseBodyText = text;
+        this.responseBodyTextFile = text;
     }
 
     /**
      * テストのためにHTTPレスポンスボディにファイルを設定する
      *
-     * @param file ファイル
+     * @param file ex:cream.png
      */
     public void setResponseBodyFile(File file) {
-        this.responseBodyFile = file;
+        this.responseBodyBinaryFile = file;
     }
 
 
@@ -42,11 +43,11 @@ public class HttpResponse {
      * 生成したレスポンスのコンテンツ　= HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
      * @param outputStream 書き込み先データストリーム
-     * @param statusCode   ステータスクラス
-     * @throws IOException 書き込みエラー
+     * @param statusCode   ex:200
+     * @throws IOException
      */
     public void writeResponseOutputStream(OutputStream outputStream, int statusCode) throws IOException {
-        PrintWriter writer = new PrintWriter(outputStream, true);
+        PrintWriter printWriter = new PrintWriter(outputStream, true);
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
 
@@ -54,14 +55,14 @@ public class HttpResponse {
         stringBuilder.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
         stringBuilder.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
 
-        if (this.responseBodyText != null) {
-            stringBuilder.append(this.responseBodyText).append("\n");
+        if (responseBodyTextFile != null) {
+            stringBuilder.append(responseBodyTextFile).append("\n");
         }
-        writer.println(stringBuilder.toString());
+        printWriter.println(stringBuilder.toString());
 
-        if (this.responseBodyFile != null) {
+        if (responseBodyBinaryFile != null) {
             BufferedInputStream bufferedInputStream
-                    = new BufferedInputStream(new FileInputStream(this.responseBodyFile));
+                    = new BufferedInputStream(new FileInputStream(responseBodyBinaryFile));
             try {
                 for (int c = bufferedInputStream.read(); c >= 0; c = bufferedInputStream.read()) {
                     outputStream.write(c);

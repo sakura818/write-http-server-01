@@ -15,6 +15,7 @@ import java.util.Map;
  *
  * @author sakura818
  */
+
 public class HttpResponseMessageBodyContent {
 
     /**
@@ -49,38 +50,26 @@ public class HttpResponseMessageBodyContent {
      * ステータスコードに応じて適切なファイルやhtmlを返す
      * 名前がひどい　分け方よくない
      * TODO:
+     *
      */
 
 
     public String readBinaryFile(int statusCode, File file) {
         FileInputStream fileInputStream = null;
+
+        responseBodyTextFile;
+        responseBodyBinaryFile;
+
+
         /*
 
         バイト型のファイルを読み込み、それをStringBuilderにいれるためString型に変換する。
         1. FileInputStreamでバイト型のファイルを読み込む
         2. 1で生成したバイト型のファイルをString型に変換する .toCharArray();
         */
-        if (statusCode == 200) {
-            try {
-                fileInputStream = new FileInputStream(file);
-                int i;
-                while ((i = fileInputStream.read()) != -1) {
-                    System.out.print((char) i);
-                }
-                byte b = (byte) i;
-                String str = Byte.toString(b);
-                return str;
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (fileInputStream != null)
-                    try {
-                        fileInputStream.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-            }
+        if (statusCode == 200) {
+
         }
         return "200 Response Message Body";
     }

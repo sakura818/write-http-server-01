@@ -23,10 +23,10 @@ public class HttpRequestTest {
         assertThat("/", is(httpRequest.partRequestUriPath("")));
 
         // requestUriがhttp://localhost:8080/hello.htmlのとき
-        assertThat("hello.html", is(httpRequest.partRequestUriPath("http://localhost:8080/hello.html")));
+        assertThat("hello.html", is(httpRequest.partRequestUriPath("http://localhost:8080/index.html")));
 
         // requestUriがhttp://localhost:8080/hoge/hello.htmlのとき
-        assertThat(null, is(httpRequest.partRequestUriPath("http://localhost:8080/hoge/hello.html")));
+        assertThat(null, is(httpRequest.partRequestUriPath("http://localhost:8080/hoge/index.html")));
     }
 
     @Test
@@ -37,12 +37,12 @@ public class HttpRequestTest {
         assertThat(null, is(httpRequest.getFilePath()));
 
         // requestLineがGET http://localhost:8080/hello.html HTTP/1.1のとき
-        httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/hello.html HTTP/1.1");
+        httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
         assertThat("GET", is(httpRequest.getMethod()));
         assertThat("hello.htm", is(httpRequest.getFilePath()));
 
         // requestLineがGET  http://localhost:8080/hello.htmlのとき
-        httpRequest.spaceSeparateRequestLine("GET  http://localhost:8080/hello.html");
+        httpRequest.spaceSeparateRequestLine("GET  http://localhost:8080/index.html");
         assertThat(null, is(httpRequest.getMethod()));
         assertThat(null, is(httpRequest.getFilePath()));
     }

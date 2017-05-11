@@ -12,15 +12,8 @@ import java.util.Map;
  *
  * @author sakura818
  */
-public class HttpResponseStatusLineContent {
 
-    /**
-     * ResponseStatusLineを生成する
-     * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
-     *
-     * @param statusCode
-     * @return responseStatusLineContent
-     */
+public class HttpResponseStatusLineContent {
 
     private int statusCode;
     private String reasonPhrase;
@@ -30,6 +23,14 @@ public class HttpResponseStatusLineContent {
     public String getResponseStatusLineContent() {
         return this.responseStatusLineContent;
     }
+
+    /**
+     * ResponseStatusLineを生成する
+     * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
+     *
+     * @param statusCode ex:200
+     * @return responseStatusLineContent ex:OK
+     */
 
     public String createResponseStatusLine(int statusCode) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -83,25 +84,5 @@ public class HttpResponseStatusLineContent {
     }
 
 
-    /**
-     * リクエストに応じて適切なステータスコードを返す
-     *
-     * @param method ex:GET
-     * @param file   ex:hello.html
-     * @return statusCode ex:200
-     */
 
-    public int selectStatusCode(String method, File file) {
-        int statusCode;
-        if (method == null) {
-            statusCode = 400;
-            return statusCode;
-        }
-        if (!file.exists()) {
-            statusCode = 404;
-            return statusCode;
-        }
-        statusCode = 200;
-        return statusCode;
-    }
 }

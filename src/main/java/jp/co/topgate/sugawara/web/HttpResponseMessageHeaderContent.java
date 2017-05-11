@@ -12,6 +12,7 @@ import java.util.Map;
  *
  * @author sakura818
  */
+
 public class HttpResponseMessageHeaderContent {
     private String responseMessageHeaderContent;
 
@@ -23,7 +24,7 @@ public class HttpResponseMessageHeaderContent {
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      *
-     * @param file
+     * @param file index.html
      * @return responseMessageHeaderContent
      */
 
@@ -40,7 +41,9 @@ public class HttpResponseMessageHeaderContent {
     /**
      * GeneralHeaderを生成する
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
-     * 今回はなにもここに追加しないが、Cache-ControlやDateなどを追加するときここに記述する
+     * Cache-ControlやDateなどを追加するときここに記述する
+     * 今回は簡易的な機能のみを提供するためGeneralHeaderになにも記載していない
+     * @return generalHeader
      */
 
     public String createGeneralHeader() {
@@ -53,7 +56,7 @@ public class HttpResponseMessageHeaderContent {
      * ResponseHeaderを生成する
      * ResponseHeaderとはサーバについてや、Request-URI によって識別されるリソースへの更なるアクセスに関する情報を与える。
      *
-     * @return ResponseHeader
+     * @return ResponseHeader ex:"Server: sakura818"
      */
 
     public String createResponseHeader() {
@@ -67,7 +70,7 @@ public class HttpResponseMessageHeaderContent {
      * EntityHeaderを生成する
      * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
      *
-     * @param file
+     * @param file ex:index.html
      * @return EntityHeader
      */
 

@@ -19,7 +19,7 @@ public class HttpServerTest {
     @Test
     public void 正常にコネクションできたかを判断するHttpServerのテスト() {
         try {
-            File htmlFile = new File("src/test/resources/hello.html");
+            File htmlFile = new File("src/test/resources/index.html");
             InputStream inputStream = new FileInputStream(htmlFile);
 
             File pngFile = new File("src/test/resources/cream.png");

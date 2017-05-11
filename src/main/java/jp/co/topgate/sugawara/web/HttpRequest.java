@@ -13,11 +13,13 @@ import java.io.*;
  *
  * @author sakura818
  */
+
 public class HttpRequest {
 
 
     /**
-     * HttpRequestを行ごとに読み込む
+     * HttpRequestをinputStreamから読み込む
+     * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
      *
      * @param inputStream
      * @return readLine リクエストの1行目
@@ -40,12 +42,18 @@ public class HttpRequest {
     }
 
     /**
-     * 空白文字を区切り文字としてrequestLineを3つに分割する
-     * requestLine = method + requestUri(→filePath) + httpVersion
-     * methodとhttpVersionは使用しないため配列の要素に追加しない
+     * requestLineを空白文字をdelimiterとして3つに分割し、requestUriを編集してfileにする
+     * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
+     * →　array[0] = GET, array[1] = http://localhost:8080/index.html, array[2] = HTTP/1.1
+     * →  requestUri = array[1]
+     * →  http://localhost:8080/index.html to index.html
+     * →　file = index.html
+     *
+     * requestLine = method + requestUri + httpVersion
+     * methodとhttpVersionは今回使用しない
      *
      * @param inputStream
-     * @return file 例えばindex.html
+     * @return file ex:index.html
      */
 
     public String spaceSeparateRequestLine(InputStream inputStream) {
@@ -56,7 +64,7 @@ public class HttpRequest {
 
         String file = parseFile(requestUri);
         if (file.endsWith("/")) {
-            file += "hello.html";
+            file += "index.html";
         }
         return file;
     }
@@ -64,8 +72,8 @@ public class HttpRequest {
     /**
      * requestUriからファイル名を抜き出す
      *
-     * @param requestUri 　例えばhttp://localhost:8080/index.html
-     * @return file 例えばindex.html
+     * @param requestUri 　ex:http://localhost:8080/index.html
+     * @return file ex:index.html
      */
 
     public String parseFile(String requestUri) {
@@ -74,6 +82,28 @@ public class HttpRequest {
             return requestUri.substring(lastDotPosition + 1);
         }
         return null;
+    }
+
+    /**
+     * HttpRequestに応じて適切なステータスコードを返す
+     *
+     * @param method ex:GET
+     * @param file   ex:index.html
+     * @return statusCode ex:200
+     */
+
+    public int selectStatusCode(String method, File file) {
+        int statusCode;
+        if (method == null) {
+            statusCode = 400;
+            return statusCode;
+        }
+        if (!file.exists()) {
+            statusCode = 404;
+            return statusCode;
+        }
+        statusCode = 200;
+        return statusCode;
     }
 
 }
