@@ -10,7 +10,6 @@ import java.io.OutputStream;
 /**
  * HttpServer class
  * クライアントとサーバのデータの入出力を行う
- * TODO:データの入出力のメソッド呼び出し　
  *
  *
  * @author sakura818
@@ -40,6 +39,7 @@ public class HttpServer {
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
+                httpResponse.writeResponseOutputStream(outputStream,statuscode);
 
                 inputStream.close();
                 outputStream.close();
