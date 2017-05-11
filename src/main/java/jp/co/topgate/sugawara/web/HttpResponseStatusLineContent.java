@@ -15,9 +15,6 @@ import java.util.Map;
 
 public class HttpResponseStatusLineContent {
 
-    private int statusCode;
-    private String reasonPhrase;
-    private String statusCodeAndReasonPhrase;
     private String responseStatusLineContent;
 
     public String getResponseStatusLineContent() {
@@ -52,6 +49,9 @@ public class HttpResponseStatusLineContent {
             put(404, "Not Found");
         }
     };
+
+    private int statusCode;
+    private String reasonPhrase;
 
     /**
      * テストのためにステータスコードを設定する

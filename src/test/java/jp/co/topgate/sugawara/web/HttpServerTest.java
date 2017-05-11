@@ -11,13 +11,13 @@ import static org.junit.Assert.assertThat;
 
 /**
  * HttpServerTest Class
- * connectionを管理するのをテストするクラス
+ * クライアントとサーバのデータの入出力がきちんとできているかのクラス
  *
  * @author sakura818
  */
 public class HttpServerTest {
     @Test
-    public void 正常にコネクションできたかを判断するHttpServerのテスト() {
+    public void 正常にコネクションできたかを判断するテスト() {
         try {
             File htmlFile = new File("src/test/resources/index.html");
             InputStream inputStream = new FileInputStream(htmlFile);

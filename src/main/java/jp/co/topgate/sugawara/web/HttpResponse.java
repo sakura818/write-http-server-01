@@ -1,8 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * HttpResponse class
@@ -20,7 +18,7 @@ public class HttpResponse {
     private File responseBodyBinaryFile;
 
     /**
-     * テストのためにHTTPレスポンスボディを設定する
+     * テストのためにレスポンスボディを設定する
      *
      * @param text ex:index.html
      */
@@ -29,7 +27,7 @@ public class HttpResponse {
     }
 
     /**
-     * テストのためにHTTPレスポンスボディにファイルを設定する
+     * テストのためにレスポンスボディにファイルを設定する
      *
      * @param file ex:cream.png
      */

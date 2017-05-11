@@ -10,6 +10,7 @@ import java.io.*;
  * HttpRequestを読み込む処理を行う
  * HttpRequest = Request-Line + MessageHeader + MessageBody
  * しかし、今回の課題では簡易的な機能しか提供しないためheaderやbodyは読み込んでいない
+ * TODO:リクエストが表示されないエラーを解決する(while文のところ)　デバッグ
  *
  * @author sakura818
  */

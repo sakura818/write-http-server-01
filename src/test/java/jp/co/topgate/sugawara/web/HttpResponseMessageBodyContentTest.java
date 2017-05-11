@@ -1,7 +1,12 @@
 package jp.co.topgate.sugawara.web;
 
 /**
- * Created by haruka.sugawara on 2017/05/11.
+ * HttpResponseMessageBodyContentTest Class
+ *
+ *
+ * @author sakura818
  */
+
+
 public class HttpResponseMessageBodyContentTest {
 }

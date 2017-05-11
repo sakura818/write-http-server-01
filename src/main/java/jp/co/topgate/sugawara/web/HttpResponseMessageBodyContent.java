@@ -20,7 +20,7 @@ public class HttpResponseMessageBodyContent {
 
     /**
      * ResponseMessageBodyを生成する
-     * TODO:メモに記載
+     * TODO:200のファイルを呼び出すところまだ書いていない　ファイルを呼び出すときにTextかBinaryか分ける
      *
      * @return ResponseMessageBody
      */

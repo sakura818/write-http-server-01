@@ -10,6 +10,8 @@ import java.io.OutputStream;
 /**
  * HttpServer class
  * クライアントとサーバのデータの入出力を行う
+ * TODO:データの入出力のメソッド呼び出し　重い
+ *
  *
  * @author sakura818
  */
