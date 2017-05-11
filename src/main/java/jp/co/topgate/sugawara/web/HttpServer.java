@@ -35,7 +35,9 @@ public class HttpServer {
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest();
-                System.out.println(httpRequest.readHttpRequest(inputStream));
+
+                System.out.println("request show");
+                httpRequest.showHttpRequest(inputStream);
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
