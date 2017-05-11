@@ -7,6 +7,9 @@ import java.util.Map;
  * Created by haruka.sugawara on 2017/05/11.
  */
 public class HttpResponseMessageHeaderContent {
+    private String responseMessageHeaderContent;
+    public String getResponseMessageHeaderContent() {return this.responseMessageHeaderContent;}
+
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
@@ -30,7 +33,6 @@ public class HttpResponseMessageHeaderContent {
      * GeneralHeaderとは一般的な適用性を持つが、転送されたエンティティには適用されないヘッダ
      * 今回はなにもここに追加しないが、Cache-ControlやDateなどを追加するときここに記述する
      *
-     * @param generalHeaderContent
      */
 
     public String createGeneralHeader() {
@@ -104,7 +106,7 @@ public class HttpResponseMessageHeaderContent {
     }
 
     /**
-     * 拡張子とContentTypeの写像
+     * 拡張子とContentTypeのMap
      */
     private static final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {

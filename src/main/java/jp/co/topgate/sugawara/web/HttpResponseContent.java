@@ -25,8 +25,8 @@ public class HttpResponseContent {
      */
     public String createHttpResponseContent(int statusCode, String file) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(createResponseStatusLine(statusCode)).append("\n");
-        stringBuilder.append(createResponseMessageHeader(file)).append("\n");
+        stringBuilder.append(HttpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
+        stringBuilder.append(HttpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
         stringBuilder.append(createResponseMessageBody()).append("\n");
         String httpResponseContent = new String(stringBuilder);
         return httpResponseContent;

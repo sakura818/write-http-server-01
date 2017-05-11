@@ -15,6 +15,12 @@ public class HttpResponseStatusLineContent {
      * @return responseStatusLineContent
      */
 
+    private int statusCode;
+    private String reasonPhrase;
+    private String statusCodeAndReasonPhrase;
+    private String responseStatusLineContent;
+    public String getResponseStatusLineContent(){return this.responseStatusLineContent;}
+
     public String createResponseStatusLine(int statusCode) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("HTTP/1.1").append(" ");

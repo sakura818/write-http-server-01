@@ -21,9 +21,7 @@ public class HttpResponseMessageBodyContent {
         return "responseMessageBody";
     }
 
-    private int statusCode;
-    private String reasonPhrase;
-    private String statusCodeAndReasonPhrase;
+
 
     /**
      * statusCodeとreasonPhraseの写像
