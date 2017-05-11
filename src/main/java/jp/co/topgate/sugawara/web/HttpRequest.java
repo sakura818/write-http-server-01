@@ -31,7 +31,7 @@ public class HttpRequest {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             String readLine = bufferedReader.readLine();
             StringBuilder stringBuilder = new StringBuilder();
-            while (!(readLine).equals(null)) {
+            while (readLine != null && !readLine.isEmpty()) {
                 stringBuilder.append(readLine).append("\n");
             }
             System.out.println(stringBuilder);
@@ -43,13 +43,8 @@ public class HttpRequest {
 
     /**
      * requestLineを空白文字をdelimiterとして3つに分割し、requestUriを編集してfileにする
-     * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
-     * →　array[0] = GET, array[1] = http://localhost:8080/index.html, array[2] = HTTP/1.1
-     * →  requestUri = array[1]
-     * →  http://localhost:8080/index.html to index.html
-     * →　file = index.html
-     *
      * requestLine = method + requestUri + httpVersion
+     * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
      * methodとhttpVersionは今回使用しない
      *
      * @param inputStream

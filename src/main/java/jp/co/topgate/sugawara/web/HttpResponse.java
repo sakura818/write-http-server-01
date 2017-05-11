@@ -50,6 +50,7 @@ public class HttpResponse {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
+        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");

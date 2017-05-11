@@ -25,70 +25,42 @@ public class HttpResponseMessageBodyContent {
      * @return ResponseMessageBody
      */
 
-    public String createResponseMessageBody() {
-        return "responseMessageBody";
-    }
-
-
-    /**
-     * statusCodeとreasonPhraseのMap
-     */
-
-    private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
-        {
-            put(200, "OK");
-            put(400, "Bad Request");
-            put(404, "Not Found");
-        }
-    };
-
 
     // private static final String FILE_DIR = "src/main/resources/";
     // File file = new File(FILE_DIR, httpRequest.getFilePath());
 
     /**
      * ステータスコードに応じて適切なファイルやhtmlを返す
-     * 名前がひどい　分け方よくない
-     * TODO:
      *
      */
+    private String responseBodyTextFile;
+    private String responseBodyBinaryFile;
 
+    public String getResponseBodyTextFile() {
+        return this.responseBodyTextFile;
+    }
 
-    public String readBinaryFile(int statusCode, File file) {
-        FileInputStream fileInputStream = null;
+    public String getResponseBodyBinaryFile() {
+        return this.responseBodyBinaryFile;
+    }
 
-        responseBodyTextFile;
-        responseBodyBinaryFile;
-
-
-        /*
-
-        バイト型のファイルを読み込み、それをStringBuilderにいれるためString型に変換する。
-        1. FileInputStreamでバイト型のファイルを読み込む
-        2. 1で生成したバイト型のファイルをString型に変換する .toCharArray();
-        */
+    public String createResponseMessageBody(int statusCode, File file) {
 
         if (statusCode == 200) {
-
+            // private static final String FILE_DIR = "src/main/resources/";
+            // File file = new File(FILE_DIR, httpRequest.getFilePath());
+            return "200 Response Message Body";
+        } else if (statusCode == 400) {
+            responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
+                    "<body><h1>Bad Request</h1>" +
+                    "<p>リクエストにエラーがあります。</p></body></html>";
+            return responseBodyTextFile;
+        } else if (statusCode == 404) {
+            responseBodyTextFile = "<html><head><title>404 Not Found</title></head>" +
+                    "<body><h1>Not Found</h1>" +
+                    "<p>該当のページは見つかりませんでした。</p></body></html>";
+            return responseBodyTextFile;
         }
-        return "200 Response Message Body";
-    }
-
-    public String badRequest(int statusCode) {
-        if (statusCode == 400) {
-        }
-        String errorPageHtml400 = "<html><head><title>400 Bad Request</title></head>" +
-                "<body><h1>Bad Request</h1>" +
-                "<p>リクエストにエラーがあります。</p></body></html>";
-        return errorPageHtml400;
-    }
-
-    public String notFound(int statusCode) {
-        if (statusCode == 404) {
-        }
-        String errorPageHtml404 = "<html><head><title>404 Not Found</title></head>" +
-                "<body><h1>Not Found</h1>" +
-                "<p>該当のページは見つかりませんでした。</p></body></html>";
-        return errorPageHtml404;
+        return responseBodyTextFile = "no content";
     }
 }
