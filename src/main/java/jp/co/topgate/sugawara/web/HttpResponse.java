@@ -52,11 +52,14 @@ public class HttpResponse {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
         stringBuilder.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
+        httpResponseMessageBodyContent.getResponseBodyTextFile();
 
         if (responseBodyTextFile != null) {
             stringBuilder.append(responseBodyTextFile).append("\n");
         }
         printWriter.println(stringBuilder.toString());
+
+        httpResponseMessageBodyContent.getResponseBodyBinaryFile();
 
         if (responseBodyBinaryFile != null) {
             BufferedInputStream bufferedInputStream

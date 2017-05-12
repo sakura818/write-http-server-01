@@ -17,20 +17,29 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpServerTest {
     @Test
-    public void 正常にコネクションできたかを判断するテスト() {
+    public void HttpServerのテスト() {
         try {
-            File htmlFile = new File("src/test/resources/index.html");
-            InputStream inputStream = new FileInputStream(htmlFile);
 
-            File pngFile = new File("src/test/resources/cream.png");
-            OutputStream outputStream = new FileOutputStream(pngFile);
-
+            System.out.println("request show");
+            File exampleRequestFile = new File("src/test/resources/exampleRequest.txt");
+            InputStream inputStream = new FileInputStream(exampleRequestFile);
             HttpRequest httpRequest = new HttpRequest();
-            httprequest.readRequest(inputStream);
+            httpRequest.showHttpRequest(inputStream);
+
+            File responseFile = new File("src/test/resources/cream.png");
+            OutputStream outputStream = new FileOutputStream(responseFile);
+            HttpResponse httpResponse = new HttpResponse();
+            httpResponse.writeResponseOutputStream(outputStream);
+
+            inputStream.close();
+            outputStream.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
+
+
+
+

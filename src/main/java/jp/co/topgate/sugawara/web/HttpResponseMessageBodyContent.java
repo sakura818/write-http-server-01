@@ -47,7 +47,7 @@ public class HttpResponseMessageBodyContent {
 
         if (statusCode == 200) {
             // private static final String FILE_DIR = "src/main/resources/";
-            // File file = new File(FILE_DIR, httpRequest.getFilePath());
+            // File file = new File(FILE_DIR, httpRequest.getFile());
             return "200 Response Message Body";
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +

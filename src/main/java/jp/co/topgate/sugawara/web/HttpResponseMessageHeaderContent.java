@@ -120,7 +120,7 @@ public class HttpResponseMessageHeaderContent {
     /**
      * 拡張子とContentTypeのMap
      */
-    private static final Map<String, String> extensionToContentType = new HashMap<String, String>() {
+    public final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
             put("html", "text/html");
             put("htm", "text/html");

@@ -2,6 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
