@@ -23,7 +23,7 @@ public class HttpRequest {
      * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
      *
      * @param inputStream
-     * @return readLine リクエストの1行目
+     * @return readRequestLine リクエストの1行目
      */
 
     public String readHttpRequest(InputStream inputStream) {
@@ -39,17 +39,19 @@ public class HttpRequest {
 
     /**
      * HttpRequestの全文を表示する
-     *@param inputStream
+     *
+     * @param inputStream
      */
 
     public void showHttpRequest(InputStream inputStream) {
-        try{
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String readHttpRequest  = bufferedReader.readLine();
-        while (readHttpRequest != null && !readHttpRequest.isEmpty()) {
-            System.out.println(readHttpRequest);
-        }}catch (IOException e) {
+        try {
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+            String readHttpRequest = bufferedReader.readLine();
+            while (readHttpRequest != null && !readHttpRequest.isEmpty()) {
+                System.out.println(readHttpRequest);
+            }
+        } catch (IOException e) {
             System.out.println("HttpRequestの全文表示失敗");
             throw new RuntimeException(e);
         }

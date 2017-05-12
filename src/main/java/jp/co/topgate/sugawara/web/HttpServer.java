@@ -11,7 +11,6 @@ import java.io.OutputStream;
  * HttpServer class
  * クライアントとサーバのデータの入出力を行う
  *
- *
  * @author sakura818
  */
 

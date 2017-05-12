@@ -31,7 +31,6 @@ public class HttpResponseMessageBodyContent {
 
     /**
      * ステータスコードに応じて適切なファイルやhtmlを返す
-     *
      */
     private String responseBodyTextFile;
     private String responseBodyBinaryFile;
