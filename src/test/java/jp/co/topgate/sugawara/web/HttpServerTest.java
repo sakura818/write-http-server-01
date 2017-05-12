@@ -25,8 +25,8 @@ public class HttpServerTest {
             File pngFile = new File("src/test/resources/cream.png");
             OutputStream outputStream = new FileOutputStream(pngFile);
 
-            HttpRequest request = new HttpRequest();
-            request.readRequest(inputStream);
+            HttpRequest httpRequest = new HttpRequest();
+            httprequest.readRequest(inputStream);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
