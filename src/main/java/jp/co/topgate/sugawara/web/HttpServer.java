@@ -33,10 +33,10 @@ public class HttpServer {
                 System.out.println("request incoming");
 
                 InputStream inputStream = this.socket.getInputStream();
-                HttpRequest httpRequest = new HttpRequest();
+                HttpRequest httpRequest = new HttpRequest(inputStream);
 
                 System.out.println("request show");
-                httpRequest.sysoutHttpRequest(inputStream);
+                httpRequest.sysoutHttpRequest();
 
                 File filePath = new File(httpRequest.getFilePath());
                 int statusCode = selectStatusCode(httpRequest, filePath);

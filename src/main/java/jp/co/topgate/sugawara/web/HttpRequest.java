@@ -15,17 +15,33 @@ import java.io.*;
  */
 
 public class HttpRequest {
+    private InputStream inputStream;
+    private String method;
+    private String filePath;
+
+    public HttpRequest(InputStream inputStream) {
+        this.inputStream = inputStream;
+        String requestLine = readHttpRequestLine();
+        String[] requestLineArray = spaceSeparateRequestLine(requestLine);
+        this.method = requestLineArray[0];
+        String requestUri = requestLineArray[1];
+
+        String filePath = parseFilePath(requestUri);
+        if (filePath.endsWith("/")) {
+            filePath += "index.html";
+        }
+        this.filePath = filePath;
+    }
 
     /**
      * HttpRequestの全文をSystem.out.printlnで表示する
      * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
      *
-     * @param inputStream
      */
 
-    public void sysoutHttpRequest(InputStream inputStream) {
+    public void sysoutHttpRequest() {
         try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             String sysoutHttpRequest = bufferedReader.readLine();
             while (sysoutHttpRequest != null && !sysoutHttpRequest.isEmpty()) { //TODO:
@@ -40,13 +56,12 @@ public class HttpRequest {
     /**
      * RequestLineをinputStreamから読み込む
      *
-     * @param inputStream
      * @return readRequestLine リクエストの1行目
      */
 
-    public String readHttpRequestLine(InputStream inputStream) {
+    public String readHttpRequestLine() { 
         try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             String readHttpRequestLine = bufferedReader.readLine();
             return readHttpRequestLine;
@@ -55,30 +70,20 @@ public class HttpRequest {
         }
     }
 
-    private String method;
-
     /**
      * requestLineに対して空白文字をdelimiterとして3つに分割する
      * requestLine = method + requestUri + httpVersion
      * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
      * methodとhttpVersionは今回使用しない
      *
-     * @param inputStream
+     * @param requestLine
      * @return filePath ex:index.html
      */
 
-    public String spaceSeparateRequestLine(InputStream inputStream) {
+    public String[] spaceSeparateRequestLine(String requestLine) {
         String[] spaceSeparateRequestLineArray;
 
-        spaceSeparateRequestLineArray = (readHttpRequestLine(inputStream).split(" ", 3));
-        this.method = spaceSeparateRequestLineArray[0];
-        String requestUri = spaceSeparateRequestLineArray[1];
-
-        String filePath = parseFilePath(requestUri);
-        if (filePath.endsWith("/")) {
-            filePath += "index.html";
-        }
-        return filePath;
+        return  (requestLine.split(" ", 3));
     }
 
     /**
@@ -107,8 +112,6 @@ public class HttpRequest {
         }
         return filePath;
     }
-
-    private String filePath;
 
     /**
      * filePathを取得する
