@@ -36,14 +36,14 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest();
 
                 System.out.println("request show");
-                httpRequest.showHttpRequest(inputStream);
+                httpRequest.sysoutHttpRequest(inputStream);
 
-                File file = new File(httpRequest.getFile());
-                int statusCode = selectStatusCode(httpRequest, file);
+                File filePath = new File(httpRequest.getFilePath());
+                int statusCode = selectStatusCode(httpRequest, filePath);
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
-                httpResponse.writeResponseOutputStream(outputStream, file, statusCode);
+                httpResponse.writeResponseOutputStream(outputStream, filePath, statusCode);
 
                 inputStream.close();
                 outputStream.close();
@@ -63,20 +63,19 @@ public class HttpServer {
         }
     }
 
-
     /**
      * HttpRequestに応じて適切なステータスコードを返す
      *
      * @param httpRequest
-     * @param file        ex:index.html
+     * @param filePath        ex:index.html
      * @return statusCode ex:200
      */
 
-    public int selectStatusCode(HttpRequest httpRequest, File file) {
+    public int selectStatusCode(HttpRequest httpRequest, File filePath) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
-        if (!file.exists()) {
+        if (!filePath.exists()) {
             return 404;
         }
         return 200;

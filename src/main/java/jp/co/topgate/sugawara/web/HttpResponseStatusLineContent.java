@@ -1,5 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,13 +15,8 @@ import java.util.Map;
 
 public class HttpResponseStatusLineContent {
 
-    private String responseStatusLineContent;
-    private int statusCode;
-    private String reasonPhrase;
-
     public HttpResponseStatusLineContent(int statusCode) {
     }
-
 
     /**
      * ResponseStatusLineを生成する
@@ -31,11 +27,11 @@ public class HttpResponseStatusLineContent {
      */
 
     public String createResponseStatusLine(int statusCode) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("HTTP/1.1").append(" ");
-        stringBuilder.append(statusCode).append(" ");
-        stringBuilder.append(getReasonPhrase());
-        String responseStatusLineContent = new String(stringBuilder);
+        StringBuilder responseStatusLine = new StringBuilder();
+        responseStatusLine.append("HTTP/1.1").append(" ");
+        responseStatusLine.append(statusCode).append(" ");
+        responseStatusLine.append(createReasonPhrase(statusCode));
+        String responseStatusLineContent = new String(responseStatusLine);
         return responseStatusLineContent;
     }
 
@@ -50,6 +46,24 @@ public class HttpResponseStatusLineContent {
             put(404, "Not Found");
         }
     };
+
+    /**
+     * reasonPhraseを生成する
+     * reasonPhraseとはstatusCodeを説明するメッセージ
+     *
+     * @param statusCode ex:200
+     * @return reasonPhrase ex:OK
+     */
+
+    public String createReasonPhrase(int statusCode) {
+        if (statusCodeToReasonPhrase.containsKey(statusCode)) {
+            return statusCodeToReasonPhrase.get(statusCode);
+        }
+        return null;
+    }
+
+    private int statusCode;
+    private String reasonPhrase;
 
     /**
      * テストのためにステータスコードを設定する
@@ -79,15 +93,6 @@ public class HttpResponseStatusLineContent {
 
     public String getReasonPhrase() {
         return this.reasonPhrase;
-    }
-
-    /**
-     * テストのために現在設定されているstatusCodeを取得する
-     *
-     * @return responseStatusLineContent ex:HTTP/1.1 200 OK
-     */
-    public String getResponseStatusLineContent() {
-        return this.responseStatusLineContent;
     }
 
 

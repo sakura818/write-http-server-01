@@ -14,29 +14,6 @@ import java.io.*;
 
 public class HttpResponse {
 
-    private String responseBodyTextFile;
-    private File responseBodyBinaryFile;
-
-    /**
-     * テストのためにレスポンスボディを設定する
-     *
-     * @param text ex:index.html
-     */
-    public void setResponseBodyText(String text) {
-        this.responseBodyTextFile = text;
-    }
-
-    /**
-     * テストのためにレスポンスボディにファイルを設定する
-     *
-     * @param file ex:cream.png
-     */
-    public void setResponseBodyFile(File file) {
-        this.responseBodyBinaryFile = file;
-    }
-
-    private StringBuilder httpResponse = new StringBuilder();
-
 
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
@@ -45,15 +22,15 @@ public class HttpResponse {
      * @param outputStream 書き込み先データストリーム
      * @throws IOException
      */
-    public void writeResponseOutputStream(OutputStream outputStream, File file, int statusCode) throws IOException {
+    public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(file);
-        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(file, statusCode);
+        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
+        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(filePath, statusCode);
 
         StringBuilder httpResponse = new StringBuilder();
-        httpResponse.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
-        httpResponse.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
+        httpResponse.append(httpResponseStatusLineContent.createResponseStatusLine(statusCode)).append("\n");
+        httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
         httpResponseMessageBodyContent.getResponseBodyTextFile();
 
         if (responseBodyTextFile != null) {
@@ -80,14 +57,29 @@ public class HttpResponse {
         }
     }
 
+
+    private String responseBodyTextFile;
+    private File responseBodyBinaryFile;
+
     /**
-     * HttpResponseを取得する
+     * テストのためにレスポンスボディを設定する
      *
-     * @return httpResponse
+     * @param text ex:index.html
      */
-    public String getHttpResponse() {
-        return httpResponse.toString();
+    public void setResponseBodyText(String text) {
+        this.responseBodyTextFile = text;
     }
+
+    /**
+     * テストのためにレスポンスボディにファイルを設定する
+     *
+     * @param file ex:cream.png
+     */
+    public void setResponseBodyFile(File file) {
+        this.responseBodyBinaryFile = file;
+    }
+
+    private StringBuilder httpResponse = new StringBuilder();
 
 }
 

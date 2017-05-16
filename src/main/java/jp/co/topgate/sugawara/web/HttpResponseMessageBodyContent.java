@@ -3,8 +3,6 @@ package jp.co.topgate.sugawara.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -26,16 +24,10 @@ public class HttpResponseMessageBodyContent {
      */
 
 
-    // private static final String FILE_DIR = "src/main/resources/";
-    // File file = new File(FILE_DIR, httpRequest.getFilePath());
-¬
-    /**
-     * ステータスコードとファイルに応じて適切なファイルやhtmlを返す
-     */
     private String responseBodyTextFile;
     private String responseBodyBinaryFile;
 
-    public HttpResponseMessageBodyContent(File file, int statusCode) {
+    public HttpResponseMessageBodyContent(File filePath, int statusCode) {
     }
 
     public String getResponseBodyTextFile() {
@@ -46,13 +38,27 @@ public class HttpResponseMessageBodyContent {
         return this.responseBodyBinaryFile;
     }
 
-    public String createResponseMessageBody(int statusCode, File file) {
+
+    /**
+     * statusCodeとfilePathに応じてresponseBodyTextFileかresponseBodyBinaryFileをかえす
+     */
+
+    public String createResponseMessageBody(int statusCode, File filePath) throws IOException {
 
         if (statusCode == 200) {
             // private static final String FILE_DIR = "src/main/resources/";
-            // File file = new File(FILE_DIR, httpRequest.getFile());
+            // File filePath = new File(FILE_DIR, httpRequest.getFile());
             // TODO: ファイルがTextFileかBinaryFileか判別する
-            return "200 Response Message Body";
+            // 判別する方法は文字コード00があればバイナリファイル、文字コード00がない場合はテキストファイル
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+
+            byte[] b = new byte[1];
+            while (fileInputStream.read(b, 0, 1) > 0) {
+                if (b[0] == 0) {
+                    return responseBodyBinaryFile;
+                }
+            }
+            return responseBodyTextFile;
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
