@@ -14,6 +14,9 @@ import java.io.*;
 
 public class HttpResponse {
 
+    private String responseBodyTextFile;
+    private File responseBodyBinaryFile;
+    private StringBuilder httpResponse = new StringBuilder();
 
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
@@ -60,9 +63,6 @@ public class HttpResponse {
         }
     }
 
-    private String responseBodyTextFile;
-    private File responseBodyBinaryFile;
-
     /**
      * テストのためにレスポンスボディを設定する
      *
@@ -81,7 +81,6 @@ public class HttpResponse {
         this.responseBodyBinaryFile = file;
     }
 
-    private StringBuilder httpResponse = new StringBuilder();
 
 }
 

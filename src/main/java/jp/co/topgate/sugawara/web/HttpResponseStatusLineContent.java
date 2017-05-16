@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class HttpResponseStatusLineContent {
 
+    private int statusCode;
+    private String reasonPhrase;
+
     public HttpResponseStatusLineContent(int statusCode) {
     }
 
@@ -62,8 +65,6 @@ public class HttpResponseStatusLineContent {
         return null;
     }
 
-    private int statusCode;
-    private String reasonPhrase;
 
     /**
      * テストのためにステータスコードを設定する

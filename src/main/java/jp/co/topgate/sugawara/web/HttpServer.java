@@ -36,7 +36,7 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
                 System.out.println("request show");
-                httpRequest.sysoutHttpRequest();
+                httpRequest.printHttpRequest();
 
                 File filePath = new File(httpRequest.getFilePath());
                 int statusCode = selectStatusCode(httpRequest, filePath);

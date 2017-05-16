@@ -39,13 +39,13 @@ public class HttpRequest {
      *
      */
 
-    public void sysoutHttpRequest() {
+    public void printHttpRequest() {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            String sysoutHttpRequest = bufferedReader.readLine();
-            while (sysoutHttpRequest != null && !sysoutHttpRequest.isEmpty()) { //TODO:
-                System.out.println(sysoutHttpRequest);
+            String printHttpRequest = bufferedReader.readLine();
+            while (printHttpRequest != null && !printHttpRequest.isEmpty()) { //TODO:
+                System.out.println(printHttpRequest);
             }
         } catch (IOException e) {
             System.out.println("HttpRequestの全文表示失敗");
@@ -59,7 +59,7 @@ public class HttpRequest {
      * @return readRequestLine リクエストの1行目
      */
 
-    public String readHttpRequestLine() { 
+    public String readHttpRequestLine() {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
@@ -82,7 +82,6 @@ public class HttpRequest {
 
     public String[] spaceSeparateRequestLine(String requestLine) {
         String[] spaceSeparateRequestLineArray;
-
         return  (requestLine.split(" ", 3));
     }
 
