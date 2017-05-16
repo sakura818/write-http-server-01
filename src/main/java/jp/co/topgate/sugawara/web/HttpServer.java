@@ -17,7 +17,7 @@ import java.io.OutputStream;
 public class HttpServer {
 
     private Socket socket;
-    final int PORT = 8080;
+    private final int PORT = 8080;
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -67,7 +67,7 @@ public class HttpServer {
      * HttpRequestに応じて適切なステータスコードを返す
      *
      * @param httpRequest
-     * @param filePath        ex:index.html
+     * @param filePath    ex:index.html
      * @return statusCode ex:200
      */
 

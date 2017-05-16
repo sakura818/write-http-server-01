@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * HttpResponseStatusLineContent Class
- * HttpResponseのStatusLineを生成する
+ * HttpResponseのStatusLineのContentを生成するクラス
  * StatusLineとはHTTP-Version SP Status-Code SP Reason-Phrase CRLF
  * HttpResponseのContentを3つに分けたうちの1つである。
  *

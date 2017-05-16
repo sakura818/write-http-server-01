@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * HttpResponseMessageBodyContent Class
- * HttpResponseのMessageBodyを生成する
+ * HttpResponseのMessageBodyのContentを生成するクラス
  * MessageBodyはファイルのデータの中身
  * HttpResponseのContentを3つに分けたうちの1つである。
  *
@@ -16,19 +16,9 @@ import java.io.IOException;
 
 public class HttpResponseMessageBodyContent {
 
-    /**
-     * ResponseMessageBodyを生成する
-     * TODO:200のファイルを呼び出すところまだ書いていない　ファイルを呼び出すときにTextかBinaryか分ける
-     *
-     * @return ResponseMessageBody
-     */
-
 
     private String responseBodyTextFile;
     private String responseBodyBinaryFile;
-
-    public HttpResponseMessageBodyContent(File filePath, int statusCode) {
-    }
 
     public String getResponseBodyTextFile() {
         return this.responseBodyTextFile;
@@ -38,9 +28,16 @@ public class HttpResponseMessageBodyContent {
         return this.responseBodyBinaryFile;
     }
 
+    public HttpResponseMessageBodyContent(File filePath, int statusCode) {
+    }
 
     /**
+     * ResponseMessageBodyを生成する
      * statusCodeとfilePathに応じてresponseBodyTextFileかresponseBodyBinaryFileをかえす
+     *
+     * @param statusCode ex:200
+     * @param filePath   ex:index.html
+     * @return ResponseMessageBody
      */
 
     public String createResponseMessageBody(int statusCode, File filePath) throws IOException {
@@ -53,7 +50,7 @@ public class HttpResponseMessageBodyContent {
             FileInputStream fileInputStream = new FileInputStream(filePath);
 
             byte[] b = new byte[1];
-            while (fileInputStream.read(b, 0, 1) > 0) {
+            while (fileInputStream.read(b, 0, 1) > 0) { //TODO
                 if (b[0] == 0) {
                     return responseBodyBinaryFile;
                 }

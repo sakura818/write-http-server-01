@@ -17,7 +17,8 @@ import java.io.*;
 public class HttpRequest {
 
     /**
-     * HttpRequestの全文を表示する
+     * HttpRequestの全文をSystem.out.printlnで表示する
+     * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
      *
      * @param inputStream
      */
@@ -26,9 +27,9 @@ public class HttpRequest {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            String readHttpRequest = bufferedReader.readLine();
-            while (readHttpRequest != null && !readHttpRequest.isEmpty()) {
-                System.out.println(readHttpRequest);
+            String sysoutHttpRequest = bufferedReader.readLine();
+            while (sysoutHttpRequest != null && !sysoutHttpRequest.isEmpty()) { //TODO:
+                System.out.println(sysoutHttpRequest);
             }
         } catch (IOException e) {
             System.out.println("HttpRequestの全文表示失敗");
@@ -37,8 +38,7 @@ public class HttpRequest {
     }
 
     /**
-     * HttpRequestをinputStreamから読み込む
-     * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
+     * RequestLineをinputStreamから読み込む
      *
      * @param inputStream
      * @return readRequestLine リクエストの1行目
@@ -55,8 +55,10 @@ public class HttpRequest {
         }
     }
 
+    private String method;
+
     /**
-     * requestLineを空白文字をdelimiterとして3つに分割し、requestUriを編集してfilePathにする
+     * requestLineに対して空白文字をdelimiterとして3つに分割する
      * requestLine = method + requestUri + httpVersion
      * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
      * methodとhttpVersionは今回使用しない
@@ -78,8 +80,6 @@ public class HttpRequest {
         }
         return filePath;
     }
-
-    private String method;
 
     /**
      * メソッドを取得する

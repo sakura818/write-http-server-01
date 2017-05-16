@@ -24,13 +24,16 @@ public class HttpResponse {
      */
     public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
-        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
-        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(filePath, statusCode);
-
         StringBuilder httpResponse = new StringBuilder();
+
+        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
         httpResponse.append(httpResponseStatusLineContent.createResponseStatusLine(statusCode)).append("\n");
+
+        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
         httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
+
+        HttpResponseMessageBodyContent httpResponseMessageBodyContent
+                = new HttpResponseMessageBodyContent(filePath, statusCode);
         httpResponseMessageBodyContent.getResponseBodyTextFile();
 
         if (responseBodyTextFile != null) {
@@ -44,7 +47,7 @@ public class HttpResponse {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(responseBodyBinaryFile));
             try {
-                for (int c = bufferedInputStream.read(); c >= 0; c = bufferedInputStream.read()) {
+                for (int c = bufferedInputStream.read(); c >= 0; c = bufferedInputStream.read()) { //TODO
                     outputStream.write(c);
                 }
             } catch (IOException e) {
@@ -56,7 +59,6 @@ public class HttpResponse {
             }
         }
     }
-
 
     private String responseBodyTextFile;
     private File responseBodyBinaryFile;

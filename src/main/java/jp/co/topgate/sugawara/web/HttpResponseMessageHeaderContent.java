@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * HttpResponseMessageHeaderContent Class
- * HttpResponseのMessageHeaderを生成する
+ * HttpResponseのMessageHeaderのContentを生成するクラス
  * MessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
  * HttpResponseのContentを3つに分けたうちの1つである。
  *
@@ -46,8 +46,8 @@ public class HttpResponseMessageHeaderContent {
      */
 
     public String createGeneralHeader() {
-        StringBuilder stringBuilder = new StringBuilder();
-        String generalHeaderContent = new String(stringBuilder);
+        StringBuilder generalHeader = new StringBuilder();
+        String generalHeaderContent = new String(generalHeader);
         return generalHeaderContent;
     }
 
@@ -59,9 +59,9 @@ public class HttpResponseMessageHeaderContent {
      */
 
     public String createResponseHeader() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Server: " + "sakura818").append("\n");
-        String responseHeaderContent = new String(stringBuilder);
+        StringBuilder responseHeader = new StringBuilder();
+        responseHeader.append("Server: " + "sakura818").append("\n");
+        String responseHeaderContent = new String(responseHeader);
         return responseHeaderContent;
     }
 
@@ -74,11 +74,11 @@ public class HttpResponseMessageHeaderContent {
      */
 
     public String createEntityHeader(File filePath) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Allow: " + "GET").append("\n");
-        stringBuilder.append("Content-Language: " + "en").append("\n");
-        stringBuilder.append(createContentType(filePath)).append("\n");
-        String entityHeaderContent = new String(stringBuilder);
+        StringBuilder entityHeader = new StringBuilder();
+        entityHeader.append("Allow: " + "GET").append("\n");
+        entityHeader.append("Content-Language: " + "en").append("\n");
+        entityHeader.append(createContentType(filePath)).append("\n");
+        String entityHeaderContent = new String(entityHeader);
         return entityHeaderContent;
     }
 
