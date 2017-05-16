@@ -28,7 +28,7 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'App'
+mainClassName = 'jp.co.topgate.sugawara.web.Main'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
