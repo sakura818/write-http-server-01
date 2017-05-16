@@ -21,6 +21,7 @@ public class HttpResponseStatusLineContent {
     public HttpResponseStatusLineContent(int statusCode) {
     }
 
+
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF

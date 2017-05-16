@@ -16,11 +16,11 @@ public class HttpResponse {
 
     private String responseBodyTextFile;
     private File responseBodyBinaryFile;
-    private StringBuilder httpResponse = new StringBuilder();
 
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
-     * 生成したレスポンスのコンテンツ　= HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
+     * 生成したレスポンスのコンテンツ
+     * = HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
      * @param outputStream 書き込み先データストリーム
      * @throws IOException
@@ -32,7 +32,8 @@ public class HttpResponse {
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
         httpResponse.append(httpResponseStatusLineContent.createResponseStatusLine(statusCode)).append("\n");
 
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
+        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent
+                = new HttpResponseMessageHeaderContent(filePath);
         httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
@@ -42,7 +43,6 @@ public class HttpResponse {
         if (responseBodyTextFile != null) {
             httpResponse.append(responseBodyTextFile).append("\n");
         }
-        printWriter.println(httpResponse.toString());
 
         httpResponseMessageBodyContent.getResponseBodyBinaryFile();
 
@@ -50,8 +50,9 @@ public class HttpResponse {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(responseBodyBinaryFile));
             try {
-                for (int c = bufferedInputStream.read(); c >= 0; c = bufferedInputStream.read()) { //TODO
-                    outputStream.write(c);
+                int binaryData; // 読み込んだデータを格納
+                while ((binaryData = bufferedInputStream.read()) != -1) {
+                    outputStream.write(binaryData);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

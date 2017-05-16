@@ -77,7 +77,7 @@ public class HttpResponseMessageHeaderContent {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
-        entityHeader.append(createContentType(filePath)).append("\n");
+        entityHeader.append("Content-Type: " + createContentType(filePath)).append("\n");
         String entityHeaderContent = new String(entityHeader);
         return entityHeaderContent;
     }

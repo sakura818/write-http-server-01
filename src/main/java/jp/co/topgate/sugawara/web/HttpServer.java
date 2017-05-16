@@ -18,6 +18,7 @@ public class HttpServer {
 
     private Socket socket;
     private final int PORT = 8080;
+    private final String FILE_DIR = "src/main/resources/";
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -36,9 +37,10 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
                 System.out.println("request show");
-                httpRequest.printHttpRequest();
+                //httpRequest.printHttpRequest();
 
-                File filePath = new File(httpRequest.getFilePath());
+                File filePath = new File(FILE_DIR, httpRequest.getFilePath());
+                System.out.println("ファイルパスが正しくとれているか確認" + filePath);// TODO:delete
                 int statusCode = selectStatusCode(httpRequest, filePath);
 
                 OutputStream outputStream = this.socket.getOutputStream();

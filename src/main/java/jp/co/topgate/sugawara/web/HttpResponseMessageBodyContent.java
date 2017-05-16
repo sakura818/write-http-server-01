@@ -15,6 +15,11 @@ import java.io.IOException;
  */
 
 public class HttpResponseMessageBodyContent {
+    /*
+    public HttpResponseMessageBodyContent(int statusCode, File filePath) {
+        String responseMessageBody = createResponseMessageBody(statusCode, filePath);
+    }
+    */
 
 
     private String responseBodyTextFile;
@@ -29,6 +34,7 @@ public class HttpResponseMessageBodyContent {
     }
 
     public HttpResponseMessageBodyContent(File filePath, int statusCode) {
+
     }
 
     /**
@@ -43,14 +49,11 @@ public class HttpResponseMessageBodyContent {
     public String createResponseMessageBody(int statusCode, File filePath) throws IOException {
 
         if (statusCode == 200) {
-            // private static final String FILE_DIR = "src/main/resources/";
-            // File filePath = new File(FILE_DIR, httpRequest.getFile());
-            // TODO: ファイルがTextFileかBinaryFileか判別する
             // 判別する方法は文字コード00があればバイナリファイル、文字コード00がない場合はテキストファイル
             FileInputStream fileInputStream = new FileInputStream(filePath);
 
             byte[] b = new byte[1];
-            while (fileInputStream.read(b, 0, 1) > 0) { //TODO
+            while (fileInputStream.read(b, 0, 1) > 0) { //TODO debug
                 if (b[0] == 0) {
                     return responseBodyBinaryFile;
                 }
@@ -68,5 +71,7 @@ public class HttpResponseMessageBodyContent {
             return responseBodyTextFile;
         }
         return responseBodyTextFile = "no content";
+
+
     }
 }
