@@ -11,7 +11,6 @@ import java.io.*;
  * HttpRequest = Request-Line + MessageHeader + MessageBody
  * しかし、今回の課題では簡易的な機能しか提供しないためheaderやbodyは読み込んでいない
  *
- *
  * @author sakura818
  */
 
@@ -71,6 +70,7 @@ public class HttpRequest {
         String[] spaceSeparateRequestLineArray;
 
         spaceSeparateRequestLineArray = (readHttpRequestLine(inputStream).split(" ", 3));
+        this.method = spaceSeparateRequestLineArray[0];
         String requestUri = spaceSeparateRequestLineArray[1];
 
         String file = parseFile(requestUri);
@@ -78,6 +78,17 @@ public class HttpRequest {
             file += "index.html";
         }
         return file;
+    }
+
+    private String method;
+
+    /**
+     * メソッドを取得する
+     *
+     * @return method
+     */
+    public String getMethod() {
+        return this.method;
     }
 
     /**
@@ -88,37 +99,27 @@ public class HttpRequest {
      */
 
     public String parseFile(String requestUri) {
+        if (requestUri == null) {
+            return "";
+        }
         int lastDotPosition = requestUri.lastIndexOf("/");
         if (lastDotPosition != -1) {
             return requestUri.substring(lastDotPosition + 1);
         }
-        return null;
+        return file;
     }
 
-    private int statusCode;
-    public int getStatusCode(){return this.statusCode;}
+    private String file;
 
     /**
-     * HttpRequestに応じて適切なステータスコードを返す
+     * 要求するリソースのローカルパスを取得します.
      *
-     * @param method ex:GET
-     * @param file   ex:index.html
-     * @return statusCode ex:200
+     * @return file
      */
-
-    public int selectStatusCode(String method, File file) {
-        int statusCode;
-        if (method == null) {
-            statusCode = 400;
-            return statusCode;
-        }
-        if (!file.exists()) {
-            statusCode = 404;
-            return statusCode;
-        }
-        statusCode = 200;
-        return statusCode;
+    public String getFile() {
+        return this.file;
     }
+
 
 }
 

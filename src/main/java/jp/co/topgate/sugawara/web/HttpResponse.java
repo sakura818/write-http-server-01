@@ -35,6 +35,8 @@ public class HttpResponse {
         this.responseBodyBinaryFile = file;
     }
 
+    private StringBuilder httpResponse = new StringBuilder();
+
 
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
@@ -43,21 +45,21 @@ public class HttpResponse {
      * @param outputStream 書き込み先データストリーム
      * @throws IOException
      */
-    public void writeResponseOutputStream(OutputStream outputStream) throws IOException {
+    public void writeResponseOutputStream(OutputStream outputStream, File file, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
-        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
-        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent();
+        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
+        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(file);
+        HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(file, statusCode);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
-        stringBuilder.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
+        StringBuilder httpResponse = new StringBuilder();
+        httpResponse.append(httpResponseStatusLineContent.getResponseStatusLineContent()).append("\n");
+        httpResponse.append(httpResponseMessageHeaderContent.getResponseMessageHeaderContent()).append("\n");
         httpResponseMessageBodyContent.getResponseBodyTextFile();
 
         if (responseBodyTextFile != null) {
-            stringBuilder.append(responseBodyTextFile).append("\n");
+            httpResponse.append(responseBodyTextFile).append("\n");
         }
-        printWriter.println(stringBuilder.toString());
+        printWriter.println(httpResponse.toString());
 
         httpResponseMessageBodyContent.getResponseBodyBinaryFile();
 
@@ -77,6 +79,16 @@ public class HttpResponse {
             }
         }
     }
+
+    /**
+     * HttpResponseを取得する
+     *
+     * @return httpResponse
+     */
+    public String getHttpResponse() {
+        return httpResponse.toString();
+    }
+
 }
 
 

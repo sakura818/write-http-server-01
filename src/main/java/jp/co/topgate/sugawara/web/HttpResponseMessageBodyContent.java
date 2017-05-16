@@ -28,12 +28,15 @@ public class HttpResponseMessageBodyContent {
 
     // private static final String FILE_DIR = "src/main/resources/";
     // File file = new File(FILE_DIR, httpRequest.getFilePath());
-
+¬
     /**
-     * ステータスコードに応じて適切なファイルやhtmlを返す
+     * ステータスコードとファイルに応じて適切なファイルやhtmlを返す
      */
     private String responseBodyTextFile;
     private String responseBodyBinaryFile;
+
+    public HttpResponseMessageBodyContent(File file, int statusCode) {
+    }
 
     public String getResponseBodyTextFile() {
         return this.responseBodyTextFile;
@@ -48,6 +51,7 @@ public class HttpResponseMessageBodyContent {
         if (statusCode == 200) {
             // private static final String FILE_DIR = "src/main/resources/";
             // File file = new File(FILE_DIR, httpRequest.getFile());
+            // TODO: ファイルがTextFileかBinaryFileか判別する
             return "200 Response Message Body";
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +

@@ -1,5 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,7 @@ import java.util.Map;
 public class HttpResponseMessageHeaderContent {
     private String responseMessageHeaderContent;
 
-    public String getResponseMessageHeaderContent() {
-        return this.responseMessageHeaderContent;
+    public HttpResponseMessageHeaderContent(File file) {
     }
 
     /**
@@ -35,6 +35,16 @@ public class HttpResponseMessageHeaderContent {
         stringBuilder.append(createEntityHeader(file));
         String responseMessageHeaderContent = new String(stringBuilder);
         return responseMessageHeaderContent;
+    }
+
+    /**
+     * テストのために現在設定されているstatusCodeを取得する
+     *
+     * @return responseMessageHeaderContent
+     */
+
+    public String getResponseMessageHeaderContent() {
+        return this.responseMessageHeaderContent;
     }
 
 

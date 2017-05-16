@@ -15,10 +15,12 @@ import java.util.Map;
 public class HttpResponseStatusLineContent {
 
     private String responseStatusLineContent;
+    private int statusCode;
+    private String reasonPhrase;
 
-    public String getResponseStatusLineContent() {
-        return this.responseStatusLineContent;
+    public HttpResponseStatusLineContent(int statusCode) {
     }
+
 
     /**
      * ResponseStatusLineを生成する
@@ -49,9 +51,6 @@ public class HttpResponseStatusLineContent {
         }
     };
 
-    private int statusCode;
-    private String reasonPhrase;
-
     /**
      * テストのためにステータスコードを設定する
      *
@@ -80,6 +79,15 @@ public class HttpResponseStatusLineContent {
 
     public String getReasonPhrase() {
         return this.reasonPhrase;
+    }
+
+    /**
+     * テストのために現在設定されているstatusCodeを取得する
+     *
+     * @return responseStatusLineContent ex:HTTP/1.1 200 OK
+     */
+    public String getResponseStatusLineContent() {
+        return this.responseStatusLineContent;
     }
 
 

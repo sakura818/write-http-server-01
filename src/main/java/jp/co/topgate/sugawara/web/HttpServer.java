@@ -29,7 +29,7 @@ public class HttpServer {
             ServerSocket serverSocket = new ServerSocket(PORT);
             System.out.println("start up http server http://localhost:" + PORT);
             while (true) {
-                Socket socket = serverSocket.accept();
+                socket = serverSocket.accept();
                 System.out.println("request incoming");
 
                 InputStream inputStream = this.socket.getInputStream();
@@ -38,9 +38,12 @@ public class HttpServer {
                 System.out.println("request show");
                 httpRequest.showHttpRequest(inputStream);
 
+                File file = new File(httpRequest.getFile());
+                int statusCode = selectStatusCode(httpRequest, file);
+
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
-                httpResponse.writeResponseOutputStream(outputStream);
+                httpResponse.writeResponseOutputStream(outputStream, file, statusCode);
 
                 inputStream.close();
                 outputStream.close();
@@ -59,6 +62,26 @@ public class HttpServer {
             System.out.println("正常にコネクションできないエラーが発生しました");
         }
     }
+
+
+    /**
+     * HttpRequestに応じて適切なステータスコードを返す
+     *
+     * @param httpRequest
+     * @param file        ex:index.html
+     * @return statusCode ex:200
+     */
+
+    public int selectStatusCode(HttpRequest httpRequest, File file) {
+        if (httpRequest.getMethod() == null) {
+            return 400;
+        }
+        if (!file.exists()) {
+            return 404;
+        }
+        return 200;
+    }
+
 }
 
 
