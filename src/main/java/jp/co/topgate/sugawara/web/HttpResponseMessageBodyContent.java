@@ -26,15 +26,19 @@ public class HttpResponseMessageBodyContent {
     public String getResponseBodyBinaryFile() {
         return this.responseBodyBinaryFile;
     }
+
+    /*
+
     private File file;
     public HttpResponseMessageBodyContent(File filePath, int statusCode) {
-        // responseBodyTextFile = createResponseMessageBody(statusCode,filePath);
         this.file = filePath;
     }
+    */
 
     /**
      * ResponseMessageBodyを生成する
      * statusCodeとfilePathに応じてresponseBodyTextFileかresponseBodyBinaryFileをかえす
+     * //TODO ファイルなのにString型で返すのはおかしい
      *
      * @param statusCode ex:200
      * @param filePath   ex:index.html
@@ -43,11 +47,11 @@ public class HttpResponseMessageBodyContent {
 
     public String createResponseMessageBody(File filePath,int statusCode) throws IOException {
         if (statusCode == 200) {
-            // 判別する方法は文字コード00があればバイナリファイル、文字コード00がない場合はテキストファイル
+            // 判別する方法は文字コード0があればバイナリファイル、なはればテキストファイル
             FileInputStream fileInputStream = new FileInputStream(filePath);
 
             byte[] b = new byte[1];
-            while (fileInputStream.read(b, 0, 1) > 0) { //TODO debug
+            while (fileInputStream.read(b, 0, 1) > 0) {
                 if (b[0] == 0) {
                     return responseBodyBinaryFile;
                 }

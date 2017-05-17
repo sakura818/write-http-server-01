@@ -37,7 +37,7 @@ public class HttpResponse {
         httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
-                = new HttpResponseMessageBodyContent(filePath, statusCode);
+                = new HttpResponseMessageBodyContent();
 
         httpResponseMessageBodyContent.createResponseMessageBody(filePath,statusCode);
         responseBodyTextFile = httpResponseMessageBodyContent.getResponseBodyTextFile();
@@ -50,7 +50,7 @@ public class HttpResponse {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(responseBodyBinaryFile));
             try {
-                int binaryData; // 読み込んだデータを格納
+                int binaryData;
                 while ((binaryData = bufferedInputStream.read()) != -1) {
                     outputStream.write(binaryData);
                 }
@@ -63,6 +63,7 @@ public class HttpResponse {
             }
         }
         printWriter.println(httpResponse.toString());
+        System.out.println("response...");
         System.out.println(httpResponse.toString());
     }
 
