@@ -36,11 +36,10 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
-                System.out.println("request show");
+                System.out.println("request...");
                 //httpRequest.printHttpRequest();
 
                 File filePath = new File(FILE_DIR, httpRequest.getFilePath());
-                System.out.println("ファイルパスが正しくとれているか確認" + filePath);// TODO:delete
                 int statusCode = selectStatusCode(httpRequest, filePath);
 
                 OutputStream outputStream = this.socket.getOutputStream();
