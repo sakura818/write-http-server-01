@@ -82,7 +82,6 @@ public class HttpRequest {
      */
 
     public String[] spaceSeparateRequestLine(String requestLine) {
-        String[] spaceSeparateRequestLineArray;
         return (requestLine.split(" ", 3));
     }
 
@@ -122,7 +121,18 @@ public class HttpRequest {
         return this.filePath;
     }
 
+    /**
+     * テストのためにrequestLineを設定する
+     *
+     * @param requestLine
 
+    private String requestLine;
+
+    public void setRequestLine(String requestLine) {
+        this.requestLine = requestLine;
+
+    }
+    */
 }
 
 
