@@ -77,25 +77,6 @@ public class HttpResponseStatusLineContent {
         this.statusCode = i;
     }
 
-    /**
-     * テストのために現在設定されているstatusCodeを取得する
-     *
-     * @return statusCode ex:200
-     */
-
-    public int getStatusCode() {
-        return this.statusCode;
-    }
-
-    /**
-     * テストのために現在設定されているreasonPhraseを取得する
-     *
-     * @return reasonPhrase ex:OK
-     */
-
-    public String getReasonPhrase() {
-        return this.reasonPhrase;
-    }
 
 
 }

@@ -137,5 +137,15 @@ public class HttpResponseMessageHeaderContent {
         }
     };
 
+    /**
+     * テストのためにfilePathを設定する
+     *
+     * @param filePath　ex:index.html
+     */
+    private File filePath;
+    public void setFilePath(File filePath) {
+        this.filePath = filePath;
+    }
+
 
 }

@@ -20,52 +20,34 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderContentTest {
-    try{
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
-        File exampleRequestFile = new File("src/test/resources/exampleRequest.txt");
-        InputStream inputStream = new FileInputStream(exampleRequestFile);
+    private File filePath;
+    HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
 
-        @Test
-        public void ファイルの拡張子からContentTypeをMapするテスト(inputStream) {
-        // 拡張子がNULLのファイル
+    @Test
+    public void ファイルの拡張子に応じて適切なContentTypeを判断するテスト() {
         assertThat(null, is(httpResponseMessageHeaderContent.createContentType(null)));
 
-        // 拡張子がhtmlのファイル
-        assertThat("text/html", is(HttpResponseMessageHeaderContent.createContentType("test.html")));
+        assertThat("text/html", is(httpResponseMessageHeaderContent.createContentType(new File("test.html"))));
 
-        // 拡張子がtxtのファイル
-        assertThat("text/plain", is(HttpResponseMessageHeaderContent.createContentType("test.txt")));
+        assertThat("application/octet-stream", is(httpResponseMessageHeaderContent.createContentType(new File("hoge.hoge"))));
 
-        // 拡張子がmapHttpResponseMessageHeaderContentにない
-        assertThat("application/octet-stream", is(HttpResponseMessageHeaderContent.createContentType("hoge.hoge")));
+        assertThat(null, is(httpResponseMessageHeaderContent.createContentType(new File("hoge"))));
 
-        // 拡張子のないファイル
-        assertThat(null, is(HttpResponseMessageHeaderContent.createContentType("hoge")));
+        assertThat("text/html", is(httpResponseMessageHeaderContent.createContentType(new File("hoge..html"))));
+    }
 
-        // ファイルのなかに連続して"."がある
-        assertThat("text/html", is(HttpResponseMessageHeaderContent.createContentType("hoge..html")));
-        }
-
-        @Test
-        public void ファイルの拡張子を判断するテスト (file) {
-        // 拡張子がNULLのファイル
+    @Test
+    public void ファイルから拡張子をぬきだすテスト() {
         assertThat(null, is(httpResponseMessageHeaderContent.extractExtension(null)));
 
-        // 拡張子がhtmlのファイル
-        assertThat("html", is(httpResponseMessageHeaderContent.extractExtension("hoge.html")));
+        assertThat("html", is(httpResponseMessageHeaderContent.extractExtension(new File("hoge.html"))));
 
-        // 拡張子がtxtのファイル
-        assertThat("txt", is(httpResponseMessageHeaderContent.extractExtension("hoge.txt")));
+        assertThat(null, is(httpResponseMessageHeaderContent.extractExtension(new File("hoge"))));
 
-        // 拡張子のないファイル
-        assertThat(null, is(httpResponseMessageHeaderContent.extractExtension("hoge")));
-
-        // ファイルのなかに連続して"."がある
-        assertThat("html", is(httpResponseMessageHeaderContent.extractExtension("hoge..html")));
+        assertThat("html", is(httpResponseMessageHeaderContent.extractExtension(new File("hoge..html"))));
 
     }
-    }catch(IOException e){
-        throw new RuntimeException(e);
-    }
+
+
 }
 
