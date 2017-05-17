@@ -15,6 +15,7 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpResponseTest {
+    HttpResponse httpResponse = new HttpResponse();
 
     @Test
     public void createResponseMessageBodyのテストのメソッド() {

@@ -14,5 +14,5 @@ public class HttpResponseMessageBodyContentTest {
     private int statusCode;
     HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(filePath,statusCode);
 
-    
+
 }

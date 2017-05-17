@@ -15,12 +15,6 @@ import java.io.IOException;
  */
 
 public class HttpResponseMessageBodyContent {
-    /*
-    public HttpResponseMessageBodyContent(int statusCode, File filePath) {
-        String responseMessageBody = createResponseMessageBody(statusCode, filePath);
-    }
-    */
-
 
     private String responseBodyTextFile;
     private String responseBodyBinaryFile;
@@ -34,6 +28,7 @@ public class HttpResponseMessageBodyContent {
     }
 
     public HttpResponseMessageBodyContent(File filePath, int statusCode) {
+        // responseBodyTextFile = createResponseMessageBody(statusCode,filePath);
 
     }
 
@@ -46,8 +41,7 @@ public class HttpResponseMessageBodyContent {
      * @return ResponseMessageBody
      */
 
-    public String createResponseMessageBody(int statusCode, File filePath) throws IOException {
-
+    public String createResponseMessageBody(File filePath,int statusCode) throws IOException {
         if (statusCode == 200) {
             // 判別する方法は文字コード00があればバイナリファイル、文字コード00がない場合はテキストファイル
             FileInputStream fileInputStream = new FileInputStream(filePath);
