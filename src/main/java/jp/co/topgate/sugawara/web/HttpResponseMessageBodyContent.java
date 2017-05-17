@@ -26,10 +26,10 @@ public class HttpResponseMessageBodyContent {
     public String getResponseBodyBinaryFile() {
         return this.responseBodyBinaryFile;
     }
-
+    private File file;
     public HttpResponseMessageBodyContent(File filePath, int statusCode) {
         // responseBodyTextFile = createResponseMessageBody(statusCode,filePath);
-
+        this.file = filePath;
     }
 
     /**

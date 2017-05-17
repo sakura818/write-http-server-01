@@ -26,7 +26,7 @@ public class HttpResponse {
      * @throws IOException
      */
     public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
-        PrintWriter printWriter = new PrintWriter(outputStream);
+        PrintWriter printWriter = new PrintWriter(outputStream, true);
         StringBuilder httpResponse = new StringBuilder();
 
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
@@ -35,8 +35,6 @@ public class HttpResponse {
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent
                 = new HttpResponseMessageHeaderContent(filePath);
         httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
-
-        httpResponse.append("\n");
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent(filePath, statusCode);
@@ -47,8 +45,6 @@ public class HttpResponse {
         if (responseBodyTextFile != null) {
             httpResponse.append(responseBodyTextFile).append("\n");
         }
-
-        httpResponseMessageBodyContent.getResponseBodyBinaryFile();
 
         if (responseBodyBinaryFile != null) {
             BufferedInputStream bufferedInputStream
@@ -66,7 +62,8 @@ public class HttpResponse {
                 }
             }
         }
-        printWriter.write(httpResponse.toString());
+        printWriter.println(httpResponse.toString());
+        System.out.println(httpResponse.toString());
     }
 
     /**

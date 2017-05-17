@@ -44,11 +44,11 @@ public class HttpServer {
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
+
                 httpResponse.writeResponseOutputStream(outputStream, filePath, statusCode);
 
                 inputStream.close();
                 outputStream.close();
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

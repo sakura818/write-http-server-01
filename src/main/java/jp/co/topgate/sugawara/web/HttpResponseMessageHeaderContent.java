@@ -122,8 +122,8 @@ public class HttpResponseMessageHeaderContent {
      */
     public final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
-            put("html", "text/html");
-            put("htm", "text/html");
+            put("html", "text/html; charset=UTF-8");
+            put("htm", "text/html; charset=UTF-8");
             put("css", "text/css");
             put("js", "application/javascript");
             put("jpg", "image/jpeg");
