@@ -27,15 +27,16 @@ public class HttpResponseMessageBodyContent {
 
     public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
         byte[] binaryData = new byte[4096];
+
+
         if (statusCode == 200) {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(filePath));
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             try {
                 int i;
                 while (bufferedInputStream.read() == -1) {
                     i = bufferedInputStream.read();
-                    System.out.println(Integer.toHexString(i));
+                    // System.out.println(Integer.toHexString(i));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
