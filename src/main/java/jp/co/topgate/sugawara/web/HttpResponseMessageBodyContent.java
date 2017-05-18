@@ -15,16 +15,10 @@ import java.io.*;
 public class HttpResponseMessageBodyContent {
 
     private String responseBodyTextFile;
-    private String responseBodyBinaryFile;
-
-    public String getResponseBodyTextFile() {
-        return this.responseBodyTextFile;
-    }
-
 
 
     /**
-     * filePathがresponseBodyTextFileかresponseBodyBinaryFileか判断する
+     * ResponseMessageBodyを生成するためにfilePathからファイルをバイト型の配列で読み込む
      *
      * @param statusCode ex:200
      * @param filePath   ex:index.html
@@ -32,35 +26,37 @@ public class HttpResponseMessageBodyContent {
      */
 
     public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
+        byte[] binaryData = new byte[4096];
         if (statusCode == 200) {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(filePath));
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             try {
-                int binaryData;
-                while ((binaryData = bufferedInputStream.read()) != -1) {
-                    outputStream.write(binaryData);
+                int i;
+                while (bufferedInputStream.read() == -1) {
+                    i = bufferedInputStream.read();
+                    System.out.println(Integer.toHexString(i));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
-                if (bufferedInputStream != null) {
-                    bufferedInputStream.close();
-                }
+                bufferedInputStream.close();
             }
+            return binaryData;
 
-            return byte[];
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
                     "<p>リクエストにエラーがあります。</p></body></html>";
-            return byte[];
+            binaryData = responseBodyTextFile.getBytes();
+            return binaryData;
         } else if (statusCode == 404) {
             responseBodyTextFile = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +
                     "<p>該当のページは見つかりませんでした。</p></body></html>";
-            return byte[];
+            binaryData = responseBodyTextFile.getBytes();
+            return binaryData;
         }
+        return binaryData;
     }
-
-
 }

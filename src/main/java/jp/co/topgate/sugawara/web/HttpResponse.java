@@ -31,18 +31,26 @@ public class HttpResponse {
 
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
         printWriter.println(httpResponseStatusLineContent.createResponseStatusLine(statusCode));
+        System.out.println(httpResponseStatusLineContent.createResponseStatusLine(statusCode));
 
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent
                 = new HttpResponseMessageHeaderContent(filePath);
         printWriter.println(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath));
+        System.out.println(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath));
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent();
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
-
         bufferedOutputStream.write(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode));
-        byte[] CRLF = "\r\n".getBytes("utf-8");
+        for (int i = 0; i < httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode).length; i++) {
+            System.out.println(Integer.toHexString(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode)[i]));
+        }
+
+        byte[] CRLF = "\r\n".getBytes("UTF-8");
         bufferedOutputStream.write(CRLF);
+        for (int i = 0; i < CRLF.length; i++) {
+            System.out.println(Integer.toHexString(CRLF[i]));
+        }
     }
 
 }
