@@ -15,7 +15,7 @@ import java.io.*;
 public class HttpResponse {
 
     private String responseBodyTextFile;
-    private File responseBodyBinaryFile;
+    private String responseBodyBinaryFile;
 
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
@@ -39,16 +39,18 @@ public class HttpResponse {
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent();
 
-        httpResponseMessageBodyContent.createResponseMessageBody(filePath,statusCode);
+        httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode);
+
         responseBodyTextFile = httpResponseMessageBodyContent.getResponseBodyTextFile();
 
         if (responseBodyTextFile != null) {
             httpResponse.append(responseBodyTextFile).append("\n");
         }
 
+
         if (responseBodyBinaryFile != null) {
             BufferedInputStream bufferedInputStream
-                    = new BufferedInputStream(new FileInputStream(responseBodyBinaryFile));
+                    = new BufferedInputStream(new FileInputStream(filePath));
             try {
                 int binaryData;
                 while ((binaryData = bufferedInputStream.read()) != -1) {
@@ -66,25 +68,6 @@ public class HttpResponse {
         System.out.println("response...");
         System.out.println(httpResponse.toString());
     }
-
-    /**
-     * テストのためにレスポンスボディを設定する
-     *
-     * @param text ex:index.html
-     */
-    public void setResponseBodyText(String text) {
-        this.responseBodyTextFile = text;
-    }
-
-    /**
-     * テストのためにレスポンスボディにファイルを設定する
-     *
-     * @param file ex:cream.png
-     */
-    public void setResponseBodyFile(File file) {
-        this.responseBodyBinaryFile = file;
-    }
-
 
 }
 

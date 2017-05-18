@@ -36,19 +36,21 @@ public class HttpRequest {
     /**
      * HttpRequestの全文をSystem.out.printlnで表示する
      * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
-     * TODO:このメソッドは実行した時にhogeの下の文でとまる
+     * TODO:
      */
 
     public void printHttpRequest() {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            System.out.println("hoge");
-            String printHttpRequest = bufferedReader.readLine();
-            //while (printHttpRequest != null && !printHttpRequest.isEmpty()) { //TODO:
-            System.out.println(printHttpRequest);
-            //}
-            System.out.println("HttpRequestの全文表示失敗");
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            System.out.println(stringBuilder);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -65,6 +67,7 @@ public class HttpRequest {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             String readHttpRequestLine = bufferedReader.readLine();
+            System.out.println(readHttpRequestLine);
             return readHttpRequestLine;
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -143,6 +143,7 @@ public class HttpResponseMessageHeaderContent {
      * @param filePath　ex:index.html
      */
     private File filePath;
+
     public void setFilePath(File filePath) {
         this.filePath = filePath;
     }

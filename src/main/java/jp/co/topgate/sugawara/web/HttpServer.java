@@ -32,11 +32,11 @@ public class HttpServer {
             while (true) {
                 socket = serverSocket.accept();
                 System.out.println("request incoming");
+                System.out.println("request...");
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
-                System.out.println("request...");
                 //httpRequest.printHttpRequest();
 
                 File filePath = new File(FILE_DIR, httpRequest.getFilePath());

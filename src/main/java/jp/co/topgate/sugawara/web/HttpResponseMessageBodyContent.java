@@ -1,8 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 
 /**
@@ -23,39 +21,37 @@ public class HttpResponseMessageBodyContent {
         return this.responseBodyTextFile;
     }
 
-    public String getResponseBodyBinaryFile() {
-        return this.responseBodyBinaryFile;
-    }
 
-    /*
-
-    private File file;
-    public HttpResponseMessageBodyContent(File filePath, int statusCode) {
-        this.file = filePath;
-    }
-    */
 
     /**
-     * ResponseMessageBodyを生成する
-     * statusCodeとfilePathに応じてresponseBodyTextFileかresponseBodyBinaryFileをかえす
-     * //TODO ファイルなのにString型で返すのはおかしい
+     * filePathがresponseBodyTextFileかresponseBodyBinaryFileか判断する
      *
      * @param statusCode ex:200
      * @param filePath   ex:index.html
      * @return ResponseMessageBody
      */
 
-    public String createResponseMessageBody(File filePath,int statusCode) throws IOException {
+    public String createResponseMessageBody(File filePath, int statusCode) throws IOException {
         if (statusCode == 200) {
-            // 判別する方法は文字コード0があればバイナリファイル、なはればテキストファイル
+            // 判別する方法は文字コード0があればバイナリファイル、なければテキストファイル
             FileInputStream fileInputStream = new FileInputStream(filePath);
 
             byte[] b = new byte[1];
             while (fileInputStream.read(b, 0, 1) > 0) {
                 if (b[0] == 0) {
-                    return responseBodyBinaryFile;
+                    return "responseBodyBinaryFile";
                 }
             }
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            responseBodyTextFile = stringBuilder.toString();
             return responseBodyTextFile;
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
@@ -69,7 +65,5 @@ public class HttpResponseMessageBodyContent {
             return responseBodyTextFile;
         }
         return responseBodyTextFile = "no content";
-
-
     }
 }
