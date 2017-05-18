@@ -27,46 +27,22 @@ public class HttpResponse {
      */
     public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
-        StringBuilder httpResponse = new StringBuilder();
+        System.out.println("response...");
 
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
-        httpResponse.append(httpResponseStatusLineContent.createResponseStatusLine(statusCode)).append("\n");
+        printWriter.println(httpResponseStatusLineContent.createResponseStatusLine(statusCode));
 
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent
                 = new HttpResponseMessageHeaderContent(filePath);
-        httpResponse.append(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath)).append("\n");
+        printWriter.println(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath));
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent();
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
 
-        httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode);
-
-        responseBodyTextFile = httpResponseMessageBodyContent.getResponseBodyTextFile();
-
-        if (responseBodyTextFile != null) {
-            httpResponse.append(responseBodyTextFile).append("\n");
-        }
-
-
-        if (responseBodyBinaryFile != null) {
-            BufferedInputStream bufferedInputStream
-                    = new BufferedInputStream(new FileInputStream(filePath));
-            try {
-                int binaryData;
-                while ((binaryData = bufferedInputStream.read()) != -1) {
-                    outputStream.write(binaryData);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (bufferedInputStream != null) {
-                    bufferedInputStream.close();
-                }
-            }
-        }
-        printWriter.println(httpResponse.toString());
-        System.out.println("response...");
-        System.out.println(httpResponse.toString());
+        bufferedOutputStream.write(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode));
+        byte[] CRLF = "\r\n".getBytes("utf-8");
+        bufferedOutputStream.write(CRLF);
     }
 
 }

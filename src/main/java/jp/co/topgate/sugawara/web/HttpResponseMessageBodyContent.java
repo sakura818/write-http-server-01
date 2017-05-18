@@ -31,39 +31,36 @@ public class HttpResponseMessageBodyContent {
      * @return ResponseMessageBody
      */
 
-    public String createResponseMessageBody(File filePath, int statusCode) throws IOException {
+    public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
         if (statusCode == 200) {
-            // 判別する方法は文字コード0があればバイナリファイル、なければテキストファイル
-            FileInputStream fileInputStream = new FileInputStream(filePath);
-
-            byte[] b = new byte[1];
-            while (fileInputStream.read(b, 0, 1) > 0) {
-                if (b[0] == 0) {
-                    return "responseBodyBinaryFile";
+            BufferedInputStream bufferedInputStream
+                    = new BufferedInputStream(new FileInputStream(filePath));
+            try {
+                int binaryData;
+                while ((binaryData = bufferedInputStream.read()) != -1) {
+                    outputStream.write(binaryData);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (bufferedInputStream != null) {
+                    bufferedInputStream.close();
                 }
             }
-            FileReader fileReader = new FileReader(filePath);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append("\n");
-            }
-            responseBodyTextFile = stringBuilder.toString();
-            return responseBodyTextFile;
+            return byte[];
         } else if (statusCode == 400) {
             responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
                     "<p>リクエストにエラーがあります。</p></body></html>";
-            return responseBodyTextFile;
+            return byte[];
         } else if (statusCode == 404) {
             responseBodyTextFile = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +
                     "<p>該当のページは見つかりませんでした。</p></body></html>";
-            return responseBodyTextFile;
+            return byte[];
         }
-        return responseBodyTextFile = "no content";
     }
+
+
 }
