@@ -105,16 +105,15 @@ public class HttpResponseMessageHeaderContent {
      */
 
     public String extractExtension(File filePath) {
-
-        String fileName = filePath.getName();
         if (filePath == null) {
             return null;
         }
+        String fileName = filePath.getName();
         int lastDotPosition = fileName.lastIndexOf(".");
         if (lastDotPosition != -1) {
             return fileName.substring(lastDotPosition + 1);
-        }
-        return null;
+        }else
+        return fileName.substring(lastDotPosition + 1);
     }
 
     /**
@@ -133,20 +132,7 @@ public class HttpResponseMessageHeaderContent {
             put("txt", "text/plain");
             put("pdf", "application/pdf");
             put("mp4", "video/mp4");
-            put("octet-stream", "application/octet-stream");
         }
     };
-
-    /**
-     * テストのためにfilePathを設定する
-     *
-     * @param filePath　ex:index.html
-     */
-    private File filePath;
-
-    public void setFilePath(File filePath) {
-        this.filePath = filePath;
-    }
-
 
 }

@@ -24,30 +24,23 @@ public class HttpResponseMessageHeaderContentTest {
     HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
 
     @Test
-    public void ファイルの拡張子に応じて適切なContentTypeを判断するテスト() {
+    public void MessageHeaderをstringBuilderで文字列を連結させるテスト() {
+        assertThat("Server: sakura818\nAllow: GET\nContent-Language: en\nContent-Type: text/html; charset=UTF-8\n", is(httpResponseMessageHeaderContent.createResponseMessageHeader(new File("hoge.html"))));
+    }
+
+    @Test
+    public void ファイルの拡張子からContentTypeを判断するテスト() {
         assertThat(null, is(httpResponseMessageHeaderContent.createContentType(null)));
-
-        assertThat("text/html", is(httpResponseMessageHeaderContent.createContentType(new File("test.html"))));
-
-        assertThat("application/octet-stream", is(httpResponseMessageHeaderContent.createContentType(new File("hoge.hoge"))));
-
-        assertThat(null, is(httpResponseMessageHeaderContent.createContentType(new File("hoge"))));
-
-        assertThat("text/html", is(httpResponseMessageHeaderContent.createContentType(new File("hoge..html"))));
+        assertThat("text/html; charset=UTF-8", is(httpResponseMessageHeaderContent.createContentType(new File("hoge.html"))));
+        assertThat("text/html; charset=UTF-8", is(httpResponseMessageHeaderContent.createContentType(new File("hoge..html"))));
     }
 
     @Test
     public void ファイルから拡張子をぬきだすテスト() {
         assertThat(null, is(httpResponseMessageHeaderContent.extractExtension(null)));
-
         assertThat("html", is(httpResponseMessageHeaderContent.extractExtension(new File("hoge.html"))));
-
-        assertThat(null, is(httpResponseMessageHeaderContent.extractExtension(new File("hoge"))));
-
         assertThat("html", is(httpResponseMessageHeaderContent.extractExtension(new File("hoge..html"))));
-
     }
-
 
 }
 

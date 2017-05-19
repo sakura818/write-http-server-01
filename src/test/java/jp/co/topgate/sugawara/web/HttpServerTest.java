@@ -19,49 +19,22 @@ import static org.junit.Assert.assertThat;
  */
 public class HttpServerTest {
 
-    private Socket socket;
-    private final int PORT = 8080;
     private final String FILE_DIR = "src/main/resources/";
 
     @Test
-    public void HttpServerのテスト() {
-        try {
+    public void HttpServerのテスト() throws IOException{
 
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            System.out.println("start up http server http://localhost:" + PORT);
-            while (true) {
-                socket = serverSocket.accept();
-                System.out.println("request incoming");
+        File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
+        InputStream inputStream = new FileInputStream(DummyHttpRequest);
+        HttpRequest httpRequest = new HttpRequest(inputStream);
 
-                System.out.println("request...");
-                InputStream inputStream = this.socket.getInputStream();
-                HttpRequest httpRequest = new HttpRequest(inputStream);
+        File filePath = new File(FILE_DIR, httpRequest.getFilePath());
+        System.out.println("DummyHttpRequestのfilePathが正しくとれているか確認 " + filePath);
+        // assertThat(src/main/resources/index.html, is(filePath));
+        int statusCode = selectStatusCode(httpRequest, filePath);
+        System.out.println("DummyHttpRequestのstatusCodeが正しくとれているか確認 " + statusCode);
+        assertThat(200, is(statusCode));
 
-                File filePath = new File(FILE_DIR, httpRequest.getFilePath());
-                System.out.println("filePathが正しくとれているか確認" + filePath);
-                int statusCode = selectStatusCode(httpRequest, filePath);
-                System.out.println("statusCodeが正しくとれているか確認" + statusCode);
-
-                OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();
-                httpResponse.writeResponseOutputStream(outputStream, filePath, statusCode);
-
-                inputStream.close();
-                outputStream.close();
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (socket != null) {
-                    this.socket.close();
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("正常にコネクションできないエラーが発生しました");
-        }
     }
 
     /**

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 
 /**
  * HttpResponseStatusLineContentTest Class
- * リクエストに応じて適切なステータスコードを判断するのをテストするクラス
+ * HttpResponseのStatusLineのContentを生成するクラスをテストする
  *
  * @author sakura818
  */
@@ -15,20 +15,16 @@ import static org.junit.Assert.assertThat;
 
 public class HttpResponseStatusLineContentTest {
     private int statusCode;
+    HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(this.statusCode);
     @Test
-    public void ステータスコードに応じて適切なreasonPhraseを返すテスト() {
-
-        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
-
-        httpResponseStatusLineContent.setStatusCode(200);
-        assertThat("OK", is(httpResponseStatusLineContent.createReasonPhrase(statusCode)));
-
-        httpResponseStatusLineContent.setStatusCode(400);
-        assertThat("Bad Request", is(httpResponseStatusLineContent.createReasonPhrase(statusCode)));
-
-        httpResponseStatusLineContent.setStatusCode(404);
-        assertThat("Not Found", is(httpResponseStatusLineContent.createReasonPhrase(statusCode)));
+    public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
+        assertThat("OK", is(httpResponseStatusLineContent.createReasonPhrase(200)));
+        assertThat("Bad Request", is(httpResponseStatusLineContent.createReasonPhrase(400)));
+        assertThat("Not Found", is(httpResponseStatusLineContent.createReasonPhrase(404)));
     }
-
+    @Test
+    public void StatusLineをstringBuilderで文字列を連結させるテスト(){
+        assertThat("HTTP/1.1 200 OK",is(httpResponseStatusLineContent.createResponseStatusLine(200)));
+    }
 
 }
