@@ -16,7 +16,7 @@ import java.nio.file.Path;
 
 public class HttpResponseMessageBodyContent {
 
-    private String responseBodyTextFile;
+    private String responseErrorBody;
 
 
     /**
@@ -28,11 +28,10 @@ public class HttpResponseMessageBodyContent {
      */
 
     public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
-        byte[] binaryData = new byte[500000];
+        byte[] binaryData = new byte[(int) filePath.length()];
         if (statusCode == 200) {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(filePath));
-            //ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream();
             try {
                 bufferedInputStream.read(binaryData);
             } catch (IOException e) {
@@ -40,19 +39,17 @@ public class HttpResponseMessageBodyContent {
             } finally {
                 bufferedInputStream.close();
             }
-            return binaryData;
-
         } else if (statusCode == 400) {
-            responseBodyTextFile = "<html><head><title>400 Bad Request</title></head>" +
+            responseErrorBody = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
                     "<p>リクエストにエラーがあります。</p></body></html>";
-            binaryData = responseBodyTextFile.getBytes();
+            binaryData = responseErrorBody.getBytes();
             return binaryData;
         } else if (statusCode == 404) {
-            responseBodyTextFile = "<html><head><title>404 Not Found</title></head>" +
+            responseErrorBody = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +
                     "<p>該当のページは見つかりませんでした。</p></body></html>";
-            binaryData = responseBodyTextFile.getBytes();
+            binaryData = responseErrorBody.getBytes();
             return binaryData;
         }
         return binaryData;

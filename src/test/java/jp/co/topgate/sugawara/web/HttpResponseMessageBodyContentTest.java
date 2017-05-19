@@ -12,7 +12,7 @@ import java.io.File;
 public class HttpResponseMessageBodyContentTest {
     private File filePath;
     private int statusCode;
-    //HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent(filePath,statusCode);
+    HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent();
 
 
 }
