@@ -1,6 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 /**
@@ -26,18 +28,13 @@ public class HttpResponseMessageBodyContent {
      */
 
     public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
-        byte[] binaryData = new byte[4096];
-
-
+        byte[] binaryData = new byte[500000];
         if (statusCode == 200) {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(filePath));
+            //ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream();
             try {
-                int i;
-                while (bufferedInputStream.read() == -1) {
-                    i = bufferedInputStream.read();
-                    // System.out.println(Integer.toHexString(i));
-                }
+                bufferedInputStream.read(binaryData);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
