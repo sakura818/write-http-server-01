@@ -132,10 +132,10 @@ public class HttpRequest {
     private String requestLine;
 
     public void setRequestLine(String requestLine) {
-        this.requestLine = requestLine;
+    this.requestLine = requestLine;
 
     }
-    */
+     */
 }
 
 

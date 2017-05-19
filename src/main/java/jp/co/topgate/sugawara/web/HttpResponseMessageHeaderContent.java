@@ -112,8 +112,8 @@ public class HttpResponseMessageHeaderContent {
         int lastDotPosition = fileName.lastIndexOf(".");
         if (lastDotPosition != -1) {
             return fileName.substring(lastDotPosition + 1);
-        }else
-        return fileName.substring(lastDotPosition + 1);
+        } else
+            return fileName.substring(lastDotPosition + 1);
     }
 
     /**

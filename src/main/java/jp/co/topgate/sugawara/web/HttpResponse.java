@@ -41,8 +41,6 @@ public class HttpResponse {
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent();
-        //BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
-        //bufferedOutputStream.write(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode));
         outputStream.write(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode));
 
         for (int i = 0; i < httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode).length; i++) {
@@ -50,7 +48,6 @@ public class HttpResponse {
         }
 
         byte[] CRLF = "\r\n".getBytes("UTF-8");
-        //bufferedOutputStream.write(CRLF);
         outputStream.write(CRLF);
         for (int i = 0; i < CRLF.length; i++) {
             System.out.println(Integer.toHexString(CRLF[i]));

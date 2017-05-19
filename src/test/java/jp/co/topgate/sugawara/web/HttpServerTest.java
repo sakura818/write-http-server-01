@@ -22,7 +22,7 @@ public class HttpServerTest {
     private final String FILE_DIR = "src/main/resources/";
 
     @Test
-    public void HttpServerのテスト() throws IOException{
+    public void HttpServerのテスト() throws IOException {
 
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
@@ -30,7 +30,7 @@ public class HttpServerTest {
 
         File filePath = new File(FILE_DIR, httpRequest.getFilePath());
         System.out.println("DummyHttpRequestのfilePathが正しくとれているか確認 " + filePath);
-        // assertThat(src/main/resources/index.html, is(filePath));
+        // assertThat("src/main/resources/index.html", is(filePath));
         int statusCode = selectStatusCode(httpRequest, filePath);
         System.out.println("DummyHttpRequestのstatusCodeが正しくとれているか確認 " + statusCode);
         assertThat(200, is(statusCode));

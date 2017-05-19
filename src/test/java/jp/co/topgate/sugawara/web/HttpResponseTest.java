@@ -11,7 +11,6 @@ import static org.junit.Assert.assertThat;
 /**
  * HttpResponseMessageBodyContentTest Class
  *
- *
  * @author sakura818
  */
 public class HttpResponseTest {
@@ -21,6 +20,5 @@ public class HttpResponseTest {
     public void createResponseMessageBodyのテストのメソッド() {
 
     }
-
 
 }
