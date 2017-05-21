@@ -31,29 +31,13 @@ public class HttpServerTest {
         File filePath = new File(FILE_DIR, httpRequest.getFilePath());
         System.out.println("DummyHttpRequestのfilePathが正しくとれているか確認 " + filePath);
         // assertThat("src/main/resources/index.html", is(filePath));
-        int statusCode = selectStatusCode(httpRequest, filePath);
+        HttpServer httpServer = new HttpServer();
+        int statusCode = httpServer.selectStatusCode(httpRequest, filePath);
         System.out.println("DummyHttpRequestのstatusCodeが正しくとれているか確認 " + statusCode);
         assertThat(200, is(statusCode));
 
     }
 
-    /**
-     * HttpRequestに応じて適切なステータスコードを返す
-     *
-     * @param httpRequest
-     * @param filePath    ex:index.html
-     * @return statusCode ex:200
-     */
-
-    public int selectStatusCode(HttpRequest httpRequest, File filePath) {
-        if (httpRequest.getMethod() == null) {
-            return 400;
-        }
-        if (!filePath.exists()) {
-            return 404;
-        }
-        return 200;
-    }
 }
 
 
