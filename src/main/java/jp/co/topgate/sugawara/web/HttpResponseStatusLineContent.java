@@ -30,13 +30,13 @@ public class HttpResponseStatusLineContent {
      * @return responseStatusLineContent ex:OK
      */
 
-    public String createResponseStatusLine(int statusCode) {
-        StringBuilder responseStatusLine = new StringBuilder();
-        responseStatusLine.append("HTTP/1.1").append(" ");
-        responseStatusLine.append(statusCode).append(" ");
-        responseStatusLine.append(createReasonPhrase(statusCode));
-        String responseStatusLineContent = new String(responseStatusLine);
-        return responseStatusLineContent;
+    public String createHttpResponseStatusLine(int statusCode) {
+        StringBuilder httpResponseStatusLine = new StringBuilder();
+        httpResponseStatusLine.append("HTTP/1.1").append(" ");
+        httpResponseStatusLine.append(statusCode).append(" ");
+        httpResponseStatusLine.append(createReasonPhrase(statusCode));
+        String httpResponseStatusLineContent = new String(httpResponseStatusLine);
+        return httpResponseStatusLineContent;
     }
 
     /**

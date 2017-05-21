@@ -31,8 +31,8 @@ public class HttpServer {
             System.out.println("start up http server http://localhost:" + PORT);
             while (true) {
                 socket = serverSocket.accept();
-                System.out.println("request incoming");
-                System.out.println("request...");
+                System.out.println("http request incoming");
+                System.out.println("http request...");
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);

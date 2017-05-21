@@ -16,9 +16,8 @@ import java.nio.file.Path;
 
 public class HttpResponseMessageBodyContent {
 
-    private String responseErrorBody;
-
-
+    private String httpResponseMessageBodyHtml;
+    
     /**
      * ResponseMessageBodyを生成するためにfilePathからファイルをバイト型の配列で読み込む
      *
@@ -27,31 +26,31 @@ public class HttpResponseMessageBodyContent {
      * @return ResponseMessageBody
      */
 
-    public byte[] createResponseMessageBody(File filePath, int statusCode) throws IOException {
-        byte[] binaryData = new byte[(int) filePath.length()];
+    public byte[] createHttpResponseMessageBody(File filePath, int statusCode) throws IOException {
+        byte[] httpResponseMessageBodyContent = new byte[(int) filePath.length()];
         if (statusCode == 200) {
             BufferedInputStream bufferedInputStream
                     = new BufferedInputStream(new FileInputStream(filePath));
             try {
-                bufferedInputStream.read(binaryData);
+                bufferedInputStream.read(httpResponseMessageBodyContent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
                 bufferedInputStream.close();
             }
         } else if (statusCode == 400) {
-            responseErrorBody = "<html><head><title>400 Bad Request</title></head>" +
+            httpResponseMessageBodyHtml = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
                     "<p>リクエストにエラーがあります。</p></body></html>";
-            binaryData = responseErrorBody.getBytes();
-            return binaryData;
+            httpResponseMessageBodyContent = httpResponseMessageBodyHtml.getBytes();
+            return httpResponseMessageBodyContent;
         } else if (statusCode == 404) {
-            responseErrorBody = "<html><head><title>404 Not Found</title></head>" +
+            httpResponseMessageBodyHtml = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +
                     "<p>該当のページは見つかりませんでした。</p></body></html>";
-            binaryData = responseErrorBody.getBytes();
-            return binaryData;
+            httpResponseMessageBodyContent = httpResponseMessageBodyHtml.getBytes();
+            return httpResponseMessageBodyContent;
         }
-        return binaryData;
+        return httpResponseMessageBodyContent;
     }
 }

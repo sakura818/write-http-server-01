@@ -39,20 +39,16 @@ public class HttpRequest {
      * TODO:
      */
 
-    public void printHttpRequest() {
+    public void printHttpRequest() throws IOException{
+        BufferedInputStream bufferedInputStream
+                = new BufferedInputStream(this.inputStream);
         try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append("\n");
-            }
-            System.out.println(stringBuilder);
-
+            bufferedInputStream.read();
+            System.out.println(bufferedInputStream.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            bufferedInputStream.close();
         }
     }
 
@@ -120,22 +116,12 @@ public class HttpRequest {
      *
      * @return filepath
      */
+
     public String getFilePath() {
         return this.filePath;
     }
 
-    /**
-     * テストのためにrequestLineを設定する
-     *
-     * @param requestLine
 
-    private String requestLine;
-
-    public void setRequestLine(String requestLine) {
-    this.requestLine = requestLine;
-
-    }
-     */
 }
 
 

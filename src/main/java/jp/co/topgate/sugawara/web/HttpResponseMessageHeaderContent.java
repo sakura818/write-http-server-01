@@ -27,13 +27,13 @@ public class HttpResponseMessageHeaderContent {
      * @return responseMessageHeaderContent
      */
 
-    public String createResponseMessageHeader(File filePath) {
-        StringBuilder responseMessageHeader = new StringBuilder();
-        responseMessageHeader.append(createGeneralHeader());
-        responseMessageHeader.append(createResponseHeader());
-        responseMessageHeader.append(createEntityHeader(filePath));
-        String responseMessageHeaderContent = new String(responseMessageHeader);
-        return responseMessageHeaderContent;
+    public String createHttpResponseMessageHeader(File filePath) {
+        StringBuilder httpResponseMessageHeader = new StringBuilder();
+        httpResponseMessageHeader.append(createGeneralHeader());
+        httpResponseMessageHeader.append(createResponseHeader());
+        httpResponseMessageHeader.append(createEntityHeader(filePath));
+        String httpResponseMessageHeaderContent = new String(httpResponseMessageHeader);
+        return httpResponseMessageHeaderContent;
     }
 
     /**

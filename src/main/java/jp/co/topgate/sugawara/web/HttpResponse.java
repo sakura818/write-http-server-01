@@ -14,37 +14,33 @@ import java.io.*;
 
 public class HttpResponse {
 
-    private String responseBodyTextFile;
-    private String responseBodyBinaryFile;
-
     /**
      * 生成したレスポンスのコンテンツをOutputStreamに書き込む
      * 生成したレスポンスのコンテンツ
      * = HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
-     * @param outputStream 書き込み先データストリーム
+     * @param outputStream バイト出力ストリーム
      * @throws IOException
      */
     public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
-        System.out.println("response...");
+        System.out.println("http response...");
 
         HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
-        printWriter.println(httpResponseStatusLineContent.createResponseStatusLine(statusCode));
-        System.out.println(httpResponseStatusLineContent.createResponseStatusLine(statusCode));
+        printWriter.println(httpResponseStatusLineContent.createHttpResponseStatusLine(statusCode));
+        System.out.println(httpResponseStatusLineContent.createHttpResponseStatusLine(statusCode));
 
         HttpResponseMessageHeaderContent httpResponseMessageHeaderContent
                 = new HttpResponseMessageHeaderContent(filePath);
-        printWriter.println(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath));
+        printWriter.println(httpResponseMessageHeaderContent.createHttpResponseMessageHeader(filePath));
 
-        System.out.println(httpResponseMessageHeaderContent.createResponseMessageHeader(filePath));
+        System.out.println(httpResponseMessageHeaderContent.createHttpResponseMessageHeader(filePath));
 
         HttpResponseMessageBodyContent httpResponseMessageBodyContent
                 = new HttpResponseMessageBodyContent();
-        outputStream.write(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode));
-
-        for (int i = 0; i < httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode).length; i++) {
-            System.out.println(Integer.toHexString(httpResponseMessageBodyContent.createResponseMessageBody(filePath, statusCode)[i]));
+        outputStream.write(httpResponseMessageBodyContent.createHttpResponseMessageBody(filePath, statusCode));
+        for (int i = 0; i < httpResponseMessageBodyContent.createHttpResponseMessageBody(filePath, statusCode).length; i++) {
+            System.out.println(Integer.toHexString(httpResponseMessageBodyContent.createHttpResponseMessageBody(filePath, statusCode)[i]));
         }
 
         byte[] CRLF = "\r\n".getBytes("UTF-8");
