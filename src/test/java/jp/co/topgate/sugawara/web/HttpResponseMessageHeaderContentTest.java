@@ -25,7 +25,7 @@ public class HttpResponseMessageHeaderContentTest {
 
     @Test
     public void MessageHeaderをstringBuilderで文字列を連結させるテスト() {
-        assertThat("Server: sakura818\nAllow: GET\nContent-Language: en\nContent-Type: text/html; charset=UTF-8\n", is(httpResponseMessageHeaderContent.createResponseMessageHeader(new File("hoge.html"))));
+        assertThat("Server: sakura818\nAllow: GET\nContent-Language: en\nContent-Type: text/html; charset=UTF-8\n", is(httpResponseMessageHeaderContent.createHttpResponseMessageHeader(new File("hoge.html"))));
     }
 
     @Test

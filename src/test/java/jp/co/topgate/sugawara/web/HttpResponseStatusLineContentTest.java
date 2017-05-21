@@ -26,7 +26,7 @@ public class HttpResponseStatusLineContentTest {
 
     @Test
     public void StatusLineをstringBuilderで文字列を連結させるテスト() {
-        assertThat("HTTP/1.1 200 OK", is(httpResponseStatusLineContent.createResponseStatusLine(200)));
+        assertThat("HTTP/1.1 200 OK", is(httpResponseStatusLineContent.createHttpResponseStatusLine(200)));
     }
 
 }
