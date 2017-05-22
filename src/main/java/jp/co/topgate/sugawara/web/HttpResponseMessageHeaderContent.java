@@ -16,9 +16,6 @@ import java.util.Map;
 
 public class HttpResponseMessageHeaderContent {
 
-    public HttpResponseMessageHeaderContent(File filePath) {
-    }
-
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)

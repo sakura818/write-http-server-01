@@ -4,7 +4,7 @@ import java.io.*;
 
 /**
  * HttpResponse class
- * HttpResponseを出力ストリームOutputStreamに送信する
+ * HttpResponseのコンテンツをバイト出力ストリームOutputStreamに書き込む
  * HttpResponse = HttpResponseStatusLineContent Class + HttpResponseMessageHeaderContent Class + HttpResponseBodyContent Class
  *
  * @author sakura818
@@ -13,22 +13,24 @@ import java.io.*;
 public class HttpResponse {
 
     /**
-     * 生成したレスポンスのコンテンツをOutputStreamに書き込む
-     * 生成したレスポンスのコンテンツ
-     * = HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
+     * HttpResponseのコンテンツをOutputStreamに書き込む
+     * HttpResponseのコンテンツ= HttpResponseStatusLineContent + HttpResponseMessageHeaderContent + HttpResponseBodyContent
      *
      * @param outputStream バイト出力ストリーム
+     * @param filePath     ファイルパス
+     * @param statusCode   ステータスコード
      * @throws IOException
      */
+
     public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
 
         /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
-        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(statusCode);
+        HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
         printWriter.println(httpResponseStatusLineContent.createHttpResponseStatusLine(statusCode));
 
         /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
-        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
+        HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
         printWriter.println(httpResponseMessageHeaderContent.createHttpResponseMessageHeader(filePath));
 
         /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */

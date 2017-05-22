@@ -18,10 +18,6 @@ public class HttpResponseStatusLineContent {
     private int statusCode;
     private String reasonPhrase;
 
-    public HttpResponseStatusLineContent(int statusCode) {
-    }
-
-
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
@@ -65,7 +61,6 @@ public class HttpResponseStatusLineContent {
         }
         return null;
     }
-
 
     /**
      * テストのためにステータスコードを設定する
