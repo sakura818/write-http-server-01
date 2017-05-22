@@ -22,7 +22,7 @@ public class HttpResponse {
      * @throws IOException
      */
 
-    public void writeResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
+    public void writeHttpResponseOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
 
         /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */

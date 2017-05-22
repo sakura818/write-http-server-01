@@ -22,7 +22,7 @@ public class HttpRequest {
     public HttpRequest(InputStream inputStream) {
         this.inputStream = inputStream;
         String requestLine = printHttpRequestLine();
-        String[] requestLineArray = spaceSeparateRequestLine(requestLine);
+        String[] requestLineArray = separateRequestLine(requestLine);
         this.method = requestLineArray[0];
         String requestUri = requestLineArray[1];
 
@@ -62,7 +62,7 @@ public class HttpRequest {
      * @return filePath ex:index.html
      */
 
-    public String[] spaceSeparateRequestLine(String requestLine) {
+    public String[] separateRequestLine(String requestLine) {
         return (requestLine.split(" ", 3));
     }
 
@@ -78,7 +78,7 @@ public class HttpRequest {
     /**
      * requestUriからfilePathを抜き出す
      *
-     * @param requestUri 　ex:http://localhost:8080/index.html
+     * @param requestUri ex:http://localhost:8080/index.html
      * @return filePath ex:index.html
      */
 

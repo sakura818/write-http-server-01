@@ -44,7 +44,7 @@ public class HttpServer {
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
 
-                httpResponse.writeResponseOutputStream(outputStream, filePath, statusCode);
+                httpResponse.writeHttpResponseOutputStream(outputStream, filePath, statusCode);
 
                 inputStream.close();
                 outputStream.close();
