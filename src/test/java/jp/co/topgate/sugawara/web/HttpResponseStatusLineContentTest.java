@@ -14,8 +14,8 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseStatusLineContentTest {
-    private int statusCode;
-    HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent(this.statusCode);
+
+    HttpResponseStatusLineContent httpResponseStatusLineContent = new HttpResponseStatusLineContent();
 
     @Test
     public void statusCodeに応じて適切なreasonPhraseを返すテスト() {

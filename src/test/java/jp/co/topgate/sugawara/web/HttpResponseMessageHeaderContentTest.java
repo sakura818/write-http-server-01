@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 public class HttpResponseMessageHeaderContentTest {
     private File filePath;
-    HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent(filePath);
+    HttpResponseMessageHeaderContent httpResponseMessageHeaderContent = new HttpResponseMessageHeaderContent();
 
     @Test
     public void MessageHeaderをstringBuilderで文字列を連結させるテスト() {
