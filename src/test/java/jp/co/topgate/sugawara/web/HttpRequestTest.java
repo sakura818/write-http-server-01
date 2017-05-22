@@ -23,17 +23,17 @@ public class HttpRequestTest {
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
         HttpRequest httpRequest = new HttpRequest(inputStream);
 
-        String[] requestLineArray2 = httpRequest.spaceSeparateRequestLine("GET / HTTP/1.1");
+        String[] requestLineArray = httpRequest.spaceSeparateRequestLine("GET / HTTP/1.1");
+        String method = requestLineArray[0];
+        String requestUri = requestLineArray[1];
+        assertThat("GET", is(method));
+        assertThat("/", is(requestUri));
+
+        String[] requestLineArray2 = httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
         String method2 = requestLineArray2[0];
         String requestUri2 = requestLineArray2[1];
         assertThat("GET", is(method2));
-        assertThat("/", is(requestUri2));
-
-        String[] requestLineArray3 = httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
-        String method3 = requestLineArray3[0];
-        String requestUri3 = requestLineArray3[1];
-        assertThat("GET", is(method3));
-        assertThat("http://localhost:8080/index.html", is(requestUri3));
+        assertThat("http://localhost:8080/index.html", is(requestUri2));
 
     }
 

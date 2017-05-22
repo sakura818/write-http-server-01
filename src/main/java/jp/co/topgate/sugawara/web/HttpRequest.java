@@ -39,7 +39,7 @@ public class HttpRequest {
      * TODO:
      */
 
-    public void printHttpRequest() throws IOException{
+    public void printHttpRequest() throws IOException {
         BufferedInputStream bufferedInputStream
                 = new BufferedInputStream(this.inputStream);
         try {

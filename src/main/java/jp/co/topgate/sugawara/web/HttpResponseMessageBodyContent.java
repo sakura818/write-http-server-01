@@ -17,7 +17,7 @@ import java.nio.file.Path;
 public class HttpResponseMessageBodyContent {
 
     private String httpResponseMessageBodyHtml;
-    
+
     /**
      * ResponseMessageBodyを生成するためにfilePathからファイルをバイト型の配列で読み込む
      *
