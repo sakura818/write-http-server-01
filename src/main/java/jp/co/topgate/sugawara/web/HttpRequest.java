@@ -17,40 +17,65 @@ import java.io.*;
 public class HttpRequest {
     private InputStream inputStream;
     private String method;
-    private String filePath;
+    private String file;
 
     public HttpRequest(InputStream inputStream) {
         this.inputStream = inputStream;
-        String requestLine = printHttpRequestLine();
-        String[] requestLineArray = separateRequestLine(requestLine);
+        String requestLine = readRequestLine();
+        String[] requestLineArray = splitRequestLine(requestLine);
         this.method = requestLineArray[0];
         String requestUri = requestLineArray[1];
 
-        String filePath = parseFilePath(requestUri);
-        if (filePath.endsWith("/")) {
-            filePath += "index.html";
+        String file = parseFilePath(requestUri);
+        if (file.endsWith("/")) {
+            file += "index.html";
         }
-        this.filePath = filePath;
+        this.file = file;
     }
+
 
     /**
      * inputStreamからHttpRequestのRequestLineを読み込む
-     * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
      *
      * @return readRequestLine HttpRequestの1行目 ex:GET http://localhost:8080/index.html HTTP/1.1
      */
 
-    public String printHttpRequestLine() {
+    public String readRequestLine() {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            String readHttpRequestLine = bufferedReader.readLine();
-            System.out.println(readHttpRequestLine);
-            return readHttpRequestLine;
+            String requestLine = bufferedReader.readLine();
+            return requestLine;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * HttpRequestを表示する
+     * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
+     */
+    public void printHttpRequest() {
+
+        try {
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+            try {
+                while (true) {
+                    String line = bufferedReader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    System.out.println(line);
+                }
+            } finally {
+                bufferedReader.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * requestLineに対して空白文字をdelimiterとして3つに分割する
@@ -62,7 +87,7 @@ public class HttpRequest {
      * @return filePath ex:index.html
      */
 
-    public String[] separateRequestLine(String requestLine) {
+    public String[] splitRequestLine(String requestLine) {
         return (requestLine.split(" ", 3));
     }
 
@@ -71,15 +96,16 @@ public class HttpRequest {
      *
      * @return method
      */
+
     public String getMethod() {
         return this.method;
     }
 
     /**
-     * requestUriからfilePathを抜き出す
+     * requestUriからfileを抜き出す
      *
      * @param requestUri ex:http://localhost:8080/index.html
-     * @return filePath ex:index.html
+     * @return file ex:index.html
      */
 
     public String parseFilePath(String requestUri) {
@@ -90,7 +116,7 @@ public class HttpRequest {
         if (lastDotPosition != -1) {
             return requestUri.substring(lastDotPosition + 1);
         }
-        return filePath;
+        return file;
     }
 
     /**
@@ -100,7 +126,7 @@ public class HttpRequest {
      */
 
     public String getFilePath() {
-        return this.filePath;
+        return this.file;
     }
 
 

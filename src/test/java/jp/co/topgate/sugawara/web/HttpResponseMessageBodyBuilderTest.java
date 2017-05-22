@@ -9,22 +9,21 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
 /**
- * HttpResponseMessageBodyContentTest Class
+ * HttpResponseMessageBodyBuilderTest Class
  *
  * @author sakura818
  */
 
-public class HttpResponseMessageBodyContentTest {
-    private File filePath;
+public class HttpResponseMessageBodyBuilderTest {
+    private File file;
     private int statusCode;
-    HttpResponseMessageBodyContent httpResponseMessageBodyContent = new HttpResponseMessageBodyContent();
+    HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(file,statusCode);
 
     @Test
     public void ファイルに書き込まれている文字列がバイト型の配列に文字コードで格納できるかのテスト() throws IOException {
-        filePath = new File("src/test/resources/sampleString.txt");
-        byte[] binaryData = new byte[(int) filePath.length()];
-        BufferedInputStream bufferedInputStream
-                = new BufferedInputStream(new FileInputStream(filePath));
+        file = new File("src/test/resources/sampleString.txt");
+        byte[] binaryData = new byte[(int) file.length()];
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
         try {
             bufferedInputStream.read(binaryData);
         } catch (IOException e) {

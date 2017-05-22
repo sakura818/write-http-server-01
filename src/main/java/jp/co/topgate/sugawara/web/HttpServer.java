@@ -17,6 +17,7 @@ import java.io.OutputStream;
 public class HttpServer {
 
     private Socket socket;
+    private ServerSocket serverSocket;
     private final int PORT = 8080;
     private final String FILE_DIR = "src/main/resources/";
 
@@ -25,7 +26,7 @@ public class HttpServer {
      * TODO:try-catchの範囲が広いのでなおす
      */
 
-    public void connection() {
+    public void connect() {
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
@@ -37,14 +38,15 @@ public class HttpServer {
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
+                //httpRequest.printHttpRequest();
 
-                File filePath = new File(FILE_DIR, httpRequest.getFilePath());
-                int statusCode = selectStatusCode(httpRequest, filePath);
+                File file = new File(FILE_DIR, httpRequest.getFilePath());
+                int statusCode = getStatusCode(httpRequest, file);
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();
 
-                httpResponse.writeHttpResponseOutputStream(outputStream, filePath, statusCode);
+                httpResponse.writeToOutputStream(outputStream, file, statusCode);
 
                 inputStream.close();
                 outputStream.close();
@@ -55,6 +57,9 @@ public class HttpServer {
             try {
                 if (socket != null) {
                     this.socket.close();
+                }
+                if (serverSocket != null) {
+                    this.serverSocket.close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -67,22 +72,23 @@ public class HttpServer {
      * HttpRequestに応じて適切なステータスコードを返す
      *
      * @param httpRequest
-     * @param filePath    ex:index.html
+     * @param file    ex:index.html
      * @return statusCode ex:200
      * TODO:selectStatusCodeメソッドの位置が微妙かもしれない 新たにクラスをつくる?
      */
 
-    public int selectStatusCode(HttpRequest httpRequest, File filePath) {
+    public int getStatusCode(HttpRequest httpRequest, File file) {
         if (httpRequest.getMethod() == null) {
             return 400;
         }
-        if (!filePath.exists()) {
+        if (!file.exists()) {
             return 404;
         }
         return 200;
     }
 
 }
+
 
 
 

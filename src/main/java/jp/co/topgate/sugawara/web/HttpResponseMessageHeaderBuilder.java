@@ -6,7 +6,7 @@ import java.util.Map;
 
 
 /**
- * HttpResponseMessageHeaderContent Class
+ * HttpResponseMessageHeaderBuilder Class
  * HttpResponseのMessageHeaderのContentを生成するクラス
  * MessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
  * HttpResponseのContentを3つに分けたうちの1つである。
@@ -14,23 +14,30 @@ import java.util.Map;
  * @author sakura818
  */
 
-public class HttpResponseMessageHeaderContent {
+public class HttpResponseMessageHeaderBuilder {
+
+
+    private File file;
+
+    public HttpResponseMessageHeaderBuilder(File file){
+        this.file = file                                                    ;
+    }
+
 
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      *
-     * @param filePath ex:index.html
+     * @param file ex:index.html
      * @return httpResponseMessageHeaderContent
      */
 
-    public String createHttpResponseMessageHeader(File filePath) {
-        StringBuilder httpResponseMessageHeader = new StringBuilder();
-        httpResponseMessageHeader.append(createGeneralHeader());
-        httpResponseMessageHeader.append(createResponseHeader());
-        httpResponseMessageHeader.append(createEntityHeader(filePath));
-        String httpResponseMessageHeaderContent = new String(httpResponseMessageHeader);
-        return httpResponseMessageHeaderContent;
+    public String build(File file) {
+        StringBuilder messageHeader = new StringBuilder();
+        messageHeader.append(createGeneralHeader());
+        messageHeader.append(createResponseHeader());
+        messageHeader.append(createEntityHeader(file));
+        return messageHeader.toString();
     }
 
     /**
@@ -66,15 +73,15 @@ public class HttpResponseMessageHeaderContent {
      * EntityHeaderを生成する
      * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
      *
-     * @param filePath ex:index.html
+     * @param file ex:index.html
      * @return entityHeaderContent
      */
 
-    public String createEntityHeader(File filePath) {
+    public String createEntityHeader(File file) {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
-        entityHeader.append("Content-Type: " + createContentType(filePath)).append("\n");
+        entityHeader.append("Content-Type: " + createContentType(file)).append("\n");
         String entityHeaderContent = new String(entityHeader);
         return entityHeaderContent;
     }
@@ -83,13 +90,13 @@ public class HttpResponseMessageHeaderContent {
      * ContentTypeを生成する
      * ContentTypeとは元のデータのメディアタイプ
      *
-     * @param filePath ex:index.html
+     * @param file ex:index.html
      * @return ContentType ex:text/html
      */
 
-    public String createContentType(File filePath) {
-        if (extensionToContentType.containsKey(extractExtension(filePath))) {
-            return extensionToContentType.get(extractExtension(filePath));
+    public String createContentType(File file) {
+        if (extensionToContentType.containsKey(extractExtension(file))) {
+            return extensionToContentType.get(extractExtension(file));
         }
         return null;
     }
@@ -97,15 +104,15 @@ public class HttpResponseMessageHeaderContent {
     /**
      * ファイルから拡張子を抜き出す。なぜならContentTypeはファイルの拡張子によって判別されるから。
      *
-     * @param filePath ex:index.html
+     * @param file ex:index.html
      * @return ファイルの拡張子　ex:html
      */
 
-    public String extractExtension(File filePath) {
-        if (filePath == null) {
+    public String extractExtension(File file) {
+        if (file == null) {
             return null;
         }
-        String fileName = filePath.getName();
+        String fileName = file.getName();
         int lastDotPosition = fileName.lastIndexOf(".");
         if (lastDotPosition != -1) {
             return fileName.substring(lastDotPosition + 1);
