@@ -1,36 +1,30 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 
 /**
  * HttpResponseMessageBodyContent Class
  * HttpResponseのMessageBodyのContentを生成するクラス
- * MessageBodyはファイルのデータの中身
- * HttpResponseのContentを3つに分けたうちの1つである。
  *
  * @author sakura818
  */
 
 public class HttpResponseMessageBodyContent {
 
-    private String httpResponseMessageBodyHtml;
-
     /**
-     * ResponseMessageBodyを生成するためにfilePathからファイルをバイト型の配列で読み込む
+     * statusCodeで条件分岐した後、filePathもしくはhttpResponseMessageBodyHtmlをバイト型の配列で読み込みHttpResponseMessageBodyを生成する
      *
-     * @param statusCode ex:200
      * @param filePath   ex:index.html
-     * @return ResponseMessageBody
+     * @param statusCode ex:200
+     * @return httpResponseMessageBodyContent
      */
 
     public byte[] createHttpResponseMessageBody(File filePath, int statusCode) throws IOException {
         byte[] httpResponseMessageBodyContent = new byte[(int) filePath.length()];
+        String httpResponseMessageBodyHtml;
         if (statusCode == 200) {
-            BufferedInputStream bufferedInputStream
-                    = new BufferedInputStream(new FileInputStream(filePath));
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(filePath));
             try {
                 bufferedInputStream.read(httpResponseMessageBodyContent);
             } catch (IOException e) {

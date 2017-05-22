@@ -22,6 +22,7 @@ public class HttpServer {
 
     /**
      * クライアントとサーバのデータの入出力を行う
+     * TODO:try-catchの範囲が広いのでなおす
      */
 
     public void connection() {
@@ -36,8 +37,6 @@ public class HttpServer {
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
-
-                //httpRequest.printHttpRequest();
 
                 File filePath = new File(FILE_DIR, httpRequest.getFilePath());
                 int statusCode = selectStatusCode(httpRequest, filePath);
@@ -70,6 +69,7 @@ public class HttpServer {
      * @param httpRequest
      * @param filePath    ex:index.html
      * @return statusCode ex:200
+     * TODO:selectStatusCodeメソッドの位置が微妙かもしれない 新たにクラスをつくる?
      */
 
     public int selectStatusCode(HttpRequest httpRequest, File filePath) {

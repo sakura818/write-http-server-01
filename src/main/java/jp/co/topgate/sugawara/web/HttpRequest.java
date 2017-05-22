@@ -7,9 +7,9 @@ import java.io.*;
 
 /**
  * HttpRequest class
- * HttpRequestを読み込む処理を行う
+ * inputStreamからHttpRequestを読み込む処理を行う
  * HttpRequest = Request-Line + MessageHeader + MessageBody
- * しかし、今回の課題では簡易的な機能しか提供しないためMessageHeaderとMessageBodyは読み込んでいない
+ * 今回の課題では簡易的な機能しか提供しないためMessageHeaderとMessageBodyは読み込んでいない
  *
  * @author sakura818
  */
@@ -21,7 +21,7 @@ public class HttpRequest {
 
     public HttpRequest(InputStream inputStream) {
         this.inputStream = inputStream;
-        String requestLine = readHttpRequestLine();
+        String requestLine = printHttpRequestLine();
         String[] requestLineArray = spaceSeparateRequestLine(requestLine);
         this.method = requestLineArray[0];
         String requestUri = requestLineArray[1];
@@ -34,31 +34,13 @@ public class HttpRequest {
     }
 
     /**
-     * HttpRequestの全文をSystem.out.printlnで表示する
-     * BufferedReaderのreadLineメソッドを使用して行ごとに読み込んでいく
-     * TODO:
-     */
-
-    public void printHttpRequest() throws IOException {
-        BufferedInputStream bufferedInputStream
-                = new BufferedInputStream(this.inputStream);
-        try {
-            bufferedInputStream.read();
-            System.out.println(bufferedInputStream.read());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            bufferedInputStream.close();
-        }
-    }
-
-    /**
-     * RequestLineをinputStreamから読み込む
+     * inputStreamからHttpRequestのRequestLineを読み込む
+     * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
      *
-     * @return readRequestLine リクエストの1行目
+     * @return readRequestLine HttpRequestの1行目 ex:GET http://localhost:8080/index.html HTTP/1.1
      */
 
-    public String readHttpRequestLine() {
+    public String printHttpRequestLine() {
         try {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
@@ -73,8 +55,8 @@ public class HttpRequest {
     /**
      * requestLineに対して空白文字をdelimiterとして3つに分割する
      * requestLine = method + requestUri + httpVersion
-     * ex: requestLine = GET http://localhost:8080/index.html HTTP/1.1
-     * methodとhttpVersionは今回使用しない
+     * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
+     * httpVersionは今回使用しない
      *
      * @param requestLine
      * @return filePath ex:index.html

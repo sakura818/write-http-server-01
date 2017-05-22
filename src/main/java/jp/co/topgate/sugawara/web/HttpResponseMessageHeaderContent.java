@@ -16,15 +16,12 @@ import java.util.Map;
 
 public class HttpResponseMessageHeaderContent {
 
-    public HttpResponseMessageHeaderContent(File filePath) {
-    }
-
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      *
-     * @param filePath index.html
-     * @return responseMessageHeaderContent
+     * @param filePath ex:index.html
+     * @return httpResponseMessageHeaderContent
      */
 
     public String createHttpResponseMessageHeader(File filePath) {
@@ -42,7 +39,7 @@ public class HttpResponseMessageHeaderContent {
      * Cache-ControlやDateなどを追加するときここに記述する
      * 今回は簡易的な機能のみを提供するためGeneralHeaderになにも記載していない
      *
-     * @return generalHeader
+     * @return generalHeaderContent
      */
 
     public String createGeneralHeader() {
@@ -55,7 +52,7 @@ public class HttpResponseMessageHeaderContent {
      * ResponseHeaderを生成する
      * ResponseHeaderとはサーバについてや、Request-URI によって識別されるリソースへの更なるアクセスに関する情報を与える。
      *
-     * @return ResponseHeader ex:"Server: sakura818"
+     * @return responseHeaderContent ex:"Server: sakura818"
      */
 
     public String createResponseHeader() {
@@ -70,7 +67,7 @@ public class HttpResponseMessageHeaderContent {
      * EntityHeaderとはエンティティボディや、もしボディが無ければリクエストによって識別されたリソースについての外部情報を定義する。
      *
      * @param filePath ex:index.html
-     * @return EntityHeader
+     * @return entityHeaderContent
      */
 
     public String createEntityHeader(File filePath) {
@@ -119,6 +116,7 @@ public class HttpResponseMessageHeaderContent {
     /**
      * 拡張子とContentTypeのMap
      */
+
     public final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
             put("html", "text/html; charset=UTF-8");
