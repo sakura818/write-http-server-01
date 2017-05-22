@@ -2,11 +2,7 @@
 
 ## Description
 
-HTTPサーバ
-
-***DEMO:***
-
-![Demo]
+HttpServer
 
 ## Requirement
 
@@ -17,7 +13,7 @@ HTTPサーバ
 
 1. ターミナルでgit cloneしたフォルダに移動
 2. ターミナルで./gradlew runと入力
-3. ブラウザでhttp://localhost:8080/hello.html などに移動
+3. ブラウザでhttp://localhost:8080/index.html などに移動
 
 ## Installation
 
