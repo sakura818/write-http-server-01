@@ -38,11 +38,6 @@ public class HttpResponseMessageBodyBuilder {
             } finally {
                 bufferedInputStream.close();
             }
-        } else if (this.statusCode == 400) {
-            messageBodyHtml = "<html><head><title>400 Bad Request</title></head>" +
-                    "<body><h1>Bad Request</h1>" +
-                    "<p>リクエストにエラーがあります。</p></body></html>";
-            messageBody = messageBodyHtml.getBytes();
         } else if (this.statusCode == 404) {
             messageBodyHtml = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +

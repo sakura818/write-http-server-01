@@ -20,14 +20,9 @@ public class HttpResponseStatusLineBuilderTest {
 
     @Test
     public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
-        assertThat("OK", is(httpResponseStatusLineBuilder.getReasonPhrase(statusCode)));
+        assertThat("OK", is(httpResponseStatusLineBuilder.getReasonPhrase(200)));
         assertThat("Bad Request", is(httpResponseStatusLineBuilder.getReasonPhrase(400)));
         assertThat("Not Found", is(httpResponseStatusLineBuilder.getReasonPhrase(404)));
-    }
-
-    @Test
-    public void StatusLineをstringBuilderで文字列を連結させるテスト() {
-        assertThat("HTTP/1.1 200 OK", is(httpResponseStatusLineBuilder.build(statusCode)));
     }
 
 }

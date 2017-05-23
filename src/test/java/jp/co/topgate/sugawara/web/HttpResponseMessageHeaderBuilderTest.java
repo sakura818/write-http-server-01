@@ -20,13 +20,8 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderBuilderTest{
-    private File filePath;
-    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(filePath);
-
-    @Test
-    public void MessageHeaderをstringBuilderで文字列を連結させるテスト() {
-        assertThat("Server: sakura818\nAllow: GET\nContent-Language: en\nContent-Type: text/html; charset=UTF-8\n", is(httpResponseMessageHeaderBuilder.build(new File("hoge.html"))));
-    }
+    private File file;
+    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
 
     @Test
     public void ファイルの拡張子からContentTypeを判断するテスト() {

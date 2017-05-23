@@ -23,20 +23,18 @@ public class HttpRequestTest {
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
         HttpRequest httpRequest = new HttpRequest(inputStream);
 
-        String[] requestLineArray = httpRequest.spaceSeparateRequestLine("GET / HTTP/1.1");
+        String[] requestLineArray = httpRequest.splitRequestLine("GET / HTTP/1.1");
         String method = requestLineArray[0];
         String requestUri = requestLineArray[1];
         assertThat("GET", is(method));
         assertThat("/", is(requestUri));
 
-        String[] requestLineArray2 = httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
+        String[] requestLineArray2 = httpRequest.splitRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
         String method2 = requestLineArray2[0];
         String requestUri2 = requestLineArray2[1];
         assertThat("GET", is(method2));
         assertThat("http://localhost:8080/index.html", is(requestUri2));
-
     }
-
 
     @Test
     public void requestUriから正しくfileを抜き出せるかのテスト() throws IOException {

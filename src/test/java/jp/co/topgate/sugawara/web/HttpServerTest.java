@@ -18,24 +18,24 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpServerTest {
+    HttpServer httpServer = new HttpServer();
 
-    private final String FILE_DIR = "src/main/resources/";
-
-    @Test
-    public void HttpServerのテスト() throws IOException {
-
+    @Test   
+    public void connectメソッドのテスト() throws IOException {
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
-        HttpRequest httpRequest = new HttpRequest(inputStream);
 
-        File filePath = new File(FILE_DIR, httpRequest.getFilePath());
-        System.out.println("DummyHttpRequestのfilePathが正しくとれているか確認 " + filePath);
-        // assertThat("src/main/resources/index.html", is(filePath));
-        HttpServer httpServer = new HttpServer();
-        int statusCode = httpServer.selectStatusCode(httpRequest, filePath);
-        System.out.println("DummyHttpRequestのstatusCodeが正しくとれているか確認 " + statusCode);
-        assertThat(200, is(statusCode));
+        File DummyHttpResponse = new File("src/test/resources/DummyHttpResponse.txt");
+        OutputStream outputStream = new FileOutputStream(DummyHttpResponse);
 
+        inputStream.close();
+        outputStream.close();
+    }
+
+    @Test
+    public void 適切なstatusCodeを選択できているかのテスト() throws IOException {
+        assertThat(200, is(httpServer.getStatusCode(new File("src/test/resources/DummyHttpRequest.txt"))));
+        assertThat(404, is(httpServer.getStatusCode(new File("hoge.txt"))));
     }
 
 }

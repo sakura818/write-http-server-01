@@ -15,7 +15,6 @@ import java.io.*;
  */
 
 public class HttpRequest {
-    private InputStream inputStream;
     private String method;
     private String file;
 
@@ -37,12 +36,10 @@ public class HttpRequest {
     }
 
     /**
-     * HttpRequestを表示する
-     * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
+     * HttpRequestのRequestLineを表示する
      */
     public void printRequestLine(String requestLine) {
         System.out.println(requestLine);
-
     }
 
 
@@ -53,7 +50,7 @@ public class HttpRequest {
      * httpVersionは今回使用しない
      *
      * @param requestLine
-     * @return filePath ex:index.html
+     * @return file ex:index.html
      */
 
     public String[] splitRequestLine(String requestLine) {
@@ -89,12 +86,12 @@ public class HttpRequest {
     }
 
     /**
-     * filePathを取得する
+     * fileを取得する
      *
-     * @return filepath
+     * @return file
      */
 
-    public String getFilePath() {
+    public String getFile() {
         return this.file;
     }
 

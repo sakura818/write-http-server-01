@@ -3,8 +3,6 @@ package jp.co.topgate.sugawara.web;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * MainTest Class
@@ -13,9 +11,9 @@ import java.net.Socket;
  * @author sakura818
  */
 public class MainTest {
-    public static void HttpServerのconnectionメソッドを呼び出せるかのテスト(String[] args) {
+    public static void HttpServerのconnectメソッドを呼び出せるかのテスト(String[] args) {
         HttpServer httpServer = new HttpServer();
-        httpServer.connection();
+        httpServer.connect();
     }
 }
 

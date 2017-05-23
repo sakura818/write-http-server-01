@@ -22,6 +22,7 @@ public class HttpResponse {
      * @throws IOException
      */
 
+
     public void writeToOutputStream(OutputStream outputStream, File file, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
 
