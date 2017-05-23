@@ -34,11 +34,10 @@ public class HttpServer {
             while (true) {
                 this.socket = this.serverSocket.accept();
                 System.out.println("http request incoming");
-                System.out.println("http request...");
+                System.out.println("http request line...");
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
-                //httpRequest.printHttpRequest();
 
                 File file = new File(this.FILE_DIR, httpRequest.getFilePath());
                 int statusCode = getStatusCode(httpRequest, file);

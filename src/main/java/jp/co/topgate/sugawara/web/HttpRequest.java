@@ -24,14 +24,7 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        StringBuilder httpRequest = new StringBuilder();
-
-        while (requestLine != null && !requestLine.isEmpty()) {
-            httpRequest.append(requestLine + "\n");
-            requestLine = bufferedReader.readLine();
-        }
-        System.out.println(httpRequest);
-        //String requestLine = readRequestLine();
+        printRequestLine(requestLine);
         String[] requestLineArray = splitRequestLine(requestLine);
         this.method = requestLineArray[0];
         String requestUri = requestLineArray[1];
@@ -47,8 +40,8 @@ public class HttpRequest {
      * HttpRequestを表示する
      * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
      */
-    public void printHttpRequest() throws IOException {
-
+    public void printRequestLine(String requestLine) {
+        System.out.println(requestLine);
 
     }
 
