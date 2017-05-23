@@ -15,20 +15,25 @@ import static org.junit.Assert.assertThat;
 
 public class HttpResponseStatusLineBuilderTest {
     private int statusCode;
-
     HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
 
     @Test
-    public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
-        assertThat("OK", is(httpResponseStatusLineBuilder.getReasonPhrase(statusCode)));
-        assertThat("Bad Request", is(httpResponseStatusLineBuilder.getReasonPhrase(400)));
-        assertThat("Not Found", is(httpResponseStatusLineBuilder.getReasonPhrase(404)));
+    public void StatusLineを適切な形で生成できているかのテスト() {
+        assertThat("HTTP/1.1 200 OK", is(buildTest()));
+    }
+
+    public String buildTest() {
+        StringBuilder statusLine = new StringBuilder();
+        statusLine.append("HTTP/1.1").append(" ");
+        statusLine.append(200).append(" ");
+        statusLine.append("OK");
+        return statusLine.toString();
     }
 
     @Test
-    public void StatusLineをstringBuilderで文字列を連結させるテスト() {
-        assertThat("HTTP/1.1 200 OK", is(httpResponseStatusLineBuilder.build()));
+    public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
+        assertThat("OK", is(httpResponseStatusLineBuilder.getReasonPhrase(200)));
+        assertThat("Not Found", is(httpResponseStatusLineBuilder.getReasonPhrase(404)));
     }
-
 
 }

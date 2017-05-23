@@ -19,8 +19,8 @@ public class HttpResponseMessageHeaderBuilder {
 
     private File file;
 
-    public HttpResponseMessageHeaderBuilder(File file){
-        this.file = file                                                    ;
+    public HttpResponseMessageHeaderBuilder(File file) {
+        this.file = file;
     }
 
     /**
@@ -49,8 +49,7 @@ public class HttpResponseMessageHeaderBuilder {
 
     String createGeneralHeader() {
         StringBuilder generalHeader = new StringBuilder();
-        String generalHeaderContent = new String(generalHeader);
-        return generalHeaderContent;
+        return generalHeader.toString();
     }
 
     /**
@@ -60,11 +59,10 @@ public class HttpResponseMessageHeaderBuilder {
      * @return responseHeaderContent ex:"Server: sakura818"
      */
 
-     String createResponseHeader() {
+    String createResponseHeader() {
         StringBuilder responseHeader = new StringBuilder();
         responseHeader.append("Server: " + "sakura818").append("\n");
-        String responseHeaderContent = new String(responseHeader);
-        return responseHeaderContent;
+        return responseHeader.toString();
     }
 
     /**
@@ -75,13 +73,12 @@ public class HttpResponseMessageHeaderBuilder {
      * @return entityHeaderContent
      */
 
-     String createEntityHeader(File file) {
+    String createEntityHeader(File file) {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
         entityHeader.append("Content-Type: " + createContentType(file)).append("\n");
-        String entityHeaderContent = new String(entityHeader);
-        return entityHeaderContent;
+        return entityHeader.toString();
     }
 
     /**
@@ -92,11 +89,11 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ContentType ex:text/html
      */
 
-     String createContentType(File file) {
+    String createContentType(File file) {
         if (extensionToContentType.containsKey(extractExtension(file))) {
             return extensionToContentType.get(extractExtension(file));
         }
-        return null;
+        return "text/html; charset=utf-8";
     }
 
     /**
@@ -106,23 +103,21 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ファイルの拡張子　ex:html
      */
 
-     String extractExtension(File file) {
-        if (file == null) {
-            return null;
-        }
+    String extractExtension(File file) {
         String fileName = file.getName();
         int lastDotPosition = fileName.lastIndexOf(".");
-        if (lastDotPosition != -1) {
-            return fileName.substring(lastDotPosition + 1);
-        } else
-            return fileName.substring(lastDotPosition + 1);
+        if (lastDotPosition > 0) {
+            String extension = fileName.substring(lastDotPosition + 1);
+            return extension;
+        }
+        return fileName;
     }
 
     /**
      * 拡張子とContentTypeのMap
      */
 
-     final Map<String, String> extensionToContentType = new HashMap<String, String>() {
+    final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
             put("html", "text/html; charset=UTF-8");
             put("htm", "text/html; charset=UTF-8");
