@@ -63,7 +63,7 @@ public class HttpRequest {
             try {
                 while (true) {
                     String line = bufferedReader.readLine();
-                    if (line == "") {
+                    if (line == null || line.length() == 0) {
                         break;
                     }
                     System.out.println(line);

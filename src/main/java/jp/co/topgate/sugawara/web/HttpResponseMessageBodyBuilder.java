@@ -20,20 +20,17 @@ public class HttpResponseMessageBodyBuilder {
         this.statusCode = statusCode;
     }
 
-
     /**
      * statusCodeで条件分岐した後、fileもしくはmessageBodyHtmlをバイト型の配列で読み込みHttpResponseMessageBodyを生成する
      *
-     * @param file   ex:index.html
-     * @param statusCode ex:200
      * @return messageBody
      */
 
-    public byte[] build(File file, int statusCode) throws IOException {
-        byte[] messageBody = new byte[(int) file.length()];
+    public byte[] build() throws IOException {
+        byte[] messageBody = new byte[(int) this.file.length()];
         String messageBodyHtml;
-        if (statusCode == 200) {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
+        if (this.statusCode == 200) {
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(this.file));
             try {
                 bufferedInputStream.read(messageBody);
             } catch (IOException e) {
@@ -41,12 +38,12 @@ public class HttpResponseMessageBodyBuilder {
             } finally {
                 bufferedInputStream.close();
             }
-        } else if (statusCode == 400) {
+        } else if (this.statusCode == 400) {
             messageBodyHtml = "<html><head><title>400 Bad Request</title></head>" +
                     "<body><h1>Bad Request</h1>" +
                     "<p>リクエストにエラーがあります。</p></body></html>";
             messageBody = messageBodyHtml.getBytes();
-        } else if (statusCode == 404) {
+        } else if (this.statusCode == 404) {
             messageBodyHtml = "<html><head><title>404 Not Found</title></head>" +
                     "<body><h1>Not Found</h1>" +
                     "<p>該当のページは見つかりませんでした。</p></body></html>";

@@ -23,20 +23,18 @@ public class HttpResponseMessageHeaderBuilder {
         this.file = file                                                    ;
     }
 
-
     /**
      * ResponseMessageHeaderを生成する
      * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
      *
-     * @param file ex:index.html
      * @return httpResponseMessageHeaderContent
      */
 
-    public String build(File file) {
+    public String build() {
         StringBuilder messageHeader = new StringBuilder();
         messageHeader.append(createGeneralHeader());
         messageHeader.append(createResponseHeader());
-        messageHeader.append(createEntityHeader(file));
+        messageHeader.append(createEntityHeader(this.file));
         return messageHeader.toString();
     }
 

@@ -23,15 +23,15 @@ public class HttpResponseStatusLineBuilder {
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      *
-     * @param statusCode ex:200
+     *
      * @return httpResponseStatusLineContent ex:OK
      */
 
-    public String build(int statusCode) {
+    public String build() {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
-        statusLine.append(statusCode).append(" ");
-        statusLine.append(getReasonPhrase(statusCode));
+        statusLine.append(this.statusCode).append(" ");
+        statusLine.append(getReasonPhrase(this.statusCode));
         return statusLine.toString();
     }
 

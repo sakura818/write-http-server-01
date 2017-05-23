@@ -29,10 +29,10 @@ public class HttpServer {
     public void connect() {
 
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            System.out.println("start up http server http://localhost:" + PORT);
+            this.serverSocket = new ServerSocket(this.PORT);
+            System.out.println("start up http server http://localhost:" + this.PORT);
             while (true) {
-                socket = serverSocket.accept();
+                this.socket = this.serverSocket.accept();
                 System.out.println("http request incoming");
                 System.out.println("http request...");
 
@@ -40,7 +40,7 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest(inputStream);
                 //httpRequest.printHttpRequest();
 
-                File file = new File(FILE_DIR, httpRequest.getFilePath());
+                File file = new File(this.FILE_DIR, httpRequest.getFilePath());
                 int statusCode = getStatusCode(httpRequest, file);
 
                 OutputStream outputStream = this.socket.getOutputStream();
@@ -55,10 +55,10 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (socket != null) {
+                if (this.socket != null) {
                     this.socket.close();
                 }
-                if (serverSocket != null) {
+                if (this.serverSocket != null) {
                     this.serverSocket.close();
                 }
             } catch (IOException e) {
