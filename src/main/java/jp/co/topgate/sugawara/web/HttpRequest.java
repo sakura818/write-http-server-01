@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.util.regex.Pattern;
 
 
 /**
@@ -28,10 +29,8 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
         printRequestLine(requestLine);
-        String[] requestLineArray = splitRequestLine(requestLine);
-        String method = requestLineArray[0];
-        String requestUri = requestLineArray[1];
-        String httpVersion = requestLineArray[2];
+        String requestLineArray = splitRequestLine(requestLine);
+        String requestUri = requestLineArray;
 
         String file = parseFilePath(requestUri);
         if (file.endsWith("/")) {
@@ -59,8 +58,12 @@ public class HttpRequest {
      * @return file ex:index.html
      */
 
-    String[] splitRequestLine(String requestLine) {
-        return (requestLine.split(" ", 3));
+    String splitRequestLine(String requestLine) {
+        String regexp = "GET" + " " + ".*/.*" + " " + "HTTP/1.1";
+        boolean match = Pattern.matches(regexp, requestLine);
+        System.out.println(match);
+        return "";
+
     }
 
     /**
@@ -71,14 +74,11 @@ public class HttpRequest {
      */
 
     String parseFilePath(String requestUri) {
-        if (requestUri == null) {
-            return "";
-        }
         int lastDotPosition = requestUri.lastIndexOf("/");
-        if (lastDotPosition != -1) {
+        if (lastDotPosition > 0) {
             return requestUri.substring(lastDotPosition + 1);
         }
-        return file;
+        return requestUri;
     }
 
     /**
