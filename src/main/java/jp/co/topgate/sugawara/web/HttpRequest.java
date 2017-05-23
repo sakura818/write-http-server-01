@@ -19,9 +19,19 @@ public class HttpRequest {
     private String method;
     private String file;
 
-    public HttpRequest(InputStream inputStream) {
-        this.inputStream = inputStream;
-        String requestLine = readRequestLine();
+
+    public HttpRequest(InputStream inputStream) throws IOException {
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+        String requestLine = bufferedReader.readLine();
+        StringBuilder httpRequest = new StringBuilder();
+
+        while (requestLine != null && !requestLine.isEmpty()) {
+            httpRequest.append(requestLine + "\n");
+            requestLine = bufferedReader.readLine();
+        }
+        System.out.println(httpRequest);
+        //String requestLine = readRequestLine();
         String[] requestLineArray = splitRequestLine(requestLine);
         this.method = requestLineArray[0];
         String requestUri = requestLineArray[1];
@@ -33,47 +43,13 @@ public class HttpRequest {
         this.file = file;
     }
 
-
-    /**
-     * inputStreamからHttpRequestのRequestLineを読み込む
-     *
-     * @return readRequestLine HttpRequestの1行目 ex:GET http://localhost:8080/index.html HTTP/1.1
-     */
-
-    public String readRequestLine() {
-        try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            String requestLine = bufferedReader.readLine();
-            return requestLine;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * HttpRequestを表示する
      * TODO:全ての行を表示したほうが良い　現状では1行目しか表示しない
      */
-    public void printHttpRequest() {
+    public void printHttpRequest() throws IOException {
 
-        try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-            try {
-                while (true) {
-                    String line = bufferedReader.readLine();
-                    if (line == null || line.length() == 0) {
-                        break;
-                    }
-                    System.out.println(line);
-                }
-            } finally {
-                bufferedReader.close();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
 
