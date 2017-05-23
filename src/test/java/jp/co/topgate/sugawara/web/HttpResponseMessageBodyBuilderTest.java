@@ -15,23 +15,15 @@ import static org.junit.Assert.assertThat;
  */
 
 public class HttpResponseMessageBodyBuilderTest {
-    private File file;
-    private int statusCode;
-    HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(file,statusCode);
 
     @Test
-    public void ファイルに書き込まれている文字列がバイト型の配列に文字コードで格納できるかのテスト() throws IOException {
-        file = new File("src/test/resources/sampleString.txt");
-        byte[] binaryData = new byte[(int) file.length()];
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
-        try {
-            bufferedInputStream.read(binaryData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            bufferedInputStream.close();
-        }
-        // sampleString.txtに書き込まれている文字列"ABC"は文字コード"65,66,67"
+    public void ファイルに書き込まれている文字列をバイト型の配列に格納できているかのテスト() throws IOException {
+        File sampleStringFile = new File("src/test/resources/sampleString.txt");
+        byte[] binaryData = new byte[(int) sampleStringFile.length()];
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(sampleStringFile));
+        bufferedInputStream.read(binaryData);
+        bufferedInputStream.close();
+        /** sampleString.txtに書き込まれている文字列"ABC"は10進数で"65,66,67 */
         byte[] hoge = {65, 66, 67};
         assertArrayEquals(hoge, binaryData);
     }
