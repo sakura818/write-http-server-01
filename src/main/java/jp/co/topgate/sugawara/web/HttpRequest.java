@@ -15,9 +15,13 @@ import java.io.*;
  */
 
 public class HttpRequest {
-    private String method;
     private String file;
 
+    /**
+     * HttpRequestのコンストラクタ
+     *
+     * @param inputStream
+     */
 
     public HttpRequest(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
@@ -25,8 +29,9 @@ public class HttpRequest {
         String requestLine = bufferedReader.readLine();
         printRequestLine(requestLine);
         String[] requestLineArray = splitRequestLine(requestLine);
-        this.method = requestLineArray[0];
+        String method = requestLineArray[0];
         String requestUri = requestLineArray[1];
+        String httpVersion = requestLineArray[2];
 
         String file = parseFilePath(requestUri);
         if (file.endsWith("/")) {
@@ -37,14 +42,15 @@ public class HttpRequest {
 
     /**
      * HttpRequestのRequestLineを表示する
+     *
+     * @param requestLine
      */
-    public void printRequestLine(String requestLine) {
+    void printRequestLine(String requestLine) {
         System.out.println(requestLine);
     }
 
-
     /**
-     * requestLineに対して空白文字をdelimiterとして3つに分割する
+     * requestLineに対して空白文字をdelimiterとしてmethod,requestUri,httpVersionの3つに分割する
      * requestLine = method + requestUri + httpVersion
      * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
      * httpVersionは今回使用しない
@@ -53,18 +59,8 @@ public class HttpRequest {
      * @return file ex:index.html
      */
 
-    public String[] splitRequestLine(String requestLine) {
+    String[] splitRequestLine(String requestLine) {
         return (requestLine.split(" ", 3));
-    }
-
-    /**
-     * メソッドを取得する
-     *
-     * @return method
-     */
-
-    public String getMethod() {
-        return this.method;
     }
 
     /**
@@ -74,7 +70,7 @@ public class HttpRequest {
      * @return file ex:index.html
      */
 
-    public String parseFilePath(String requestUri) {
+    String parseFilePath(String requestUri) {
         if (requestUri == null) {
             return "";
         }
@@ -94,7 +90,6 @@ public class HttpRequest {
     public String getFile() {
         return this.file;
     }
-
 
 }
 

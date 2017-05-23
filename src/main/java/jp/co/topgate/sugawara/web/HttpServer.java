@@ -74,7 +74,7 @@ public class HttpServer {
      * @return statusCode ex:200
      */
 
-    public int getStatusCode(File file) {
+    int getStatusCode(File file) {
         if (!file.exists()) {
             return 404;
         }

@@ -47,7 +47,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return generalHeaderContent
      */
 
-    public String createGeneralHeader() {
+    String createGeneralHeader() {
         StringBuilder generalHeader = new StringBuilder();
         String generalHeaderContent = new String(generalHeader);
         return generalHeaderContent;
@@ -60,7 +60,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return responseHeaderContent ex:"Server: sakura818"
      */
 
-    public String createResponseHeader() {
+     String createResponseHeader() {
         StringBuilder responseHeader = new StringBuilder();
         responseHeader.append("Server: " + "sakura818").append("\n");
         String responseHeaderContent = new String(responseHeader);
@@ -75,7 +75,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return entityHeaderContent
      */
 
-    public String createEntityHeader(File file) {
+     String createEntityHeader(File file) {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
@@ -92,7 +92,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ContentType ex:text/html
      */
 
-    public String createContentType(File file) {
+     String createContentType(File file) {
         if (extensionToContentType.containsKey(extractExtension(file))) {
             return extensionToContentType.get(extractExtension(file));
         }
@@ -106,7 +106,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ファイルの拡張子　ex:html
      */
 
-    public String extractExtension(File file) {
+     String extractExtension(File file) {
         if (file == null) {
             return null;
         }
@@ -122,7 +122,7 @@ public class HttpResponseMessageHeaderBuilder {
      * 拡張子とContentTypeのMap
      */
 
-    public final Map<String, String> extensionToContentType = new HashMap<String, String>() {
+     final Map<String, String> extensionToContentType = new HashMap<String, String>() {
         {
             put("html", "text/html; charset=UTF-8");
             put("htm", "text/html; charset=UTF-8");

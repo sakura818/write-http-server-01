@@ -39,7 +39,7 @@ public class HttpResponseStatusLineBuilder {
      * statusCodeとreasonPhraseのMap
      */
 
-    private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+    static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
         {
             put(200, "OK");
             put(400, "Bad Request");
@@ -55,7 +55,7 @@ public class HttpResponseStatusLineBuilder {
      * @return reasonPhrase ex:OK
      */
 
-    public String getReasonPhrase(int statusCode) {
+    String getReasonPhrase(int statusCode) {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }

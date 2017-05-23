@@ -11,9 +11,6 @@ import java.io.IOException;
  * @author sakura818
  */
 public class MainTest {
-    public static void HttpServerのconnectメソッドを呼び出せるかのテスト(String[] args) {
-        HttpServer httpServer = new HttpServer();
-        httpServer.connect();
-    }
+
 }
 
