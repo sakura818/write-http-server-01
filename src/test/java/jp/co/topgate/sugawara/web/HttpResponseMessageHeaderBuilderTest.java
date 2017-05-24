@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderBuilderTest {
-    private File file;
+    private File file = new File("src/test/resources/index.html");
     HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
 
     @Test

@@ -19,7 +19,7 @@ public class HttpServer {
     private Socket socket;
     private ServerSocket serverSocket;
     private final int PORT = 8080;
-    private final String FILE_DIR = "src/main/resources/";
+    private final String FILEPATH_DIR = "src/main/resources/";
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -38,14 +38,14 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
-                File file = new File(this.FILE_DIR, httpRequest.getFile());
+                File filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
                 //boolean isCorrectRequestLine = httpRequest.getIsCorrectRequestLine();
-                int statusCode = getStatusCode(file);
+                int statusCode = getStatusCode(filePath);
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse(file, statusCode);
+                HttpResponse httpResponse = new HttpResponse();
 
-                httpResponse.writeToOutputStream(outputStream);
+                httpResponse.writeToOutputStream(outputStream, filePath, statusCode);
 
                 inputStream.close();
                 outputStream.close();
@@ -70,15 +70,15 @@ public class HttpServer {
     /**
      * HttpRequestに応じて適切なステータスコードを返す
      *
-     * @param file ex:index.html
+     * @param filePath ex:index.html
      * @return statusCode ex:200
      */
 
-    int getStatusCode(File file) {
+    int getStatusCode(File filePath) {
         //if(isCorrectRequestLine == false){
         //    return 400;
         //}
-        if (!file.exists()) {
+        if (!filePath.exists()) {
             return 404;
         }
         return 200;

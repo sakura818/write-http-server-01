@@ -11,15 +11,6 @@ import java.io.*;
  */
 
 public class HttpResponse {
-    private File file;
-    private int statusCode;
-
-    //TODO;このコンストラクタ必要なのか再検討
-    public HttpResponse(File file, int statusCode) {
-        this.file = file;
-        this.statusCode = statusCode;
-    }
-
 
     /**
      * HttpResponseのコンテンツをOutputStreamに書き込む
@@ -30,19 +21,19 @@ public class HttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException {
+    public void writeToOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);
 
         /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
-        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(this.statusCode);
+        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         printWriter.println(statusLineBuilder.build());
 
         /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
-        HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(this.file);
+        HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(filePath);
         printWriter.println(messageHeaderContent.build());
 
         /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
-        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(this.file, this.statusCode);
+        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath, statusCode);
         outputStream.write(messageBodyBuilder.build());
 
         /** HttpResponseのMessageBodyの最後の印となるCRLFをバイト出力ストリームに書き込む PrintWriterクラスのprintlnメソッドと違いOutputStreamクラスのwriteメソッドでは最後改行がされないため*/

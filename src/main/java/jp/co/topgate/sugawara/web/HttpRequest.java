@@ -14,7 +14,7 @@ import java.io.*;
  */
 
 public class HttpRequest {
-    private String file;
+    private String UriPath;
     private boolean isCorrectRequestLine;
     private String requestUri;
 
@@ -28,26 +28,17 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        printRequestLine(requestLine);
-        String requestUri = splitRequestLine(requestLine);
+        System.out.println(requestLine);
+        String requestUri = getRequestUri(requestLine);
         //this.isCorrectRequestLine = isCorrectRequestLine;
 
-        String file = parseFilePath(requestUri);
-        if (file.endsWith("/")) {
-            file += "index.html";
+        String UriPath = parseFilePath(requestUri);
+        if (UriPath.endsWith("/")) {
+            UriPath += "index.html";
         }
-        this.file = file;
+        this.UriPath = UriPath;
     }
 
-
-    /**
-     * HttpRequestのRequestLineを表示する
-     *
-     * @param requestLine
-     */
-    void printRequestLine(String requestLine) {
-        System.out.println(requestLine);
-    }
 
     /**
      * requestLineに対して空白文字をdelimiterとしてmethod,requestUri,httpVersionの3つに分割する
@@ -58,26 +49,25 @@ public class HttpRequest {
      * TODO:↑falseのときはstatusCodeを400にしようとしていたが失敗。400のときにrequestUriをどう設定していいのかも把握すべき。
      *
      * @param requestLine
-     * @return file ex:index.html
+     * @return UriPath ex:index.html
      */
 
-    String splitRequestLine(String requestLine) {
+    String getRequestUri(String requestLine) {
         String[] requestLineArray = requestLine.split(" ", 3);
-        /*
-        if (requestLineArray.length == 3 && requestLineArray[0] == "GET" && requestLineArray[2] == "HTTP/1.1") {
-             isCorrectRequestLine　== true;
-             requestUri = requestLineArray[1];
+
+        if ((requestLineArray.length == 3)) {
+            requestUri = requestLineArray[1];
         }
-        */
-        requestUri = requestLineArray[1];
+
+        //requestUri = requestLineArray[1];
         return requestUri;
     }
 
     /**
-     * requestUriからfileを抜き出す
+     * requestUriからUriPathを抜き出す
      *
      * @param requestUri ex:http://localhost:8080/index.html
-     * @return file ex:index.html
+     * @return UriPath ex:index.html
      */
 
     String parseFilePath(String requestUri) {
@@ -85,17 +75,17 @@ public class HttpRequest {
         if (lastDotPosition != -1) {
             return requestUri.substring(lastDotPosition + 1);
         }
-        return file;
+        return UriPath;
     }
 
     /**
-     * fileを取得する
+     * UriPathを取得する
      *
-     * @return file
+     * @return UriPath
      */
 
-    public String getFile() {
-        return this.file;
+    public String getUriPath() {
+        return this.UriPath;
     }
 
 
