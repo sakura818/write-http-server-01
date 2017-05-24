@@ -67,7 +67,7 @@ public class HttpServer {
     }
 
     /**
-     * HttpRequestに応じて適切なステータスコードを返す
+     * 適切なステータスコードを返す
      *
      * @param filePath ex:index.html
      * @return statusCode ex:200
