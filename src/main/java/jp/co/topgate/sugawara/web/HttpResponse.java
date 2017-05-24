@@ -14,8 +14,8 @@ public class HttpResponse {
     private File file;
     private int statusCode;
 
-
-    public HttpResponse(OutputStream outputStream, File file, int statusCode) {
+    //TODO;このコンストラクタ必要なのか再検討
+    public HttpResponse(File file, int statusCode) {
         this.file = file;
         this.statusCode = statusCode;
     }
@@ -29,7 +29,6 @@ public class HttpResponse {
      * @param outputStream バイト出力ストリーム
      * @throws IOException
      */
-
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
         PrintWriter printWriter = new PrintWriter(outputStream, true);

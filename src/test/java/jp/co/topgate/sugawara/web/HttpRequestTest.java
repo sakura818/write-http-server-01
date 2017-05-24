@@ -3,7 +3,6 @@ package jp.co.topgate.sugawara.web;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -18,7 +17,7 @@ import static org.junit.Assert.assertThat;
 public class HttpRequestTest {
 
     @Test
-    //TODO:このメソッドはまだ書いている途中
+    //TODO:このメソッドはテスト対象メソッドがまだ未実装の部分があるため書いている途中
     public void requestLineを正しく分割できているかのテスト() throws IOException {
         /** 以下の3行はhttpRequestのインスタンスを呼び出す エラー処理がクラス全体ではなくメソッドでしかできないため */
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");

@@ -3,8 +3,6 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
-import java.util.regex.Pattern;
-
 
 /**
  * HttpRequest class
