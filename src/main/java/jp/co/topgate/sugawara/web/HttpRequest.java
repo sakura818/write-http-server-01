@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * HttpRequest class
@@ -51,7 +52,12 @@ public class HttpRequest {
     String getRequestUri(String requestLine) {
         String[] requestLineArray = requestLine.split(" ", 3);
         System.out.println("OK1");
-        if ((requestLineArray.length == 3) && (requestLineArray[0] == "GET") && (requestLineArray[2] == "HTTP/1.1")) {
+        System.out.println(Arrays.toString(requestLineArray));
+        System.out.println(requestLineArray[0]);
+        System.out.println(requestLineArray[1]);
+        System.out.println(requestLineArray[2]);
+
+        if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
             System.out.println("OK2");
             requestUri = requestLineArray[1];
             System.out.println("OK3");
