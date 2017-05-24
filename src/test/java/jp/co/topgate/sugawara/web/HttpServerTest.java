@@ -26,11 +26,9 @@ public class HttpServerTest {
     }
 
     @Test
-    //TODO:このメソッドは書いている途中
     public void HttpRequestに応じて適切なステータスコードを返すテスト() {
-        assertThat(404, is(httpServer.getStatusCode(new File("index.html"))));
-        assertThat(404, is(httpServer.getStatusCode(new File("hoge"))));
-
+        assertThat(200, is(httpServer.getStatusCode(new File("src/test/resources/index.html"))));
+        assertThat(404, is(httpServer.getStatusCode(new File("src/test/resources/hoge.html"))));
     }
 
 }
