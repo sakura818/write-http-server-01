@@ -18,23 +18,18 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpServerTest {
-
-    private final String FILE_DIR = "src/main/resources/";
+    HttpServer httpServer = new HttpServer();
 
     @Test
-    public void HttpServerのテスト() throws IOException {
+    //TODO:このテストの書き方
+    public void HttpServerのテスト() {
+    }
 
-        File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
-        InputStream inputStream = new FileInputStream(DummyHttpRequest);
-        HttpRequest httpRequest = new HttpRequest(inputStream);
-
-        File filePath = new File(FILE_DIR, httpRequest.getFilePath());
-        System.out.println("DummyHttpRequestのfilePathが正しくとれているか確認 " + filePath);
-        // assertThat("src/main/resources/index.html", is(filePath));
-        HttpServer httpServer = new HttpServer();
-        int statusCode = httpServer.selectStatusCode(httpRequest, filePath);
-        System.out.println("DummyHttpRequestのstatusCodeが正しくとれているか確認 " + statusCode);
-        assertThat(200, is(statusCode));
+    @Test
+    //TODO:このメソッドは書いている途中
+    public void HttpRequestに応じて適切なステータスコードを返すテスト() {
+        assertThat(404, is(httpServer.getStatusCode(new File("index.html"))));
+        assertThat(404, is(httpServer.getStatusCode(new File("hoge"))));
 
     }
 

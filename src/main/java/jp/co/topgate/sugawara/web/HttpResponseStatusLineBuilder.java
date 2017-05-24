@@ -1,40 +1,44 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * HttpResponseStatusLineContent Class
+ * HttpResponseStatusLineBuilder Class
  * HttpResponseのStatusLineのContentを生成するクラス
  * StatusLine = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
  *
  * @author sakura818
  */
 
-public class HttpResponseStatusLineContent {
+public class HttpResponseStatusLineBuilder {
+    private int statusCode;
+
+    public HttpResponseStatusLineBuilder(int statusCode) {
+        this.statusCode = statusCode;
+    }
 
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      *
-     * @param statusCode ex:200
      * @return httpResponseStatusLineContent ex:OK
      */
 
-    public String createHttpResponseStatusLine(int statusCode) {
-        StringBuilder httpResponseStatusLine = new StringBuilder();
-        httpResponseStatusLine.append("HTTP/1.1").append(" ");
-        httpResponseStatusLine.append(statusCode).append(" ");
-        httpResponseStatusLine.append(createReasonPhrase(statusCode));
-        String httpResponseStatusLineContent = new String(httpResponseStatusLine);
-        return httpResponseStatusLineContent;
+    public String build() {
+        StringBuilder statusLine = new StringBuilder();
+        statusLine.append("HTTP/1.1").append(" ");
+        statusLine.append(this.statusCode).append(" ");
+        statusLine.append(getReasonPhrase(this.statusCode));
+        return statusLine.toString();
     }
 
     /**
      * statusCodeとreasonPhraseのMap
      */
 
-    private static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+    static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
         {
             put(200, "OK");
             put(400, "Bad Request");
@@ -50,7 +54,7 @@ public class HttpResponseStatusLineContent {
      * @return reasonPhrase ex:OK
      */
 
-    public String createReasonPhrase(int statusCode) {
+    String getReasonPhrase(int statusCode) {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }

@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -17,36 +18,23 @@ import static org.junit.Assert.assertThat;
 public class HttpRequestTest {
 
     @Test
+    //TODO:このメソッドはまだ書いている途中
     public void requestLineを正しく分割できているかのテスト() throws IOException {
-
+        /** 以下の3行はhttpRequestのインスタンスを呼び出す エラー処理がクラス全体ではなくメソッドでしかできないため */
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
         HttpRequest httpRequest = new HttpRequest(inputStream);
-
-        String[] requestLineArray = httpRequest.spaceSeparateRequestLine("GET / HTTP/1.1");
-        String method = requestLineArray[0];
-        String requestUri = requestLineArray[1];
-        assertThat("GET", is(method));
-        assertThat("/", is(requestUri));
-
-        String[] requestLineArray2 = httpRequest.spaceSeparateRequestLine("GET http://localhost:8080/index.html HTTP/1.1");
-        String method2 = requestLineArray2[0];
-        String requestUri2 = requestLineArray2[1];
-        assertThat("GET", is(method2));
-        assertThat("http://localhost:8080/index.html", is(requestUri2));
 
     }
 
-
     @Test
     public void requestUriから正しくfileを抜き出せるかのテスト() throws IOException {
-
+        /** 以下の3行はhttpRequestのインスタンスを呼び出す エラー処理がクラス全体ではなくメソッドでしかできないため */
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequest.txt");
         InputStream inputStream = new FileInputStream(DummyHttpRequest);
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        // assertThat("index.html", is(httpRequest.parseFilePath("/")));
+
         assertThat("index.html", is(httpRequest.parseFilePath("http://localhost:8080/index.html")));
-        // assertThat("index.html", is(httpRequest.parseFilePath("/")));
     }
 
 
