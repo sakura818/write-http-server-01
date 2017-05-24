@@ -15,7 +15,6 @@ import java.io.*;
 
 public class HttpRequest {
     private String UriPath;
-    private boolean isCorrectRequestLine;
     private String requestUri;
 
     /**
@@ -30,7 +29,6 @@ public class HttpRequest {
         String requestLine = bufferedReader.readLine();
         System.out.println(requestLine);
         String requestUri = getRequestUri(requestLine);
-        //this.isCorrectRequestLine = isCorrectRequestLine;
 
         String UriPath = parseFilePath(requestUri);
         if (UriPath.endsWith("/")) {
@@ -41,12 +39,9 @@ public class HttpRequest {
 
 
     /**
-     * requestLineに対して空白文字をdelimiterとしてmethod,requestUri,httpVersionの3つに分割する
+     * requestLineからrequestUriをgetする
      * requestLine = method + requestUri + httpVersion
      * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
-     * httpVersionは今回使用しない
-     * TODO:requestLineが適切な形かチェックしてOKだったらboolean isCorrectRequestLineをtrueに、OKじゃない場合はboolean isCorrectRequestLineをfalseにしようと考えていた。
-     * TODO:↑falseのときはstatusCodeを400にしようとしていたが失敗。400のときにrequestUriをどう設定していいのかも把握すべき。
      *
      * @param requestLine
      * @return UriPath ex:index.html
@@ -89,15 +84,6 @@ public class HttpRequest {
     }
 
 
-    /**
-     * isCorrectRequestLineを取得する
-     *
-     * @return isCorrectRequestLine
-     */
-
-    public boolean getIsCorrectRequestLine() {
-        return this.isCorrectRequestLine;
-    }
 
 }
 

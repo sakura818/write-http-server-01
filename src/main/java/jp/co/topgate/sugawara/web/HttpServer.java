@@ -39,7 +39,6 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
                 File filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                //boolean isCorrectRequestLine = httpRequest.getIsCorrectRequestLine();
                 int statusCode = getStatusCode(filePath);
 
                 OutputStream outputStream = this.socket.getOutputStream();
@@ -75,9 +74,6 @@ public class HttpServer {
      */
 
     int getStatusCode(File filePath) {
-        //if(isCorrectRequestLine == false){
-        //    return 400;
-        //}
         if (!filePath.exists()) {
             return 404;
         }
