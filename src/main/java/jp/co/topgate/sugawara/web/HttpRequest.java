@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 
 public class HttpRequest {
     private String file;
+    private boolean isCorrectRequestLine;
+    private String requestUri;
 
     /**
      * HttpRequestのコンストラクタ
@@ -29,8 +31,8 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
         printRequestLine(requestLine);
-        String requestLineArray = splitRequestLine(requestLine);
-        String requestUri = requestLineArray;
+        String requestUri = splitRequestLine(requestLine);
+        //this.isCorrectRequestLine = isCorrectRequestLine;
 
         String file = parseFilePath(requestUri);
         if (file.endsWith("/")) {
@@ -38,6 +40,7 @@ public class HttpRequest {
         }
         this.file = file;
     }
+
 
     /**
      * HttpRequestのRequestLineを表示する
@@ -53,17 +56,23 @@ public class HttpRequest {
      * requestLine = method + requestUri + httpVersion
      * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
      * httpVersionは今回使用しない
+     * TODO:requestLineが適切な形かチェックしてOKだったらboolean isCorrectRequestLineをtrueに、OKじゃない場合はboolean isCorrectRequestLineをfalseにしようと考えていた。
+     * TODO:↑falseのときはstatusCodeを400にしようとしていたが失敗。400のときにrequestUriをどう設定していいのかも把握すべき。
      *
      * @param requestLine
      * @return file ex:index.html
      */
 
     String splitRequestLine(String requestLine) {
-        String regexp = "GET" + " " + ".*/.*" + " " + "HTTP/1.1";
-        boolean match = Pattern.matches(regexp, requestLine);
-        System.out.println(match);
-        return "";
-
+        String[] requestLineArray = requestLine.split(" ", 3);
+        /*
+        if (requestLineArray.length == 3 && requestLineArray[0] == "GET" && requestLineArray[2] == "HTTP/1.1") {
+             isCorrectRequestLine　== true;
+             requestUri = requestLineArray[1];
+        }
+        */
+        requestUri = requestLineArray[1];
+        return requestUri;
     }
 
     /**
@@ -75,10 +84,10 @@ public class HttpRequest {
 
     String parseFilePath(String requestUri) {
         int lastDotPosition = requestUri.lastIndexOf("/");
-        if (lastDotPosition > 0) {
+        if (lastDotPosition != -1) {
             return requestUri.substring(lastDotPosition + 1);
         }
-        return requestUri;
+        return file;
     }
 
     /**
@@ -89,6 +98,17 @@ public class HttpRequest {
 
     public String getFile() {
         return this.file;
+    }
+
+
+    /**
+     * isCorrectRequestLineを取得する
+     *
+     * @return isCorrectRequestLine
+     */
+
+    public boolean getIsCorrectRequestLine() {
+        return this.isCorrectRequestLine;
     }
 
 }

@@ -23,7 +23,6 @@ public class HttpServer {
 
     /**
      * クライアントとサーバのデータの入出力を行う
-     *
      */
 
     public void connect() {
@@ -40,12 +39,13 @@ public class HttpServer {
                 HttpRequest httpRequest = new HttpRequest(inputStream);
 
                 File file = new File(this.FILE_DIR, httpRequest.getFile());
+                //boolean isCorrectRequestLine = httpRequest.getIsCorrectRequestLine();
                 int statusCode = getStatusCode(file);
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();
+                HttpResponse httpResponse = new HttpResponse(outputStream, file, statusCode);
 
-                httpResponse.writeToOutputStream(outputStream, file, statusCode);
+                httpResponse.writeToOutputStream(outputStream);
 
                 inputStream.close();
                 outputStream.close();
@@ -70,11 +70,14 @@ public class HttpServer {
     /**
      * HttpRequestに応じて適切なステータスコードを返す
      *
-     * @param file        ex:index.html
+     * @param file ex:index.html
      * @return statusCode ex:200
      */
 
     int getStatusCode(File file) {
+        //if(isCorrectRequestLine == false){
+        //    return 400;
+        //}
         if (!file.exists()) {
             return 404;
         }

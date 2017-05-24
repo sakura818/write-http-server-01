@@ -15,7 +15,8 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpResponseTest {
-
+    //TODO:このメソッドはまだ書いている途中
+/*
     OutputStream outputStream;
     HttpResponse httpResponse = new HttpResponse();
 
@@ -28,5 +29,6 @@ public class HttpResponseTest {
         outputStream.write(CRLF);
 
     }
+    */
 
 }

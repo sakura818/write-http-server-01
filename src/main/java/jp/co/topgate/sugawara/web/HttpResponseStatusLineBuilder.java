@@ -15,14 +15,13 @@ import java.util.Map;
 public class HttpResponseStatusLineBuilder {
     private int statusCode;
 
-    public HttpResponseStatusLineBuilder(int statusCode){
+    public HttpResponseStatusLineBuilder(int statusCode) {
         this.statusCode = statusCode;
     }
 
     /**
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
-     *
      *
      * @return httpResponseStatusLineContent ex:OK
      */
