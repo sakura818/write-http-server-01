@@ -21,6 +21,7 @@ public class HttpRequestTest {
     public void requestLineからrequestUriをgetするテスト() throws IOException {
         /** 以下の3行はhttpRequestのインスタンスを呼び出す エラー処理がクラス全体ではなくメソッドでしかできないため */
         //File DummyHttpRequest1 = new File("src/test/resources/DummyHttpRequestLine/1.txt");
+
         InputStream inputStream1 = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
         HttpRequest httpRequest1 = new HttpRequest(inputStream1);
         assertThat((httpRequest1.parseRequestUri("GET /index.html HTTP/1.1")), is("/index.html"));
@@ -44,16 +45,17 @@ public class HttpRequestTest {
         */
     }
 
+
     @Test
     public void requestUriからUriPathを抜き出すのテスト() throws IOException {
         /** 以下の3行はhttpRequestのインスタンスを呼び出す エラー処理がクラス全体ではなくメソッドでしかできないため */
         File DummyHttpRequest = new File("src/test/resources/DummyHttpRequestLine.txt");
-        InputStream inputStream = new FileInputStream(DummyHttpRequest);
-        HttpRequest httpRequest = new HttpRequest(inputStream);
+        //InputStream inputStream = new FileInputStream(DummyHttpRequest);
+        //HttpRequest httpRequest = new HttpRequest(inputStream);
 
-        assertThat((httpRequest.parseUriPath("http://localhost:8080/index.html")), is("index.html"));
-        assertThat((httpRequest.parseUriPath("/index.html")), is("index.html"));
-        assertThat((httpRequest.parseUriPath("index")), is("index/"));
+        //assertThat((httpRequest.parseUriPath("http://localhost:8080/index.html")), is("index.html"));
+        //assertThat((httpRequest.parseUriPath("/index.html")), is("index.html"));
+        //assertThat((httpRequest.parseUriPath("index")), is("index/"));
     }
 
 

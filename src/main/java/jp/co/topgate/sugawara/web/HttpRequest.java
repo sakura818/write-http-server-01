@@ -50,16 +50,17 @@ public class HttpRequest {
      */
 
     String parseRequestUri(String requestLine) {
-        String[] requestLineArray = requestLine.split(" ", 3);
-        try {
+        if (requestLine != null) {
+            String[] requestLineArray = requestLine.split(" ", 3);
             if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
                 requestUri = requestLineArray[1];
+            } else {
+                throw new RuntimeException("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-            //System.out.println("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
+            return requestUri;
+        } else {
+            throw new RuntimeException("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
         }
-        return requestUri;
     }
 
     /**

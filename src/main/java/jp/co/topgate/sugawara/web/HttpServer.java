@@ -36,10 +36,17 @@ public class HttpServer {
                 System.out.println("http request line...");
 
                 InputStream inputStream = this.socket.getInputStream();
-                HttpRequest httpRequest = new HttpRequest(inputStream);
 
-                File filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                int statusCode = getStatusCode(filePath);
+                HttpRequest httpRequest;
+                File filePath = null;
+                int statusCode;
+                try {
+                    httpRequest = new HttpRequest(inputStream);
+                    filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    statusCode = getStatusCode(filePath);
+                } catch (Exception e) {
+                    statusCode = 400;
+                }
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse();

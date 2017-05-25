@@ -1,6 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * HttpResponse class
@@ -12,6 +13,10 @@ import java.io.*;
 
 public class HttpResponse {
 
+    private ArrayList<byte[]> createResponseContents() {
+
+    }
+
     /**
      * HttpResponseのコンテンツをOutputStreamに書き込む
      * HttpResponse= StatusLine + MessageHeader + MessageBody
@@ -22,18 +27,22 @@ public class HttpResponse {
      */
 
     public void writeToOutputStream(OutputStream outputStream, File filePath, int statusCode) throws IOException {
-        PrintWriter printWriter = new PrintWriter(outputStream, true);
 
         /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-        printWriter.println(statusLineBuilder.build());
-
         /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
         HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(filePath);
-        printWriter.println(messageHeaderContent.build());
-
         /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
         HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath, statusCode);
+
+        ArrayList<byte[]> contents = new ArrayList<byte[]>();
+        contents.add(messageHeaderContent.build().getBytes());
+        contents.add(statusLineBuilder.build().getBytes());
+        contents.add(messageBodyBuilder.build());
+
+        PrintWriter printWriter = new PrintWriter(outputStream, true);
+        printWriter.println(messageHeaderContent.build());
+        printWriter.println(statusLineBuilder.build());
         outputStream.write(messageBodyBuilder.build());
 
         /** HttpResponseのMessageBodyの最後の印となるCRLFをバイト出力ストリームに書き込む PrintWriterクラスのprintlnメソッドと違いOutputStreamクラスのwriteメソッドでは最後改行がされないため*/
