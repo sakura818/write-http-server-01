@@ -36,19 +36,20 @@ public class HttpServer {
                 System.out.println("http request line...");
 
                 InputStream inputStream = this.socket.getInputStream();
-
                 HttpRequest httpRequest;
 
                 File file = null;
                 int statusCode;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    file = new File(this.FILEPATH_DIR, "httpRequest.getUriPath()");
                     statusCode = getStatusCode(file);
-                    //if (statusCode == 404){file ="src/main/resources/statusCode404.html";}
+                    if (statusCode == 404) {
+                        file = new File(this.FILEPATH_DIR, "statusCode404.html");
+                    }
                 } catch (Exception e) {
                     statusCode = 400;
-                    //file = "src/main/resources/statusCode400.html";
+                    file = new File(this.FILEPATH_DIR, "statusCode400.html");
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();

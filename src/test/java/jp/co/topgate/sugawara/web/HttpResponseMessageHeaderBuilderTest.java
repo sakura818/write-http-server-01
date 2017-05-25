@@ -25,11 +25,12 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void EntityHeaderTestを適切な形で生成できているかのテスト() {
-        assertThat(buildTest(), is("Server: sakura818\n" +
+        assertThat(buildTest(), is(("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n".getBytes()));
+                "Content-Type: text/html; charset=UTF-8\n").getBytes()));
     }
+
 
     public byte[] buildTest() {
         StringBuilder messageHeader = new StringBuilder();

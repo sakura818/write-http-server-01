@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 public class HttpResponseTest {
     //TODO:テスト対象メソッド直し中
 
-    HttpResponse httpResponse = new HttpResponse();
+    //HttpResponse httpResponse = new HttpResponse();
 
     @Test
     public void httpResponseを適切な形で生成できているかのテスト() throws IOException {
