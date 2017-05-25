@@ -29,7 +29,7 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
         System.out.println(requestLine);
-        String requestUri = getRequestUri(requestLine);
+        String requestUri = parseRequestUri(requestLine);
 
         String UriPath = parseUriPath(requestUri);
         if (UriPath.endsWith("/")) {
@@ -49,20 +49,16 @@ public class HttpRequest {
      * @return UriPath ex:index.html
      */
 
-    String getRequestUri(String requestLine) {
+    String parseRequestUri(String requestLine) {
         String[] requestLineArray = requestLine.split(" ", 3);
-        System.out.println("OK1");
-        System.out.println(Arrays.toString(requestLineArray));
-        System.out.println(requestLineArray[0]);
-        System.out.println(requestLineArray[1]);
-        System.out.println(requestLineArray[2]);
-
-        if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
-            System.out.println("OK2");
-            requestUri = requestLineArray[1];
-            System.out.println("OK3");
+        try {
+            if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
+                requestUri = requestLineArray[1];
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+            //System.out.println("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
         }
-        //requestUri = requestLineArray[1];
         return requestUri;
     }
 
@@ -74,9 +70,14 @@ public class HttpRequest {
      */
 
     String parseUriPath(String requestUri) {
-        int lastDotPosition = requestUri.lastIndexOf("/");
-        if (lastDotPosition != -1) {
-            return requestUri.substring(lastDotPosition + 1);
+        try {
+            int lastDotPosition = requestUri.lastIndexOf("/");
+            if (lastDotPosition != -1) {
+                return requestUri.substring(lastDotPosition + 1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+            //System.out.println("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
         }
         return uriPath;
     }

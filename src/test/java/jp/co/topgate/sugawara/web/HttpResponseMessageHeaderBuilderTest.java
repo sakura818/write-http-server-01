@@ -20,15 +20,15 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderBuilderTest {
-    private File file = new File("src/test/resources/index.html");
-    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
+    private File filePath = new File("src/test/resources/index.html");
+    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(filePath);
 
     @Test
     public void EntityHeaderTestを適切な形で生成できているかのテスト() {
-        assertThat("Server: sakura818\n" +
+        assertThat((buildTest()), is("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n", is(buildTest()));
+                "Content-Type: text/html; charset=UTF-8\n"));
     }
 
     public String buildTest() {
@@ -78,25 +78,25 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト() {
-        assertThat("text/html; charset=UTF-8", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.html"))));
-        assertThat("text/html; charset=UTF-8", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.htm"))));
-        assertThat("text/css", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.css"))));
-        assertThat("application/javascript", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.js"))));
-        assertThat("image/jpeg", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpg"))));
-        assertThat("image/jpeg", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpeg"))));
-        assertThat("image/png", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.png"))));
-        assertThat("image/gif", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.gif"))));
-        assertThat("text/plain", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.txt"))));
-        assertThat("application/pdf", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.pdf"))));
-        assertThat("video/mp4", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.mp4"))));
-        assertThat("text/html; charset=utf-8", is(httpResponseMessageHeaderBuilder.createContentType(new File("hoge.hoge"))));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.html"))), is("text/html; charset=UTF-8"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.htm"))), is("text/html; charset=UTF-8"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.css"))), is("text/css"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.js"))), is("application/javascript"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpg"))), is("image/jpeg"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpeg"))), is("image/jpeg"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.png"))), is("image/png"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.gif"))), is("image/gif"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.txt"))), is("text/plain"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.pdf"))), is("application/pdf"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.mp4"))), is("video/mp4"));
+        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.hoge"))), is("text/html; charset=utf-8"));
     }
 
     @Test
     public void ファイルから拡張子をextractするテスト() {
-        assertThat("html", is(httpResponseMessageHeaderBuilder.extractExtension(new File("hoge.html"))));
-        assertThat("html", is(httpResponseMessageHeaderBuilder.extractExtension(new File("hoge..html"))));
-        assertThat("html", is(httpResponseMessageHeaderBuilder.extractExtension(new File("html"))));
+        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge.html"))), is("html"));
+        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge..html"))), is("html"));
+        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("html"))), is("html"));
     }
 
 }

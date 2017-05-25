@@ -32,8 +32,8 @@ public class HttpResponseStatusLineBuilderTest {
 
     @Test
     public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
-        assertThat("OK", is(httpResponseStatusLineBuilder.getReasonPhrase(200)));
-        assertThat("Not Found", is(httpResponseStatusLineBuilder.getReasonPhrase(404)));
+        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(200), is("OK"));
+        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(404), is("Not Found"));
     }
 
 }
