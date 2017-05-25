@@ -13,34 +13,42 @@ import java.util.ArrayList;
 
 public class HttpResponse {
 
+    private File  file;
+    private int statusCode;
+
+    public HttpResponse(File  file,int statusCode) {
+        this. file =  file;
+        this.statusCode = statusCode;
+    }
 
     /**
      * HttpResponseのコンテンツを並べる
      * HttpResponse= StatusLine + MessageHeader + MessageBody
      *
-     * @param filePath
+     * @param  file
      * @param statusCode
      * @throws Exception
      */
 
-    public ArrayList<byte[]> createHttpResponseContents(File filePath, int statusCode) throws Exception {
+    public ArrayList<byte[]> createHttpResponseContents(File  file, int statusCode) throws Exception {
 
         ArrayList<byte[]> createResponseContents = new ArrayList<byte[]>();
         {
             /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
             HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
             /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
-            HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(filePath);
+            HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder( file);
             /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
-            HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath);
+            HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder( file);
+            /** HttpResponseのMessageBodyの最後の印となるCRLFをバイト出力ストリームに書き込む PrintWriterクラスのprintlnメソッドと違いOutputStreamクラスのwriteメソッドでは最後改行がされないため*/
+            byte[] CRLF = "\r\n".getBytes("UTF-8");
 
             createResponseContents.add(messageHeaderContent.build());
             createResponseContents.add(statusLineBuilder.build());
             createResponseContents.add(messageBodyBuilder.build());
-            byte[] CRLF = "\r\n".getBytes("UTF-8");
             createResponseContents.add(CRLF);
         }
-        return  createResponseContents;
+        return createResponseContents;
     }
 
 
@@ -52,27 +60,15 @@ public class HttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException {
+    public void writeToOutputStream(OutputStream outputStream) throws Exception {
+        createHttpResponseContents( file,statusCode);
 
-        PrintWriter printWriter = new PrintWriter(outputStream, true);
-        printWriter.println(messageHeaderContent.build());
-        printWriter.println(statusLineBuilder.build());
-        outputStream.write(messageBodyBuilder.build());
-
-        /** HttpResponseのMessageBodyの最後の印となるCRLFをバイト出力ストリームに書き込む PrintWriterクラスのprintlnメソッドと違いOutputStreamクラスのwriteメソッドでは最後改行がされないため*/
-        byte[] CRLF = "\r\n".getBytes("UTF-8");
-        outputStream.write(CRLF);
+        outputStream.write();
 
         /** HttpResponseMessageをコンソールに表示する */
         System.out.println("http response...");
-        System.out.println(statusLineBuilder.build());
-        System.out.println(messageHeaderContent.build());
-        for (int i = 0; i < messageBodyBuilder.build().length; i++) {
-            System.out.println(Integer.toHexString(messageBodyBuilder.build()[i]));
-        }
-        for (int i = 0; i < CRLF.length; i++) {
-            System.out.println(Integer.toHexString(CRLF[i]));
-
+        for (int i = 0; i < (createHttpResponseContents( file,statusCode)).length; i++) {
+            System.out.println(Integer.toHexString(createHttpResponseContents( file,statusCode)[i]));
         }
 
     }

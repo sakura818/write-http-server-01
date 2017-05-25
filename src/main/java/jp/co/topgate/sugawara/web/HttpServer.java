@@ -38,22 +38,23 @@ public class HttpServer {
                 InputStream inputStream = this.socket.getInputStream();
 
                 HttpRequest httpRequest;
-                File filePath = null;
+
+                File file = null;
                 int statusCode;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                    statusCode = getStatusCode(filePath);
-                    //if (statusCode == 404){filePath ="src/main/resources/statusCode404.html";}
+                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    statusCode = getStatusCode(file);
+                    //if (statusCode == 404){file ="src/main/resources/statusCode404.html";}
                 } catch (Exception e) {
                     statusCode = 400;
-                    //filePath = "src/main/resources/statusCode400.html";
+                    //file = "src/main/resources/statusCode400.html";
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse();
+                HttpResponse httpResponse = new HttpResponse(outputStream, file, statusCode);
 
-                httpResponse.writeToOutputStream(outputStream, filePath, statusCode);
+                httpResponse.writeToOutputStream(outputStream, file, statusCode);
 
                 inputStream.close();
                 outputStream.close();
@@ -78,12 +79,12 @@ public class HttpServer {
     /**
      * 適切なステータスコードを返す
      *
-     * @param filePath ex:index.html
+     * @param file ex:index.html
      * @return statusCode ex:200
      */
 
-    int getStatusCode(File filePath) {
-        if (!filePath.exists()) {
+    int getStatusCode(File file) {
+        if (!file.exists()) {
             return 404;
         }
         return 200;
