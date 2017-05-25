@@ -24,7 +24,7 @@ public class HttpResponseMessageBodyBuilderTest {
     }
 
     @Test
-    public void statusCodeが200のときのテスト() throws IOException{
+    public void statusCodeが200のときのテスト() throws IOException {
 
         File indexHtml = new File("src/test/resources/HttpResponseMessageBodyBuilderTest/index.html");
         HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(indexHtml);
@@ -32,13 +32,13 @@ public class HttpResponseMessageBodyBuilderTest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(indexHtml));
         bufferedInputStream.read(messageBody);
         bufferedInputStream.close();
-        byte[] indexHtmlExpectByte  = {};
+        byte[] indexHtmlExpectByte = {};
         assertThat(messageBody, is(indexHtmlExpectByte));
 
     }
 
     @Test
-    public void statusCodeが400のときのテスト() throws IOException{
+    public void statusCodeが400のときのテスト() throws IOException {
 
         File statusCode400Html = new File("src/test/resources/HttpResponseMessageBodyBuilderTest/statusCode400.html");
         HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(statusCode400Html);
@@ -46,7 +46,7 @@ public class HttpResponseMessageBodyBuilderTest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(statusCode400Html));
         bufferedInputStream.read(messageBody);
         bufferedInputStream.close();
-        byte[] statusCode400HtmlExpectByte  = {};
+        byte[] statusCode400HtmlExpectByte = {};
         assertThat(messageBody, is(statusCode400HtmlExpectByte));
 
     }

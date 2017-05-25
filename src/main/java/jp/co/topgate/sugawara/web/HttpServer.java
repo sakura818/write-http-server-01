@@ -44,6 +44,7 @@ public class HttpServer {
                     httpRequest = new HttpRequest(inputStream);
                     filePath = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
                     statusCode = getStatusCode(filePath);
+                    //if (statusCode == 404){filePath ="src/main/resources/statusCode404.html";}
                 } catch (Exception e) {
                     statusCode = 400;
                     //filePath = "src/main/resources/statusCode400.html";
