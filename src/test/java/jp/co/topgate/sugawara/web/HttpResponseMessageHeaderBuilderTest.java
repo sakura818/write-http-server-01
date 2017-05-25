@@ -17,8 +17,8 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderBuilderTest {
-    private File filePath = new File("src/test/resources/index.html");
-    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(filePath);
+    private File file = new File("src/test/resources/index.html");
+    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
 
     @Test
     public void EntityHeaderTestを適切な形で生成できているかのテスト() {
