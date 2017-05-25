@@ -54,12 +54,12 @@ public class HttpServer {
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse(outputStream, file, statusCode);
 
-                httpResponse.writeToOutputStream(outputStream, file, statusCode);
+                httpResponse.writeToOutputStream(outputStream);
 
                 inputStream.close();
                 outputStream.close();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             try {
