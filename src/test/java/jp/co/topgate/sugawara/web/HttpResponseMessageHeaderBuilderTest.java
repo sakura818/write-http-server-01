@@ -28,15 +28,15 @@ public class HttpResponseMessageHeaderBuilderTest {
         assertThat(buildTest(), is("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n"));
+                "Content-Type: text/html; charset=UTF-8\n".getBytes()));
     }
 
-    public String buildTest() {
+    public byte[] buildTest() {
         StringBuilder messageHeader = new StringBuilder();
         messageHeader.append(createGeneralHeaderTest());
         messageHeader.append(createResponseHeaderTest());
         messageHeader.append(createEntityHeaderTest());
-        return messageHeader.toString();
+        return (messageHeader.toString()).getBytes();
     }
 
     @Test

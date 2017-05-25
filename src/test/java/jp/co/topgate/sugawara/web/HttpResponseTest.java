@@ -20,7 +20,7 @@ public class HttpResponseTest {
     HttpResponse httpResponse = new HttpResponse();
 
     @Test
-    public void outputStreamに書き込めているかのテスト() throws IOException {
+    public void httpResponseを適切な形で生成できているかのテスト() throws IOException {
 
     }
 

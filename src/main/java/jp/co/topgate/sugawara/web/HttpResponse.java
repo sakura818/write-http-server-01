@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class HttpResponse {
 
-    private ArrayList<byte[]> createResponseContents() {
+    private ArrayList<byte[]> createResponseContents() throws IOException{
         /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
@@ -21,8 +21,8 @@ public class HttpResponse {
         /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
         HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath, statusCode);
 
-        createResponseContents.add(messageHeaderContent.build().getBytes());
-        createResponseContents.add(statusLineBuilder.build().getBytes());
+        createResponseContents.add(messageHeaderContent.build());
+        createResponseContents.add(statusLineBuilder.build());
         createResponseContents.add(messageBodyBuilder.build());
 
     }

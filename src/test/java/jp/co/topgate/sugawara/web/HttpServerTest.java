@@ -14,7 +14,6 @@ import static org.junit.Assert.assertThat;
 
 /**
  * HttpServerTest Class
- * クライアントとサーバのデータの入出力がきちんとできているかのクラス
  *
  * @author sakura818
  */
