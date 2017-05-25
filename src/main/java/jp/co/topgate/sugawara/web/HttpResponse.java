@@ -14,6 +14,16 @@ import java.util.ArrayList;
 public class HttpResponse {
 
     private ArrayList<byte[]> createResponseContents() {
+        /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
+        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
+        /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
+        HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(filePath);
+        /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
+        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath, statusCode);
+
+        createResponseContents.add(messageHeaderContent.build().getBytes());
+        createResponseContents.add(statusLineBuilder.build().getBytes());
+        createResponseContents.add(messageBodyBuilder.build());
 
     }
 
