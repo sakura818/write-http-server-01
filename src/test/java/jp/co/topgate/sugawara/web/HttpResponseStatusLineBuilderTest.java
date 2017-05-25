@@ -19,20 +19,21 @@ public class HttpResponseStatusLineBuilderTest {
 
     @Test
     public void StatusLineを適切な形で生成できているかのテスト() {
-        assertThat("HTTP/1.1 200 OK", is(buildTest()));
+        assertThat("HTTP/1.1 200 OK".getBytes(), is(buildTest()));
     }
 
-    public String buildTest() {
+    public byte[] buildTest() {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(200).append(" ");
         statusLine.append("OK");
-        return statusLine.toString();
+        return (statusLine.toString()).getBytes();
     }
 
     @Test
     public void statusCodeに応じて適切なreasonPhraseを返すテスト() {
         assertThat(httpResponseStatusLineBuilder.getReasonPhrase(200), is("OK"));
+        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(400), is("Bad Request"));
         assertThat(httpResponseStatusLineBuilder.getReasonPhrase(404), is("Not Found"));
     }
 

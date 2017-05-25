@@ -46,6 +46,7 @@ public class HttpServer {
                     statusCode = getStatusCode(filePath);
                 } catch (Exception e) {
                     statusCode = 400;
+                    //filePath = "src/main/resources/statusCode400.html";
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();

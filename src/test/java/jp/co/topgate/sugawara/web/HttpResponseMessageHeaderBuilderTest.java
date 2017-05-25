@@ -25,7 +25,7 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void EntityHeaderTestを適切な形で生成できているかのテスト() {
-        assertThat((buildTest()), is("Server: sakura818\n" +
+        assertThat(buildTest(), is("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
                 "Content-Type: text/html; charset=UTF-8\n"));
@@ -41,7 +41,7 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void GeneralHeaderを適切な形で生成できているかのテスト() {
-        assertThat("", is(createGeneralHeaderTest()));
+        assertThat(createGeneralHeaderTest(), is(""));
     }
 
     public String createGeneralHeaderTest() {
@@ -52,7 +52,7 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void messageHeaderを適切な形で生成できているかのテスト() {
-        assertThat("Server: sakura818\n", is(createResponseHeaderTest()));
+        assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
     }
 
     public String createResponseHeaderTest() {
@@ -63,9 +63,9 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void EntityHeaderを適切な形で生成できているかのテスト() {
-        assertThat("Allow: GET\n" +
+        assertThat(createEntityHeaderTest(), is("Allow: GET\n" +
                 "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n", is(createEntityHeaderTest()));
+                "Content-Type: text/html; charset=UTF-8\n"));
     }
 
     public String createEntityHeaderTest() {

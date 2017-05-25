@@ -25,12 +25,12 @@ public class HttpResponseStatusLineBuilder {
      * @return httpResponseStatusLineContent ex:OK
      */
 
-    public String build() {
+    public byte[] build() {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(this.statusCode).append(" ");
         statusLine.append(getReasonPhrase(this.statusCode));
-        return statusLine.toString();
+        return (statusLine.toString()).getBytes();
     }
 
     /**
@@ -40,6 +40,7 @@ public class HttpResponseStatusLineBuilder {
     static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
         {
             put(200, "OK");
+            put(400, "Bad Request");
             put(404, "Not Found");
         }
     };

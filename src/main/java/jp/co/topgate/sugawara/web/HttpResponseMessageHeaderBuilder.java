@@ -30,12 +30,12 @@ public class HttpResponseMessageHeaderBuilder {
      * @return httpResponseMessageHeaderContent
      */
 
-    public String build() {
+    public byte[] build() {
         StringBuilder messageHeader = new StringBuilder();
         messageHeader.append(createGeneralHeader());
         messageHeader.append(createResponseHeader());
         messageHeader.append(createEntityHeader(this.filePath));
-        return messageHeader.toString();
+        return (messageHeader.toString()).getBytes();
     }
 
     /**
