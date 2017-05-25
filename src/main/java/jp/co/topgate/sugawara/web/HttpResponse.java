@@ -43,8 +43,8 @@ public class HttpResponse {
             /** HttpResponseのMessageBodyの最後のflagとなるCRLFをバイト出力ストリームに書き込む OutputStreamクラスのwriteメソッドでは最後改行がされないため*/
             byte[] CRLF = "\r\n".getBytes("UTF-8");
 
-            createResponseContents.add(messageHeaderContent.build());
             createResponseContents.add(statusLineBuilder.build());
+            createResponseContents.add(messageHeaderContent.build());
             createResponseContents.add(messageBodyBuilder.build());
             createResponseContents.add(CRLF);
         }

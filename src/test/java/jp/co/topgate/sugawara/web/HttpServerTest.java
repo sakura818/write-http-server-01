@@ -25,12 +25,12 @@ public class HttpServerTest {
 
     @Test
     public void ファイルが存在していた場合はステータスコード200を返すかテスト() {
-        assertThat(httpServer.getStatusCode(new File(FILEPATH_DIR,"index.html")), is(200));
+        assertThat(httpServer.getStatusCode(new File(FILEPATH_DIR, "index.html")), is(200));
     }
 
     @Test
     public void ファイルが存在していなかった場合はステータスコード404を返すかテスト() {
-        assertThat(httpServer.getStatusCode(new File(FILEPATH_DIR,"noExist.html")), is(404));
+        assertThat(httpServer.getStatusCode(new File(FILEPATH_DIR, "noExist.html")), is(404));
     }
 
 }
