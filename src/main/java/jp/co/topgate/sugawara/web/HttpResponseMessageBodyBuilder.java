@@ -28,7 +28,6 @@ public class HttpResponseMessageBodyBuilder {
 
     public byte[] build() throws IOException {
         byte[] messageBody = new byte[(int) this.filePath.length()];
-        String messageBodyHtml;
         if (this.statusCode == 200) {
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(this.filePath));
             try {
@@ -39,10 +38,14 @@ public class HttpResponseMessageBodyBuilder {
                 bufferedInputStream.close();
             }
         } else if (this.statusCode == 404) {
-            messageBodyHtml = "<html><head><title>404 Not Found</title></head>" +
-                    "<body><h1>Not Found</h1>" +
-                    "<p>該当のページは見つかりませんでした。</p></body></html>";
-            messageBody = messageBodyHtml.getBytes();
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(this.filePath));
+            try {
+                bufferedInputStream.read(messageBody);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                bufferedInputStream.close();
+            }
         }
         return messageBody;
     }
