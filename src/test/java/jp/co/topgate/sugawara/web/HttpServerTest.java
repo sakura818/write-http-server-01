@@ -26,7 +26,7 @@ public class HttpServerTest {
     public void UriPathとFILEPATH_DIRからfilePathが生成できているかのテスト() {
         File filePath = new File(this.FILEPATH_DIR, "index.html");
         System.out.println(filePath);
-        assertThat(filePath, (new File("src/test/resources/index.html")));
+        assertThat(filePath, is(new File("src/test/resources/index.html")));
     }
 
     @Test
