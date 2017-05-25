@@ -3,9 +3,6 @@ package jp.co.topgate.sugawara.web;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 /**
  * HttpResponseMessageHeaderBuilderTest Class
- * ファイルの拡張子に応じてContentTypeをMapするのをテストするクラス
+ * HttpResponseのMessageHeaderのContentを生成するクラスをテストするクラス
  *
  * @author sakura818
  */

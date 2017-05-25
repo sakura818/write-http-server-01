@@ -3,7 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
-import java.util.Arrays;
+
 
 /**
  * HttpRequest class
@@ -43,7 +43,6 @@ public class HttpRequest {
      * requestLineからrequestUriをgetする
      * requestLine = method + requestUri + httpVersion
      * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
-     * //TODO:if文に条件が複数あると実行されない
      *
      * @param requestLine
      * @return UriPath ex:index.html
@@ -78,15 +77,14 @@ public class HttpRequest {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-            //System.out.println("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
         }
         return uriPath;
     }
 
     /**
-     * UriPathを取得する
+     * uriPathを取得する
      *
-     * @return UriPath
+     * @return uriPath
      */
 
     public String getUriPath() {

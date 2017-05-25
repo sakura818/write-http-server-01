@@ -16,18 +16,12 @@ import static org.junit.Assert.assertThat;
 
 public class HttpResponseMessageBodyBuilderTest {
     private File filePath;
-    private int statusCode;
-
-    public HttpResponseMessageBodyBuilderTest(File filePath, int statusCode) {
-        this.filePath = filePath;
-        this.statusCode = statusCode;
-    }
+    HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(filePath);
 
     @Test
     public void statusCodeが200のときのテスト() throws IOException {
 
-        File indexHtml = new File("src/test/resources/HttpResponseMessageBodyBuilderTest/index.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(indexHtml);
+        File indexHtml = new File("src/test/resources/index.html");
         byte[] messageBody = new byte[(int) indexHtml.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(indexHtml));
         bufferedInputStream.read(messageBody);
@@ -40,8 +34,7 @@ public class HttpResponseMessageBodyBuilderTest {
     @Test
     public void statusCodeが400のときのテスト() throws IOException {
 
-        File statusCode400Html = new File("src/test/resources/HttpResponseMessageBodyBuilderTest/statusCode400.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(statusCode400Html);
+        File statusCode400Html = new File("src/test/resources/BadRequest.html");
         byte[] messageBody = new byte[(int) statusCode400Html.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(statusCode400Html));
         bufferedInputStream.read(messageBody);
@@ -51,12 +44,10 @@ public class HttpResponseMessageBodyBuilderTest {
 
     }
 
-
     @Test
     public void statusCodeが404のときのテスト() throws IOException {
 
-        File statusCode404Html = new File("src/test/resources/HttpResponseMessageBodyBuilderTest/statusCode404.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(statusCode404Html);
+        File statusCode404Html = new File("src/test/resources/NotFound.html");
         byte[] messageBody = new byte[(int) statusCode404Html.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(statusCode404Html));
         bufferedInputStream.read(messageBody);

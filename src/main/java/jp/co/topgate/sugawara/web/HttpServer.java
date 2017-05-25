@@ -42,14 +42,14 @@ public class HttpServer {
                 int statusCode;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    file = new File(this.FILEPATH_DIR, "httpRequest.getUriPath()");
+                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
                     statusCode = getStatusCode(file);
                     if (statusCode == 404) {
-                        file = new File(this.FILEPATH_DIR, "statusCode404.html");
+                        file = new File(this.FILEPATH_DIR, "NotFound.html");
                     }
                 } catch (Exception e) {
                     statusCode = 400;
-                    file = new File(this.FILEPATH_DIR, "statusCode400.html");
+                    file = new File(this.FILEPATH_DIR, "BadRequest.html");
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();

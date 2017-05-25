@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpServerTest {
-    private final String FILEPATH_DIR = "src/main/resources/";
+    final static String FILEPATH_DIR = "src/main/resources/";
     HttpServer httpServer = new HttpServer();
 
     @Test
