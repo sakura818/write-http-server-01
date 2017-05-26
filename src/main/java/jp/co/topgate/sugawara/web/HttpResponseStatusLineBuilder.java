@@ -29,7 +29,7 @@ public class HttpResponseStatusLineBuilder {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(this.statusCode).append(" ");
-        statusLine.append(getReasonPhrase(this.statusCode));
+        statusLine.append(getReasonPhrase(this.statusCode)).append("\n");
         return (statusLine.toString()).getBytes();
     }
 

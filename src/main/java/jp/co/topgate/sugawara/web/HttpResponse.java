@@ -1,7 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.*;
-import java.util.ArrayList;
 
 /**
  * HttpResponse class
@@ -41,8 +40,8 @@ public class HttpResponse {
 
         System.arraycopy(statusLineBuilder.build(), 0, createResponseContents, 0, (statusLineBuilder.build()).length);
         System.arraycopy((messageHeaderContent.build()), 0, createResponseContents, (statusLineBuilder.build()).length, (messageHeaderContent.build()).length);
-        System.arraycopy((messageBodyBuilder.build()), 0, createResponseContents,((statusLineBuilder.build().length) +  (messageHeaderContent.build()).length), (messageBodyBuilder.build()).length);
-        System.arraycopy(CRLF, 0, createResponseContents,((statusLineBuilder.build().length) +  (messageHeaderContent.build()).length +  (messageBodyBuilder.build()).length), CRLF.length);
+        System.arraycopy((messageBodyBuilder.build()), 0, createResponseContents, ((statusLineBuilder.build().length) + (messageHeaderContent.build()).length), (messageBodyBuilder.build()).length);
+        System.arraycopy(CRLF, 0, createResponseContents, ((statusLineBuilder.build().length) + (messageHeaderContent.build()).length + (messageBodyBuilder.build()).length), CRLF.length);
 
         return createResponseContents;
     }
@@ -58,23 +57,15 @@ public class HttpResponse {
 
     public void writeToOutputStream(OutputStream outputStream) throws Exception {
         /** HttpResponseをoutputStreamに書き込む */
-        //ArrayList<byte[]> k = createHttpResponseContents(file, statusCode);
-        //for (int i = 0; i < k.size(); i++) {
-        //    outputStream.write(k.get(i));   //
-        //}
         outputStream.write(createHttpResponseContents(file, statusCode));
 
-        /** HttpResponseをコンソールに表示する */
         System.out.println("http response...");
-        //for (int i = 0; i < (createHttpResponseContents(file, statusCode)).size(); i++) {
-        //    System.out.println((createHttpResponseContents(file, statusCode).get(i)));
-        //}
-
-        for (int i = 0; i < createHttpResponseContents(file,statusCode).length; i++) {
-                System.out.print(createHttpResponseContents(file,statusCode)[i]);
+        /** HttpResponseをコンソールに表示する */
+        for (int i = 0; i < createHttpResponseContents(file, statusCode).length; i++) {
+            System.out.print(createHttpResponseContents(file, statusCode)[i]);
         }
+        System.out.println("flag");
+        System.out.println(createHttpResponseContents(file, statusCode)[(createHttpResponseContents(file, statusCode).length) -2]);
+        System.out.println(createHttpResponseContents(file, statusCode)[(createHttpResponseContents(file, statusCode).length) -1]);
     }
 }
-
-
-
