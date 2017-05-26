@@ -68,7 +68,11 @@ public class HttpResponse {
 
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
-        outputStream.write(httpResponseContent);
+        try {
+            outputStream.write(httpResponseContent);
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
 
         System.out.println("http response...");
         /** HttpResponseをコンソールに表示する */
