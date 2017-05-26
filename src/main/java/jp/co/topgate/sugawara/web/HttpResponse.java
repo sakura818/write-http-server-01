@@ -30,21 +30,20 @@ public class HttpResponse {
      * @throws Exception
      */
 
-    public ArrayList<byte[]> createHttpResponseContents(File file, int statusCode) throws Exception {
+    public byte[] createHttpResponseContents(File file, int statusCode) throws Exception {
 
-        ArrayList<byte[]> createResponseContents = new ArrayList<byte[]>();
-        {
-            HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(file);
-            HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
-            
-            byte[] CRLF = "\r\n".getBytes("UTF-8");
+        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
+        HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(file);
+        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
 
-            createResponseContents.add(statusLineBuilder.build());
-            createResponseContents.add(messageHeaderContent.build());
-            createResponseContents.add(messageBodyBuilder.build());
-            createResponseContents.add(CRLF);
-        }
+        byte[] CRLF = "\r\n".getBytes("UTF-8");
+        byte[] createResponseContents = new byte[(statusLineBuilder.build()).length + (messageHeaderContent.build()).length + (messageBodyBuilder.build()).length + CRLF.length];
+
+        System.arraycopy(statusLineBuilder.build(), 0, createResponseContents, 0, (statusLineBuilder.build()).length);
+        System.arraycopy((messageHeaderContent.build()), 0, createResponseContents, (statusLineBuilder.build()).length, (messageHeaderContent.build()).length);
+        System.arraycopy((messageBodyBuilder.build()), 0, createResponseContents,((statusLineBuilder.build().length) +  (messageHeaderContent.build()).length), (messageBodyBuilder.build()).length);
+        System.arraycopy(CRLF, 0, createResponseContents,((statusLineBuilder.build().length) +  (messageHeaderContent.build()).length +  (messageBodyBuilder.build()).length), CRLF.length);
+
         return createResponseContents;
     }
 
@@ -59,17 +58,21 @@ public class HttpResponse {
 
     public void writeToOutputStream(OutputStream outputStream) throws Exception {
         /** HttpResponseをoutputStreamに書き込む */
-        createHttpResponseContents(file, statusCode);
-        for (int i = 0; i < (createHttpResponseContents(file, statusCode)).size(); i++) {
-            outputStream.write(createHttpResponseContents(file, statusCode).get(i));   //
-        }
+        //ArrayList<byte[]> k = createHttpResponseContents(file, statusCode);
+        //for (int i = 0; i < k.size(); i++) {
+        //    outputStream.write(k.get(i));   //
+        //}
+        outputStream.write(createHttpResponseContents(file, statusCode));
 
         /** HttpResponseをコンソールに表示する */
         System.out.println("http response...");
-        for (int i = 0; i < (createHttpResponseContents(file, statusCode)).size(); i++) {
-            System.out.println((createHttpResponseContents(file, statusCode).get(i)));
-        }
+        //for (int i = 0; i < (createHttpResponseContents(file, statusCode)).size(); i++) {
+        //    System.out.println((createHttpResponseContents(file, statusCode).get(i)));
+        //}
 
+        for (int i = 0; i < createHttpResponseContents(file,statusCode).length; i++) {
+                System.out.print(createHttpResponseContents(file,statusCode)[i]);
+        }
     }
 }
 
