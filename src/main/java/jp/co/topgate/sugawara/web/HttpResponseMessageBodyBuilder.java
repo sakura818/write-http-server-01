@@ -32,7 +32,11 @@ public class HttpResponseMessageBodyBuilder {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            bufferedInputStream.close();
+            try {
+                bufferedInputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return messageBody;
     }
