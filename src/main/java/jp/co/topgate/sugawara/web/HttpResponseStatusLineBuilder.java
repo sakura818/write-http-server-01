@@ -37,7 +37,7 @@ public class HttpResponseStatusLineBuilder {
      * statusCodeとreasonPhraseのMap
      */
 
-    static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+    final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
         {
             put(200, "OK");
             put(400, "Bad Request");
