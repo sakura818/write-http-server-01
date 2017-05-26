@@ -64,10 +64,8 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (this.socket != null) {
+                if ((this.socket != null) && (this.serverSocket != null)) {
                     this.socket.close();
-                }
-                if (this.serverSocket != null) {
                     this.serverSocket.close();
                 }
             } catch (IOException e) {

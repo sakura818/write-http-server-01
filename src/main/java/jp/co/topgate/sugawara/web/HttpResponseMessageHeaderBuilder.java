@@ -34,7 +34,7 @@ public class HttpResponseMessageHeaderBuilder {
         StringBuilder messageHeader = new StringBuilder();
         messageHeader.append(createGeneralHeader());
         messageHeader.append(createResponseHeader());
-        messageHeader.append(createEntityHeader(this.file));
+        messageHeader.append(createEntityHeader(this.file)).append("\n");
         return (messageHeader.toString()).getBytes();
     }
 

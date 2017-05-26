@@ -35,20 +35,22 @@ public class HttpResponse {
         HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
         HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
 
+        byte[] statusLine = statusLineBuilder.build();
+        byte[] messageHeader = messageHeaderBuilder.build();
+        byte[] messageBody = messageBodyBuilder.build();
         byte[] CRLF = "\r\n".getBytes("UTF-8");
 
-
-        int statusLineLength = (statusLineBuilder.build()).length;
-        int messageHeaderLength = (messageHeaderBuilder.build()).length;
-        int messageBodyLength = (messageBodyBuilder.build()).length;
+        int statusLineLength = statusLine.length;
+        int messageHeaderLength = messageHeader.length;
+        int messageBodyLength = messageBody.length;
         int CRLFLength = CRLF.length;
 
         byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
 
-        System.arraycopy(statusLineBuilder.build(), 0, createResponseContents, 0, statusLineLength);
-        System.arraycopy((messageHeaderBuilder.build()), 0, createResponseContents, statusLineLength, messageHeaderLength);
-        System.arraycopy((messageBodyBuilder.build()), 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
-        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength+ messageHeaderLength + messageBodyLength), CRLFLength);
+        System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
+        System.arraycopy(messageHeader, 0, createResponseContents, statusLineLength, messageHeaderLength);
+        System.arraycopy(messageBody, 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
+        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
 
         return createResponseContents;
     }
@@ -74,7 +76,7 @@ public class HttpResponse {
             System.out.print(httpResponseContent[i]);
         }
         System.out.println("flag");
-        System.out.println(httpResponseContent[(httpResponseContent.length) -2]);
-        System.out.println(httpResponseContent[(httpResponseContent.length) -1]);
+        System.out.println(httpResponseContent[(httpResponseContent.length) - 2]);
+        System.out.println(httpResponseContent[(httpResponseContent.length) - 1]);
     }
 }
