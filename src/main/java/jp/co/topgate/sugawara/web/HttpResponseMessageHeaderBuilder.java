@@ -1,6 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class HttpResponseMessageHeaderBuilder {
         messageHeader.append(createGeneralHeader());
         messageHeader.append(createResponseHeader());
         messageHeader.append(createEntityHeader(this.file)).append("\n");
-        return (messageHeader.toString()).getBytes();
+        return (messageHeader.toString()).getBytes(StandardCharsets.UTF_8);
     }
 
     /**
