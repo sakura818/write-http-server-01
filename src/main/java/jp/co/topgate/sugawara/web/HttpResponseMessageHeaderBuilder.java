@@ -106,7 +106,12 @@ public class HttpResponseMessageHeaderBuilder {
 
     String extractExtension(File file) {
         String fileName = file.getName();
-        int lastDotPosition = fileName.lastIndexOf(".");
+        int lastDotPosition;
+        try {
+            lastDotPosition = fileName.lastIndexOf(".");
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(".が負の値の場合、あるいはこのStringオブジェクトの長さが大きいのでIndexOutOfBoundsExceptionが発生してます");
+        }
         if (lastDotPosition > 0) {
             String extension = fileName.substring(lastDotPosition + 1);
             return extension;
