@@ -27,7 +27,12 @@ public class HttpRequest {
     public HttpRequest(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
+        String requestLine;
+        try {
+            requestLine = bufferedReader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(requestLine);
         String requestUri = parseRequestUri(requestLine);
 
