@@ -32,17 +32,17 @@ public class HttpResponseStatusLineBuilderTest {
 
     @Test
     public void statusCodeが200のときに適切なreasonPhraseを返すかのテスト() {
-        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(200), is("OK"));
+        assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(200), is("OK"));
     }
 
     @Test
     public void statusCodeが400のときに適切なreasonPhraseを返すかのテスト() {
-        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(400), is("Bad Request"));
+        assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(400), is("Bad Request"));
     }
 
     @Test
     public void statusCodeが404のときに適切なreasonPhraseを返すかのテスト() {
-        assertThat(httpResponseStatusLineBuilder.getReasonPhrase(404), is("Not Found"));
+        assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(404), is("Not Found"));
     }
 
 }
