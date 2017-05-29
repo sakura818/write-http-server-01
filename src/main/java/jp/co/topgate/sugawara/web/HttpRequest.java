@@ -31,6 +31,7 @@ public class HttpRequest {
 
         System.out.println(requestLine);
         String requestUri = parseRequestUri(requestLine);
+        this.requestUri = requestUri;
 
         String UriPath = parseUriPath(requestUri);
         if (UriPath.endsWith("/")) {
