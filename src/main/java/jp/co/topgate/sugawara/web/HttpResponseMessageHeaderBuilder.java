@@ -78,7 +78,7 @@ public class HttpResponseMessageHeaderBuilder {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
-        entityHeader.append("Content-Type: " + createContentType(file)).append("\n");
+        entityHeader.append("Content-Type: " + catchContentType(file)).append("\n");
         return entityHeader.toString();
     }
 
@@ -90,7 +90,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ContentType ex:text/html
      */
 
-    String createContentType(File file) {
+    String catchContentType(File file) {
         if (extensionToContentType.containsKey(extractExtension(file))) {
             return extensionToContentType.get(extractExtension(file));
         }
