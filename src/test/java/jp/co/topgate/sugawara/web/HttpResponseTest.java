@@ -23,20 +23,17 @@ public class HttpResponseTest {
 
     private File file;
     private int statusCode;
-    private OutputStream outputStream;
 
     HttpResponse httpResponse = new HttpResponse(file, statusCode);
 
     @Test
     public void httpResponseを適切な形で生成できているかのテスト() throws Exception {
-        assertArrayEquals(httpResponseActual(), httpResponseExpect());
+        assertThat(httpResponseActual(), is(httpResponseExpect()));
     }
 
     public byte[] httpResponseExpect() throws Exception {
 
-        byte[] httpResponseExpect = null;
-
-        byte[] statusLine = "HTTP/1.1 200 OK".getBytes();
+        byte[] statusLine = "HTTP/1.1 200 OK\n".getBytes();
         byte[] messageHeader = ("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
@@ -68,12 +65,12 @@ public class HttpResponseTest {
         int messageBodyLength = messageBody.length;
         int CRLFLength = CRLF.length;
 
-        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
+        byte[] httpResponseExpect = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
 
-        System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
-        System.arraycopy(messageHeader, 0, createResponseContents, statusLineLength, messageHeaderLength);
-        System.arraycopy(messageBody, 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
-        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
+        System.arraycopy(statusLine, 0, httpResponseExpect, 0, statusLineLength);
+        System.arraycopy(messageHeader, 0, httpResponseExpect, statusLineLength, messageHeaderLength);
+        System.arraycopy(messageBody, 0, httpResponseExpect, (statusLineLength + messageHeaderLength), messageBodyLength);
+        System.arraycopy(CRLF, 0, httpResponseExpect, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
 
         return httpResponseExpect;
     }
@@ -81,7 +78,7 @@ public class HttpResponseTest {
 
     public byte[] httpResponseActual() throws Exception {
 
-        byte[] httpResponseActual = ("HTTP/1.1 200 OK" + "Server: sakura818\n" +
+        byte[] httpResponseActual = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +
                     "Allow: GET\n" +
                     "Content-Language: en\n" +
                     "Content-Type: text/html; charset=UTF-8\n" + "<!DOCTYPE html>\n" +
