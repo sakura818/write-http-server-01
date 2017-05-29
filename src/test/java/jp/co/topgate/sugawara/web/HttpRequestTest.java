@@ -1,6 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.*;
 
@@ -15,6 +17,9 @@ import static org.junit.Assert.assertThat;
  */
 
 public class HttpRequestTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void requestLineからrequestUriをgetするテスト1() throws IOException {
