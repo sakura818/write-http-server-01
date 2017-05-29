@@ -75,13 +75,9 @@ public class HttpRequest {
      */
 
     String parseUriPath(String requestUri) {
-        try {
-            int lastDotPosition = requestUri.lastIndexOf("/");
-            if (lastDotPosition != -1) {
-                return requestUri.substring(lastDotPosition + 1);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        int lastDotPosition = requestUri.lastIndexOf("/");
+        if (lastDotPosition != -1) {
+            return requestUri.substring(lastDotPosition + 1);
         }
         return uriPath;
     }
