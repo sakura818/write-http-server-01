@@ -17,7 +17,6 @@ public class HttpResponseTest {
 
     private File file;
     private int statusCode;
-
     HttpResponse httpResponse = new HttpResponse(file, statusCode);
 
     @Test
