@@ -20,7 +20,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public void statusCodeが200のときのテスト() throws IOException {
 
         File indexHtml = new File("src/test/resources/index.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(indexHtml);
+        new HttpResponseMessageBodyBuilder(indexHtml);
         byte[] indexHtmlByteActual = new byte[(int) indexHtml.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(indexHtml));
         bufferedInputStream.read(indexHtmlByteActual);
@@ -53,7 +53,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public void statusCodeが400のときのテスト() throws IOException {
 
         File badRequestHtml = new File("src/test/resources/BadRequest.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(badRequestHtml);
+        new HttpResponseMessageBodyBuilder(badRequestHtml);
         byte[] badRequestHtmlByteActual = new byte[(int) badRequestHtml.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(badRequestHtml));
         bufferedInputStream.read(badRequestHtmlByteActual);
@@ -78,7 +78,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public void statusCodeが404のときのテスト() throws IOException {
 
         File notFoundHtml = new File("src/test/resources/NotFound.html");
-        HttpResponseMessageBodyBuilder httpResponseMessageBodyBuilder = new HttpResponseMessageBodyBuilder(notFoundHtml);
+        new HttpResponseMessageBodyBuilder(notFoundHtml);
         byte[] notFoundHtmlByteActual = new byte[(int) notFoundHtml.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notFoundHtml));
         bufferedInputStream.read(notFoundHtmlByteActual);
