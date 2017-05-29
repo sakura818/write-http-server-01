@@ -104,17 +104,13 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ファイルの拡張子　ex:html
      */
 
-    String extractExtension(File file) {
+    String extractExtension(File file) throws IndexOutOfBoundsException {
         String fileName = file.getName();
         int lastDotPosition;
         lastDotPosition = fileName.lastIndexOf(".");
-        try {
-            if (lastDotPosition > 0) {
-                String extension = fileName.substring(lastDotPosition + 1);
-                return extension;
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException(".が負の値の場合、あるいはこのStringオブジェクトの長さが大きいのでIndexOutOfBoundsExceptionが発生してます");
+        if (lastDotPosition > 0) {
+            String extension = fileName.substring(lastDotPosition + 1);
+            return extension;
         }
         return fileName;
     }
