@@ -47,7 +47,7 @@ public class HttpServer {
                     if (statusCode == 404) {
                         file = new File(this.FILEPATH_DIR, "NotFound.html");
                     }
-                } catch (Exception e) {
+                } catch (IOException e) {
                     statusCode = 400;
                     file = new File(this.FILEPATH_DIR, "BadRequest.html");
                 }
