@@ -11,58 +11,69 @@ import java.io.*;
  */
 
 public class HttpResponse {
+
     private File file;
     private int statusCode;
 
-    //TODO;このコンストラクタ必要なのか再検討
     public HttpResponse(File file, int statusCode) {
         this.file = file;
         this.statusCode = statusCode;
+    }
+
+    /**
+     * HttpResponseのコンテンツを組み立てる
+     * HttpResponse= StatusLine + MessageHeader + MessageBody
+     *
+     * @param file
+     * @param statusCode
+     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
+     */
+
+    public byte[] createHttpResponseContent(File file, int statusCode) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
+
+        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
+        HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
+        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
+
+        byte[] statusLine = statusLineBuilder.build();
+        byte[] messageHeader = messageHeaderBuilder.build();
+        byte[] messageBody = messageBodyBuilder.build();
+        byte[] CRLF = "\r\n".getBytes("UTF-8");
+
+        int statusLineLength = statusLine.length;
+        int messageHeaderLength = messageHeader.length;
+        int messageBodyLength = messageBody.length;
+        int CRLFLength = CRLF.length;
+
+        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
+
+        System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
+        System.arraycopy(messageHeader, 0, createResponseContents, statusLineLength, messageHeaderLength);
+        System.arraycopy(messageBody, 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
+        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
+
+        return createResponseContents;
     }
 
 
     /**
      * HttpResponseのコンテンツをOutputStreamに書き込む
      * HttpResponse= StatusLine + MessageHeader + MessageBody
-     * //TODO:print部分をメソッドに、インスタンスを生成する部分に分けてみたが失敗　他に改良の仕方を探す
      *
      * @param outputStream バイト出力ストリーム
-     * @throws IOException
+     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException {
-        PrintWriter printWriter = new PrintWriter(outputStream, true);
+    public void writeToOutputStream(OutputStream outputStream) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
 
-        /** HttpResponseのStatusLineをバイト出力ストリームに書き込む */
-        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(this.statusCode);
-        printWriter.println(statusLineBuilder.build());
+        byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
+        /** HttpResponseをoutputStreamに書き込む */
+        outputStream.write(httpResponseContent);
 
-        /** HttpResponseのMessageHeaderをバイト出力ストリームに書き込む */
-        HttpResponseMessageHeaderBuilder messageHeaderContent = new HttpResponseMessageHeaderBuilder(this.file);
-        printWriter.println(messageHeaderContent.build());
-
-        /** HttpResponseのMessageBodyをバイト出力ストリームに書き込む */
-        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(this.file, this.statusCode);
-        outputStream.write(messageBodyBuilder.build());
-
-        /** HttpResponseのMessageBodyの最後の印となるCRLFをバイト出力ストリームに書き込む PrintWriterクラスのprintlnメソッドと違いOutputStreamクラスのwriteメソッドでは最後改行がされないため*/
-        byte[] CRLF = "\r\n".getBytes("UTF-8");
-        outputStream.write(CRLF);
-
-        /** HttpResponseMessageをコンソールに表示する */
         System.out.println("http response...");
-        System.out.println(statusLineBuilder.build());
-        System.out.println(messageHeaderContent.build());
-        for (int i = 0; i < messageBodyBuilder.build().length; i++) {
-            System.out.println(Integer.toHexString(messageBodyBuilder.build()[i]));
+        /** HttpResponseをコンソールに表示する */
+        for (int i = 0; i < httpResponseContent.length; i++) {
+            System.out.print(httpResponseContent[i]);
         }
-        for (int i = 0; i < CRLF.length; i++) {
-            System.out.println(Integer.toHexString(CRLF[i]));
-
-        }
-
     }
 }
-
-
-

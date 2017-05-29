@@ -1,6 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,12 +31,12 @@ public class HttpResponseMessageHeaderBuilder {
      * @return httpResponseMessageHeaderContent
      */
 
-    public String build() {
+    public byte[] build() {
         StringBuilder messageHeader = new StringBuilder();
         messageHeader.append(createGeneralHeader());
         messageHeader.append(createResponseHeader());
-        messageHeader.append(createEntityHeader(this.file));
-        return messageHeader.toString();
+        messageHeader.append(createEntityHeader(this.file)).append("\n");
+        return (messageHeader.toString()).getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -77,7 +78,7 @@ public class HttpResponseMessageHeaderBuilder {
         StringBuilder entityHeader = new StringBuilder();
         entityHeader.append("Allow: " + "GET").append("\n");
         entityHeader.append("Content-Language: " + "en").append("\n");
-        entityHeader.append("Content-Type: " + createContentType(file)).append("\n");
+        entityHeader.append("Content-Type: " + catchContentType(file)).append("\n");
         return entityHeader.toString();
     }
 
@@ -89,7 +90,7 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ContentType ex:text/html
      */
 
-    String createContentType(File file) {
+    String catchContentType(File file) {
         if (extensionToContentType.containsKey(extractExtension(file))) {
             return extensionToContentType.get(extractExtension(file));
         }
@@ -103,9 +104,10 @@ public class HttpResponseMessageHeaderBuilder {
      * @return ファイルの拡張子　ex:html
      */
 
-    String extractExtension(File file) {
+    String extractExtension(File file) throws IndexOutOfBoundsException {
         String fileName = file.getName();
-        int lastDotPosition = fileName.lastIndexOf(".");
+        int lastDotPosition;
+        lastDotPosition = fileName.lastIndexOf(".");
         if (lastDotPosition > 0) {
             String extension = fileName.substring(lastDotPosition + 1);
             return extension;

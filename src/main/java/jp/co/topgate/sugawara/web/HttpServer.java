@@ -19,7 +19,7 @@ public class HttpServer {
     private Socket socket;
     private ServerSocket serverSocket;
     private final int PORT = 8080;
-    private final String FILE_DIR = "src/main/resources/";
+    private final String FILEPATH_DIR = "src/main/resources/";
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -36,16 +36,35 @@ public class HttpServer {
                 System.out.println("http request line...");
 
                 InputStream inputStream = this.socket.getInputStream();
-                HttpRequest httpRequest = new HttpRequest(inputStream);
+                HttpRequest httpRequest;
 
-                File file = new File(this.FILE_DIR, httpRequest.getFile());
-                //boolean isCorrectRequestLine = httpRequest.getIsCorrectRequestLine();
-                int statusCode = getStatusCode(file);
+                File file = null;
+                int statusCode;
+                try {
+                    httpRequest = new HttpRequest(inputStream);
+                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    statusCode = catchStatusCode(file);
+                    if (statusCode == 404) {
+                        file = new File(this.FILEPATH_DIR, "NotFound.html");
+                    }
+                } catch (IOException e) {
+                    statusCode = 400;
+                    file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                }
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse(file, statusCode);
-
-                httpResponse.writeToOutputStream(outputStream);
+                try {
+                    httpResponse.writeToOutputStream(outputStream);
+                } catch (IndexOutOfBoundsException e) {
+                    throw new RuntimeException(e);
+                } catch (ArrayStoreException e) {
+                    throw new RuntimeException(e);
+                } catch (NullPointerException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 inputStream.close();
                 outputStream.close();
@@ -54,10 +73,8 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (this.socket != null) {
+                if ((this.socket != null) && (this.serverSocket != null)) {
                     this.socket.close();
-                }
-                if (this.serverSocket != null) {
                     this.serverSocket.close();
                 }
             } catch (IOException e) {
@@ -68,16 +85,13 @@ public class HttpServer {
     }
 
     /**
-     * HttpRequestに応じて適切なステータスコードを返す
+     * 適切なステータスコードを返す
      *
      * @param file ex:index.html
      * @return statusCode ex:200
      */
 
-    int getStatusCode(File file) {
-        //if(isCorrectRequestLine == false){
-        //    return 400;
-        //}
+    int catchStatusCode(File file) {
         if (!file.exists()) {
             return 404;
         }

@@ -3,32 +3,34 @@ package jp.co.topgate.sugawara.web;
 import org.junit.Test;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
  * HttpServerTest Class
- * クライアントとサーバのデータの入出力がきちんとできているかのクラス
  *
  * @author sakura818
  */
 public class HttpServerTest {
+    final static String FILEPATH_DIR = "src/test/resources/";
     HttpServer httpServer = new HttpServer();
 
     @Test
-    //TODO:このテストの書き方
-    public void HttpServerのテスト() {
+    public void UriPathとFILEPATH_DIRからfileが生成できているかのテスト() {
+        File file = new File(this.FILEPATH_DIR, "index.html");
+        System.out.println(file);
+        assertThat(file, is(new File("src/test/resources/index.html")));
     }
 
     @Test
-    public void HttpRequestに応じて適切なステータスコードを返すテスト() {
-        assertThat(200, is(httpServer.getStatusCode(new File("src/test/resources/index.html"))));
-        assertThat(404, is(httpServer.getStatusCode(new File("src/test/resources/hoge.html"))));
+    public void ファイルが存在していた場合はステータスコード200を返すかテスト() {
+        assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "index.html")), is(200));
+    }
+
+    @Test
+    public void ファイルが存在していなかった場合はステータスコード404を返すかテスト() {
+        assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExist.html")), is(404));
     }
 
 }

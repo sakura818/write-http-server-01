@@ -2,7 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 /**
  * Main class
- * パッケージのスタート　HttpServerのconnectionメソッドを呼び出す
+ * HttpServerのconnectionメソッドを呼び出す
  *
  * @author sakura818
  */

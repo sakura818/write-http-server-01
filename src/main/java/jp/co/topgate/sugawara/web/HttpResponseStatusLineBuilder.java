@@ -1,6 +1,5 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,22 +22,22 @@ public class HttpResponseStatusLineBuilder {
      * ResponseStatusLineを生成する
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      *
-     * @return httpResponseStatusLineContent ex:OK
+     * @return httpResponseStatusLineContent ex:HTTP/1.1 200 OK
      */
 
-    public String build() {
+    public byte[] build() {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(this.statusCode).append(" ");
-        statusLine.append(getReasonPhrase(this.statusCode));
-        return statusLine.toString();
+        statusLine.append(catchReasonPhrase(this.statusCode)).append("\n");
+        return (statusLine.toString()).getBytes();
     }
 
     /**
      * statusCodeとreasonPhraseのMap
      */
 
-    static final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
+    final Map<Integer, String> statusCodeToReasonPhrase = new HashMap<Integer, String>() {
         {
             put(200, "OK");
             put(400, "Bad Request");
@@ -54,7 +53,7 @@ public class HttpResponseStatusLineBuilder {
      * @return reasonPhrase ex:OK
      */
 
-    String getReasonPhrase(int statusCode) {
+    String catchReasonPhrase(int statusCode) {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }
