@@ -76,18 +76,18 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     @Test
     public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト() {
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.html"))), is("text/html; charset=UTF-8"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.htm"))), is("text/html; charset=UTF-8"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.css"))), is("text/css"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.js"))), is("application/javascript"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpg"))), is("image/jpeg"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.jpeg"))), is("image/jpeg"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.png"))), is("image/png"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.gif"))), is("image/gif"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.txt"))), is("text/plain"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.pdf"))), is("application/pdf"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.mp4"))), is("video/mp4"));
-        assertThat((httpResponseMessageHeaderBuilder.createContentType(new File("hoge.hoge"))), is("text/html; charset=utf-8"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.html"))), is("text/html; charset=UTF-8"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.htm"))), is("text/html; charset=UTF-8"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.css"))), is("text/css"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.js"))), is("application/javascript"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.jpg"))), is("image/jpeg"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.jpeg"))), is("image/jpeg"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.png"))), is("image/png"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.gif"))), is("image/gif"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.txt"))), is("text/plain"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.pdf"))), is("application/pdf"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.mp4"))), is("video/mp4"));
+        assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.hoge"))), is("text/html; charset=utf-8"));
     }
 
     @Test
