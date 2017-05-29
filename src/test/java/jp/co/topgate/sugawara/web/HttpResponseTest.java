@@ -20,13 +20,12 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpResponseTest {
-    //TODO:
 
     private File file;
     private int statusCode;
     private OutputStream outputStream;
 
-    HttpResponse httpResponse = new HttpResponse(outputStream, file, statusCode);
+    HttpResponse httpResponse = new HttpResponse(file, statusCode);
 
     @Test
     public void httpResponseを適切な形で生成できているかのテスト() throws Exception {
