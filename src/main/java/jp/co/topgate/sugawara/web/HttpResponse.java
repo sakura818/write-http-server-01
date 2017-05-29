@@ -68,6 +68,6 @@ public class HttpResponse {
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
-        
+
     }
 }
