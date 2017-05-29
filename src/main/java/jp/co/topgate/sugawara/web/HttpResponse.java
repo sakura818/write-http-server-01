@@ -75,8 +75,5 @@ public class HttpResponse {
         for (int i = 0; i < httpResponseContent.length; i++) {
             System.out.print(httpResponseContent[i]);
         }
-        System.out.println("flag");
-        System.out.println(httpResponseContent[(httpResponseContent.length) - 2]);
-        System.out.println(httpResponseContent[(httpResponseContent.length) - 1]);
     }
 }
