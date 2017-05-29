@@ -27,8 +27,7 @@ public class HttpRequest {
     public HttpRequest(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine;
-        requestLine = bufferedReader.readLine();
+        String requestLine = bufferedReader.readLine();
 
         System.out.println(requestLine);
         String requestUri = parseRequestUri(requestLine);
