@@ -56,10 +56,6 @@ public class HttpServer {
                 HttpResponse httpResponse = new HttpResponse(file, statusCode);
                 try {
                     httpResponse.writeToOutputStream(outputStream);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new RuntimeException(e);
-                } catch (ArrayStoreException e) {
-                    throw new RuntimeException(e);
                 } catch (NullPointerException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {
