@@ -29,7 +29,7 @@ public class HttpResponseStatusLineBuilder {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(this.statusCode).append(" ");
-        statusLine.append(getReasonPhrase(this.statusCode)).append("\n");
+        statusLine.append(catchReasonPhrase(this.statusCode)).append("\n");
         return (statusLine.toString()).getBytes();
     }
 
@@ -53,7 +53,7 @@ public class HttpResponseStatusLineBuilder {
      * @return reasonPhrase ex:OK
      */
 
-    String getReasonPhrase(int statusCode) {
+    String catchReasonPhrase(int statusCode) {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }
