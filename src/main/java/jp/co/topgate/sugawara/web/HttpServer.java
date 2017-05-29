@@ -43,7 +43,7 @@ public class HttpServer {
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                    statusCode = getStatusCode(file);
+                    statusCode = catchStatusCode(file);
                     if (statusCode == 404) {
                         file = new File(this.FILEPATH_DIR, "NotFound.html");
                     }
@@ -91,7 +91,7 @@ public class HttpServer {
      * @return statusCode ex:200
      */
 
-    int getStatusCode(File file) {
+    int catchStatusCode(File file) {
         if (!file.exists()) {
             return 404;
         }
