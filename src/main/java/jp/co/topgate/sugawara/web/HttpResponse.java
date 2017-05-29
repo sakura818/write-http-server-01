@@ -29,7 +29,7 @@ public class HttpResponse {
      * @throws Exception
      */
 
-    public byte[] createHttpResponseContent(File file, int statusCode) throws IndexOutOfBoundsException, IOException,Exception {
+    public byte[] createHttpResponseContent(File file, int statusCode) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
 
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
@@ -64,13 +64,13 @@ public class HttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IndexOutOfBoundsException, IOException,Exception {
+    public void writeToOutputStream(OutputStream outputStream) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
 
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
         try {
             outputStream.write(httpResponseContent);
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
