@@ -27,17 +27,9 @@ public class HttpResponseMessageBodyBuilder {
     public byte[] build() throws IOException {
         byte[] messageBody = new byte[(int) this.file.length()];
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(this.file));
-        try {
-            bufferedInputStream.read(messageBody);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                bufferedInputStream.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        bufferedInputStream.read(messageBody);
+        bufferedInputStream.close();
+        
         return messageBody;
     }
 }
