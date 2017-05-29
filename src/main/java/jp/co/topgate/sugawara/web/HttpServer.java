@@ -54,7 +54,17 @@ public class HttpServer {
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse(file, statusCode);
-                httpResponse.writeToOutputStream(outputStream);
+                try {
+                    httpResponse.writeToOutputStream(outputStream);
+                } catch (IndexOutOfBoundsException e) {
+                    throw new RuntimeException(e);
+                } catch (ArrayStoreException e) {
+                    throw new RuntimeException(e);
+                } catch (NullPointerException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 inputStream.close();
                 outputStream.close();
