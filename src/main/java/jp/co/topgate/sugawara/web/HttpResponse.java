@@ -15,7 +15,7 @@ public class HttpResponse {
     private File file;
     private int statusCode;
 
-    public HttpResponse(OutputStream outputStream, File file, int statusCode) {
+    public HttpResponse(File file, int statusCode) {
         this.file = file;
         this.statusCode = statusCode;
     }
@@ -68,7 +68,6 @@ public class HttpResponse {
 
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
-
         outputStream.write(httpResponseContent);
 
         System.out.println("http response...");
