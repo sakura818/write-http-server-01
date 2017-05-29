@@ -38,19 +38,18 @@ public class HttpResponse {
         byte[] statusLine = statusLineBuilder.build();
         byte[] messageHeader = messageHeaderBuilder.build();
         byte[] messageBody = messageBodyBuilder.build();
-        byte[] CRLF = "\r\n".getBytes("UTF-8");
+
 
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
         int messageBodyLength = messageBody.length;
-        int CRLFLength = CRLF.length;
 
-        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
+
+        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
         System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
         System.arraycopy(messageHeader, 0, createResponseContents, statusLineLength, messageHeaderLength);
         System.arraycopy(messageBody, 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
-        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
 
         return createResponseContents;
     }

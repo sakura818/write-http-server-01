@@ -37,6 +37,13 @@ public class HttpRequestTest {
         HttpRequest httpRequest = new HttpRequest(inputStream);
         assertThat((httpRequest.parseUriPath("http://localhost:8080/index.html")), is("index.html"));
     }
+
+    @Test
+    public void requestUriからUriPathを抜き出すのテスト2() throws IOException {
+        InputStream inputStream2 = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
+        HttpRequest httpRequest2 = new HttpRequest(inputStream2);
+        assertThat((httpRequest2.parseUriPath("/index.html")), is("index.html"));
+    }
 }
 
 
