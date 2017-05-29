@@ -19,14 +19,14 @@ public class HttpResponseStatusLineBuilderTest {
 
     @Test
     public void StatusLineを適切な形で生成できているかのテスト() {
-        assertThat(buildTest(), is("HTTP/1.1 200 OK".getBytes()));
+        assertThat(buildTest(), is("HTTP/1.1 200 OK\n".getBytes()));
     }
 
     public byte[] buildTest() {
         StringBuilder statusLine = new StringBuilder();
         statusLine.append("HTTP/1.1").append(" ");
         statusLine.append(200).append(" ");
-        statusLine.append("OK");
+        statusLine.append("OK").append("\n");
         return (statusLine.toString()).getBytes();
     }
 
