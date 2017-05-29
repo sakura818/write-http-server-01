@@ -46,6 +46,17 @@ public class HttpRequestTest {
 
     }
 
+    /*
+    @Test
+    public void requestLineからrequestUriをgetするテスト3() throws IOException {
+        InputStream inputStream3 = new ByteArrayInputStream(" http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
+        HttpRequest httpRequest3 = new HttpRequest(inputStream3);
+        expectedException.expect(IOException.class);
+        expectedException.expectMessage("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
+        throw new RuntimeException("不正なリクエストラインです。正しいリクエストラインを再度送信してください。");
+    }
+    */
+
     @Test
     public void requestUriからUriPathを抜き出すのテスト() throws IOException {
         InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
