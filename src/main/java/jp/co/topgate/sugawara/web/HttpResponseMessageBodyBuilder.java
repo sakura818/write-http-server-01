@@ -29,7 +29,7 @@ public class HttpResponseMessageBodyBuilder {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(this.file));
         bufferedInputStream.read(messageBody);
         bufferedInputStream.close();
-        
+
         return messageBody;
     }
 }
