@@ -21,7 +21,7 @@ public class HttpResponseMessageHeaderBuilderTest {
     HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
 
     @Test
-    public void EntityHeaderTestを適切な形で生成できているかのテスト() {
+    public void buildメソッドのEntityHeaderTestを適切な形で生成できているかのテスト() {
         assertThat(buildTest(), is(("Server: sakura818\n" +
                 "Allow: GET\n" +
                 "Content-Language: en\n" +
@@ -38,7 +38,7 @@ public class HttpResponseMessageHeaderBuilderTest {
     }
 
     @Test
-    public void GeneralHeaderを適切な形で生成できているかのテスト() {
+    public void createGeneralHeaderメソッドのGeneralHeaderを適切な形で生成できているかのテスト() {
         assertThat(createGeneralHeaderTest(), is(""));
     }
 
@@ -49,7 +49,7 @@ public class HttpResponseMessageHeaderBuilderTest {
 
 
     @Test
-    public void messageHeaderを適切な形で生成できているかのテスト() {
+    public void createResponseHeaderメソッドのmessageHeaderを適切な形で生成できているかのテスト() {
         assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
     }
 
@@ -60,7 +60,7 @@ public class HttpResponseMessageHeaderBuilderTest {
     }
 
     @Test
-    public void EntityHeaderを適切な形で生成できているかのテスト() {
+    public void createEntityHeaderメソッドのEntityHeaderを適切な形で生成できているかのテスト() {
         assertThat(createEntityHeaderTest(), is("Allow: GET\n" +
                 "Content-Language: en\n" +
                 "Content-Type: text/html; charset=UTF-8\n"));
@@ -75,7 +75,7 @@ public class HttpResponseMessageHeaderBuilderTest {
     }
 
     @Test
-    public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト() {
+    public void catchContentTypeメソッドのファイルの拡張子に応じて適切なContentTypeをかえすテスト() {
         assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.html"))), is("text/html; charset=UTF-8"));
         assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.htm"))), is("text/html; charset=UTF-8"));
         assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.css"))), is("text/css"));
@@ -91,7 +91,7 @@ public class HttpResponseMessageHeaderBuilderTest {
     }
 
     @Test
-    public void ファイルから拡張子をextractするテスト() {
+    public void extractExtensionメソッドのファイルから拡張子をextractするテスト() {
         assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge.html"))), is("html"));
         assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge..html"))), is("html"));
         assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("html"))), is("html"));
