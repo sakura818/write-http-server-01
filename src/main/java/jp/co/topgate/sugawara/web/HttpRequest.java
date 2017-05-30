@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class HttpRequest {
     private String uriPath;
     private String requestUri;
+    private int statusCode;
 
     /**
      * HttpRequestのコンストラクタ
@@ -33,17 +34,18 @@ public class HttpRequest {
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
 
+        this.statusCode = getStatusCode();
+
         String UriPath = parseUriPath(requestUri);
         this.uriPath = UriPath;
     }
-
 
     /**
      * requestLineからUriPathをparseする
      * requestLine = method + requestUri + httpVersion
      *
      * @param requestLine ex:GET /index.html HTTP/1.1
-     * @return UriPath ex:index.html
+     * @return requestUri ex:index.html
      */
 
     String parseRequestUri(String requestLine) {
@@ -55,11 +57,15 @@ public class HttpRequest {
                     requestUri += "index.html";
                 }
             } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
-                int statusCode = 500;
+                statusCode = 500;
             }
         }
         return requestUri;
     }
+
+    /**
+     * このHttpServerでサポートしているmethodのリスト
+     */
 
     ArrayList<String> availableMethod = new ArrayList<String>() {
         {
@@ -67,6 +73,9 @@ public class HttpRequest {
         }
     };
 
+    /**
+     * このHttpServerでサポートしていないmethodのリスト
+     */
 
     ArrayList<String> notAvailableMethod = new ArrayList<String>() {
         {
@@ -80,11 +89,19 @@ public class HttpRequest {
         }
     };
 
+    /**
+     * このHttpServerでサポートしているhttpVersionのリスト
+     */
+
     ArrayList<String> availableHttpVersion = new ArrayList<String>() {
         {
             add("HTTP/1.1");
         }
     };
+
+    /**
+     * このHttpServerでサポートしていないhttpVersionのリスト
+     */
 
     ArrayList<String> notAvailableHttpVersion = new ArrayList<String>() {
         {
@@ -110,6 +127,17 @@ public class HttpRequest {
         uriPath = requestUri;
         return uriPath;
     }
+
+    /**
+     * 500のstatusCode500を取得する
+     *
+     * @return uriPath
+     */
+
+    public int getStatusCode() {
+        return this.statusCode;
+    }
+
 
     /**
      * uriPathを取得する
