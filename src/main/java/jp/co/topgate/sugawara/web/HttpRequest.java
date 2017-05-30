@@ -32,6 +32,7 @@ public class HttpRequest {
         System.out.println(requestLine);
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
+
         if (requestUri.endsWith("/")) {
             requestUri += "index.html";
         }
