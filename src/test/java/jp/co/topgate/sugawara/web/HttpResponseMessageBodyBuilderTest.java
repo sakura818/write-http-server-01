@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class HttpResponseMessageBodyBuilderTest {
 
     @Test
-    public void statusCodeが200のときのテスト() throws IOException {
+    public void buildメソッドのstatusCodeが200のときのテスト() throws IOException {
 
         File indexHtml = new File("src/test/resources/index.html");
         new HttpResponseMessageBodyBuilder(indexHtml);
@@ -49,7 +49,7 @@ public class HttpResponseMessageBodyBuilderTest {
     }
 
     @Test
-    public void statusCodeが400のときのテスト() throws IOException {
+    public void buildメソッドのstatusCodeが400のときのテスト() throws IOException {
 
         File badRequestHtml = new File("src/test/resources/BadRequest.html");
         new HttpResponseMessageBodyBuilder(badRequestHtml);
@@ -74,7 +74,7 @@ public class HttpResponseMessageBodyBuilderTest {
     }
 
     @Test
-    public void statusCodeが404のときのテスト() throws IOException {
+    public void buildメソッドのstatusCodeが404のときのテスト() throws IOException {
 
         File notFoundHtml = new File("src/test/resources/NotFound.html");
         new HttpResponseMessageBodyBuilder(notFoundHtml);
