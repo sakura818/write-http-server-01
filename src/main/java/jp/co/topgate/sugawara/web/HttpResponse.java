@@ -26,7 +26,7 @@ public class HttpResponse {
      *
      * @param file
      * @param statusCode
-     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
+     * @throws IOException, NullPointerException
      */
 
     public byte[] createHttpResponseContent(File file, int statusCode) throws IOException, NullPointerException {
@@ -60,7 +60,7 @@ public class HttpResponse {
      * HttpResponse= StatusLine + MessageHeader + MessageBody
      *
      * @param outputStream バイト出力ストリーム
-     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
+     * @throws IOException, NullPointerException
      */
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException, NullPointerException {
