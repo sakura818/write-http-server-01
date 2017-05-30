@@ -56,8 +56,7 @@ public class HttpServer {
                 try {
                     httpResponse.writeToOutputStream(outputStream);
                 } catch (IOException e) {
-                    inputStream.close();
-                    outputStream.close();
+                    throw new RuntimeException(e);
                 }
 
                 inputStream.close();
