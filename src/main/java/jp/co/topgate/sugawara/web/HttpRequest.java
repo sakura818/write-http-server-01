@@ -28,7 +28,6 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        System.out.println(requestLine);
 
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
