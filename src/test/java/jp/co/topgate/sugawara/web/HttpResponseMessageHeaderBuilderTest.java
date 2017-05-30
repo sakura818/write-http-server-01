@@ -54,7 +54,7 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     public static class createResponseHeaderメソッドのテスト {
         @Test
-        public void createResponseHeaderメソッドのmessageHeaderを適切な形で生成できているかのテスト() {
+        public void messageHeaderを適切な形で生成できているかのテスト() {
             assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
         }
 
