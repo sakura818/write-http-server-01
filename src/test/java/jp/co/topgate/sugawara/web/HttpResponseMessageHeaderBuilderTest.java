@@ -90,11 +90,16 @@ public class HttpResponseMessageHeaderBuilderTest {
         assertThat((httpResponseMessageHeaderBuilder.catchContentType(new File("hoge.hoge"))), is("text/html; charset=utf-8"));
     }
 
-    @Test
-    public void extractExtensionメソッドのファイルから拡張子をextractするテスト() {
-        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge.html"))), is("html"));
-        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge..html"))), is("html"));
-        assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("html"))), is("html"));
+    public static class extractExtensionメソッドのテスト {
+        private File file = new File("src/test/resources/index.html");
+        HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
+
+        @Test
+        public void ファイルから拡張子をextractするテスト() {
+            assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge.html"))), is("html"));
+            assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("hoge..html"))), is("html"));
+            assertThat((httpResponseMessageHeaderBuilder.extractExtension(new File("html"))), is("html"));
+        }
     }
 
 }
