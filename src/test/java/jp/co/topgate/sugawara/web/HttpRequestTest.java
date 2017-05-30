@@ -22,34 +22,34 @@ public class HttpRequestTest {
     public static class parseRequestUriメソッドのテスト {
 
         @Test
-        public void requestLineからrequestUriをgetするテスト1() throws IOException {
-            InputStream inputStream1 = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
-            HttpRequest httpRequest1 = new HttpRequest(inputStream1);
-            assertThat((httpRequest1.parseRequestUri("GET /index.html HTTP/1.1")), is("/index.html"));
+        public void requestLineからrequestUriを抜き出すテスト1() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat((httpRequest.parseRequestUri("GET /index.html HTTP/1.1")), is("/index.html"));
         }
 
         @Test
-        public void requestLineからrequestUriをgetするテスト2() throws IOException {
-            InputStream inputStream2 = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
-            HttpRequest httpRequest2 = new HttpRequest(inputStream2);
-            assertThat((httpRequest2.parseRequestUri("GET http://localhost:8080/index.html HTTP/1.1")), is("http://localhost:8080/index.html"));
+        public void requestLineからrequestUriを抜き出すテスト2() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat((httpRequest.parseRequestUri("GET http://localhost:8080/index.html HTTP/1.1")), is("http://localhost:8080/index.html"));
         }
     }
 
     public static class parseUriPathメソッドのテスト {
 
         @Test
-        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すのテスト() throws IOException {
+        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すテスト1() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.parseUriPath("http://localhost:8080/index.html")), is("index.html"));
         }
 
         @Test
-        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すのテスト2() throws IOException {
-            InputStream inputStream2 = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
-            HttpRequest httpRequest2 = new HttpRequest(inputStream2);
-            assertThat((httpRequest2.parseUriPath("/index.html")), is("index.html"));
+        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すテスト2() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat((httpRequest.parseUriPath("/index.html")), is("index.html"));
         }
     }
 }

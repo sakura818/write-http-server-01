@@ -93,7 +93,7 @@ public class HttpResponseTest {
                     "<p>gifです<img src=\"sample.gif\" width=\"100\" height=\"100\" alt=\"gif\" border=\"0\" align=\"center\" hspace=\"10\" vspace=\"10\">\n" +
                     "</p>\n" +
                     "</body>\n" +
-                    "</html>" ).getBytes();
+                    "</html>").getBytes();
 
             return httpResponseActual;
         }
