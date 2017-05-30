@@ -1,6 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 
@@ -15,7 +17,7 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 
-
+@RunWith(Enclosed.class)
 public class HttpResponseMessageHeaderBuilderTest {
 
     public static class buildメソッドのテスト {

@@ -1,6 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 
-
+@RunWith(Enclosed.class)
 public class HttpResponseStatusLineBuilderTest {
     private int statusCode = 200;
     HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);

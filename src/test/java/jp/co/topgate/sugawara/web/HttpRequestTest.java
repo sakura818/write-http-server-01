@@ -17,6 +17,7 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 
+@RunWith(Enclosed.class)
 public class HttpRequestTest {
     public static class parseRequestUriメソッドのテスト {
 
