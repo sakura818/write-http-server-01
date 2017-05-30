@@ -49,20 +49,26 @@ public class HttpRequest {
     String parseRequestUri(String requestLine) {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
+            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
                 requestUri = requestLineArray[1];
                 if (requestUri.equals("/")) {
                     requestUri += "index.html";
                 }
-            } else if ((requestLineArray.length == 3) && !("GET".equals(requestLineArray[0])) || !("HTTP/1.1".equals(requestLineArray[2]))) {
+            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
                 int statusCode = 500;
             }
         }
         return requestUri;
     }
 
+    ArrayList<String> availableMethod = new ArrayList<String>() {
+        {
+            add("GET");
+        }
+    };
 
-    ArrayList<String> methodList = new ArrayList<String>() {
+
+    ArrayList<String> notAvailableMethod = new ArrayList<String>() {
         {
             add("HEAD");
             add("POST");
@@ -74,7 +80,13 @@ public class HttpRequest {
         }
     };
 
-    ArrayList<String> httpVersionList = new ArrayList<String>() {
+    ArrayList<String> availableHttpVersion = new ArrayList<String>() {
+        {
+            add("HTTP/1.1");
+        }
+    };
+
+    ArrayList<String> notAvailableHttpVersion = new ArrayList<String>() {
         {
             add("HTTP/0.9");
             add("HTTP/1.0");
