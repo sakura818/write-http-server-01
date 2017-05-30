@@ -17,19 +17,19 @@ public class HttpServerTest {
     HttpServer httpServer = new HttpServer();
 
     @Test
-    public void UriPathとFILEPATH_DIRからfileが生成できているかのテスト() {
+    public void connectメソッドのUriPathとFILEPATH_DIRからfileが生成できているかのテスト() {
         File file = new File(this.FILEPATH_DIR, "index.html");
         System.out.println(file);
         assertThat(file, is(new File("src/test/resources/index.html")));
     }
 
     @Test
-    public void ファイルが存在していた場合はステータスコード200を返すかテスト() {
+    public void catchStatusCodeメソッドのファイルが存在していた場合はステータスコード200を返すかテスト() {
         assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "index.html")), is(200));
     }
 
     @Test
-    public void ファイルが存在していなかった場合はステータスコード404を返すかテスト() {
+    public void catchStatusCodeメソッドのファイルが存在していなかった場合はステータスコード404を返すかテスト() {
         assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExist.html")), is(404));
     }
 
