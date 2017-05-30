@@ -37,14 +37,19 @@ public class HttpServer {
                 HttpRequest httpRequest;
 
                 File file = null;
-                int statusCode;
+                int statusCode = 0;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-
-                    statusCode = catchStatusCode(file);
-                    if (statusCode == 404) {
-                        file = new File(this.FILEPATH_DIR, "NotFound.html");
+                    if (httpRequest.getStatusCode() == 500) {
+                        statusCode = 500;
+                        file = new File(this.FILEPATH_DIR, "InternalServerError.html");
+                    }
+                    if (httpRequest.getStatusCode() == 200) {
+                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                        statusCode = catchStatusCode(file);
+                        if (statusCode == 404) {
+                            file = new File(this.FILEPATH_DIR, "NotFound.html");
+                        }
                     }
                 } catch (IOException e) {
                     statusCode = 400;

@@ -32,10 +32,9 @@ public class HttpRequest {
         String requestLine = bufferedReader.readLine();
 
         String requestUri = parseRequestUri(requestLine);
-        this.requestUri = requestUri;
-
         this.statusCode = getStatusCode();
 
+        this.requestUri = requestUri;
         String UriPath = parseUriPath(requestUri);
         this.uriPath = UriPath;
     }
@@ -56,7 +55,9 @@ public class HttpRequest {
                 if (requestUri.equals("/")) {
                     requestUri += "index.html";
                 }
+                statusCode = 200;
             } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+                requestUri = requestLineArray[1];
                 statusCode = 500;
             }
         }
