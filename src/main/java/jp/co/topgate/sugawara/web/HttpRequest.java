@@ -29,7 +29,7 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
         System.out.println(requestLine);
-        
+
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
 
@@ -68,10 +68,11 @@ public class HttpRequest {
      */
 
     String parseUriPath(String requestUri) {
-        int lastDotPosition = requestUri.lastIndexOf("/");
-        if (lastDotPosition != -1) {
-            return requestUri.substring(lastDotPosition + 1);
+        String host = "http://localhost:8080";
+        if(host.startsWith(host)){
+            requestUri = requestUri.replace(host,"");
         }
+        uriPath = requestUri;
         return uriPath;
     }
 
