@@ -98,4 +98,29 @@ public class HttpResponseMessageBodyBuilderTest {
 
     }
 
+    @Test
+    public void buildメソッドのstatusCodeが500のときのテスト() throws IOException {
+
+        File internalServerErrorHtml = new File("src/test/resources/InternalServerError.html");
+        new HttpResponseMessageBodyBuilder(internalServerErrorHtml);
+        byte[] internalServerErrorHtmlByteActual = new byte[(int) internalServerErrorHtml.length()];
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(internalServerErrorHtml));
+        bufferedInputStream.read(internalServerErrorHtmlByteActual);
+        bufferedInputStream.close();
+        assertThat(internalServerErrorHtmlByteActual, is(("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "\n" +
+                "<head>\n" +
+                "    <title>500 Internal Server Error</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>\n" +
+                "<h1>Not Found</h1>\n" +
+                "<p>サーバー内部のエラーです。</p>\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>").getBytes()));
+
+    }
+
 }
