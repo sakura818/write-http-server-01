@@ -47,16 +47,17 @@ public class HttpResponseMessageHeaderBuilderTest {
         return GeneralHeader.toString();
     }
 
+    public static class createResponseHeaderメソッドのテスト {
+        @Test
+        public void createResponseHeaderメソッドのmessageHeaderを適切な形で生成できているかのテスト() {
+            assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
+        }
 
-    @Test
-    public void createResponseHeaderメソッドのmessageHeaderを適切な形で生成できているかのテスト() {
-        assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
-    }
-
-    public String createResponseHeaderTest() {
-        StringBuilder responseHeader = new StringBuilder();
-        responseHeader.append("Server: " + "sakura818").append("\n");
-        return responseHeader.toString();
+        public String createResponseHeaderTest() {
+            StringBuilder responseHeader = new StringBuilder();
+            responseHeader.append("Server: " + "sakura818").append("\n");
+            return responseHeader.toString();
+        }
     }
 
     public static class createEntityHeaderメソッドのテスト {
