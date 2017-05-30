@@ -20,7 +20,7 @@ public class HttpResponseTest {
     HttpResponse httpResponse = new HttpResponse(file, statusCode);
 
     @Test
-    public void httpResponseを適切な形で生成できているかのテスト() throws Exception {
+    public void createHttpResponseContentメソッドのhttpResponseを適切な形で生成できているかのテスト() throws Exception {
         assertThat(httpResponseActual(), is(httpResponseExpect()));
     }
 
