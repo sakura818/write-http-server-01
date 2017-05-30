@@ -17,24 +17,26 @@ import static org.junit.Assert.assertThat;
 
 
 public class HttpResponseMessageHeaderBuilderTest {
-    private File file = new File("src/test/resources/index.html");
-    HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
 
-    @Test
-    public void buildメソッドのEntityHeaderTestを適切な形で生成できているかのテスト() {
-        assertThat(buildTest(), is(("Server: sakura818\n" +
-                "Allow: GET\n" +
-                "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n").getBytes()));
-    }
+    public static class buildメソッドのテスト {
+        @Test
+        public void buildメソッドのEntityHeaderTestを適切な形で生成できているかのテスト() {
+            assertThat(buildTest(), is(("Server: sakura818\n" +
+                    "Allow: GET\n" +
+                    "Content-Language: en\n" +
+                    "Content-Type: text/html; charset=UTF-8\n").getBytes()));
+        }
 
 
-    public byte[] buildTest() {
-        StringBuilder messageHeader = new StringBuilder();
-        messageHeader.append(createGeneralHeaderTest());
-        messageHeader.append(createResponseHeaderTest());
-        messageHeader.append(createEntityHeaderTest());
-        return (messageHeader.toString()).getBytes();
+        public byte[] buildTest() {
+            StringBuilder messageHeader = new StringBuilder();
+            messageHeader.append("");
+            messageHeader.append("Server: sakura818\n");
+            messageHeader.append("Allow: GET\n" +
+                    "Content-Language: en\n" +
+                    "Content-Type: text/html; charset=UTF-8\n");
+            return (messageHeader.toString()).getBytes();
+        }
     }
 
     public static class createGeneralHeaderメソッドのテスト {
