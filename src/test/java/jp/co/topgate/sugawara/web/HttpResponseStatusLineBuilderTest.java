@@ -18,7 +18,7 @@ public class HttpResponseStatusLineBuilderTest {
     HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
 
     @Test
-    public void StatusLineを適切な形で生成できているかのテスト() {
+    public void buildメソッドのStatusLineを適切な形で生成できているかのテスト() {
         assertThat(buildTest(), is("HTTP/1.1 200 OK\n".getBytes()));
     }
 
@@ -31,22 +31,22 @@ public class HttpResponseStatusLineBuilderTest {
     }
 
     @Test
-    public void statusCodeが200のときに適切なreasonPhraseを返すかのテスト() {
+    public void catchReasonPhraseメソッドのstatusCodeが200のときに適切なreasonPhraseを返すかのテスト() {
         assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(200), is("OK"));
     }
 
     @Test
-    public void statusCodeが400のときに適切なreasonPhraseを返すかのテスト() {
+    public void catchReasonPhraseメソッドのstatusCodeが400のときに適切なreasonPhraseを返すかのテスト() {
         assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(400), is("Bad Request"));
     }
 
     @Test
-    public void statusCodeが404のときに適切なreasonPhraseを返すかのテスト() {
+    public void catchReasonPhraseメソッドのstatusCodeが404のときに適切なreasonPhraseを返すかのテスト() {
         assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(404), is("Not Found"));
     }
 
     @Test
-    public void statusCodeが500のときに適切なreasonPhraseを返すかのテスト() {
+    public void catchReasonPhraseメソッドのstatusCodeが500のときに適切なreasonPhraseを返すかのテスト() {
         assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(500), is("Internal Server Error"));
     }
 
