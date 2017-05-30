@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.util.ArrayList;
 
 
 /**
@@ -53,10 +54,34 @@ public class HttpRequest {
                 if (requestUri.equals("/")) {
                     requestUri += "index.html";
                 }
+            } else if ((requestLineArray.length == 3) && !("GET".equals(requestLineArray[0])) || !("HTTP/1.1".equals(requestLineArray[2]))) {
+                int statusCode = 500;
             }
         }
         return requestUri;
     }
+
+
+    ArrayList<String> methodList = new ArrayList<String>() {
+        {
+            add("HEAD");
+            add("POST");
+            add("PUT");
+            add("DELETE");
+            add("TRACE");
+            add("HEAD");
+            add("CONNECT");
+        }
+    };
+
+    ArrayList<String> httpVersionList = new ArrayList<String>() {
+        {
+            add("HTTP/0.9");
+            add("HTTP/1.0");
+            add("HTTP/2");
+        }
+    };
+
 
     /**
      * requestUriからUriPathを抜き出す
