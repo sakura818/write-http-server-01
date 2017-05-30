@@ -19,10 +19,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(Enclosed.class)
 public class HttpResponseTest {
 
-    private File file;
-    private int statusCode;
-    HttpResponse httpResponse = new HttpResponse(file, statusCode);
-
     public static class createHttpResponseContentメソッドのテスト {
 
         @Test
