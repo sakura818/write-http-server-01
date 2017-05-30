@@ -58,6 +58,6 @@ public class HttpResponseStatusLineBuilder {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }
-        return null;
+        return "Unknown Status Code";
     }
 }
