@@ -69,7 +69,7 @@ public class HttpRequest {
 
     String parseUriPath(String requestUri) {
         String host = "http://localhost:8080";
-        if(host.startsWith(host)){
+        if(requestUri.startsWith(host)){
             requestUri = requestUri.replace(host,"");
         }
         uriPath = requestUri;
