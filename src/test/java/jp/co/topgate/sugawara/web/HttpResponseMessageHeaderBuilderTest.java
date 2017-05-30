@@ -59,19 +59,22 @@ public class HttpResponseMessageHeaderBuilderTest {
         return responseHeader.toString();
     }
 
-    @Test
-    public void createEntityHeaderメソッドのEntityHeaderを適切な形で生成できているかのテスト() {
-        assertThat(createEntityHeaderTest(), is("Allow: GET\n" +
-                "Content-Language: en\n" +
-                "Content-Type: text/html; charset=UTF-8\n"));
-    }
+    public static class createEntityHeaderメソッドのテスト {
 
-    public String createEntityHeaderTest() {
-        StringBuilder entityHeader = new StringBuilder();
-        entityHeader.append("Allow: " + "GET").append("\n");
-        entityHeader.append("Content-Language: " + "en").append("\n");
-        entityHeader.append("Content-Type: " + "text/html; charset=UTF-8").append("\n");
-        return entityHeader.toString();
+        @Test
+        public void EntityHeaderを適切な形で生成できているかのテスト() {
+            assertThat(createEntityHeaderTest(), is("Allow: GET\n" +
+                    "Content-Language: en\n" +
+                    "Content-Type: text/html; charset=UTF-8\n"));
+        }
+
+        public String createEntityHeaderTest() {
+            StringBuilder entityHeader = new StringBuilder();
+            entityHeader.append("Allow: " + "GET").append("\n");
+            entityHeader.append("Content-Language: " + "en").append("\n");
+            entityHeader.append("Content-Type: " + "text/html; charset=UTF-8").append("\n");
+            return entityHeader.toString();
+        }
     }
 
     public static class catchContentTypeメソッドのテスト {
