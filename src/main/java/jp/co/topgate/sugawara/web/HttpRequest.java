@@ -33,14 +33,11 @@ public class HttpRequest {
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
 
-        if (requestUri.endsWith("/")) {
+        if (requestUri.equals("/")) {
             requestUri += "index.html";
         }
 
         String UriPath = parseUriPath(requestUri);
-        if (UriPath.endsWith("/")) {
-            UriPath += "index.html";
-        }
         this.uriPath = UriPath;
     }
 
