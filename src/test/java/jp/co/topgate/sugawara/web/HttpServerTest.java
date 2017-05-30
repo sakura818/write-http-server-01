@@ -13,8 +13,6 @@ import static org.junit.Assert.assertThat;
  * @author sakura818
  */
 public class HttpServerTest {
-    final static String FILEPATH_DIR = "src/test/resources/";
-    HttpServer httpServer = new HttpServer();
 
     public static class connectメソッドのテスト {
         final static String FILEPATH_DIR = "src/test/resources/";
@@ -27,14 +25,20 @@ public class HttpServerTest {
         }
     }
 
-    @Test
-    public void catchStatusCodeメソッドのファイルが存在していた場合はステータスコード200を返すかテスト() {
-        assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "index.html")), is(200));
-    }
+    public static class catchStatusCodeメソッドのテスト {
+        final static String FILEPATH_DIR = "src/test/resources/";
+        HttpServer httpServer = new HttpServer();
 
-    @Test
-    public void catchStatusCodeメソッドのファイルが存在していなかった場合はステータスコード404を返すかテスト() {
-        assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExist.html")), is(404));
+        @Test
+        public void ファイルが存在していた場合はステータスコード200を返すかテスト() {
+            assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "index.html")), is(200));
+        }
+
+        @Test
+        public void ファイルが存在していなかった場合はステータスコード404を返すかテスト() {
+            assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExist.html")), is(404));
+        }
+
     }
 
 }
