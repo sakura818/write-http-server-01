@@ -37,14 +37,17 @@ public class HttpResponseMessageHeaderBuilderTest {
         return (messageHeader.toString()).getBytes();
     }
 
-    @Test
-    public void createGeneralHeaderメソッドのGeneralHeaderを適切な形で生成できているかのテスト() {
-        assertThat(createGeneralHeaderTest(), is(""));
-    }
+    public static class createGeneralHeaderメソッドのテスト {
+        @Test
+        public void GeneralHeaderを適切な形で生成できているかのテスト() {
+            assertThat(createGeneralHeaderTest(), is(""));
+        }
 
-    public String createGeneralHeaderTest() {
-        StringBuilder GeneralHeader = new StringBuilder();
-        return GeneralHeader.toString();
+        public String createGeneralHeaderTest() {
+            StringBuilder GeneralHeader = new StringBuilder();
+            return GeneralHeader.toString();
+        }
+
     }
 
     public static class createResponseHeaderメソッドのテスト {
