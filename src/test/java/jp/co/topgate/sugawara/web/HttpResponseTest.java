@@ -54,18 +54,15 @@ public class HttpResponseTest {
                     "</p>\n" +
                     "</body>\n" +
                     "</html>").getBytes();
-            byte[] CRLF = "\r\n".getBytes("UTF-8");
             int statusLineLength = statusLine.length;
             int messageHeaderLength = messageHeader.length;
             int messageBodyLength = messageBody.length;
-            int CRLFLength = CRLF.length;
 
-            byte[] httpResponseExpect = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
+            byte[] httpResponseExpect = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
             System.arraycopy(statusLine, 0, httpResponseExpect, 0, statusLineLength);
             System.arraycopy(messageHeader, 0, httpResponseExpect, statusLineLength, messageHeaderLength);
             System.arraycopy(messageBody, 0, httpResponseExpect, (statusLineLength + messageHeaderLength), messageBodyLength);
-            System.arraycopy(CRLF, 0, httpResponseExpect, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
 
             return httpResponseExpect;
         }
@@ -96,7 +93,7 @@ public class HttpResponseTest {
                     "<p>gifです<img src=\"sample.gif\" width=\"100\" height=\"100\" alt=\"gif\" border=\"0\" align=\"center\" hspace=\"10\" vspace=\"10\">\n" +
                     "</p>\n" +
                     "</body>\n" +
-                    "</html>" + "\r\n").getBytes();
+                    "</html>" ).getBytes();
 
             return httpResponseActual;
         }
