@@ -32,7 +32,7 @@ public class HttpServer {
             System.out.println("start up http server http://localhost:" + this.PORT);
             while (true) {
                 this.socket = this.serverSocket.accept();
-                
+
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest;
 
@@ -55,9 +55,6 @@ public class HttpServer {
                 HttpResponse httpResponse = new HttpResponse(file, statusCode);
                 try {
                     httpResponse.writeToOutputStream(outputStream);
-                } catch (NullPointerException e) {
-                    inputStream.close();
-                    outputStream.close();
                 } catch (IOException e) {
                     inputStream.close();
                     outputStream.close();

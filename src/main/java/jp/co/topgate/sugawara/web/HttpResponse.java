@@ -29,7 +29,7 @@ public class HttpResponse {
      * @throws IOException, NullPointerException
      */
 
-    public byte[] createHttpResponseContent(File file, int statusCode) throws IOException, NullPointerException {
+    public byte[] createHttpResponseContent(File file, int statusCode) throws IOException {
 
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
@@ -63,7 +63,7 @@ public class HttpResponse {
      * @throws IOException, NullPointerException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException, NullPointerException {
+    public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
