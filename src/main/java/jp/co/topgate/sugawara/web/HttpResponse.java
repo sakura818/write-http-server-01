@@ -4,7 +4,7 @@ import java.io.*;
 
 /**
  * HttpResponse class
- * HttpResponseのコンテンツをバイト出力ストリームOutputStreamに書き込む
+ * HttpResponseのコンテンツを組み立て、バイト出力ストリームOutputStreamに書き込む
  * HttpResponse = StatusLine + MessageHeader + MessageBody
  *
  * @author sakura818
@@ -26,7 +26,7 @@ public class HttpResponse {
      *
      * @param file
      * @param statusCode
-     * @throws IOException, NullPointerException
+     * @throws IOException
      */
 
     public byte[] createHttpResponseContent(File file, int statusCode) throws IOException {
@@ -56,11 +56,10 @@ public class HttpResponse {
 
 
     /**
-     * HttpResponseのコンテンツをOutputStreamに書き込む
-     * HttpResponse= StatusLine + MessageHeader + MessageBody
+     * HttpResponseをOutputStreamに書き込む
      *
      * @param outputStream バイト出力ストリーム
-     * @throws IOException, NullPointerException
+     * @throws IOException
      */
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {

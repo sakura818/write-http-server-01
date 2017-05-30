@@ -19,8 +19,7 @@ public class HttpResponseStatusLineBuilder {
     }
 
     /**
-     * ResponseStatusLineを生成する
-     * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
+     * StatusLineを生成する
      *
      * @return httpResponseStatusLineContent ex:HTTP/1.1 200 OK
      */

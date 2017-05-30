@@ -19,7 +19,7 @@ public class HttpResponseMessageBodyBuilder {
     }
 
     /**
-     * fileをバイト型の配列で読み込みHttpResponseMessageBodyを生成する
+     * fileをバイト型の配列で読み込みMessageBodyを生成する
      *
      * @return messageBody
      */

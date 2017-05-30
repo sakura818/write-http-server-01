@@ -38,11 +38,10 @@ public class HttpRequest {
 
 
     /**
-     * requestLineからrequestUriをgetする
+     * requestLineからUriPathをparseする
      * requestLine = method + requestUri + httpVersion
-     * requestLine ex:GET http://localhost:8080/index.html HTTP/1.1
      *
-     * @param requestLine
+     * @param requestLine ex:GET /index.html HTTP/1.1
      * @return UriPath ex:index.html
      */
 
@@ -62,8 +61,8 @@ public class HttpRequest {
     /**
      * requestUriからUriPathを抜き出す
      *
-     * @param requestUri ex:http://localhost:8080/index.html
-     * @return UriPath ex:index.html
+     * @param requestUri ex:/index.html
+     * @return UriPath ex:/index.html
      */
 
     String parseUriPath(String requestUri) {

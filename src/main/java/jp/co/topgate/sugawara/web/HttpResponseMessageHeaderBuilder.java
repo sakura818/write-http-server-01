@@ -10,7 +10,6 @@ import java.util.Map;
  * HttpResponseMessageHeaderBuilder Class
  * HttpResponseのMessageHeaderのContentを生成するクラス
  * MessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
- * HttpResponseのContentを3つに分けたうちの1つである。
  *
  * @author sakura818
  */
@@ -25,8 +24,7 @@ public class HttpResponseMessageHeaderBuilder {
     }
 
     /**
-     * ResponseMessageHeaderを生成する
-     * ResponseMessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
+     * MessageHeaderを生成する
      *
      * @return httpResponseMessageHeaderContent
      */
@@ -98,7 +96,7 @@ public class HttpResponseMessageHeaderBuilder {
     }
 
     /**
-     * ファイルから拡張子を抜き出す。なぜならContentTypeはファイルの拡張子によって判別されるから。
+     * ファイルから拡張子を抜き出す。ContentTypeはファイルの拡張子によって判別される。
      *
      * @param file ex:index.html
      * @return ファイルの拡張子　ex:html
