@@ -17,17 +17,20 @@ public class HttpResponseStatusLineBuilderTest {
     private int statusCode = 200;
     HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
 
-    @Test
-    public void buildメソッドのStatusLineを適切な形で生成できているかのテスト() {
-        assertThat(buildTest(), is("HTTP/1.1 200 OK\n".getBytes()));
-    }
+    public static class buildメソッドのテスト {
 
-    public byte[] buildTest() {
-        StringBuilder statusLine = new StringBuilder();
-        statusLine.append("HTTP/1.1").append(" ");
-        statusLine.append(200).append(" ");
-        statusLine.append("OK").append("\n");
-        return (statusLine.toString()).getBytes();
+        @Test
+        public void StatusLineを適切な形で生成できているかのテスト() {
+            assertThat(buildTest(), is("HTTP/1.1 200 OK\n".getBytes()));
+        }
+
+        public byte[] buildTest() {
+            StringBuilder statusLine = new StringBuilder();
+            statusLine.append("HTTP/1.1").append(" ");
+            statusLine.append(200).append(" ");
+            statusLine.append("OK").append("\n");
+            return (statusLine.toString()).getBytes();
+        }
     }
 
     public static class catchReasonPhraseメソッドのテスト {
