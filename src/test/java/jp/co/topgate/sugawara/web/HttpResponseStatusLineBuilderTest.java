@@ -16,9 +16,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class HttpResponseStatusLineBuilderTest {
-    private int statusCode = 200;
-    HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-
+   
     public static class buildメソッドのテスト {
 
         @Test
