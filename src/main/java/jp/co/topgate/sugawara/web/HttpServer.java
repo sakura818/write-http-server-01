@@ -57,9 +57,11 @@ public class HttpServer {
                 try {
                     httpResponse.writeToOutputStream(outputStream);
                 } catch (NullPointerException e) {
-                    throw new RuntimeException(e);
+                    inputStream.close();
+                    outputStream.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    inputStream.close();
+                    outputStream.close();
                 }
 
                 inputStream.close();

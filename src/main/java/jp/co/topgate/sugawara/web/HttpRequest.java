@@ -28,14 +28,10 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-
         System.out.println(requestLine);
+        
         String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
-
-        if (requestUri.equals("/")) {
-            requestUri += "index.html";
-        }
 
         String UriPath = parseUriPath(requestUri);
         this.uriPath = UriPath;
@@ -56,6 +52,9 @@ public class HttpRequest {
             String[] requestLineArray = requestLine.split(" ", 3);
             if ((requestLineArray.length == 3) && ("GET".equals(requestLineArray[0])) && ("HTTP/1.1".equals(requestLineArray[2]))) {
                 requestUri = requestLineArray[1];
+                if (requestUri.equals("/")) {
+                    requestUri += "index.html";
+                }
             }
         }
         return requestUri;
