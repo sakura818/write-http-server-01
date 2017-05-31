@@ -20,6 +20,12 @@ public class HttpServer {
     private ServerSocket serverSocket;
     private final int PORT = 8080;
     private final String FILEPATH_DIR = "src/main/resources/";
+    private final int OK = 200;
+    private final int BAD_REQUEST = 400;
+    private final int NOT_FOUND = 404;
+    private final int NOT_IMPLEMENTED = 501;
+    private final int HTTP_VERSION_NOT_SUPPORTED = 505;
+
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -40,22 +46,21 @@ public class HttpServer {
                 int statusCode = 0;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    statusCode = httpRequest.getStatusCode();
-                    if (statusCode == 500) {
-                        file = new File(this.FILEPATH_DIR, "InternalServerError.html");
-                    }
-                    if (statusCode == 200) {
+                    statusCode = catchStatusCode(file);
+                    if (statusCode == OK) {
                         file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                        statusCode = catchStatusCode(file);
-                        if (statusCode == 404) {
+                        if (statusCode == NOT_FOUND) {
                             file = new File(this.FILEPATH_DIR, "NotFound.html");
                         }
                     }
-                    if (statusCode == 400) {
-                        file = new File(this.FILEPATH_DIR, "BadRequest.html");
-                    }
-                } catch (IOException e) {
-                    statusCode = 400;
+                } catch (HttpVersionNotSupported) {
+                    statusCode = HTTP_VERSION_NOT_SUPPORTED;
+                    file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
+                } catch (NotImplemented) {
+                    statusCode = NOT_IMPLEMENTED;
+                    file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                } catch (BadRequestException) {
+                    statusCode = BAD_REQUEST;
                     file = new File(this.FILEPATH_DIR, "BadRequest.html");
                 }
 
@@ -83,6 +88,7 @@ public class HttpServer {
             }
             System.out.println("正常にコネクションできないエラーが発生しました");
         }
+
     }
 
     /**
@@ -94,9 +100,9 @@ public class HttpServer {
 
     int catchStatusCode(File file) {
         if (!file.exists()) {
-            return 404;
+            return NOT_FOUND;
         }
-        return 200;
+        return OK;
     }
 
 }

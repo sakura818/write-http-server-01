@@ -1,5 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 public class HttpRequest {
     private String uriPath;
     private String requestUri;
-    private int statusCode;
+
 
     /**
      * HttpRequestのコンストラクタ
@@ -31,28 +33,11 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
 
-        this.statusCode = judgeStatusCode(requestLine);
-
-        String requestUri = parseRequestUri(requestLine, statusCode);
+        String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
 
         String UriPath = parseUriPath(requestUri);
         this.uriPath = UriPath;
-    }
-
-
-    int judgeStatusCode(String requestLine) {
-        if (requestLine != null) {
-            String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
-                statusCode = 200;
-            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
-                statusCode = 500;
-            } else {
-                statusCode = 400;
-            }
-        }
-        return statusCode;
     }
 
 
@@ -64,18 +49,21 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-    String parseRequestUri(String requestLine, int statusCode) {
-        if (statusCode == 200) {
+    String parseRequestUri(String requestLine) {
+        if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            requestUri = requestLineArray[1];
-            if (requestUri.equals("/")) {
-                requestUri += "index.html";
+            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
+                requestUri = requestLineArray[1];
+                if (requestUri.equals("/")) {
+                    requestUri += "index.html";
+                }
+            } else if ((requestLineArray.length == 3) &&  (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+                throw new HttpVersionNotSupported;
+            } else if( ((requestLineArray.length == 3) &&  (notAvailableMethod.contains(requestLineArray[0]) == true))) {
+                throw new NotImplemented;
+            } else {
+                throw new BadRequestException;
             }
-        } else if (statusCode == 500) {
-            String[] requestLineArray = requestLine.split(" ", 3);
-            requestUri = requestLineArray[1];
-        } else if (statusCode == 400) {
-            requestUri = requestLine;
         }
         return requestUri;
     }
@@ -145,16 +133,6 @@ public class HttpRequest {
             uriPath = requestUri;
         }
         return uriPath;
-    }
-
-    /**
-     * statusCode(200か500)を取得する
-     *
-     * @return statusCode
-     */
-
-    public int getStatusCode() {
-        return this.statusCode;
     }
 
 
