@@ -98,7 +98,7 @@ public class HttpServer {
     }
 
     /**
-     * 適切なステータスコードを返す
+     * 200か404のステータスコードを返す
      *
      * @param file ex:index.html
      * @return statusCode ex:200
