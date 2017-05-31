@@ -102,7 +102,7 @@ public class HttpResponseMessageBodyBuilderTest {
         @Test
         public void statusCodeが500のときのテスト() throws IOException {
 
-            File internalServerErrorHtml = new File("src/test/resources/InternalServerError.html");
+            File internalServerErrorHtml = new File("src/test/resources/NotImplemented.html");
             byte[] internalServerErrorHtmlByteActual = new byte[(int) internalServerErrorHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(internalServerErrorHtml));
             bufferedInputStream.read(internalServerErrorHtmlByteActual);
