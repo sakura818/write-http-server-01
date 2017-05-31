@@ -20,7 +20,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void statusCodeが200のときのテスト() throws IOException {
+        public void statusCodeが200のときのhtmlファイルのテスト() throws IOException {
 
             File indexHtml = new File("src/test/resources/index.html");
             byte[] indexHtmlByteActual = new byte[(int) indexHtml.length()];
@@ -47,12 +47,12 @@ public class HttpResponseMessageBodyBuilderTest {
                     "<p>gifです<img src=\"sample.gif\" width=\"100\" height=\"100\" alt=\"gif\" border=\"0\" align=\"center\" hspace=\"10\" vspace=\"10\">\n" +
                     "</p>\n" +
                     "</body>\n" +
-                    "</html>").getBytes()));
+                    "</html>\n").getBytes()));
 
         }
 
         @Test
-        public void statusCodeが400のときのテスト() throws IOException {
+        public void statusCodeが400のときのhtmlファイルのテスト() throws IOException {
 
             File badRequestHtml = new File("src/test/resources/BadRequest.html");
             byte[] badRequestHtmlByteActual = new byte[(int) badRequestHtml.length()];
@@ -76,7 +76,7 @@ public class HttpResponseMessageBodyBuilderTest {
         }
 
         @Test
-        public void statusCodeが404のときのテスト() throws IOException {
+        public void statusCodeが404のときのhtmlファイルのテスト() throws IOException {
 
             File notFoundHtml = new File("src/test/resources/NotFound.html");
             byte[] notFoundHtmlByteActual = new byte[(int) notFoundHtml.length()];
@@ -95,31 +95,56 @@ public class HttpResponseMessageBodyBuilderTest {
                     "<p>該当のページは見つかりませんでした。</p>\n" +
                     "</body>\n" +
                     "\n" +
-                    "</html>").getBytes()));
+                    "</html>\n").getBytes()));
+
+        }
+
+
+        @Test
+        public void statusCodeが501のときのhtmlファイルのテスト() throws IOException {
+
+            File notImplementedHtml = new File("src/test/resources/NotImplemented.html");
+            byte[] notImplementedHtmlByteActual = new byte[(int) notImplementedHtml.length()];
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notImplementedHtml));
+            bufferedInputStream.read(notImplementedHtmlByteActual);
+            bufferedInputStream.close();
+            assertThat(notImplementedHtmlByteActual, is(("<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "\n" +
+                    "<head>\n" +
+                    "    <title>501 Not Implemented</title>\n" +
+                    "</head>\n" +
+                    "\n" +
+                    "<body>\n" +
+                    "<h1>Not Implemented</h1>\n" +
+                    "<p>リクエストは正しいのですが、このサーバではリクエストされたメソッドをサポートしていません。</p>\n" +
+                    "</body>\n" +
+                    "\n" +
+                    "</html>\n").getBytes()));
 
         }
 
         @Test
-        public void statusCodeが500のときのテスト() throws IOException {
+        public void statusCodeが505のときのhtmlファイルのテスト() throws IOException {
 
-            File internalServerErrorHtml = new File("src/test/resources/NotImplemented.html");
-            byte[] internalServerErrorHtmlByteActual = new byte[(int) internalServerErrorHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(internalServerErrorHtml));
-            bufferedInputStream.read(internalServerErrorHtmlByteActual);
+            File httpVersionNotSupportedHtml = new File("src/test/resources/HttpVersionNotSupported.html");
+            byte[] httpVersionNotSupportedHtmlByteActual = new byte[(int) httpVersionNotSupportedHtml.length()];
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(httpVersionNotSupportedHtml));
+            bufferedInputStream.read(httpVersionNotSupportedHtmlByteActual);
             bufferedInputStream.close();
-            assertThat(internalServerErrorHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            assertThat(httpVersionNotSupportedHtmlByteActual, is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
                     "<head>\n" +
-                    "    <title>500 Internal Server Error</title>\n" +
+                    "    <title>505 Http Version Not Supported</title>\n" +
                     "</head>\n" +
                     "\n" +
                     "<body>\n" +
-                    "<h1>Not Found</h1>\n" +
-                    "<p>サーバー内部のエラーです。</p>\n" +
+                    "<h1>Http Version Not Supported</h1>\n" +
+                    "<p>リクエストは正しいのですが、このサーバではリクエストされたHttpVersionをサポートしていません。</p>\n" +
                     "</body>\n" +
                     "\n" +
-                    "</html>").getBytes()));
+                    "</html>\n").getBytes()));
 
         }
     }
