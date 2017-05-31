@@ -1,6 +1,5 @@
 package jp.co.topgate.sugawara.web;
 
-import org.omg.CORBA.INTERNAL;
 
 import java.io.IOException;
 import java.lang.String;
@@ -37,10 +36,9 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        this.statusCode = judgeStatusCode(requestLine);
-        //this.statusCode = statusCode;
+        int statusCode = judgeStatusCode(requestLine);
+        this.statusCode = statusCode;
         if (statusCode == 200) {
-
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
@@ -49,6 +47,14 @@ public class HttpRequest {
         }
 
     }
+
+    /**
+     * requestLineからstatusCodeをjudgeする
+     * requestLine = method + requestUri + httpVersion
+     *
+     * @param requestLine ex:GET /index.html HTTP/1.1
+     * @return statusCode ex:200
+     */
 
 
     int judgeStatusCode(String requestLine) {
@@ -139,7 +145,7 @@ public class HttpRequest {
     /**
      * requestUriからUriPathを抜き出す
      *
-     * @param requestUri ex:/index.html
+     * @param requestUri ex:http://localhost:8080/index.html
      * @return UriPath ex:/index.html
      */
 

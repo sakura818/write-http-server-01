@@ -15,6 +15,12 @@ public class HttpResponse {
     private File file;
     private int statusCode;
 
+    /**
+     * HttpResponseのコンストラクタ
+     *
+     * @param file,statusCode
+     */
+
     public HttpResponse(File file, int statusCode) {
         this.file = file;
         this.statusCode = statusCode;

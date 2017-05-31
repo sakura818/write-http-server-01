@@ -14,6 +14,12 @@ public class HttpResponseMessageBodyBuilder {
 
     private File file;
 
+    /**
+     * HttpResponseMessageBodyBuilderのコンストラクタ
+     *
+     * @param file
+     */
+
     public HttpResponseMessageBodyBuilder(File file) {
         this.file = file;
     }

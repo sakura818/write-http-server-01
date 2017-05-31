@@ -14,6 +14,12 @@ import java.util.Map;
 public class HttpResponseStatusLineBuilder {
     private int statusCode;
 
+    /**
+     * HttpResponseStatusLineBuilderのコンストラクタ
+     *
+     * @param statusCode
+     */
+
     public HttpResponseStatusLineBuilder(int statusCode) {
         this.statusCode = statusCode;
     }
