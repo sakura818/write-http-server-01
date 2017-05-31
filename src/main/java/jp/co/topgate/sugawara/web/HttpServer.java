@@ -47,19 +47,23 @@ public class HttpServer {
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
-                    if (statusCode == HTTP_VERSION_NOT_SUPPORTED) {
-                        file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
-                    } else if (statusCode == NOT_IMPLEMENTED) {
-                        file = new File(this.FILEPATH_DIR, "NotImplemented.html");
-                    } else if (statusCode == BAD_REQUEST) {
-                        file = new File(this.FILEPATH_DIR, "BadRequest.html");
-                    } else if (statusCode == OK) {
-                        statusCode = catchStatusCode(file);
-                        if (statusCode == OK) {
+                    switch (statusCode) {
+                        case HTTP_VERSION_NOT_SUPPORTED:
+                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
+                            break;
+                        case NOT_IMPLEMENTED:
+                            file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                            break;
+                        case BAD_REQUEST:
+                            file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                        case OK:
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                        } else if (statusCode == NOT_FOUND) {
-                            file = new File(this.FILEPATH_DIR, "NotFound.html");
-                        }
+                            statusCode = catchStatusCode(file);
+                            if (statusCode == OK) {
+                                file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                            } else if (statusCode == NOT_FOUND) {
+                                file = new File(this.FILEPATH_DIR, "NotFound.html");
+                            }
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
