@@ -20,6 +20,11 @@ import java.util.ArrayList;
 public class HttpRequest {
     private String uriPath;
     private String requestUri;
+    private int statusCode;
+    private final int OK = 200;
+    private final int BAD_REQUEST = 400;
+    private final int NOT_IMPLEMENTED = 501;
+    private final int HTTP_VERSION_NOT_SUPPORTED = 505;
 
 
     /**
@@ -32,12 +37,34 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
+        statusCode = judgeStatusCode(requestLine);
+        this.statusCode = statusCode;
+        if (statusCode == 200) {
 
-        String requestUri = parseRequestUri(requestLine);
-        this.requestUri = requestUri;
+            String requestUri = parseRequestUri(requestLine);
+            this.requestUri = requestUri;
 
-        String UriPath = parseUriPath(requestUri);
-        this.uriPath = UriPath;
+            String UriPath = parseUriPath(requestUri);
+            this.uriPath = UriPath;
+        }
+
+    }
+
+
+    int judgeStatusCode(String requestLine) {
+        if (requestLine != null) {
+            String[] requestLineArray = requestLine.split(" ", 3);
+            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
+                statusCode = OK;
+            } else if ((requestLineArray.length == 3) && (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+                statusCode = HTTP_VERSION_NOT_SUPPORTED;
+            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true)) {
+                statusCode = NOT_IMPLEMENTED;
+            } else {
+                statusCode = BAD_REQUEST;
+            }
+        }
+        return statusCode;
     }
 
 
@@ -52,17 +79,9 @@ public class HttpRequest {
     String parseRequestUri(String requestLine) {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
-                requestUri = requestLineArray[1];
-                if (requestUri.equals("/")) {
-                    requestUri += "index.html";
-                }
-            } else if ((requestLineArray.length == 3) &&  (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
-                throw new HttpVersionNotSupported;
-            } else if( ((requestLineArray.length == 3) &&  (notAvailableMethod.contains(requestLineArray[0]) == true))) {
-                throw new NotImplemented;
-            } else {
-                throw new BadRequestException;
+            requestUri = requestLineArray[1];
+            if (requestUri.equals("/")) {
+                requestUri += "index.html";
             }
         }
         return requestUri;
@@ -133,6 +152,16 @@ public class HttpRequest {
             uriPath = requestUri;
         }
         return uriPath;
+    }
+
+    /**
+     * statusCodeを取得する
+     *
+     * @return statusCOde
+     */
+
+    public int getStatusCode() {
+        return this.statusCode;
     }
 
 
