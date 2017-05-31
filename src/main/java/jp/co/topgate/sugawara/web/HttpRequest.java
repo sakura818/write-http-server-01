@@ -56,10 +56,10 @@ public class HttpRequest {
             String[] requestLineArray = requestLine.split(" ", 3);
             if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
                 statusCode = OK;
-            } else if ((requestLineArray.length == 3) && (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
-                statusCode = HTTP_VERSION_NOT_SUPPORTED;
             } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true)) {
                 statusCode = NOT_IMPLEMENTED;
+            } else if ((requestLineArray.length == 3) && (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+                statusCode = HTTP_VERSION_NOT_SUPPORTED;
             } else {
                 statusCode = BAD_REQUEST;
             }

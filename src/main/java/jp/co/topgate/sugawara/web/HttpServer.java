@@ -48,11 +48,11 @@ public class HttpServer {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
                     switch (statusCode) {
-                        case HTTP_VERSION_NOT_SUPPORTED:
-                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
-                            break;
                         case NOT_IMPLEMENTED:
                             file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                            break;
+                        case HTTP_VERSION_NOT_SUPPORTED:
+                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
                             break;
                         case BAD_REQUEST:
                             file = new File(this.FILEPATH_DIR, "BadRequest.html");
@@ -80,14 +80,9 @@ public class HttpServer {
                 inputStream.close();
                 outputStream.close();
             }
-        } catch (
-                IOException e)
-
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally
-
-        {
+        } finally {
             try {
                 if ((this.socket != null) || (this.serverSocket != null)) {
                     this.socket.close();
@@ -98,7 +93,6 @@ public class HttpServer {
             }
             System.out.println("正常にコネクションできないエラーが発生しました");
         }
-
     }
 
     /**
