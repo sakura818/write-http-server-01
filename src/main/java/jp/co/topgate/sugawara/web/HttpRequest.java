@@ -37,8 +37,8 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        statusCode = judgeStatusCode(requestLine);
-        this.statusCode = statusCode;
+        this.statusCode = judgeStatusCode(requestLine);
+        //this.statusCode = statusCode;
         if (statusCode == 200) {
 
             String requestUri = parseRequestUri(requestLine);
