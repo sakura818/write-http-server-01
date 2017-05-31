@@ -26,14 +26,14 @@ public class HttpRequest {
      * @param inputStream
      */
 
-    public HttpRequest(InputStream inputStream) throws IOException {
+    public HttpRequest(InputStream inputStream) throws IOException, NullPointerException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
 
         this.statusCode = judgeStatusCode(requestLine);
 
-        String requestUri = parseRequestUri(requestLine);
+        String requestUri = parseRequestUri(requestLine, statusCode);
         this.requestUri = requestUri;
 
         String UriPath = parseUriPath(requestUri);
@@ -48,6 +48,8 @@ public class HttpRequest {
                 statusCode = 200;
             } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
                 statusCode = 500;
+            } else {
+                statusCode = 400;
             }
         }
         return statusCode;
@@ -62,17 +64,18 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-    String parseRequestUri(String requestLine) {
-        if (requestLine != null) {
+    String parseRequestUri(String requestLine, int statusCode) {
+        if (statusCode == 200) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
-                requestUri = requestLineArray[1];
-                if (requestUri.equals("/")) {
-                    requestUri += "index.html";
-                }
-            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
-                requestUri = requestLineArray[1];
+            requestUri = requestLineArray[1];
+            if (requestUri.equals("/")) {
+                requestUri += "index.html";
             }
+        } else if (statusCode == 500) {
+            String[] requestLineArray = requestLine.split(" ", 3);
+            requestUri = requestLineArray[1];
+        } else if (statusCode == 400) {
+            requestUri = requestLine;
         }
         return requestUri;
     }
@@ -135,10 +138,12 @@ public class HttpRequest {
 
     String parseUriPath(String requestUri) {
         String host = "http://localhost:8080";
-        if (requestUri.startsWith(host)) {
-            requestUri = requestUri.replace(host, "");
+        if (requestUri != null) {
+            if (requestUri.startsWith(host)) {
+                requestUri = requestUri.replace(host, "");
+            }
+            uriPath = requestUri;
         }
-        uriPath = requestUri;
         return uriPath;
     }
 

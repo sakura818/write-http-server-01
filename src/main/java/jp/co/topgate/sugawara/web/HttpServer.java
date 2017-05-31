@@ -40,16 +40,19 @@ public class HttpServer {
                 int statusCode = 0;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    if (httpRequest.getStatusCode() == 500) {
-                        statusCode = 500;
+                    statusCode = httpRequest.getStatusCode();
+                    if (statusCode == 500) {
                         file = new File(this.FILEPATH_DIR, "InternalServerError.html");
                     }
-                    if (httpRequest.getStatusCode() == 200) {
+                    if (statusCode == 200) {
                         file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
                         statusCode = catchStatusCode(file);
                         if (statusCode == 404) {
                             file = new File(this.FILEPATH_DIR, "NotFound.html");
                         }
+                    }
+                    if (statusCode == 400) {
+                        file = new File(this.FILEPATH_DIR, "BadRequest.html");
                     }
                 } catch (IOException e) {
                     statusCode = 400;
@@ -71,7 +74,7 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if ((this.socket != null) && (this.serverSocket != null)) {
+                if ((this.socket != null) || (this.serverSocket != null)) {
                     this.socket.close();
                     this.serverSocket.close();
                 }
