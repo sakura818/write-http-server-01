@@ -26,7 +26,7 @@ public class HttpRequest {
      * @param inputStream
      */
 
-    public HttpRequest(InputStream inputStream) throws IOException, NullPointerException {
+    public HttpRequest(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
