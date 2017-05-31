@@ -48,7 +48,7 @@ public class HttpResponseStatusLineBuilder {
             put(400, "Bad Request");
             put(404, "Not Found");
             put(501, "Not Implemented");
-            put(505, "Http Version Not Supported.html");
+            put(505, "Http Version Not Supported");
         }
     };
 

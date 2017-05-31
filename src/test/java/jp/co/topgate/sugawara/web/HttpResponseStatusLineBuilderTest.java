@@ -57,10 +57,17 @@ public class HttpResponseStatusLineBuilderTest {
         }
 
         @Test
-        public void statusCodeが500のときに適切なreasonPhraseを返すかのテスト() {
-            int statusCode = 500;
+        public void statusCodeが501のときに適切なreasonPhraseを返すかのテスト() {
+            int statusCode = 501;
             HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Internal Server Error"));
+            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Not Implemented"));
+        }
+
+        @Test
+        public void statusCodeが505のときに適切なreasonPhraseを返すかのテスト() {
+            int statusCode = 505;
+            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
         }
     }
 
