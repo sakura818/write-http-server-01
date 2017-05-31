@@ -14,12 +14,18 @@ public class HttpResponseMessageBodyBuilder {
 
     private File file;
 
+    /**
+     * HttpResponseMessageBodyBuilderのコンストラクタ
+     *
+     * @param file
+     */
+
     public HttpResponseMessageBodyBuilder(File file) {
         this.file = file;
     }
 
     /**
-     * fileをバイト型の配列で読み込みHttpResponseMessageBodyを生成する
+     * fileをバイト型の配列で読み込みMessageBodyを生成する
      *
      * @return messageBody
      */

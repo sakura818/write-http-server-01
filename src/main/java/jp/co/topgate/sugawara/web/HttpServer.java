@@ -20,6 +20,12 @@ public class HttpServer {
     private ServerSocket serverSocket;
     private final int PORT = 8080;
     private final String FILEPATH_DIR = "src/main/resources/";
+    private final int OK = 200;
+    private final int BAD_REQUEST = 400;
+    private final int NOT_FOUND = 404;
+    private final int NOT_IMPLEMENTED = 501;
+    private final int HTTP_VERSION_NOT_SUPPORTED = 505;
+
 
     /**
      * クライアントとサーバのデータの入出力を行う
@@ -32,36 +38,43 @@ public class HttpServer {
             System.out.println("start up http server http://localhost:" + this.PORT);
             while (true) {
                 this.socket = this.serverSocket.accept();
-                System.out.println("http request incoming");
-                System.out.println("http request line...");
 
                 InputStream inputStream = this.socket.getInputStream();
                 HttpRequest httpRequest;
 
                 File file = null;
-                int statusCode;
+                int statusCode = 0;
                 try {
                     httpRequest = new HttpRequest(inputStream);
-                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                    statusCode = catchStatusCode(file);
-                    if (statusCode == 404) {
-                        file = new File(this.FILEPATH_DIR, "NotFound.html");
+                    statusCode = httpRequest.getStatusCode();
+                    switch (statusCode) {
+                        case OK:
+                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                            statusCode = catchStatusCode(file);
+                            if (statusCode == OK) {
+                                file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                            } else if (statusCode == NOT_FOUND) {
+                                file = new File(this.FILEPATH_DIR, "NotFound.html");
+                            }
+                            break;
+                        case BAD_REQUEST:
+                            file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                            break;
+                        case NOT_IMPLEMENTED:
+                            file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                            break;
+                        case HTTP_VERSION_NOT_SUPPORTED:
+                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
+                            break;
                     }
                 } catch (IOException e) {
-                    statusCode = 400;
-                    file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                    throw new RuntimeException(e);
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 HttpResponse httpResponse = new HttpResponse(file, statusCode);
                 try {
                     httpResponse.writeToOutputStream(outputStream);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new RuntimeException(e);
-                } catch (ArrayStoreException e) {
-                    throw new RuntimeException(e);
-                } catch (NullPointerException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -73,7 +86,7 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if ((this.socket != null) && (this.serverSocket != null)) {
+                if ((this.socket != null) || (this.serverSocket != null)) {
                     this.socket.close();
                     this.serverSocket.close();
                 }
@@ -85,7 +98,7 @@ public class HttpServer {
     }
 
     /**
-     * 適切なステータスコードを返す
+     * 200か404のステータスコードを返す
      *
      * @param file ex:index.html
      * @return statusCode ex:200
@@ -93,9 +106,9 @@ public class HttpServer {
 
     int catchStatusCode(File file) {
         if (!file.exists()) {
-            return 404;
+            return NOT_FOUND;
         }
-        return 200;
+        return OK;
     }
 
 }

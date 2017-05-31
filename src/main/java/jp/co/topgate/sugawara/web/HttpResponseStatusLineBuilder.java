@@ -14,13 +14,18 @@ import java.util.Map;
 public class HttpResponseStatusLineBuilder {
     private int statusCode;
 
+    /**
+     * HttpResponseStatusLineBuilderのコンストラクタ
+     *
+     * @param statusCode
+     */
+
     public HttpResponseStatusLineBuilder(int statusCode) {
         this.statusCode = statusCode;
     }
 
     /**
-     * ResponseStatusLineを生成する
-     * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
+     * StatusLineを生成する
      *
      * @return httpResponseStatusLineContent ex:HTTP/1.1 200 OK
      */
@@ -42,6 +47,8 @@ public class HttpResponseStatusLineBuilder {
             put(200, "OK");
             put(400, "Bad Request");
             put(404, "Not Found");
+            put(501, "Not Implemented");
+            put(505, "Http Version Not Supported");
         }
     };
 
@@ -57,6 +64,6 @@ public class HttpResponseStatusLineBuilder {
         if (statusCodeToReasonPhrase.containsKey(statusCode)) {
             return statusCodeToReasonPhrase.get(statusCode);
         }
-        return null;
+        return "Unknown Status Code";
     }
 }

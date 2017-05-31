@@ -4,7 +4,7 @@ import java.io.*;
 
 /**
  * HttpResponse class
- * HttpResponseのコンテンツをバイト出力ストリームOutputStreamに書き込む
+ * HttpResponseのコンテンツを組み立て、バイト出力ストリームOutputStreamに書き込む
  * HttpResponse = StatusLine + MessageHeader + MessageBody
  *
  * @author sakura818
@@ -14,6 +14,12 @@ public class HttpResponse {
 
     private File file;
     private int statusCode;
+
+    /**
+     * HttpResponseのコンストラクタ
+     *
+     * @param file,statusCode
+     */
 
     public HttpResponse(File file, int statusCode) {
         this.file = file;
@@ -26,10 +32,10 @@ public class HttpResponse {
      *
      * @param file
      * @param statusCode
-     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
+     * @throws IOException
      */
 
-    public byte[] createHttpResponseContent(File file, int statusCode) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
+    public byte[] createHttpResponseContent(File file, int statusCode) throws IOException {
 
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
@@ -38,42 +44,35 @@ public class HttpResponse {
         byte[] statusLine = statusLineBuilder.build();
         byte[] messageHeader = messageHeaderBuilder.build();
         byte[] messageBody = messageBodyBuilder.build();
-        byte[] CRLF = "\r\n".getBytes("UTF-8");
+
 
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
         int messageBodyLength = messageBody.length;
-        int CRLFLength = CRLF.length;
 
-        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength + CRLFLength];
+
+        byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
         System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
         System.arraycopy(messageHeader, 0, createResponseContents, statusLineLength, messageHeaderLength);
         System.arraycopy(messageBody, 0, createResponseContents, (statusLineLength + messageHeaderLength), messageBodyLength);
-        System.arraycopy(CRLF, 0, createResponseContents, (statusLineLength + messageHeaderLength + messageBodyLength), CRLFLength);
 
         return createResponseContents;
     }
 
 
     /**
-     * HttpResponseのコンテンツをOutputStreamに書き込む
-     * HttpResponse= StatusLine + MessageHeader + MessageBody
+     * HttpResponseをOutputStreamに書き込む
      *
      * @param outputStream バイト出力ストリーム
-     * @throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException
+     * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IndexOutOfBoundsException, IOException, ArrayStoreException, NullPointerException {
+    public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
 
-        System.out.println("http response...");
-        /** HttpResponseをコンソールに表示する */
-        for (int i = 0; i < httpResponseContent.length; i++) {
-            System.out.print(httpResponseContent[i]);
-        }
     }
 }
