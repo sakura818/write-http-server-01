@@ -31,13 +31,28 @@ public class HttpRequest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
 
-        String requestUri = parseRequestUri(requestLine);
-        this.statusCode = getStatusCode();
+        this.statusCode = judgeStatusCode(requestLine);
 
+        String requestUri = parseRequestUri(requestLine);
         this.requestUri = requestUri;
+
         String UriPath = parseUriPath(requestUri);
         this.uriPath = UriPath;
     }
+
+
+    int judgeStatusCode(String requestLine) {
+        if (requestLine != null) {
+            String[] requestLineArray = requestLine.split(" ", 3);
+            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
+                statusCode = 200;
+            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+                statusCode = 500;
+            }
+        }
+        return statusCode;
+    }
+
 
     /**
      * requestLineからUriPathをparseする
@@ -55,10 +70,8 @@ public class HttpRequest {
                 if (requestUri.equals("/")) {
                     requestUri += "index.html";
                 }
-                statusCode = 200;
             } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true) || (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
                 requestUri = requestLineArray[1];
-                statusCode = 500;
             }
         }
         return requestUri;
@@ -130,9 +143,9 @@ public class HttpRequest {
     }
 
     /**
-     * 500のstatusCode500を取得する
+     * statusCode(200か500)を取得する
      *
-     * @return uriPath
+     * @return statusCode
      */
 
     public int getStatusCode() {
