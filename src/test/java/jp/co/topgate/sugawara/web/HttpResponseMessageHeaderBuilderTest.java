@@ -87,21 +87,21 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     public static class catchContentTypeメソッドのテスト {
         @Test
-        public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト1() {
+        public void ファイルの拡張子htmlに応じて適切なContentTypeをかえすテスト1() {
             File file = new File("src/test/resources/index.html");
             HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/html; charset=UTF-8"));
         }
 
         @Test
-        public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト2() {
+        public void ファイルの拡張子cssに応じて適切なContentTypeをかえすテスト2() {
             File file = new File("src/test/resources/sample.css");
             HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/css"));
         }
 
         @Test
-        public void ファイルの拡張子に応じて適切なContentTypeをかえすテスト3() {
+        public void ファイルの拡張子jsに応じて適切なContentTypeをかえすテスト3() {
             File file = new File("src/test/resources/sample.js");
             HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("application/javascript"));
@@ -110,14 +110,14 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     public static class extractExtensionメソッドのテスト {
         @Test
-        public void ファイルから拡張子をextractするテスト1() {
+        public void ドットを１つだけ含むファイルから拡張子をextractするテスト() {
             File file = new File("src/test/resources/index.html");
             HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
         }
 
         @Test
-        public void ファイルから拡張子をextractするテスト2() {
+        public void ドットを２つ連続で含むファイルから拡張子をextractするテスト2() {
             File file = new File("src/test/resources/index..html");
             HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
