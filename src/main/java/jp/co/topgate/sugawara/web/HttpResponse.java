@@ -56,7 +56,6 @@ public class HttpResponse {
         return createResponseContents;
     }
 
-
     /**
      * HttpResponseをOutputStreamに書き込む
      *

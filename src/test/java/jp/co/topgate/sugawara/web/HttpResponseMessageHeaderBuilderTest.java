@@ -22,104 +22,82 @@ public class HttpResponseMessageHeaderBuilderTest {
 
     public static class buildメソッドのテスト {
         @Test
-        public void buildメソッドのEntityHeaderTestを適切な形で生成できているかのテスト() {
-            assertThat(buildTest(), is(("Server: sakura818\n" +
+        public void レスポンスでhtmlファイルを返すときMessageHeaderを適切なシンタックスで生成するテスト() {
+            File file = new File("src/test/resources/index.html");
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat(builder.build(), is(("Server: sakura818\n" +
                     "Allow: GET\n" +
                     "Content-Language: en\n" +
-                    "Content-Type: text/html; charset=UTF-8\n").getBytes()));
-        }
-
-        public byte[] buildTest() {
-            StringBuilder messageHeader = new StringBuilder();
-            messageHeader.append("");
-            messageHeader.append("Server: sakura818\n");
-            messageHeader.append("Allow: GET\n" +
-                    "Content-Language: en\n" +
-                    "Content-Type: text/html; charset=UTF-8\n");
-            return (messageHeader.toString()).getBytes();
+                    "Content-Type: text/html; charset=UTF-8\n\n").getBytes()));
         }
     }
 
     public static class createGeneralHeaderメソッドのテスト {
         @Test
-        public void GeneralHeaderを適切な形で生成できているかのテスト() {
-            assertThat(createGeneralHeaderTest(), is(""));
+        public void レスポンスでhtmlファイルを返すときGeneralHeaderを適切なシンタックスで生成するテスト() {
+            File file = new File("src/test/resources/index.html");
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat(builder.createGeneralHeader(), is(""));
         }
-
-        public String createGeneralHeaderTest() {
-            StringBuilder GeneralHeader = new StringBuilder();
-            return GeneralHeader.toString();
-        }
-
     }
 
     public static class createResponseHeaderメソッドのテスト {
         @Test
-        public void messageHeaderを適切な形で生成できているかのテスト() {
-            assertThat(createResponseHeaderTest(), is("Server: sakura818\n"));
-        }
-
-        public String createResponseHeaderTest() {
-            StringBuilder responseHeader = new StringBuilder();
-            responseHeader.append("Server: " + "sakura818").append("\n");
-            return responseHeader.toString();
+        public void レスポンスでhtmlファイルを返すときmessageHeaderを適切なシンタックスで生成するテスト() {
+            File file = new File("src/test/resources/index.html");
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat(builder.createResponseHeader(), is("Server: sakura818\n"));
         }
     }
 
     public static class createEntityHeaderメソッドのテスト {
 
         @Test
-        public void EntityHeaderを適切な形で生成できているかのテスト() {
-            assertThat(createEntityHeaderTest(), is("Allow: GET\n" +
+        public void レスポンスでhtmlファイルを返すときEntityHeaderを適切なシンタックスで生成するテスト() {
+            File file = new File("src/test/resources/index.html");
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat(builder.createEntityHeader(file), is("Allow: GET\n" +
                     "Content-Language: en\n" +
                     "Content-Type: text/html; charset=UTF-8\n"));
-        }
-
-        public String createEntityHeaderTest() {
-            StringBuilder entityHeader = new StringBuilder();
-            entityHeader.append("Allow: " + "GET").append("\n");
-            entityHeader.append("Content-Language: " + "en").append("\n");
-            entityHeader.append("Content-Type: " + "text/html; charset=UTF-8").append("\n");
-            return entityHeader.toString();
         }
     }
 
     public static class catchContentTypeメソッドのテスト {
         @Test
-        public void ファイルの拡張子htmlに応じて適切なContentTypeをかえすテスト() {
+        public void ファイルの拡張子htmlに対してContentTypeにtextスラッシュcssと文字エンコーディングUTF_8を返すテスト() {
             File file = new File("src/test/resources/index.html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/html; charset=UTF-8"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("text/html; charset=UTF-8"));
         }
 
         @Test
-        public void ファイルの拡張子cssに応じて適切なContentTypeをかえすテスト() {
+        public void ファイルの拡張子cssに対してContentTypeにtextスラッシュcssを返すテスト() {
             File file = new File("src/test/resources/sample.css");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/css"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("text/css"));
         }
 
         @Test
-        public void ファイルの拡張子jsに応じて適切なContentTypeをかえすテスト() {
+        public void ファイルの拡張子jsに対しContentTypeにapplicationスラッシュjavascriptを返すテスト() {
             File file = new File("src/test/resources/sample.js");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("application/javascript"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("application/javascript"));
         }
     }
 
     public static class extractExtensionメソッドのテスト {
         @Test
-        public void ドットを1つだけ含むファイルから拡張子をextractするテスト() {
+        public void ドットを1つだけ含むファイルから拡張子htmlを抜き出すテスト() {
             File file = new File("src/test/resources/index.html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.extractExtension(file)), is("html"));
         }
 
         @Test
-        public void ドットを2つ連続で含むファイルから拡張子をextractするテスト() {
+        public void ドットを2つ連続で含むファイルから拡張子を抜き出すテスト() {
             File file = new File("src/test/resources/index..html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.extractExtension(file)), is("html"));
         }
     }
 
