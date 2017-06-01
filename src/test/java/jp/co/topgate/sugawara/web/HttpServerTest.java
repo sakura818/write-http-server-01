@@ -40,7 +40,7 @@ public class HttpServerTest {
 
         @Test
         public void ファイルが存在していなかった場合はステータスコード404を返すテスト() {
-            assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExist.html")), is(404));
+            assertThat(httpServer.catchStatusCode(new File(this.FILEPATH_DIR, "noExistFile.html")), is(404));
         }
 
     }

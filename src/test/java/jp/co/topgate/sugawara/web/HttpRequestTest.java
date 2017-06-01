@@ -25,28 +25,28 @@ public class HttpRequestTest {
     public static class judgeStatusCodeメソッドのテスト {
 
         @Test
-        public void requestLineからstatusCode200をjudgeするテスト() throws IOException {
+        public void requestLineからstatusCode200を判断するテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getStatusCode(), is(200));
         }
 
         @Test
-        public void requestLineからstatusCode501をjudgeするテスト() throws IOException {
+        public void requestLineからstatusCode501を判断するテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("POST /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.getStatusCode()), is(501));
         }
 
         @Test
-        public void requestLineからstatusCode505をjudgeするテスト() throws IOException {
+        public void requestLineからstatusCode505を判断するテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/2".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.getStatusCode()), is(505));
         }
 
         @Test
-        public void requestLineからstatusCode400をjudgeするテスト() throws IOException {
+        public void requestLineからstatusCode400を判断するテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("hoge hoge hoge hoge".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.getStatusCode()), is(400));

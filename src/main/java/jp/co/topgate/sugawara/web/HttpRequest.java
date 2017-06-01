@@ -164,7 +164,7 @@ public class HttpRequest {
     /**
      * statusCodeを取得する
      *
-     * @return statusCOde
+     * @return statusCode
      */
 
     public int getStatusCode() {
@@ -185,7 +185,7 @@ public class HttpRequest {
     /**
      * テストのためにuriPathを取得する
      *
-     * @return uriPath
+     * @return requestUri
      */
 
     public String getRequestUri() {

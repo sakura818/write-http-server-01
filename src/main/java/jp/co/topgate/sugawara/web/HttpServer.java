@@ -43,7 +43,7 @@ public class HttpServer {
                 HttpRequest httpRequest;
 
                 File file = null;
-                int statusCode = 0;
+                int statusCode;
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
