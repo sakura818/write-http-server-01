@@ -47,25 +47,27 @@ public class HttpServer {
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
-                    switch (statusCode) {
-                        case OK:
-                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                            statusCode = catchStatusCode(file);
-                            if (statusCode == OK) {
-                                file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                            } else if (statusCode == NOT_FOUND) {
+                    if (statusCode == OK) {
+                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                        if (!file.exists()) {
+                            statusCode = NOT_FOUND;
+                        }
+                    }
+                    if (statusCode != OK) {
+                        switch (statusCode) {
+                            case NOT_FOUND:
                                 file = new File(this.FILEPATH_DIR, "NotFound.html");
-                            }
-                            break;
-                        case BAD_REQUEST:
-                            file = new File(this.FILEPATH_DIR, "BadRequest.html");
-                            break;
-                        case NOT_IMPLEMENTED:
-                            file = new File(this.FILEPATH_DIR, "NotImplemented.html");
-                            break;
-                        case HTTP_VERSION_NOT_SUPPORTED:
-                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
-                            break;
+                                break;
+                            case BAD_REQUEST:
+                                file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                                break;
+                            case NOT_IMPLEMENTED:
+                                file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                                break;
+                            case HTTP_VERSION_NOT_SUPPORTED:
+                                file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
+                                break;
+                        }
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
