@@ -20,7 +20,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void ステータスコード200を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void ステータスコード200を返すときメッセージボディにindexHtmlを送るテスト() throws IOException {
             File indexHtml = new File("src/test/resources/index.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(indexHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
@@ -47,7 +47,7 @@ public class HttpResponseMessageBodyBuilderTest {
         }
 
         @Test
-        public void レスポンスにステータスコード400を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void レスポンスにステータスコード400を返すときメッセージボディにbadRequestHtmlを送るテスト() throws IOException {
             File badRequestHtml = new File("src/test/resources/BadRequest.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(badRequestHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
@@ -66,7 +66,7 @@ public class HttpResponseMessageBodyBuilderTest {
         }
 
         @Test
-        public void レスポンスにステータスコード404を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void レスポンスにステータスコード404を返すときメッセージボディにnotFoundHtmlを送るテスト() throws IOException {
             File notFoundHtml = new File("src/test/resources/NotFound.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notFoundHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
@@ -86,7 +86,7 @@ public class HttpResponseMessageBodyBuilderTest {
 
 
         @Test
-        public void レスポンスにステータスコード501を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void レスポンスにステータスコード501を返すときメッセージボディにnotImplementedHtmlを送るテスト() throws IOException {
             File notImplementedHtml = new File("src/test/resources/NotImplemented.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notImplementedHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
@@ -105,7 +105,7 @@ public class HttpResponseMessageBodyBuilderTest {
         }
 
         @Test
-        public void レスポンスにステータスコード505を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void レスポンスにステータスコード505を返すときメッセージボディにhttpVersionNotSupportedHtmlを送るテスト() throws IOException {
             File httpVersionNotSupportedHtml = new File("src/test/resources/HttpVersionNotSupported.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(httpVersionNotSupportedHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +

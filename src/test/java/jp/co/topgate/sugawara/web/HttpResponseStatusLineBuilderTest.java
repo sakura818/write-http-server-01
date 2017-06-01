@@ -20,7 +20,7 @@ public class HttpResponseStatusLineBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void ステータスコード200のときにStatusLineを正しいシンタックスで生成するテスト() {
+        public void ステータスコード200のときにStatusLineを適切なシンタックスで生成するテスト() {
             HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(200);
             assertThat(builder.build(), is("HTTP/1.1 200 OK\n".getBytes()));
         }
