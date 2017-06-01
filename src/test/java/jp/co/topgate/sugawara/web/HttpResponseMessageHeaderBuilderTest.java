@@ -28,7 +28,7 @@ public class HttpResponseMessageHeaderBuilderTest {
             assertThat(builder.build(), is(("Server: sakura818\n" +
                     "Allow: GET\n" +
                     "Content-Language: en\n" +
-                    "Content-Type: text/html; charset=UTF-8\n").getBytes()));
+                    "Content-Type: text/html; charset=UTF-8\n\n").getBytes()));
         }
     }
 
