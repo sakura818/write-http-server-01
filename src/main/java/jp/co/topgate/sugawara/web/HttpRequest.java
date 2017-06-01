@@ -38,7 +38,7 @@ public class HttpRequest {
         String requestLine = bufferedReader.readLine();
         int statusCode = judgeStatusCode(requestLine);
         this.statusCode = statusCode;
-        if (statusCode == 200) {
+        if (statusCode == OK) {
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
@@ -179,6 +179,16 @@ public class HttpRequest {
 
     public String getUriPath() {
         return this.uriPath;
+    }
+
+    /**
+     * テストのためにuriPathを取得する
+     *
+     * @return uriPath
+     */
+
+    public String getRequestUri() {
+        return this.requestUri;
     }
 
 
