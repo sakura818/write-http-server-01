@@ -19,7 +19,7 @@ import static org.junit.Assert.assertThat;
 public class HttpServerTest {
 
     public static class catchStatusCodeメソッドのテスト {
-        final static String FILEPATH_DIR = "src/test/resources/";
+        final String FILEPATH_DIR = "src/test/resources/";
         HttpServer httpServer = new HttpServer();
 
         @Test
