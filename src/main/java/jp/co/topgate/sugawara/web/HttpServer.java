@@ -99,20 +99,6 @@ public class HttpServer {
         }
     }
 
-    /**
-     * 200か404のステータスコードを返す
-     *
-     * @param file ex:index.html
-     * @return statusCode ex:200
-     */
-
-    int catchStatusCode(File file) {
-        if (!file.exists()) {
-            return NOT_FOUND;
-        }
-        return OK;
-    }
-
 }
 
 
