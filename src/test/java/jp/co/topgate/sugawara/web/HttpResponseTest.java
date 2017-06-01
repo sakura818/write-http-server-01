@@ -26,9 +26,9 @@ public class HttpResponseTest {
         public void ステータスコード200かつメッセージボディがhtmlのときレスポンスを適切なシンタックスで生成するテスト() throws IOException {
             File file = new File("src/test/resources/index.html");
             int statusCode = 200;
-            HttpResponse httpResponse = new HttpResponse(file,statusCode);
+            HttpResponse httpResponse = new HttpResponse(file, statusCode);
 
-            assertThat(httpResponse.createHttpResponseContent(file,statusCode), is(httpResponseExpect()));
+            assertThat(httpResponse.createHttpResponseContent(file, statusCode), is(httpResponseExpect()));
         }
 
 
