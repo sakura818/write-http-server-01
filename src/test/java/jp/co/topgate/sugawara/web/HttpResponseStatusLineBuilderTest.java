@@ -31,36 +31,36 @@ public class HttpResponseStatusLineBuilderTest {
         @Test
         public void ステータスコード200のときにreasonPhraseにOKを返すテスト() {
             int statusCode = 200;
-            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("OK"));
+            HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("OK"));
         }
 
         @Test
         public void ステータスコード400のときにreasonPhraseにBad_Requestを返すテスト() {
             int statusCode = 400;
-            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Bad Request"));
+            HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Bad Request"));
         }
 
         @Test
         public void ステータスコード404のときにNot_Foundを返すテスト() {
             int statusCode = 404;
-            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Not Found"));
+            HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Not Found"));
         }
 
         @Test
         public void ステータスコード501のときにreasonPhraseにNot_Implementedを返すテスト() {
             int statusCode = 501;
-            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Not Implemented"));
+            HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Not Implemented"));
         }
 
         @Test
         public void ステータスコード505のときにreasonPhraseにHttp_Version_Not_Supportedを返すテスト() {
             int statusCode = 505;
-            HttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
+            HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
         }
     }
 }
