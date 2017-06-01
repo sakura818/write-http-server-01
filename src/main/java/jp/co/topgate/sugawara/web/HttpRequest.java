@@ -46,7 +46,6 @@ public class HttpRequest {
             String uriPath = parseUriPath(requestUri);
             this.uriPath = uriPath;
         }
-
     }
 
     /**
@@ -57,15 +56,14 @@ public class HttpRequest {
      * @return statusCode ex:200
      */
 
-
     int judgeStatusCode(String requestLine) {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
+            if ((requestLineArray.length == 3) && (implementedHttpMethod.contains(requestLineArray[0]) == true) && (supportedHttpVersions.contains(requestLineArray[2]) == true)) {
                 statusCode = OK;
-            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true)) {
+            } else if ((requestLineArray.length == 3) && (notImplementedHttpMethod.contains(requestLineArray[0]) == true)) {
                 statusCode = NOT_IMPLEMENTED;
-            } else if ((requestLineArray.length == 3) && (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+            } else if ((requestLineArray.length == 3) && (notSupportedHttpVersions.contains(requestLineArray[2]) == true)) {
                 statusCode = HTTP_VERSION_NOT_SUPPORTED;
             } else {
                 statusCode = BAD_REQUEST;
@@ -74,6 +72,53 @@ public class HttpRequest {
         return statusCode;
     }
 
+    /**
+     * このHttpServerで実装しておりRFC2616に記載されているmethodのリスト
+     */
+
+    List<String> implementedHttpMethod = new ArrayList<String>() {
+        {
+            add("GET");
+        }
+    };
+
+    /**
+     * このHttpServerで実装していないがRFC2616に記載されているmethodのリスト
+     */
+
+    List<String> notImplementedHttpMethod = new ArrayList<String>() {
+        {
+            add("HEAD");
+            add("POST");
+            add("PUT");
+            add("DELETE");
+            add("TRACE");
+            add("HEAD");
+            add("CONNECT");
+        }
+    };
+
+    /**
+     * このHttpServerでサポートしておりRFC2616に記載されているhttpVersionのリスト
+     */
+
+    List<String> supportedHttpVersions = new ArrayList<String>() {
+        {
+            add("HTTP/1.1");
+        }
+    };
+
+    /**
+     * このHttpServerでサポートしていないがRFC2616に記載されているhttpVersionのリスト
+     */
+
+    List<String> notSupportedHttpVersions = new ArrayList<String>() {
+        {
+            add("HTTP/0.9");
+            add("HTTP/1.0");
+            add("HTTP/2");
+        }
+    };
 
     /**
      * requestLineからUriPathをparseする
@@ -93,54 +138,6 @@ public class HttpRequest {
         }
         return requestUri;
     }
-
-    /**
-     * このHttpServerでサポートしているmethodのリスト
-     */
-
-    List<String> availableMethod = new ArrayList<String>() {
-        {
-            add("GET");
-        }
-    };
-
-    /**
-     * このHttpServerでサポートしていないmethodのリスト
-     */
-
-    List<String> notAvailableMethod = new ArrayList<String>() {
-        {
-            add("HEAD");
-            add("POST");
-            add("PUT");
-            add("DELETE");
-            add("TRACE");
-            add("HEAD");
-            add("CONNECT");
-        }
-    };
-
-    /**
-     * このHttpServerでサポートしているhttpVersionのリスト
-     */
-
-    List<String> availableHttpVersion = new ArrayList<String>() {
-        {
-            add("HTTP/1.1");
-        }
-    };
-
-    /**
-     * このHttpServerでサポートしていないhttpVersionのリスト
-     */
-
-    List<String> notAvailableHttpVersion = new ArrayList<String>() {
-        {
-            add("HTTP/0.9");
-            add("HTTP/1.0");
-            add("HTTP/2");
-        }
-    };
 
 
     /**
