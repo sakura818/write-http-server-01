@@ -27,14 +27,13 @@ public class HttpResponseTest {
             File file = new File("src/test/resources/index.html");
             int statusCode = 200;
             HttpResponse httpResponse = new HttpResponse(file, statusCode);
-
             assertThat(httpResponse.createHttpResponseContent(file, statusCode), is(httpResponseExpect()));
         }
 
 
         public byte[] httpResponseExpect() throws IOException {
 
-            byte[] httpResponseExpect = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +
+            byte[] httpResponseExpectHtml = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +
                     "Allow: GET\n" +
                     "Content-Language: en\n" +
                     "Content-Type: text/html; charset=UTF-8\n\n" + "<!DOCTYPE html>\n" +
@@ -59,7 +58,7 @@ public class HttpResponseTest {
                     "</body>\n" +
                     "</html>\n").getBytes();
 
-            return httpResponseExpect;
+            return httpResponseExpectHtml;
         }
     }
 
