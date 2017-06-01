@@ -39,7 +39,7 @@ public class HttpRequestTest {
         }
 
         @Test
-        public void HttpVerion2のリクエストにはステータスコード505を返すテスト() throws IOException {
+        public void HttpVersion2のリクエストにはステータスコード505を返すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/2".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.getStatusCode()), is(505));
