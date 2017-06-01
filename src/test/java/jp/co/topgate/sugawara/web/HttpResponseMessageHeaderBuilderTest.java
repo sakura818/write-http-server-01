@@ -66,22 +66,22 @@ public class HttpResponseMessageHeaderBuilderTest {
         @Test
         public void ファイルの拡張子htmlに対してContentTypeにtextスラッシュcssと文字エンコーディングUTF_8を返すテスト() {
             File file = new File("src/test/resources/index.html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/html; charset=UTF-8"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("text/html; charset=UTF-8"));
         }
 
         @Test
         public void ファイルの拡張子cssに対してContentTypeにtextスラッシュcssを返すテスト() {
             File file = new File("src/test/resources/sample.css");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("text/css"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("text/css"));
         }
 
         @Test
         public void ファイルの拡張子jsに対しContentTypeにapplicationスラッシュjavascriptを返すテスト() {
             File file = new File("src/test/resources/sample.js");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.catchContentType(file)), is("application/javascript"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("application/javascript"));
         }
     }
 
@@ -89,15 +89,15 @@ public class HttpResponseMessageHeaderBuilderTest {
         @Test
         public void ドットを1つだけ含むファイルから拡張子htmlを抜き出すテスト() {
             File file = new File("src/test/resources/index.html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.extractExtension(file)), is("html"));
         }
 
         @Test
         public void ドットを2つ連続で含むファイルから拡張子を抜き出すテスト() {
             File file = new File("src/test/resources/index..html");
-            HttpResponseMessageHeaderBuilder httpResponseMessageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-            assertThat((httpResponseMessageHeaderBuilder.extractExtension(file)), is("html"));
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.extractExtension(file)), is("html"));
         }
     }
 
