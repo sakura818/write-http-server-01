@@ -43,8 +43,8 @@ public class HttpRequest {
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
-            String UriPath = parseUriPath(requestUri);
-            this.uriPath = UriPath;
+            String uriPath = parseUriPath(requestUri);
+            this.uriPath = uriPath;
         }
 
     }
