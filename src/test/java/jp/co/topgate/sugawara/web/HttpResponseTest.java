@@ -66,7 +66,6 @@ public class HttpResponseTest {
             return httpResponseExpect;
         }
 
-
         public byte[] httpResponseActual() throws Exception {
 
             byte[] httpResponseActual = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +

@@ -21,7 +21,6 @@ public class HttpResponseMessageBodyBuilderTest {
 
         @Test
         public void statusCodeが200のときのhtmlファイルのテスト() throws IOException {
-
             File indexHtml = new File("src/test/resources/index.html");
             byte[] indexHtmlByteActual = new byte[(int) indexHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(indexHtml));
@@ -48,12 +47,10 @@ public class HttpResponseMessageBodyBuilderTest {
                     "</p>\n" +
                     "</body>\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
         public void statusCodeが400のときのhtmlファイルのテスト() throws IOException {
-
             File badRequestHtml = new File("src/test/resources/BadRequest.html");
             byte[] badRequestHtmlByteActual = new byte[(int) badRequestHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(badRequestHtml));
@@ -72,12 +69,10 @@ public class HttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
         public void statusCodeが404のときのhtmlファイルのテスト() throws IOException {
-
             File notFoundHtml = new File("src/test/resources/NotFound.html");
             byte[] notFoundHtmlByteActual = new byte[(int) notFoundHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notFoundHtml));
@@ -96,13 +91,11 @@ public class HttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
 
         @Test
         public void statusCodeが501のときのhtmlファイルのテスト() throws IOException {
-
             File notImplementedHtml = new File("src/test/resources/NotImplemented.html");
             byte[] notImplementedHtmlByteActual = new byte[(int) notImplementedHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notImplementedHtml));
@@ -121,12 +114,10 @@ public class HttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
         public void statusCodeが505のときのhtmlファイルのテスト() throws IOException {
-
             File httpVersionNotSupportedHtml = new File("src/test/resources/HttpVersionNotSupported.html");
             byte[] httpVersionNotSupportedHtmlByteActual = new byte[(int) httpVersionNotSupportedHtml.length()];
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(httpVersionNotSupportedHtml));
@@ -145,7 +136,6 @@ public class HttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
     }
 

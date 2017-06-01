@@ -36,7 +36,6 @@ public class HttpResponse {
      */
 
     public byte[] createHttpResponseContent(File file, int statusCode) throws IOException {
-
         HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
         HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
         HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
@@ -45,12 +44,9 @@ public class HttpResponse {
         byte[] messageHeader = messageHeaderBuilder.build();
         byte[] messageBody = messageBodyBuilder.build();
 
-
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
         int messageBodyLength = messageBody.length;
-
-
         byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
         System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
@@ -69,10 +65,7 @@ public class HttpResponse {
      */
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
-
         byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
-        /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
-
     }
 }

@@ -83,14 +83,14 @@ public class HttpRequestTest {
         public void 相対パスのrequestUriからUriPathを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.getUriPath()), is("/index.html"));
+            assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
 
         @Test
         public void 絶対パスのrequestUriからUriPathを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.getUriPath()), is("/index.html"));
+            assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
 
     }

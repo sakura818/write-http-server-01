@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.String;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -97,7 +98,7 @@ public class HttpRequest {
      * このHttpServerでサポートしているmethodのリスト
      */
 
-    ArrayList<String> availableMethod = new ArrayList<String>() {
+    List<String> availableMethod = new ArrayList<String>() {
         {
             add("GET");
         }
@@ -107,7 +108,7 @@ public class HttpRequest {
      * このHttpServerでサポートしていないmethodのリスト
      */
 
-    ArrayList<String> notAvailableMethod = new ArrayList<String>() {
+    List<String> notAvailableMethod = new ArrayList<String>() {
         {
             add("HEAD");
             add("POST");
@@ -123,7 +124,7 @@ public class HttpRequest {
      * このHttpServerでサポートしているhttpVersionのリスト
      */
 
-    ArrayList<String> availableHttpVersion = new ArrayList<String>() {
+    List<String> availableHttpVersion = new ArrayList<String>() {
         {
             add("HTTP/1.1");
         }
@@ -133,7 +134,7 @@ public class HttpRequest {
      * このHttpServerでサポートしていないhttpVersionのリスト
      */
 
-    ArrayList<String> notAvailableHttpVersion = new ArrayList<String>() {
+    List<String> notAvailableHttpVersion = new ArrayList<String>() {
         {
             add("HTTP/0.9");
             add("HTTP/1.0");
