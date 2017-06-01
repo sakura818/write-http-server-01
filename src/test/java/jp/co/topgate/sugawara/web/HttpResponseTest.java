@@ -37,7 +37,7 @@ public class HttpResponseTest {
             byte[] httpResponseExpect = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +
                     "Allow: GET\n" +
                     "Content-Language: en\n" +
-                    "Content-Type: text/html; charset=UTF-8\n" + "<!DOCTYPE html>\n" +
+                    "Content-Type: text/html; charset=UTF-8\n\n" + "<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
                     "    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" +
@@ -57,7 +57,7 @@ public class HttpResponseTest {
                     "<p>gifです<img src=\"sample.gif\" width=\"100\" height=\"100\" alt=\"gif\" border=\"0\" align=\"center\" hspace=\"10\" vspace=\"10\">\n" +
                     "</p>\n" +
                     "</body>\n" +
-                    "</html>").getBytes();
+                    "</html>\n").getBytes();
 
             return httpResponseExpect;
         }
