@@ -92,7 +92,6 @@ public class HttpRequestTest {
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
-
     }
 }
 

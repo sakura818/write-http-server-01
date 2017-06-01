@@ -30,7 +30,6 @@ public class HttpResponseTest {
             assertThat(httpResponse.createHttpResponseContent(file, statusCode), is(httpResponseExpect()));
         }
 
-
         public byte[] httpResponseExpect() throws IOException {
 
             byte[] httpResponseExpectHtml = ("HTTP/1.1 200 OK\n" + "Server: sakura818\n" +
@@ -61,6 +60,4 @@ public class HttpResponseTest {
             return httpResponseExpectHtml;
         }
     }
-
-
 }
