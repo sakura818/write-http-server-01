@@ -20,7 +20,7 @@ public class HttpResponseStatusLineBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void StatusLineをhttpVersion_SP_statusCode_SP_reasonPhrase_CRLFという正しい文法で生成できているかのテスト() {
+        public void ステータスコード200のときにStatusLineを正しいシンタックスで生成するテスト() {
             HttpResponseStatusLineBuilder builder = new HttpResponseStatusLineBuilder(200);
             assertThat(builder.build(), is("HTTP/1.1 200 OK\n".getBytes()));
         }
@@ -63,6 +63,4 @@ public class HttpResponseStatusLineBuilderTest {
             assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
         }
     }
-
-
 }

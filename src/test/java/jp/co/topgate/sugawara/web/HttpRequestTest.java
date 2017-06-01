@@ -56,21 +56,21 @@ public class HttpRequestTest {
     public static class parseRequestUriメソッドのテスト {
 
         @Test
-        public void requestLineから相対パスのrequestUriを抜き出すテスト() throws IOException {
+        public void リクエストの1行目から相対パスのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getRequestUri(), is("/index.html"));
         }
 
         @Test
-        public void requestLineから絶対パスのrequestUriを抜き出すテスト() throws IOException {
+        public void リクエストの1行目から絶対パスのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getRequestUri(), is("http://localhost:8080/index.html"));
         }
 
         @Test
-        public void requestLineからスラッシュだけのrequestUriを抜き出すテスト() throws IOException {
+        public void リクエストの1行目からスラッシュだけのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET / HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getRequestUri(), is("/index.html"));

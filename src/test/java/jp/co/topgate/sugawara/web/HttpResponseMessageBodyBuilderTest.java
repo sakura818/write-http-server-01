@@ -20,7 +20,7 @@ public class HttpResponseMessageBodyBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void レスポンスにステータスコード200を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
+        public void ステータスコード200を返すときメッセージボディにhtmlファイルを送るテスト() throws IOException {
             File indexHtml = new File("src/test/resources/index.html");
             HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(indexHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
