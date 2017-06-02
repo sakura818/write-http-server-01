@@ -75,6 +75,13 @@ public class HttpRequestTest {
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getRequestUri(), is("/index.html"));
         }
+
+        @Test
+        public void リクエストの1行目から日本語のファイル名のrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /日本語のファイル名.txt HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/日本語のファイル名.txt"));
+        }
     }
 
     public static class parseUriPathメソッドのテスト {
