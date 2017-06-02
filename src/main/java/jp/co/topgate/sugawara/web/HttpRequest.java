@@ -4,6 +4,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,10 +129,11 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-    String parseRequestUri(String requestLine) {
+    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            requestUri = requestLineArray[1];
+            String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
+            requestUri = decodedRequestUri;
             if (requestUri.equals("/")) {
                 requestUri += "index.html";
             }
