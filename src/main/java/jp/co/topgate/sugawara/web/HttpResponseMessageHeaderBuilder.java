@@ -98,7 +98,7 @@ public class HttpResponseMessageHeaderBuilder {
         if (extensionToContentType.containsKey(extractExtension(file))) {
             return extensionToContentType.get(extractExtension(file));
         }
-        return "text/html; charset=utf-8";
+        return "application/octet-stream";
     }
 
     /**
