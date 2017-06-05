@@ -26,7 +26,7 @@ HttpServer
 - リクエストを同時に処理はできません。
 - ファイルの文字コードはUTF-8を使用してください。
 - 1GBのファイルでも対応することができます。
-1GBのダミーファイルの作り方はMacの場合、ターミナルでdd if=/dev/zero of=largeCapacity.txt bs=1073741824 count=10と入力すると作成できます。
+1GBのダミーファイルの作り方はMacの場合、ターミナルでdd if=/dev/zero of=largeCapacity.txt bs=1073741824 count=1と入力すると作成できます。
 
 ## Author
 
