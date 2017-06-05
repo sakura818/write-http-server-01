@@ -141,6 +141,24 @@ public class HttpRequest {
         return requestUri;
     }
 
+    /**
+     * uriPathからクエリパラメータをパースします。
+     *
+     * @param uriPath
+     * @return queryParameters
+     */
+    /*
+    private String uriPathQuerySplitter(String uriPath) {
+        if (uriPath == null) {
+            String uriQuery[] = uriPath.split("\\?", 2);
+            if (uriQuery[0] != uriPath) {
+                this.queryParameters = ParseUtil.parseQueryData(uriQuery[1]);
+            }
+        }
+        return uriQuery[0];
+    }
+    */
+
 
     /**
      * requestUriからUriPathを抜き出す
