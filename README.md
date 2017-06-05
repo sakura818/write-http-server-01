@@ -13,7 +13,7 @@ HttpServer
 
 1. ターミナルでgit cloneしたフォルダに移動
 2. ターミナルで./gradlew runと入力
-3. ブラウザでhttp://localhost:8080/index.html などに移動
+3. ブラウザでhttp://localhost:8080/index.html などを入力
 
 ## Installation
 
@@ -22,8 +22,10 @@ HttpServer
 ## Anything Else
 
 ポートは8080番を使用しています。
-HTTP/1.1しか想定していないためHTTP/1.0やHTTP/2には応答しません。
 簡易的な機能しかありません。
+リクエストを同時に処理はできません。先にきたリクエストのレスポンスを返し終わると、次のリクエストの処理をします。
+ファイルの文字コードはUTF-8を使用してください。
+リクエストでURIを「/」と指定、つまり(http://localhost:8080/)とすると(http://localhost:8080/index.html)が呼ばれます。
 
 ## Author
 

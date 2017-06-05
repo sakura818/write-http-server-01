@@ -83,6 +83,13 @@ public class HttpResponseMessageHeaderBuilderTest {
             HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
             assertThat((builder.catchContentType(file)), is("application/javascript"));
         }
+
+        @Test
+        public void 未知のファイルの拡張子に対しContentTypeにapplicationスラッシュoctet_streamを返すテスト() {
+            File file = new File("src/test/resources/sample.unknownExtract");
+            HttpResponseMessageHeaderBuilder builder = new HttpResponseMessageHeaderBuilder(file);
+            assertThat((builder.catchContentType(file)), is("application/octet-stream"));
+        }
     }
 
     public static class extractExtensionメソッドのテスト {

@@ -47,7 +47,6 @@ public class HttpResponseTest {
                     "<p>JavaScriptでファイルの更新日時を表示します\n" +
                     "    <script>\n" +
                     "        lastModified_date();\n" +
-                    "\n" +
                     "    </script>\n" +
                     "</p>\n" +
                     "<p>pngです<img src=\"sample.png\" width=\"100\" height=\"100\" alt=\"png\" align=\"center\"></p>\n" +
