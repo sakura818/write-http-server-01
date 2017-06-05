@@ -49,6 +49,9 @@ public class HttpServer {
                     statusCode = httpRequest.getStatusCode();
                     if (statusCode == OK) {
                         file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                        if(file.isDirectory()){
+                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath()+"/index.html");
+                        }
                         if (!file.exists()) {
                             statusCode = NOT_FOUND;
                         }
