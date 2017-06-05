@@ -97,7 +97,7 @@ public class HttpResponseMessageBodyBuilderTest {
                     "\n" +
                     "<body>\n" +
                     "<h1>Not Implemented</h1>\n" +
-                    "<p>リクエストは正しいのですが、このサーバではリクエストされたメソッドをサポートしていません。</p>\n" +
+                    "<p>リクエストは正しいのですが、 このサーバはリクエストを実行するのに必要な機能をサポートしていません。</p>\n" +
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
