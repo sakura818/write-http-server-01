@@ -46,18 +46,14 @@ public class HttpRequest {
             this.requestUri = requestUri;
 
             String uriPath = parseUriPath(requestUri);
-            String[] uriPathAndQueryString = uriPath.split("\\?", 2);
+            String[] uriPathAndQueryString = uriPath.split("\\?",2);
+            uriPath = uriPathAndQueryString[0];
             if (uriPathAndQueryString.length == 2) {
-                uriPath = uriPathAndQueryString[0];
-                queryString = uriPathAndQueryString[1];
+                this.queryString = uriPathAndQueryString[1];
+            } else if (uriPathAndQueryString.length == 1) {
+                this.queryString = "";
             }
-            if (uriPathAndQueryString.length == 1) {
-                uriPath = uriPathAndQueryString[0];
-                queryString = "";
-            }
-
             this.uriPath = uriPath;
-            this.queryString = queryString;
         }
     }
 
