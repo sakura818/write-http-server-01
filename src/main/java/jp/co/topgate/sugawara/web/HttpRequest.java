@@ -47,11 +47,12 @@ public class HttpRequest {
 
             String uriPath = parseUriPath(requestUri);
             if (uriPath.matches(".*\\?.*")) {
-                String[] UriPathAndQueryString = divideUriPathAndQueryString(uriPath);
-                uriPath = UriPathAndQueryString[0];
-                queryString = UriPathAndQueryString[1];
+                String[] uriPathAndQueryString = divideUriPathAndQueryString(uriPath);
+                uriPath = uriPathAndQueryString[0];
+                queryString = uriPathAndQueryString[1];
             }
             this.uriPath = uriPath;
+            this.queryString = queryString;
         }
     }
 
