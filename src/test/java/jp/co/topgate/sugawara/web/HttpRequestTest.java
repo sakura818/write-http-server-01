@@ -114,18 +114,7 @@ public class HttpRequestTest {
             assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
     }
-
-    public static class divideUriPathAndQueryStringメソッドのテスト {
-
-        @Test
-        public void uriPathにクエストリングがあったときuriPathとクエストリングを分けてString型の配列にいれるテスト() throws IOException {
-            InputStream inputStream = new ByteArrayInputStream("GET /index.html?foo=bar HTTP/1.1".getBytes("utf-8"));
-            HttpRequest httpRequest = new HttpRequest(inputStream);
-            String[] expectUriPathAndQueryString = new String[]{"/index.html", "foo=bar"};
-            assertThat(httpRequest.divideUriPathAndQueryString(httpRequest.parseUriPath(httpRequest.getRequestUri())), is(expectUriPathAndQueryString));
-        }
-
-    }
+    
 }
 
 
