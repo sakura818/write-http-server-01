@@ -46,13 +46,13 @@ public class HttpRequest {
             this.requestUri = requestUri;
 
             String uriPath = parseUriPath(requestUri);
-            if (uriPath.matches(".*\\?.*")) {
-                String[] uriPathAndQueryString = divideUriPathAndQueryString(uriPath);
-                uriPath = uriPathAndQueryString[0];
-                queryString = uriPathAndQueryString[1];
+            String[] uriPathAndQueryString = uriPath.split("\\?", 2);
+            this.uriPath = uriPathAndQueryString[0];
+            if (uriPathAndQueryString.length == 2) {
+                this.queryString = uriPathAndQueryString[1];
+            } else if (uriPathAndQueryString.length == 1) {
+                this.queryString = "";
             }
-            this.uriPath = uriPath;
-            this.queryString = queryString;
         }
     }
 
@@ -167,18 +167,27 @@ public class HttpRequest {
     }
 
     /**
-     * uriPathにクエストリングがあったときuriPathとクエストリングを分ける
+     * uriPathにクエリ文字列があったときuriPathとクエリ文字列を分ける
      *
      * @param uriPath /index.html?id=1&name=hana
      * @return queryString
      */
+    /*
     public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
-        String uriPathAndQueryString[] = new String[2];
         if (uriPath != null) {
-            uriPathAndQueryString = uriPath.split("\\?", 2);
+        String[] uriPathAndQueryString = uriPath.split("\\?",2);
+            if(uriPathAndQueryString.length == 2){
+                uriPath = uriPathAndQueryString[0];
+                queryString = uriPathAndQueryString[1];
+            }
+            if(uriPathAndQueryString.length == 1){
+                uriPath = uriPathAndQueryString[0];
+                queryString = "";
+            }
         }
         return uriPathAndQueryString;
     }
+    */
 
 
     /**
@@ -200,6 +209,16 @@ public class HttpRequest {
 
     public String getUriPath() {
         return this.uriPath;
+    }
+
+    /**
+     * クエリ文字列を取得する
+     *
+     * @return queryString
+     */
+
+    public String getQueryString() {
+        return this.queryString;
     }
 
 
