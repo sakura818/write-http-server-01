@@ -136,7 +136,6 @@ public class HttpResponseMessageHeaderBuilder {
             put("txt", "text/plain");
             put("pdf", "application/pdf");
             put("mp4", "video/mp4");
-            put("mp3", "audio/mpeg");
         }
     };
 

@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 
 /**
@@ -49,6 +50,13 @@ public class HttpServer {
                     statusCode = httpRequest.getStatusCode();
                     if (statusCode == OK) {
                         file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                        if (file.isDirectory()) {
+                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
+                        }
+                        Path path = file.toPath();
+                        if (!path.normalize().startsWith(FILEPATH_DIR)) {
+                            statusCode = NOT_FOUND;
+                        }
                         if (!file.exists()) {
                             statusCode = NOT_FOUND;
                         }

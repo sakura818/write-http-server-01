@@ -22,6 +22,7 @@ public class HttpRequest {
     private String uriPath;
     private String requestUri;
     private int statusCode;
+    private String queryString;
     private final int OK = 200;
     private final int BAD_REQUEST = 400;
     private final int NOT_IMPLEMENTED = 501;
@@ -45,6 +46,11 @@ public class HttpRequest {
             this.requestUri = requestUri;
 
             String uriPath = parseUriPath(requestUri);
+            if (uriPath.matches(".*\\?.*")) {
+                String[] UriPathAndQueryString = divideUriPathAndQueryString(uriPath);
+                uriPath = UriPathAndQueryString[0];
+                queryString = UriPathAndQueryString[1];
+            }
             this.uriPath = uriPath;
         }
     }
@@ -122,7 +128,7 @@ public class HttpRequest {
     };
 
     /**
-     * requestLineからUriPathをparseする
+     * requestLineからrequestUriをparseする
      * requestLine = method + requestUri + httpVersion
      *
      * @param requestLine ex:GET /index.html HTTP/1.1
@@ -141,7 +147,6 @@ public class HttpRequest {
         return requestUri;
     }
 
-
     /**
      * requestUriからUriPathを抜き出す
      *
@@ -159,6 +164,21 @@ public class HttpRequest {
         }
         return uriPath;
     }
+
+    /**
+     * uriPathにクエストリングがあったときuriPathとクエストリングを分ける
+     *
+     * @param uriPath /index.html?id=1&name=hana
+     * @return queryString
+     */
+    public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
+        String uriPathAndQueryString[] = new String[2];
+        if (uriPath != null) {
+            uriPathAndQueryString = uriPath.split("\\?", 2);
+        }
+        return uriPathAndQueryString;
+    }
+
 
     /**
      * statusCodeを取得する
@@ -181,8 +201,9 @@ public class HttpRequest {
         return this.uriPath;
     }
 
+
     /**
-     * テストのためにuriPathを取得する
+     * テストのためにrequestUriを取得する
      *
      * @return requestUri
      */
