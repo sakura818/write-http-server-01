@@ -114,7 +114,7 @@ public class HttpRequestTest {
             assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
     }
-    
+
 }
 
 
