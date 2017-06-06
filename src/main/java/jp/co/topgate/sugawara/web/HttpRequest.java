@@ -4,9 +4,13 @@ package jp.co.topgate.sugawara.web;
 import java.io.IOException;
 import java.lang.String;
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -22,6 +26,7 @@ public class HttpRequest {
     private String uriPath;
     private String requestUri;
     private int statusCode;
+    private String queryString;
     private final int OK = 200;
     private final int BAD_REQUEST = 400;
     private final int NOT_IMPLEMENTED = 501;
@@ -45,6 +50,11 @@ public class HttpRequest {
             this.requestUri = requestUri;
 
             String uriPath = parseUriPath(requestUri);
+            if (uriPath.matches(".*\\?.*")) {
+                String[] UriPathAndQueryString = divideUriPathAndQueryString(uriPath);
+                uriPath = UriPathAndQueryString[0];
+                queryString = UriPathAndQueryString[1];
+            }
             this.uriPath = uriPath;
         }
     }
@@ -122,7 +132,7 @@ public class HttpRequest {
     };
 
     /**
-     * requestLineからUriPathをparseする
+     * requestLineからrequestUriをparseする
      * requestLine = method + requestUri + httpVersion
      *
      * @param requestLine ex:GET /index.html HTTP/1.1
@@ -142,25 +152,6 @@ public class HttpRequest {
     }
 
     /**
-     * uriPathからクエリパラメータをパースします。
-     *
-     * @param uriPath
-     * @return queryParameters
-     */
-    /*
-    private String uriPathQuerySplitter(String uriPath) {
-        if (uriPath == null) {
-            String uriQuery[] = uriPath.split("\\?", 2);
-            if (uriQuery[0] != uriPath) {
-                this.queryParameters = ParseUtil.parseQueryData(uriQuery[1]);
-            }
-        }
-        return uriQuery[0];
-    }
-    */
-
-
-    /**
      * requestUriからUriPathを抜き出す
      *
      * @param requestUri ex:http://localhost:8080/index.html
@@ -177,6 +168,21 @@ public class HttpRequest {
         }
         return uriPath;
     }
+
+    /**
+     * uriPathにクエストリングがあったときuriPathとクエストリングを分ける
+     *
+     * @param uriPath /index.html?id=1&name=hana
+     * @return queryString
+     */
+    public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
+        String uriPathAndQueryString[] = new String[2];
+        if (uriPath != null) {
+            uriPathAndQueryString = uriPath.split("\\?", 2);
+        }
+        return uriPathAndQueryString;
+    }
+
 
     /**
      * statusCodeを取得する
@@ -199,8 +205,9 @@ public class HttpRequest {
         return this.uriPath;
     }
 
+
     /**
-     * テストのためにuriPathを取得する
+     * テストのためにrequestUriを取得する
      *
      * @return requestUri
      */
