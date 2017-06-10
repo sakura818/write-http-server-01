@@ -25,6 +25,8 @@ public class HttpRequest {
     private final int NOT_IMPLEMENTED = 501;
     private final int HTTP_VERSION_NOT_SUPPORTED = 505;
 
+    private String method;
+
 
     /**
      * HttpRequestのコンストラクタ
@@ -180,6 +182,27 @@ public class HttpRequest {
     public String getUriPath() {
         return this.uriPath;
     }
+
+
+    public String readRequestLine(InputStream inputStream) {
+        return "";
+    }
+
+    public String readMessageHeader(InputStream inputStream) {
+        return "";
+    }
+
+    public String readMessageBody(InputStream inputStream) {
+        return "";
+    }
+
+    public String parseMethod(String requestLine) {
+        String[] requestLineArray = requestLine.split(" ", 3);
+        String method = requestLineArray[0];
+        return method;
+    }
+
+    public String getMethod(){return this.method;}
 
 
 }
