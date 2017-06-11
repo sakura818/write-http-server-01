@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(Enclosed.class)
 public class BoardHttpResponseMessageHeaderBuilderTest {
-    
+
     public static class buildメソッドのテスト {
         @Test
         public void buildメソッドのEntityHeaderTestを適切な形で生成できているかのテスト() {

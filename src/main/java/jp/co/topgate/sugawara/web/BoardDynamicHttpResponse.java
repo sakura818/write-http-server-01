@@ -13,7 +13,7 @@ public class BoardDynamicHttpResponse {
     private int statusCode;
 
     /**
-     * StaticHttpResponseのコンストラクタ
+     * コンストラクタ
      *
      * @param file,statusCode
      */
