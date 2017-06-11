@@ -72,9 +72,9 @@ public class HttpServer {
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse(file, statusCode);
+                StaticHttpResponse staticHttpResponse = new StaticHttpResponse(file, statusCode);
                 try {
-                    httpResponse.writeToOutputStream(outputStream);
+                    staticHttpResponse.writeToOutputStream(outputStream);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
