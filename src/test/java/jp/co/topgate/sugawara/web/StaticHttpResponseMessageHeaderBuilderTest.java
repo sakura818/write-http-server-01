@@ -11,14 +11,14 @@ import static org.junit.Assert.assertThat;
 
 
 /**
- * HttpResponseMessageHeaderBuilderTest Class
+ * StaticHttpResponseMessageHeaderBuilderTest Class
  * HttpResponseのMessageHeaderのContentを生成するクラスをテストするクラス
  *
  * @author sakura818
  */
 
 @RunWith(Enclosed.class)
-public class HttpResponseMessageHeaderBuilderTest {
+public class StaticHttpResponseMessageHeaderBuilderTest {
 
     public static class buildメソッドのテスト {
         @Test

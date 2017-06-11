@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(Enclosed.class)
-public class HttpResponseStatusLineBuilderTest {
+public class StaticHttpResponseStatusLineBuilderTest {
 
     public static class buildメソッドのテスト {
 

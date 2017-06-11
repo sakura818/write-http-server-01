@@ -10,13 +10,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * HttpResponseMessageBodyBuilderTest Class
+ * StaticHttpResponseMessageBodyBuilderTest Class
  *
  * @author sakura818
  */
 
 @RunWith(Enclosed.class)
-public class HttpResponseMessageBodyBuilderTest {
+public class StaticHttpResponseMessageBodyBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
