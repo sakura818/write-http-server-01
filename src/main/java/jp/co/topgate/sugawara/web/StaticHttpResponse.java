@@ -37,13 +37,13 @@ public class StaticHttpResponse {
 
     public byte[] createStaticHttpResponseContent(File file, int statusCode) throws IOException {
 
-        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-        HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
+        StaticHttpResponseStatusLineBuilder staticHttpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
+        StaticHttpResponseMessageHeaderBuilder staticHttpResponseMessageHeaderBuilder = new StaticHttpResponseMessageHeaderBuilder(file);
+        StaticHttpResponseMessageBodyBuilder staticHttpResponseMessageBodyBuilder = new StaticHttpResponseMessageBodyBuilder(file);
 
-        byte[] statusLine = statusLineBuilder.build();
-        byte[] messageHeader = messageHeaderBuilder.build();
-        byte[] messageBody = messageBodyBuilder.build();
+        byte[] statusLine = staticHttpResponseStatusLineBuilder.build();
+        byte[] messageHeader = staticHttpResponseMessageHeaderBuilder.build();
+        byte[] messageBody = staticHttpResponseMessageBodyBuilder.build();
 
 
         int statusLineLength = statusLine.length;

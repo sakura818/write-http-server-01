@@ -4,23 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * HttpResponseStatusLineBuilder Class
+ * StaticHttpResponseStatusLineBuilder Class
  * HttpResponseのStatusLineのContentを生成するクラス
  * StatusLine = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
  *
  * @author sakura818
  */
 
-public class HttpResponseStatusLineBuilder {
+public class StaticHttpResponseStatusLineBuilder {
     private int statusCode;
 
     /**
-     * HttpResponseStatusLineBuilderのコンストラクタ
+     * コンストラクタ
      *
      * @param statusCode
      */
 
-    public HttpResponseStatusLineBuilder(int statusCode) {
+    public StaticHttpResponseStatusLineBuilder(int statusCode) {
         this.statusCode = statusCode;
     }
 

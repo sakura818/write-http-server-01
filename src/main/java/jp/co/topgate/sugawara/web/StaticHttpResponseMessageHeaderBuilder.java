@@ -7,25 +7,25 @@ import java.util.Map;
 
 
 /**
- * HttpResponseMessageHeaderBuilder Class
+ * StaticHttpResponseMessageHeaderBuilder Class
  * HttpResponseのMessageHeaderのContentを生成するクラス
  * MessageHeader = *((GeneralHeader | ResponseHeader | EntityHeader )CRLF)
  *
  * @author sakura818
  */
 
-public class HttpResponseMessageHeaderBuilder {
+public class StaticHttpResponseMessageHeaderBuilder {
 
 
     private File file;
 
     /**
-     * HttpResponseMessageHeaderBuilderのコンストラクタ
+     * コンストラクタ
      *
      * @param file
      */
 
-    public HttpResponseMessageHeaderBuilder(File file) {
+    public StaticHttpResponseMessageHeaderBuilder(File file) {
         this.file = file;
     }
 
