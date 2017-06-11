@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class BoardHttpResponseMessageHeaderBuilder {
+public class BoardDynamicHttpResponseMessageHeaderBuilder {
 
 
     private File file;
@@ -19,7 +19,7 @@ public class BoardHttpResponseMessageHeaderBuilder {
      * @param file
      */
 
-    public BoardHttpResponseMessageHeaderBuilder(File file) {
+    public BoardDynamicHttpResponseMessageHeaderBuilder(File file) {
         this.file = file;
     }
 

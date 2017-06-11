@@ -34,9 +34,9 @@ public class BoardDynamicHttpResponse {
 
     public byte[] createBoardDynamicHttpResponseContent(File file, int statusCode) throws IOException {
 
-        StaticHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-        StaticHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new StaticHttpResponseMessageHeaderBuilder(file);
-        StaticHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new StaticHttpResponseMessageBodyBuilder(file);
+        BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
+        BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder();
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
  * Created by haruka.sugawara on 2017/06/12.
  */
 @RunWith(Enclosed.class)
-public class BoardHttpResponseStatusLineBuilderTest {
+public class BoardDynamicHttpResponseStatusLineBuilderTest {
 
     public static class buildメソッドのテスト {
 

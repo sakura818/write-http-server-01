@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class BoardHttpResponseStatusLineBuilder {
+public class BoardDynamicHttpResponseStatusLineBuilder {
     private int statusCode;
 
     /**
@@ -15,7 +15,7 @@ public class BoardHttpResponseStatusLineBuilder {
      * @param statusCode
      */
 
-    public BoardHttpResponseStatusLineBuilder(int statusCode) {
+    public BoardDynamicHttpResponseStatusLineBuilder(int statusCode) {
         this.statusCode = statusCode;
     }
 
