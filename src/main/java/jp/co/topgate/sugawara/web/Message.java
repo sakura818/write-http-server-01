@@ -24,7 +24,7 @@ public class Message {
     }
 
     /**
-     *
+     *csvファイルから投稿の1件として取得する
      *
      * @param
      * @return
@@ -35,7 +35,7 @@ public class Message {
     }
 
     /**
-     *
+     * レス番号indexを取得する
      *
      * @param
      * @return
@@ -46,7 +46,7 @@ public class Message {
     }
 
     /**
-     *
+     * 名前nameを取得する
      *
      * @param
      * @return
@@ -57,7 +57,7 @@ public class Message {
     }
 
     /**
-     *
+     * 投稿時間posttimeを取得する
      *
      * @param
      * @return
@@ -68,7 +68,7 @@ public class Message {
     }
 
     /**
-     *
+     * 本文textを取得する
      *
      * @param
      * @return
@@ -79,7 +79,7 @@ public class Message {
     }
 
     /**
-     *
+     * パスワードpasswordを取得する
      *
      * @param
      * @return
@@ -90,7 +90,7 @@ public class Message {
     }
 
     /**
-     *CSVファイルから投稿を削除する
+     * CSVファイルから投稿を削除する
      *
      * @param
      * @return
@@ -102,7 +102,7 @@ public class Message {
     }
 
     /**
-     *
+     * CSVファイルに新規投稿を追加する
      *
      * @param
      * @return
