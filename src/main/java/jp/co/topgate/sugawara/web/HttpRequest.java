@@ -172,7 +172,6 @@ public class HttpRequest {
         return this.statusCode;
     }
 
-
     /**
      * uriPathを取得する
      *
@@ -183,24 +182,58 @@ public class HttpRequest {
         return this.uriPath;
     }
 
+    /**
+     * inputStreamからrequestLineを読み取る
+     *
+     * @return uriPath
+     */
 
-    public String readRequestLine(InputStream inputStream) {
-        return "";
+    public String readRequestLine(InputStream inputStream) throws IOException{
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+        String requestLine = bufferedReader.readLine();
+
+        return requestLine;
     }
+
+    /**
+     * inputStreamからmessageheaderを読み取る
+     *
+     * @return uriPath
+     */
 
     public String readMessageHeader(InputStream inputStream) {
         return "";
     }
 
+    /**
+     *inputStreamからmessagebodyを読み取る
+     *
+     * @return uriPath
+     */
+
     public String readMessageBody(InputStream inputStream) {
         return "";
     }
+
+    /**
+     * requestLineからmethodをparseする
+     *
+     * @param requestLine
+     * @return method
+     */
 
     public String parseMethod(String requestLine) {
         String[] requestLineArray = requestLine.split(" ", 3);
         String method = requestLineArray[0];
         return method;
     }
+
+    /**
+     * methodを取得する
+     *
+     * @return method
+     */
 
     public String getMethod(){return this.method;}
 

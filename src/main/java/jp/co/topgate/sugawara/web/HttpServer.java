@@ -72,12 +72,18 @@ public class HttpServer {
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                StaticHttpResponse staticHttpResponse = new StaticHttpResponse(file, statusCode);
-                try {
-                    staticHttpResponse.writeToOutputStream(outputStream);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                System.out.print(httpRequest.getUriPath());
+                if (httpRequest.getUriPath().startsWith("/program/board/")) {
+                    BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler();
+                } else {
+                    StaticHttpResponse staticHttpResponse = new StaticHttpResponse(file, statusCode);
+                    try {
+                        staticHttpResponse.writeToOutputStream(outputStream);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
+
 
                 inputStream.close();
                 outputStream.close();
