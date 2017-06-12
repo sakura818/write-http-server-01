@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.lang.String;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 
 /**
@@ -38,7 +41,10 @@ public class HttpRequest {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
+
+        //readMessageHeader(inputStream);
         int statusCode = judgeStatusCode(requestLine);
+
         this.statusCode = statusCode;
         if (statusCode == 200) {
             String requestUri = parseRequestUri(requestLine);
@@ -188,7 +194,7 @@ public class HttpRequest {
      * @return uriPath
      */
 
-    public String readRequestLine(InputStream inputStream) throws IOException{
+    public String readRequestLine(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
@@ -202,17 +208,24 @@ public class HttpRequest {
      * @return uriPath
      */
 
-    public String readMessageHeader(InputStream inputStream) {
-        return "";
+    public void readMessageHeader(InputStream inputStream) throws IOException{
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+        String requestLine = bufferedReader.readLine();
+        System.out.println(requestLine);
     }
 
     /**
-     *inputStreamからmessagebodyを読み取る
+     * inputStreamからmessagebodyを読み取る
      *
      * @return uriPath
      */
 
-    public String readMessageBody(InputStream inputStream) {
+    public String readMessageBody(InputStream inputStream) throws IOException {
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+        String requestLine = bufferedReader.readLine();
+
         return "";
     }
 
@@ -235,7 +248,9 @@ public class HttpRequest {
      * @return method
      */
 
-    public String getMethod(){return this.method;}
+    public String getMethod() {
+        return this.method;
+    }
 
 
 }
