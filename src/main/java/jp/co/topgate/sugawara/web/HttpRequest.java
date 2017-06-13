@@ -38,9 +38,12 @@ public class HttpRequest {
      */
 
     public HttpRequest(InputStream inputStream) throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
+        //BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
+        //String requestLine = bufferedReader.readLine();
+
+        String requestLine = HttpRequestParse(inputStream);
+
 
         //readMessageHeader(inputStream);
         int statusCode = judgeStatusCode(requestLine);
@@ -208,11 +211,11 @@ public class HttpRequest {
      * @return uriPath
      */
 
-    public void readMessageHeader(InputStream inputStream) throws IOException{
+    public void readMessageHeader(InputStream inputStream) throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
         String requestLine = bufferedReader.readLine();
-        System.out.println(requestLine);
+        //System.out.println(requestLine);
     }
 
     /**
@@ -252,8 +255,83 @@ public class HttpRequest {
         return this.method;
     }
 
+    private final String LINE_FEED = System.getProperty("line.separator");
 
+    public String HttpRequestParse(InputStream inputStream) throws IOException {
+
+        // RequestLine
+        String requestLine = readLine(inputStream);
+        System.out.println(requestLine);
+
+        // MessageHeader
+        Map<String, String> headerField = new HashMap<>();
+
+
+        String line = readLine(inputStream);
+        StringBuffer header = new StringBuffer();
+        while (line != null && !line.isEmpty()) {
+            header.append(line).append(LINE_FEED);
+            String[] headerLineData = line.split(":", 2);
+            if (headerLineData.length == 2) {
+                headerField.put(headerLineData[0], headerLineData[1].trim());
+            }
+            line = readLine(inputStream);
+            System.out.println(line);
+        }
+
+        return requestLine;
+        //request.setHeader(header.toString(), headerField);
+
+        // MessageBody
+        /*
+        if (inputStream.available() <= 0) {
+            return request;
+        }
+        request.setBody(inputStream);
+        return request;
+        */
+
+    }
+
+    public String readLine(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            return null;
+        }
+        int num = 0;
+        StringBuffer sb = new StringBuffer();
+        boolean r = false;
+        try {
+            while ((num = inputStream.read()) >= 0) {
+                sb.append((char) num);
+                String line = sb.toString();
+                switch ((char) num) {
+                    case '\r':
+                        r = true;
+                        break;
+                    case '\n':
+                        if (r) {
+                            line = line.replace("\r", "");
+                        }
+                        line = line.replace("\n", "");
+                        return line;
+                    default:
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (sb.length() == 0) {
+            return null;
+        } else {
+            return sb.toString();
+        }
+    }
 }
+
+
+
+
 
 
 

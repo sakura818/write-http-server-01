@@ -15,7 +15,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(HttpRequest httpRequest) {
+    public BoardDynamicHttpResponseMessageBodyBuilder() {
     }
 
     /**
