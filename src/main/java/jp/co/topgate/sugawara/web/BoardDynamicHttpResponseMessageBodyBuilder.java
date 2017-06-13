@@ -1,6 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Date;
 public class BoardDynamicHttpResponseMessageBodyBuilder {
 
     /**
-     *コンストラクタ
+     * コンストラクタ
      *
      * @param
      * @return
@@ -19,8 +21,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     }
 
     /**
-     *
-     *
      * @param
      * @return
      */
@@ -30,8 +30,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     }
 
     /**
-     *
-     *
      * @param
      * @return
      */
@@ -45,7 +43,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * クエリストリングを解析する
      *
      * @param queryString クエリストリング
-     * @return  クエリ値
+     * @return クエリ値
      */
 
     String analyzeQueryString(String queryString) {
@@ -102,14 +100,15 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    Date measureNewPostingTime() {
-        return null;
+    ZonedDateTime measureNewPostingTime() {
+
+        ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        System.out.println(zonedDateTimeNow);
+        return zonedDateTimeNow;
     }
 
 
     /**
-     *
-     *
      * @param
      * @return
      */
