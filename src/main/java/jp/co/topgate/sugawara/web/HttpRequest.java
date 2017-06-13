@@ -264,8 +264,7 @@ public class HttpRequest {
         System.out.println(requestLine);
 
         // MessageHeader
-        Map<String, String> headerField = new HashMap<>();
-
+        Map<String, String> headerField = new HashMap<String, String>();
 
         String line = readLine(inputStream);
         StringBuffer header = new StringBuffer();
@@ -278,9 +277,10 @@ public class HttpRequest {
             line = readLine(inputStream);
             System.out.println(line);
         }
+        setHeader(header.toString(), headerField);
 
         return requestLine;
-        //request.setHeader(header.toString(), headerField);
+
 
         // MessageBody
         /*
@@ -292,18 +292,25 @@ public class HttpRequest {
         */
 
     }
+    private String header;
+    private Map<String, String> headerField = new HashMap<>();
+
+    void setHeader(String header, Map<String, String> headerField) {
+        this.header = header;
+        this.headerField = headerField;
+    }
 
     public String readLine(InputStream inputStream) throws IOException {
         if (inputStream == null) {
             return null;
         }
         int num = 0;
-        StringBuffer sb = new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer();
         boolean r = false;
         try {
             while ((num = inputStream.read()) >= 0) {
-                sb.append((char) num);
-                String line = sb.toString();
+                stringBuffer.append((char) num);
+                String line = stringBuffer.toString();
                 switch ((char) num) {
                     case '\r':
                         r = true;
@@ -321,10 +328,10 @@ public class HttpRequest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (sb.length() == 0) {
+        if (stringBuffer.length() == 0) {
             return null;
         } else {
-            return sb.toString();
+            return stringBuffer.toString();
         }
     }
 }
