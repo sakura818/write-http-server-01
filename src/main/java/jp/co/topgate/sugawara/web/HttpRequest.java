@@ -191,6 +191,17 @@ public class HttpRequest {
     }
 
     /**
+     * statusCodeを取得する
+     *
+     * @return statusCOde
+     */
+
+    public String getRequestUri() {
+        return this.requestUri;
+    }
+
+
+    /**
      * uriPathを取得する
      *
      * @return uriPath

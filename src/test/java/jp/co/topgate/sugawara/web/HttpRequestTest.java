@@ -22,80 +22,96 @@ public class HttpRequestTest {
 
     public static class judgeStatusCodeメソッドのテスト {
 
-        private final int OK = 200;
-        private final int BAD_REQUEST = 400;
-        private final int NOT_IMPLEMENTED = 501;
-        private final int HTTP_VERSION_NOT_SUPPORTED = 505;
-
         @Test
-        public void requestLineからstatusCodeをjudgeするテスト1() throws IOException {
+        public void GETリクエストにはステータスコード200を返すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.judgeStatusCode("GET /index.html HTTP/1.1")), is(OK));
+            assertThat(httpRequest.getStatusCode(), is(200));
         }
 
         @Test
-        public void requestLineからstatusCodeをjudgeするテスト2() throws IOException {
+        public void POSTリクエストにはステータスコード501を返すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("POST /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.judgeStatusCode("POST /index.html HTTP/1.1")), is(NOT_IMPLEMENTED));
+            assertThat((httpRequest.getStatusCode()), is(501));
         }
 
         @Test
-        public void requestLineからstatusCodeをjudgeするテスト3() throws IOException {
+        public void HttpVersion2のリクエストにはステータスコード505を返すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/2".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.judgeStatusCode("GET /index.html HTTP/2")), is(HTTP_VERSION_NOT_SUPPORTED));
+            assertThat((httpRequest.getStatusCode()), is(505));
         }
 
         @Test
-        public void requestLineからstatusCodeをjudgeするテスト4() throws IOException {
+        public void 不正なシンタックスのリクエストにはステータスコード400を返すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("hoge hoge hoge hoge".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.judgeStatusCode("hoge hoge hoge hoge")), is(BAD_REQUEST));
+            assertThat((httpRequest.getStatusCode()), is(400));
         }
     }
 
     public static class parseRequestUriメソッドのテスト {
 
         @Test
-        public void requestLineからrequestUriを抜き出すテスト1() throws IOException {
+        public void リクエストの1行目から相対パスのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.parseRequestUri("GET /index.html HTTP/1.1")), is("/index.html"));
+            assertThat(httpRequest.getRequestUri(), is("/index.html"));
         }
 
         @Test
-        public void requestLineからrequestUriを抜き出すテスト2() throws IOException {
+        public void リクエストの1行目から絶対パスのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.parseRequestUri("GET http://localhost:8080/index.html HTTP/1.1")), is("http://localhost:8080/index.html"));
+            assertThat(httpRequest.getRequestUri(), is("http://localhost:8080/index.html"));
         }
 
         @Test
-        public void requestLineからrequestUriを抜き出すテスト3() throws IOException {
+        public void リクエストの1行目からスラッシュだけのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET / HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.parseRequestUri("GET / HTTP/1.1")), is("/index.html"));
+            assertThat(httpRequest.getRequestUri(), is("/index.html"));
+        }
+
+        @Test
+        public void リクエストの1行目から日本語のファイル名のrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /日本語のファイル名.txt HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/日本語のファイル名.txt"));
+        }
+
+        @Test
+        public void リクエストの1行目から階層構造に応じたファイルのrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /dummyDirectory/sample.txt HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/dummyDirectory/sample.txt"));
+        }
+
+        @Test
+        public void リクエストの1行目から階層構造に応じたスラッシュのrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /dummyDirectory/ HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/dummyDirectory/index.html"));
         }
     }
 
     public static class parseUriPathメソッドのテスト {
 
         @Test
-        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すテスト1() throws IOException {
+        public void 相対パスのrequestUriからuriPathを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.parseUriPath("/index.html")), is("/index.html"));
+            assertThat(httpRequest.getUriPath(), is("/index.html"));
         }
 
         @Test
-        public void parseUriPathメソッドのrequestUriからUriPathを抜き出すテスト2() throws IOException {
+        public void 絶対パスのrequestUriからuriPathを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
-            assertThat((httpRequest.parseUriPath("/index.html")), is("/index.html"));
-        }
+            assertThat(httpRequest.getUriPath(), is("/index.html"));
 
+        }
     }
 }
 
