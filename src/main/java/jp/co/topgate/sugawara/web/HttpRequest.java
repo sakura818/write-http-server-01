@@ -108,7 +108,6 @@ public class HttpRequest {
             String[] requestLineArray = requestLine.split(" ", 3);
             String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
             requestUri = decodedRequestUri;
-            requestUri = requestLineArray[1];
             if (requestUri.equals("/")) {
                 requestUri += "index.html";
             }
