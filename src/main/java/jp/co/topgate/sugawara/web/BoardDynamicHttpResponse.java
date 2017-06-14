@@ -7,7 +7,7 @@ import java.io.OutputStream;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class BoardDynamicHttpResponse {
+public abstract class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
     private File file;
     private int statusCode;
@@ -32,7 +32,7 @@ public class BoardDynamicHttpResponse {
      * @throws IOException
      */
 
-    public byte[] createBoardDynamicHttpResponseContent(File file, int statusCode) throws IOException {
+    public byte[] createDynamicHttpResponseContent(File file, int statusCode) throws IOException {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
@@ -57,7 +57,6 @@ public class BoardDynamicHttpResponse {
         return createResponseContents;
     }
 
-
     /**
      * HttpResponseをOutputStreamに書き込む
      *
@@ -67,7 +66,7 @@ public class BoardDynamicHttpResponse {
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
-        byte[] httpResponseContent = createBoardDynamicHttpResponseContent(file, statusCode);
+        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
 

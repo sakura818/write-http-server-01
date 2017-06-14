@@ -1,5 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -7,5 +9,8 @@ import java.io.OutputStream;
  */
 public abstract class DynamicHttpResponse {
     abstract byte[] createDynamicHttpResponseContent();
-    abstract void writeToOutputStream(OutputStream outputStream);
+
+    public abstract byte[] createDynamicHttpResponseContent(File file, int statusCode) throws IOException;
+
+    abstract void writeToOutputStream(OutputStream outputStream) throws IOException;
 }

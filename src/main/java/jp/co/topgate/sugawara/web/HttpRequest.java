@@ -111,6 +111,8 @@ public class HttpRequest {
     ArrayList<String> availableMethod = new ArrayList<String>() {
         {
             add("GET");
+            add("POST");
+            add("DELETE");
         }
     };
 
@@ -121,9 +123,7 @@ public class HttpRequest {
     ArrayList<String> notAvailableMethod = new ArrayList<String>() {
         {
             add("HEAD");
-            add("POST");
             add("PUT");
-            add("DELETE");
             add("TRACE");
             add("HEAD");
             add("CONNECT");
@@ -281,17 +281,10 @@ public class HttpRequest {
 
         return requestLine;
 
-
-        // MessageBody
-        /*
-        if (inputStream.available() <= 0) {
-            return request;
         }
-        request.setBody(inputStream);
-        return request;
-        */
 
-    }
+
+
     private String header;
     private Map<String, String> headerField = new HashMap<>();
 
@@ -299,6 +292,12 @@ public class HttpRequest {
         this.header = header;
         this.headerField = headerField;
     }
+
+    private InputStream bodyInput;
+    void setBody(InputStream inputStream) {
+        this.bodyInput = inputStream;
+    }
+
 
     public String readLine(InputStream inputStream) throws IOException {
         if (inputStream == null) {
