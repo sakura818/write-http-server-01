@@ -45,6 +45,8 @@ public class HttpServer {
 
                 File file = null;
                 int statusCode = 0;
+                StaticHttpResponse staticHttpResponse = null;
+                BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
@@ -53,13 +55,21 @@ public class HttpServer {
                         if (file.isDirectory()) {
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
                         }
-                        Path path = file.toPath();
-                        if (!path.normalize().startsWith(FILEPATH_DIR)) {
-                            statusCode = NOT_FOUND;
+
+
+                        if (httpRequest.getUriPath().startsWith("/program/board/")) {
+                            boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
+                        } else {
+                            staticHttpResponse = new StaticHttpResponse(file, statusCode);
+                            Path path = file.toPath();
+                            if (!path.normalize().startsWith(FILEPATH_DIR)) {
+                                statusCode = NOT_FOUND;
+                            }
+                            if (!file.exists()) {
+                                statusCode = NOT_FOUND;
+                            }
                         }
-                        if (!file.exists()) {
-                            statusCode = NOT_FOUND;
-                        }
+
                     }
                     if (statusCode != OK) {
                         switch (statusCode) {
@@ -84,14 +94,10 @@ public class HttpServer {
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 System.out.println(httpRequest.getUriPath());
-                StaticHttpResponse staticHttpResponse = null;
-                BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
-                if (httpRequest.getUriPath().startsWith("/program/board/")) {
-                    boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
-                } else {
-                    staticHttpResponse = new StaticHttpResponse(file, statusCode);
-                }
+
+
                 try {
+                    staticHttpResponse = new StaticHttpResponse(file,statusCode);
                     staticHttpResponse.writeToOutputStream(outputStream);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -104,8 +110,6 @@ public class HttpServer {
                         file = new File(this.FILEPATH_DIR, "NotFound.html");
                     }
                  */
-
-
 
 
                 inputStream.close();
