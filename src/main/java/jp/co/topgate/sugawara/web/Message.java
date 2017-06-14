@@ -1,5 +1,9 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -9,29 +13,47 @@ public class Message {
 
     int index;
     String name;
-    Date postTime;
+    String postTime;
     String text;
     String password;
 
     /**
-     *コンストラクタ
+     * コンストラクタ
      *
      * @param
      * @return
      */
 
-    Message() {
+    Message() throws IOException {
+        readSaveBoardCsv();
     }
 
+
     /**
-     *csvファイルから投稿の1件として取得する
+     * csvファイルを読み込む
      *
      * @param
      * @return
      */
 
-    String convertCsvToMessage() {
-        return "";
+
+    public static void readSaveBoardCsv() throws IOException {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("SaveBoard.csv"));
+            String csvLine;
+
+            while ((csvLine = br.readLine()) != null) {
+                String saveBoardCsvArray[] = csvLine.split(",");
+                int index = Integer.parseInt(saveBoardCsvArray[0]);
+                String name = saveBoardCsvArray[1];
+                String postTime = saveBoardCsvArray[2];
+                String text = saveBoardCsvArray[3];
+                String password = saveBoardCsvArray[4];
+            }
+            br.close();
+        } catch (NumberFormatException e) {
+            System.out.println("フォーマットエラーがありました");
+        }
     }
 
     /**
@@ -42,7 +64,7 @@ public class Message {
      */
 
     int getIndex() {
-        return 0;
+        return this.index;
     }
 
     /**
@@ -53,7 +75,7 @@ public class Message {
      */
 
     String getName() {
-        return "";
+        return this.name;
     }
 
     /**
@@ -63,8 +85,8 @@ public class Message {
      * @return
      */
 
-    Date getPostTime() {
-        return null;
+    String getPostTime() {
+        return this.postTime;
     }
 
     /**
@@ -75,7 +97,7 @@ public class Message {
      */
 
     String getText() {
-        return "";
+        return this.text;
     }
 
     /**
@@ -86,7 +108,7 @@ public class Message {
      */
 
     String getPassword() {
-        return "";
+        return this.password;
     }
 
     /**
