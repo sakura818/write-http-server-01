@@ -14,11 +14,11 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) {
         String honya = "ni";
-        if ((httpRequest.getMethod() == "GET")) {
+        if ((httpRequest.getMethod().equals("GET"))){
             honya = "searchName";
-        } else if ((httpRequest.getMethod() == "POST")) {
+        } else if ((httpRequest.getMethod().equals("POST"))) {
             honya = "postMessage";
-        } else if ((httpRequest.getMethod() == "DELETE")) {
+        } else if ((httpRequest.getMethod().equals("DELETE"))) {
             honya = "deleteMessage";
         }
         return honya;

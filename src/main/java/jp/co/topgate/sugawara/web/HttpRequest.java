@@ -51,6 +51,8 @@ public class HttpRequest {
 
         this.statusCode = statusCode;
         if (statusCode == 200) {
+            String method = parseMethod(requestLine);
+            this.method = method;
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
