@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 
 /**
@@ -47,32 +48,39 @@ public class HttpServer {
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
-                    switch (statusCode) {
-                        case OK:
-                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                            statusCode = catchStatusCode(file);
-                        case BAD_REQUEST:
-                            file = new File(this.FILEPATH_DIR, "BadRequest.html");
-                            break;
-                        case NOT_IMPLEMENTED:
-                            file = new File(this.FILEPATH_DIR, "NotImplemented.html");
-                            break;
-                        case HTTP_VERSION_NOT_SUPPORTED:
-                            file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
-                            break;
+                    if (statusCode == OK) {
+                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                        if (file.isDirectory()) {
+                            file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
+                        }
+                        Path path = file.toPath();
+                        if (!path.normalize().startsWith(FILEPATH_DIR)) {
+                            statusCode = NOT_FOUND;
+                        }
+                        if (!file.exists()) {
+                            statusCode = NOT_FOUND;
+                        }
+                    }
+                    if (statusCode != OK) {
+                        switch (statusCode) {
+                            case NOT_FOUND:
+                                file = new File(this.FILEPATH_DIR, "NotFound.html");
+                                break;
+                            case BAD_REQUEST:
+                                file = new File(this.FILEPATH_DIR, "BadRequest.html");
+                                break;
+                            case NOT_IMPLEMENTED:
+                                file = new File(this.FILEPATH_DIR, "NotImplemented.html");
+                                break;
+                            case HTTP_VERSION_NOT_SUPPORTED:
+                                file = new File(this.FILEPATH_DIR, "HttpVersionNotSupported.html");
+                                break;
+                        }
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-                /*
-                if (statusCode == OK) {
-                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                } else if (statusCode == NOT_FOUND) {
-                    file = new File(this.FILEPATH_DIR, "NotFound.html");
-                }
-                */
-
+                
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 System.out.println(httpRequest.getUriPath());
@@ -81,11 +89,6 @@ public class HttpServer {
                 if (httpRequest.getUriPath().startsWith("/program/board/")) {
                     boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
                 } else {
-                    if (statusCode == OK) {
-                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                    } else if (statusCode == NOT_FOUND) {
-                        file = new File(this.FILEPATH_DIR, "NotFound.html");
-                    }
                     staticHttpResponse = new StaticHttpResponse(file, statusCode);
                 }
                 try {
@@ -93,6 +96,14 @@ public class HttpServer {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
+                /*
+                if (statusCode == OK) {
+                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    } else if (statusCode == NOT_FOUND) {
+                        file = new File(this.FILEPATH_DIR, "NotFound.html");
+                    }
+                 */
 
 
 
