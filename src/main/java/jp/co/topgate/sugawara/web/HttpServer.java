@@ -80,7 +80,7 @@ public class HttpServer {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                
+
 
                 OutputStream outputStream = this.socket.getOutputStream();
                 System.out.println(httpRequest.getUriPath());
