@@ -47,6 +47,7 @@ public class HttpServer {
                 int statusCode = 0;
                 StaticHttpResponse staticHttpResponse = null;
                 BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
+                String staticOrDynamic = "";
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
@@ -56,12 +57,15 @@ public class HttpServer {
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
                         }
 
-
+                        Path path = file.toPath();
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
-                            boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
+                            staticOrDynamic = "dynamic";
+
+                            if (!path.normalize().startsWith(FILEPATH_DIR + "/program/board/index.html ") || !path.normalize().startsWith(FILEPATH_DIR + "/program/board/search?q=")) {
+                                statusCode = NOT_FOUND;
+                            }
                         } else {
-                            staticHttpResponse = new StaticHttpResponse(file, statusCode);
-                            Path path = file.toPath();
+                            staticOrDynamic = "static";
                             if (!path.normalize().startsWith(FILEPATH_DIR)) {
                                 statusCode = NOT_FOUND;
                             }
@@ -91,25 +95,18 @@ public class HttpServer {
                     throw new RuntimeException(e);
                 }
 
-
                 OutputStream outputStream = this.socket.getOutputStream();
-                System.out.println(httpRequest.getUriPath());
-
 
                 try {
-                    staticHttpResponse = new StaticHttpResponse(file,statusCode);
-                    staticHttpResponse.writeToOutputStream(outputStream);
+                    if (staticOrDynamic.equals("static")) {
+                        staticHttpResponse = new StaticHttpResponse(file, statusCode);
+                        staticHttpResponse.writeToOutputStream(outputStream);
+                    } else if (staticOrDynamic.equals("dynamic")) {
+                        boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-                /*
-                if (statusCode == OK) {
-                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                    } else if (statusCode == NOT_FOUND) {
-                        file = new File(this.FILEPATH_DIR, "NotFound.html");
-                    }
-                 */
 
 
                 inputStream.close();
