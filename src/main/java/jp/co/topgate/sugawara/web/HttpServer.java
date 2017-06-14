@@ -61,9 +61,6 @@ public class HttpServer {
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
                             staticOrDynamic = "dynamic";
 
-                            if (!path.normalize().startsWith(FILEPATH_DIR + "/program/board/index.html ") || !path.normalize().startsWith(FILEPATH_DIR + "/program/board/search?q=")) {
-                                statusCode = NOT_FOUND;
-                            }
                         } else {
                             staticOrDynamic = "static";
                             if (!path.normalize().startsWith(FILEPATH_DIR)) {
@@ -102,7 +99,7 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
+                        boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest,outputStream);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
