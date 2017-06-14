@@ -20,54 +20,47 @@ public class StaticHttpResponseStatusLineBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void StatusLineを適切な形で生成できているかのテスト() {
-            assertThat(buildTest(), is("HTTP/1.1 200 OK\n".getBytes()));
-        }
-
-        public byte[] buildTest() {
-            StringBuilder statusLine = new StringBuilder();
-            statusLine.append("HTTP/1.1").append(" ");
-            statusLine.append(200).append(" ");
-            statusLine.append("OK").append("\n");
-            return (statusLine.toString()).getBytes();
+        public void ステータスコード200のときにStatusLineを適切なシンタックスで生成するテスト() {
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(200);
+            assertThat(builder.build(), is("HTTP/1.1 200 OK\n".getBytes()));
         }
     }
 
     public static class catchReasonPhraseメソッドのテスト {
 
         @Test
-        public void statusCodeが200のときに適切なreasonPhraseを返すかのテスト() {
+        public void ステータスコード200のときにreasonPhraseにOKを返すテスト() {
             int statusCode = 200;
-            StaticHttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("OK"));
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("OK"));
         }
 
         @Test
-        public void statusCodeが400のときに適切なreasonPhraseを返すかのテスト() {
+        public void ステータスコード400のときにreasonPhraseにBad_Requestを返すテスト() {
             int statusCode = 400;
-            StaticHttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Bad Request"));
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Bad Request"));
         }
 
         @Test
-        public void statusCodeが404のときに適切なreasonPhraseを返すかのテスト() {
+        public void ステータスコード404のときにNot_Foundを返すテスト() {
             int statusCode = 404;
-            StaticHttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Not Found"));
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Not Found"));
         }
 
         @Test
-        public void statusCodeが501のときに適切なreasonPhraseを返すかのテスト() {
+        public void ステータスコード501のときにreasonPhraseにNot_Implementedを返すテスト() {
             int statusCode = 501;
-            StaticHttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Not Implemented"));
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Not Implemented"));
         }
 
         @Test
-        public void statusCodeが505のときに適切なreasonPhraseを返すかのテスト() {
+        public void ステータスコード505のときにreasonPhraseにHttp_Version_Not_Supportedを返すテスト() {
             int statusCode = 505;
-            StaticHttpResponseStatusLineBuilder httpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
-            assertThat(httpResponseStatusLineBuilder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
+            StaticHttpResponseStatusLineBuilder builder = new StaticHttpResponseStatusLineBuilder(statusCode);
+            assertThat(builder.catchReasonPhrase(statusCode), is("Http Version Not Supported"));
         }
     }
 
