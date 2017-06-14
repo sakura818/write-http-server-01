@@ -28,7 +28,8 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      */
 
     public byte[] build() {
-        return "".getBytes();
+        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
+        return boardHtmlTranslator.boardTopPageHtml().getBytes();
     }
 
     /**

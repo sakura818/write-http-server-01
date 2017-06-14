@@ -56,7 +56,6 @@ public class HttpServer {
                         if (file.isDirectory()) {
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
                         }
-
                         Path path = file.toPath();
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
                             staticOrDynamic = "dynamic";
@@ -99,7 +98,7 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest,outputStream);
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest,outputStream);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
