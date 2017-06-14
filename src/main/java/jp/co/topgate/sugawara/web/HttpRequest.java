@@ -23,6 +23,7 @@ public class HttpRequest {
     private String uriPath;
     private String requestUri;
     private int statusCode;
+    private String queryString;
     private final int OK = 200;
     private final int BAD_REQUEST = 400;
     private final int NOT_IMPLEMENTED = 501;
@@ -53,8 +54,14 @@ public class HttpRequest {
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
-            String UriPath = parseUriPath(requestUri);
-            this.uriPath = UriPath;
+            String uriPath = parseUriPath(requestUri);
+            String[] uriPathAndQueryString = uriPath.split("\\?", 2);
+            this.uriPath = uriPathAndQueryString[0];
+            if (uriPathAndQueryString.length == 2) {
+                this.queryString = uriPathAndQueryString[1];
+            } else if (uriPathAndQueryString.length == 1) {
+                this.queryString = "";
+            }
         }
 
     }
@@ -332,6 +339,16 @@ public class HttpRequest {
         } else {
             return stringBuffer.toString();
         }
+    }
+
+    /**
+     * クエリ文字列を取得する
+     *
+     * @return queryString
+     */
+
+    public String getQueryString() {
+        return this.queryString;
     }
 }
 

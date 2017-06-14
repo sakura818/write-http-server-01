@@ -72,11 +72,11 @@ public class HttpServer {
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                System.out.print(httpRequest.getUriPath());
+                System.out.println(httpRequest.getUriPath());
                 StaticHttpResponse staticHttpResponse = null;
-                BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler=null;
+                BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
                 if (httpRequest.getUriPath().startsWith("/program/board/")) {
-                    boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file,statusCode,httpRequest);
+                    boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
                 } else {
                     staticHttpResponse = new StaticHttpResponse(file, statusCode);
                 }
