@@ -51,12 +51,6 @@ public class HttpServer {
                         case OK:
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
                             statusCode = catchStatusCode(file);
-                            if (statusCode == OK) {
-                                file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
-                            } else if (statusCode == NOT_FOUND) {
-                                file = new File(this.FILEPATH_DIR, "NotFound.html");
-                            }
-                            break;
                         case BAD_REQUEST:
                             file = new File(this.FILEPATH_DIR, "BadRequest.html");
                             break;
@@ -71,6 +65,15 @@ public class HttpServer {
                     throw new RuntimeException(e);
                 }
 
+                /*
+                if (statusCode == OK) {
+                    file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                } else if (statusCode == NOT_FOUND) {
+                    file = new File(this.FILEPATH_DIR, "NotFound.html");
+                }
+                */
+
+
                 OutputStream outputStream = this.socket.getOutputStream();
                 System.out.println(httpRequest.getUriPath());
                 StaticHttpResponse staticHttpResponse = null;
@@ -78,6 +81,11 @@ public class HttpServer {
                 if (httpRequest.getUriPath().startsWith("/program/board/")) {
                     boardDynamicHttpResponseHandler = new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest);
                 } else {
+                    if (statusCode == OK) {
+                        file = new File(this.FILEPATH_DIR, httpRequest.getUriPath());
+                    } else if (statusCode == NOT_FOUND) {
+                        file = new File(this.FILEPATH_DIR, "NotFound.html");
+                    }
                     staticHttpResponse = new StaticHttpResponse(file, statusCode);
                 }
                 try {
@@ -85,6 +93,8 @@ public class HttpServer {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
+
 
 
                 inputStream.close();
