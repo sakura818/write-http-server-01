@@ -8,7 +8,8 @@ import java.io.File;
 public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler {
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest) {
         System.out.println("ji");
-        dynamicHttpResponseAssort(httpRequest);
+        String assort = dynamicHttpResponseAssort(httpRequest);
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this);
     }
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) {

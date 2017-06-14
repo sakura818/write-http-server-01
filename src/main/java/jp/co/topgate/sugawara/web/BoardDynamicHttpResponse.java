@@ -7,10 +7,12 @@ import java.io.OutputStream;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public abstract class BoardDynamicHttpResponse extends DynamicHttpResponse {
+public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
     private File file;
     private int statusCode;
+    private String assort;
+    private HttpRequest httpRequest;
 
     /**
      * コンストラクタ
@@ -18,9 +20,12 @@ public abstract class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode) {
+    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler) {
         this.file = file;
         this.statusCode = statusCode;
+        this.assort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
+        System.out.println(assort);
+        this.httpRequest = httpRequest;
     }
 
     /**
@@ -36,7 +41,7 @@ public abstract class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder();
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(file, assort, httpRequest);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();

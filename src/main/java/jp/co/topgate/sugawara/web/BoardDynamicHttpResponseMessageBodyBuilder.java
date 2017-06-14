@@ -1,5 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -17,7 +18,8 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder() {
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) {
+        if(assort=="searchName") {System.out.println("ねこ");}
     }
 
     /**
