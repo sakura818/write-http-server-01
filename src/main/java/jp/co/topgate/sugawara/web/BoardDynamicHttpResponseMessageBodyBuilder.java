@@ -21,6 +21,14 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException{
         if(assort.equals("searchName")) {System.out.println("ねこ");}
         Message message = new Message();
+        System.out.println(message.readSaveBoardCsv());
+        /*
+        for(int i = 0; i < message.readSaveBoardCsv().size();i++){
+            String messagePost = message.readSaveBoardCsv().get();
+            System.out.println(messagePost);
+        }
+        */
+
     }
 
     /**
