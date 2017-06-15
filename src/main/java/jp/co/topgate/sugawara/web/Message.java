@@ -45,8 +45,9 @@ public class Message {
 
     public void readSaveBoardCsv() throws IOException {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("SaveBoard.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./src/main/resources/","SaveBoard.csv")));
             String csvLine;
+            System.out.println("csvファイル読み取ることができてる");
 
             while ((csvLine = br.readLine()) != null) {
                 String saveBoardCsvArray[] = csvLine.split(",");
@@ -55,6 +56,12 @@ public class Message {
                 String postTime = saveBoardCsvArray[2];
                 String text = saveBoardCsvArray[3];
                 String password = saveBoardCsvArray[4];
+
+                System.out.println(index);
+                System.out.println(name);
+                System.out.println(postTime);
+                System.out.println(text);
+                System.out.println(password);
             }
             br.close();
         } catch (NumberFormatException e) {
