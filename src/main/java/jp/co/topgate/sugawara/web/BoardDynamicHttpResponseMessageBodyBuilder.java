@@ -18,11 +18,14 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) {
-        if(assort=="searchName") {System.out.println("ねこ");}
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException{
+        if(assort.equals("searchName")) {System.out.println("ねこ");}
+        Message message = new Message();
+        message.readSaveBoardCsv();
     }
 
     /**
+     *
      * @param
      * @return
      */
@@ -31,6 +34,18 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
         return boardHtmlTranslator.boardTopPageHtml().getBytes();
     }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+
+    public byte[] boardShow() {
+        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
+        return boardHtmlTranslator.boardTopPageHtml().getBytes();
+    }
+
 
     /**
      * @param
@@ -104,7 +119,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
     ZonedDateTime measureNewPostingTime() {
-
         ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
         System.out.println(zonedDateTimeNow);
         return zonedDateTimeNow;

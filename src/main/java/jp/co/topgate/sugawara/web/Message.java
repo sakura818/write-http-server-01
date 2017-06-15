@@ -1,6 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -16,6 +17,8 @@ public class Message {
     String postTime;
     String text;
     String password;
+    private String fileName;
+    private int num;
 
     /**
      * コンストラクタ
@@ -26,6 +29,9 @@ public class Message {
 
     Message() throws IOException {
         readSaveBoardCsv();
+        this.fileName = fileName;
+        this.num = num;
+
     }
 
 
@@ -37,7 +43,7 @@ public class Message {
      */
 
 
-    public static void readSaveBoardCsv() throws IOException {
+    public void readSaveBoardCsv() throws IOException {
         try {
             BufferedReader br = new BufferedReader(new FileReader("SaveBoard.csv"));
             String csvLine;
