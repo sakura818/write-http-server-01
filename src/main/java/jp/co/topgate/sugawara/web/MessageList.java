@@ -59,8 +59,6 @@ public class MessageList {
                 String password = saveBoardCsvArray[4];
 
                 OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
-                System.out.println(oneMessage);
-                System.out.println(oneMessage.name);
                 list.add(oneMessage);// listに1つのBoardDataクラスのインスタンスを追加
 
             }

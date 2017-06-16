@@ -61,7 +61,7 @@ public class BoardHtmlTranslator {
                 "    </form>\n" +
                 "</section>\n" +
                 "<section>\n");
-        stringBuffer.append("    <Hr>\n"+"    <h2>投稿一覧</h2>\n" +
+        stringBuffer.append("    <Hr>\n" + "    <h2>投稿一覧</h2>\n" +
                 "    <Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);

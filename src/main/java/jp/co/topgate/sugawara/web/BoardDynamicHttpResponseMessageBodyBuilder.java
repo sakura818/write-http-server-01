@@ -142,5 +142,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         return "";
     }
 
-    String getHtml(){return this.html;}
+    String getHtml() {
+        return this.html;
+    }
 }
