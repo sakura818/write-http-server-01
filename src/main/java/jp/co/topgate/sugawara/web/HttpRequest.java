@@ -41,14 +41,12 @@ public class HttpRequest {
      */
 
     public HttpRequest(InputStream inputStream) throws IOException {
-        //BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        //String requestLine = bufferedReader.readLine();
-
-        String requestLine = HttpRequestParse(inputStream);
+        String requestLine = readRequestLine(inputStream);
+        Map<String, String> header = HttpRequestParse(inputStream);
 
 
-        //readMessageHeader(inputStream);
+        //Map<String,String> readMessageHeader(inputStream);
+        //InputStream readMessageBody(inputStream);
         int statusCode = judgeStatusCode(requestLine);
 
         this.statusCode = statusCode;
@@ -223,9 +221,8 @@ public class HttpRequest {
      */
 
     public String readRequestLine(InputStream inputStream) throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
+        String requestLine = readLine(inputStream);
+        System.out.println(requestLine);
 
         return requestLine;
     }
@@ -243,19 +240,6 @@ public class HttpRequest {
         //System.out.println(requestLine);
     }
 
-    /**
-     * inputStreamからmessagebodyを読み取る
-     *
-     * @return uriPath
-     */
-
-    public String readMessageBody(InputStream inputStream) throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
-
-        return "";
-    }
 
     /**
      * requestLineからmethodをparseする
@@ -280,21 +264,13 @@ public class HttpRequest {
         return this.method;
     }
 
-    private final String LINE_FEED = System.getProperty("line.separator");
-
-    public String HttpRequestParse(InputStream inputStream) throws IOException {
-
-        // RequestLine
-        String requestLine = readLine(inputStream);
-        System.out.println(requestLine);
-
-        // MessageHeader
+    public Map<String, String> HttpRequestParse(InputStream inputStream) throws IOException {
         Map<String, String> headerField = new HashMap<String, String>();
 
         String line = readLine(inputStream);
         StringBuffer header = new StringBuffer();
         while (line != null && !line.isEmpty()) {
-            header.append(line).append(LINE_FEED);
+            header.append(line).append("\n");
             String[] headerLineData = line.split(":", 2);
             if (headerLineData.length == 2) {
                 headerField.put(headerLineData[0], headerLineData[1].trim());
@@ -303,9 +279,7 @@ public class HttpRequest {
             System.out.println(line);
         }
         setHeader(header.toString(), headerField);
-
-        return requestLine;
-
+        return headerField;
     }
 
 
