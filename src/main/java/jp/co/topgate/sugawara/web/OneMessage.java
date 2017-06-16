@@ -1,9 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 /**
  * Created by haruka.sugawara on 2017/06/15.
@@ -23,6 +22,59 @@ public class OneMessage {
         this.postTime = postTime;
         this.text = text;
         this.password = password;
+    }
+
+
+    /**
+     * 解析したデータから新規投稿1件を生成する
+     *
+     * @param
+     * @return
+     */
+
+    void createOneMessage(int currentIndex, String nameOfFormData, String textOfFormData, String passwordOfFormData) {
+        this.index = currentIndex + 1;
+        this.name = nameOfFormData;
+        this.postTime = measureNewPostingTime().toString();
+        this.text = textOfFormData;
+        this.password = passwordOfFormData;
+    }
+
+    /**
+     * 新規投稿1件をcsvに書き込む
+     *
+     * @param
+     * @return
+     */
+    void appendOneMessage() throws IOException {
+        BufferedWriter bufferedWriter= new BufferedWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv")));
+        bufferedWriter.write("createOneMessage");
+        bufferedWriter.close();
+    }
+
+
+    /**
+     * 投稿時間を測定する
+     *
+     * @param
+     * @return
+     */
+    ZonedDateTime measureNewPostingTime() {
+        ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        System.out.println(zonedDateTimeNow);
+        return zonedDateTimeNow;
+    }
+
+    /**
+     * CSVファイルから投稿1件を削除する
+     *
+     * @param
+     * @return
+     */
+
+
+    String deleteOneMessage() {
+        return "";
     }
 
     /**

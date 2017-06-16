@@ -70,29 +70,6 @@ public class MessageList {
         return list;
     }
 
-
-    /**
-     * CSVファイルから投稿を削除する
-     *
-     * @param
-     * @return
-     */
-
-
-    String deleteMessageFromSaveBoard() {
-        return "";
-    }
-
-    /**
-     * CSVファイルに新規投稿を追加する
-     *
-     * @param
-     * @return
-     */
-
-    String appendMessageFromSaveBoard() {
-        return "";
-    }
 }
 
 

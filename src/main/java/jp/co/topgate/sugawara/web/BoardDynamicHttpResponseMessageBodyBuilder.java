@@ -122,19 +122,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
 
 
     /**
-     * 投稿時間を測定する
-     *
-     * @param
-     * @return
-     */
-    ZonedDateTime measureNewPostingTime() {
-        ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
-        System.out.println(zonedDateTimeNow);
-        return zonedDateTimeNow;
-    }
-
-
-    /**
      * @param
      * @return
      */
