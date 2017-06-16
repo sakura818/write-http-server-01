@@ -51,7 +51,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
         int messageBodyLength = messageBody.length;
-        
+
         byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
         System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
