@@ -1,5 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             System.out.println("ねこ");
         }
         analyzePostRequestBody(httpRequest, inputStream);
+        analyzeQueryString(httpRequest);
         MessageList messageList = new MessageList();
         System.out.println(messageList.readSaveBoardCsv());
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
@@ -71,11 +73,13 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     /**
      * クエリストリングを解析する
      *
-     * @param queryString クエリストリング
+     * @param httpRequest
      * @return クエリ値
      */
 
-    String analyzeQueryString(String queryString) {
+    String analyzeQueryString(HttpRequest httpRequest) {
+        httpRequest.getQueryString();
+        System.out.println(httpRequest.getQueryString());
         return "";
     }
 
@@ -118,10 +122,20 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    String analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+    byte[] analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
         System.out.println("slack");
-        httpRequest.readMessageBody(inputStream);
-        return "slack";
+        InputStream bodyInputStream = httpRequest.readMessageBody(inputStream);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int length = 0;
+        byte[] buffer = new byte[length];
+        while (true) {
+            int len = bodyInputStream.read(buffer);
+            if (len < 0) {
+                break;
+            }
+            byteArrayOutputStream.write(buffer, 0, len);
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
 
