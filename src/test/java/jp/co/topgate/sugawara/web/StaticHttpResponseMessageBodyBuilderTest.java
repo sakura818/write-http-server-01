@@ -22,7 +22,7 @@ public class StaticHttpResponseMessageBodyBuilderTest {
         @Test
         public void ステータスコード200を返すときメッセージボディにindexHtmlを送るテスト() throws IOException {
             File indexHtml = new File("src/test/resources/index.html");
-            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(indexHtml);
+            StaticHttpResponseMessageBodyBuilder builder = new StaticHttpResponseMessageBodyBuilder(indexHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
@@ -48,7 +48,7 @@ public class StaticHttpResponseMessageBodyBuilderTest {
         @Test
         public void レスポンスにステータスコード400を返すときメッセージボディにbadRequestHtmlを送るテスト() throws IOException {
             File badRequestHtml = new File("src/test/resources/BadRequest.html");
-            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(badRequestHtml);
+            StaticHttpResponseMessageBodyBuilder builder = new StaticHttpResponseMessageBodyBuilder(badRequestHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
@@ -67,7 +67,7 @@ public class StaticHttpResponseMessageBodyBuilderTest {
         @Test
         public void レスポンスにステータスコード404を返すときメッセージボディにnotFoundHtmlを送るテスト() throws IOException {
             File notFoundHtml = new File("src/test/resources/NotFound.html");
-            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notFoundHtml);
+            StaticHttpResponseMessageBodyBuilder builder = new StaticHttpResponseMessageBodyBuilder(notFoundHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
@@ -87,7 +87,7 @@ public class StaticHttpResponseMessageBodyBuilderTest {
         @Test
         public void レスポンスにステータスコード501を返すときメッセージボディにnotImplementedHtmlを送るテスト() throws IOException {
             File notImplementedHtml = new File("src/test/resources/NotImplemented.html");
-            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notImplementedHtml);
+            StaticHttpResponseMessageBodyBuilder builder = new StaticHttpResponseMessageBodyBuilder(notImplementedHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
@@ -106,7 +106,7 @@ public class StaticHttpResponseMessageBodyBuilderTest {
         @Test
         public void レスポンスにステータスコード505を返すときメッセージボディにhttpVersionNotSupportedHtmlを送るテスト() throws IOException {
             File httpVersionNotSupportedHtml = new File("src/test/resources/HttpVersionNotSupported.html");
-            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(httpVersionNotSupportedHtml);
+            StaticHttpResponseMessageBodyBuilder builder = new StaticHttpResponseMessageBodyBuilder(httpVersionNotSupportedHtml);
             assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +

@@ -180,7 +180,7 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-   
+
 
     /**
      * requestUriからUriPathを抜き出す

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(Enclosed.class)
 public class StaticHttpResponseTest {
 
-    public static class createStaticHttpResponseContentメソッドのテスト {
+    public static class createHttpResponseContentメソッドのテスト {
         @Test
         public void ステータスコード200かつメッセージボディがhtmlのときレスポンスを適切なシンタックスで生成するテスト() throws IOException {
             File file = new File("src/test/resources/index.html");
@@ -59,6 +59,4 @@ public class StaticHttpResponseTest {
             return httpResponseExpectHtml;
         }
     }
-
-
 }
