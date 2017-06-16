@@ -10,39 +10,41 @@ import java.io.*;
  * @author sakura818
  */
 
-public class HttpResponse {
+public class StaticHttpResponse {
 
     private File file;
     private int statusCode;
 
     /**
-     * HttpResponseのコンストラクタ
+     * StaticHttpResponseのコンストラクタ
      *
      * @param file,statusCode
      */
 
-    public HttpResponse(File file, int statusCode) {
+    public StaticHttpResponse(File file, int statusCode) {
         this.file = file;
         this.statusCode = statusCode;
     }
 
     /**
-     * HttpResponseのコンテンツを組み立てる
-     * HttpResponse= StatusLine + MessageHeader + MessageBody
+     * StaticHttpResponseのコンテンツを組み立てる
+     * StaticHttpResponse= StatusLine + MessageHeader + MessageBody
      *
      * @param file
      * @param statusCode
      * @throws IOException
      */
 
-    public byte[] createHttpResponseContent(File file, int statusCode) throws IOException {
-        HttpResponseStatusLineBuilder statusLineBuilder = new HttpResponseStatusLineBuilder(statusCode);
-        HttpResponseMessageHeaderBuilder messageHeaderBuilder = new HttpResponseMessageHeaderBuilder(file);
-        HttpResponseMessageBodyBuilder messageBodyBuilder = new HttpResponseMessageBodyBuilder(file);
 
-        byte[] statusLine = statusLineBuilder.build();
-        byte[] messageHeader = messageHeaderBuilder.build();
-        byte[] messageBody = messageBodyBuilder.build();
+    public byte[] createStaticHttpResponseContent(File file, int statusCode) throws IOException {
+
+        StaticHttpResponseStatusLineBuilder staticHttpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
+        StaticHttpResponseMessageHeaderBuilder staticHttpResponseMessageHeaderBuilder = new StaticHttpResponseMessageHeaderBuilder(file);
+        StaticHttpResponseMessageBodyBuilder staticHttpResponseMessageBodyBuilder = new StaticHttpResponseMessageBodyBuilder(file);
+
+        byte[] statusLine = staticHttpResponseStatusLineBuilder.build();
+        byte[] messageHeader = staticHttpResponseMessageHeaderBuilder.build();
+        byte[] messageBody = staticHttpResponseMessageBodyBuilder.build();
 
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
@@ -64,7 +66,10 @@ public class HttpResponse {
      */
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
-        byte[] httpResponseContent = createHttpResponseContent(file, statusCode);
+
+
+        byte[] httpResponseContent = createStaticHttpResponseContent(file, statusCode);
+        /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
     }
 }

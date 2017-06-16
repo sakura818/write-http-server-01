@@ -4,23 +4,23 @@ import java.io.*;
 
 
 /**
- * HttpResponseMessageBodyBuilder Class
+ * StaticHttpResponseMessageBodyBuilder Class
  * HttpResponseのMessageBodyのContentを生成するクラス
  *
  * @author sakura818
  */
 
-public class HttpResponseMessageBodyBuilder {
+public class StaticHttpResponseMessageBodyBuilder {
 
     private File file;
 
     /**
-     * HttpResponseMessageBodyBuilderのコンストラクタ
+     * コンストラクタ
      *
      * @param file
      */
 
-    public HttpResponseMessageBodyBuilder(File file) {
+    public StaticHttpResponseMessageBodyBuilder(File file) {
         this.file = file;
     }
 
