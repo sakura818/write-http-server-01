@@ -52,6 +52,7 @@ public class Message {
             System.out.println("csvファイル読み取ることができてる");
 
             while ((csvLine = br.readLine()) != null) {
+                int i = 1;
                 String saveBoardCsvArray[] = csvLine.split(",", 5);
 
                 int index = Integer.parseInt(saveBoardCsvArray[0]);
@@ -74,60 +75,6 @@ public class Message {
         return list;
     }
 
-    /**
-     * レス番号indexを取得する
-     *
-     * @param
-     * @return
-     */
-
-    int getIndex() {
-        return this.index;
-    }
-
-    /**
-     * 名前nameを取得する
-     *
-     * @param
-     * @return
-     */
-
-    String getName() {
-        return this.name;
-    }
-
-    /**
-     * 投稿時間posttimeを取得する
-     *
-     * @param
-     * @return
-     */
-
-    String getPostTime() {
-        return this.postTime;
-    }
-
-    /**
-     * 本文textを取得する
-     *
-     * @param
-     * @return
-     */
-
-    String getText() {
-        return this.text;
-    }
-
-    /**
-     * パスワードpasswordを取得する
-     *
-     * @param
-     * @return
-     */
-
-    String getPassword() {
-        return this.password;
-    }
 
     /**
      * CSVファイルから投稿を削除する

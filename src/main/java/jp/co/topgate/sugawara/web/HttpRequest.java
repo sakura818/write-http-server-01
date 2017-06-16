@@ -25,6 +25,7 @@ public class HttpRequest {
     private String requestUri;
     private int statusCode;
     private String queryString;
+    private boolean isQueryString;
     private final int OK = 200;
     private final int BAD_REQUEST = 400;
     private final int NOT_IMPLEMENTED = 501;
@@ -62,8 +63,10 @@ public class HttpRequest {
             this.uriPath = uriPathAndQueryString[0];
             if (uriPathAndQueryString.length == 2) {
                 this.queryString = uriPathAndQueryString[1];
+                this.isQueryString = true;
             } else if (uriPathAndQueryString.length == 1) {
                 this.queryString = "";
+                this.isQueryString = false;
             }
         }
 
@@ -364,6 +367,16 @@ public class HttpRequest {
 
     public String getQueryString() {
         return this.queryString;
+    }
+
+    /**
+     * クエリ文字列の有無取得する
+     *
+     * @return
+     */
+
+    public boolean getIsQueryString() {return this.isQueryString;
+
     }
 }
 

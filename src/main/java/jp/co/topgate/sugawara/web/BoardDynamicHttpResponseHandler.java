@@ -7,7 +7,7 @@ import java.io.OutputStream;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler  {
+public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler {
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream) throws IOException {
         System.out.println("BoardDynamicHttpResponseHandler constructor");
         BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this);
@@ -16,8 +16,10 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) {
         String responseAssortFlag = "responseAssortFlagStart";
-        if ((httpRequest.getMethod().equals("GET"))){
+        if ((httpRequest.getMethod().equals("GET")) && (httpRequest.getIsQueryString() == true)) {
             responseAssortFlag = "searchName";
+        } else if ((httpRequest.getMethod().equals("GET"))) {
+            responseAssortFlag = "topPage";
         } else if ((httpRequest.getMethod().equals("POST"))) {
             responseAssortFlag = "postMessage";
         } else if ((httpRequest.getMethod().equals("DELETE"))) {

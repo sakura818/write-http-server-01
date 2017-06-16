@@ -26,5 +26,60 @@ public class BoardData {
         System.out.println(index);
     }
 
+    /**
+     * レス番号indexを取得する
+     *
+     * @param
+     * @return
+     */
+
+    int getIndex() {
+        return this.index;
+    }
+
+    /**
+     * 名前nameを取得する
+     *
+     * @param
+     * @return
+     */
+
+    String getName() {
+        return this.name;
+    }
+
+    /**
+     * 投稿時間posttimeを取得する
+     *
+     * @param
+     * @return
+     */
+
+    String getPostTime() {
+        return this.postTime;
+    }
+
+    /**
+     * 本文textを取得する
+     *
+     * @param
+     * @return
+     */
+
+    String getText() {
+        return this.text;
+    }
+
+    /**
+     * パスワードpasswordを取得する
+     *
+     * @param
+     * @return
+     */
+
+    String getPassword() {
+        return this.password;
+    }
+
 
 }
