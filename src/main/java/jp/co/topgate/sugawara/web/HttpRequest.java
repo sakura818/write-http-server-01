@@ -6,9 +6,12 @@ import java.lang.String;
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+
 
 
 /**
@@ -25,6 +28,7 @@ public class HttpRequest {
     private String requestUri;
     private int statusCode;
     private String queryString;
+
     private boolean isQueryString;
     private final int OK = 200;
     private final int BAD_REQUEST = 400;
@@ -50,9 +54,12 @@ public class HttpRequest {
         int statusCode = judgeStatusCode(requestLine);
 
         this.statusCode = statusCode;
+
         if (statusCode == 200) {
             String method = parseMethod(requestLine);
             this.method = method;
+
+
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
@@ -65,9 +72,9 @@ public class HttpRequest {
             } else if (uriPathAndQueryString.length == 1) {
                 this.queryString = "";
                 this.isQueryString = false;
+
             }
         }
-
     }
 
     /**
@@ -78,15 +85,14 @@ public class HttpRequest {
      * @return statusCode ex:200
      */
 
-
     int judgeStatusCode(String requestLine) {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
-            if ((requestLineArray.length == 3) && (availableMethod.contains(requestLineArray[0]) == true) && (availableHttpVersion.contains(requestLineArray[2]) == true)) {
+            if ((requestLineArray.length == 3) && (implementedHttpMethod.contains(requestLineArray[0]) == true) && (supportedHttpVersions.contains(requestLineArray[2]) == true)) {
                 statusCode = OK;
-            } else if ((requestLineArray.length == 3) && (notAvailableMethod.contains(requestLineArray[0]) == true)) {
+            } else if ((requestLineArray.length == 3) && (notImplementedHttpMethod.contains(requestLineArray[0]) == true)) {
                 statusCode = NOT_IMPLEMENTED;
-            } else if ((requestLineArray.length == 3) && (notAvailableHttpVersion.contains(requestLineArray[2]) == true)) {
+            } else if ((requestLineArray.length == 3) && (notSupportedHttpVersions.contains(requestLineArray[2]) == true)) {
                 statusCode = HTTP_VERSION_NOT_SUPPORTED;
             } else {
                 statusCode = BAD_REQUEST;
@@ -94,6 +100,7 @@ public class HttpRequest {
         }
         return statusCode;
     }
+
 
 
     /**
@@ -116,11 +123,12 @@ public class HttpRequest {
         return requestUri;
     }
 
+
     /**
-     * このHttpServerでサポートしているmethodのリスト
+     * このHttpServerで実装しておりRFC2616に記載されているmethodのリスト
      */
 
-    ArrayList<String> availableMethod = new ArrayList<String>() {
+    List<String> implementedHttpMethod = new ArrayList<String>() {
         {
             add("GET");
             add("POST");
@@ -129,10 +137,10 @@ public class HttpRequest {
     };
 
     /**
-     * このHttpServerでサポートしていないmethodのリスト
+     * このHttpServerで実装していないがRFC2616に記載されているmethodのリスト
      */
 
-    ArrayList<String> notAvailableMethod = new ArrayList<String>() {
+    List<String> notImplementedHttpMethod = new ArrayList<String>() {
         {
             add("HEAD");
             add("PUT");
@@ -143,20 +151,20 @@ public class HttpRequest {
     };
 
     /**
-     * このHttpServerでサポートしているhttpVersionのリスト
+     * このHttpServerでサポートしておりRFC2616に記載されているhttpVersionのリスト
      */
 
-    ArrayList<String> availableHttpVersion = new ArrayList<String>() {
+    List<String> supportedHttpVersions = new ArrayList<String>() {
         {
             add("HTTP/1.1");
         }
     };
 
     /**
-     * このHttpServerでサポートしていないhttpVersionのリスト
+     * このHttpServerでサポートしていないがRFC2616に記載されているhttpVersionのリスト
      */
 
-    ArrayList<String> notAvailableHttpVersion = new ArrayList<String>() {
+    List<String> notSupportedHttpVersions = new ArrayList<String>() {
         {
             add("HTTP/0.9");
             add("HTTP/1.0");
@@ -164,6 +172,15 @@ public class HttpRequest {
         }
     };
 
+    /**
+     * requestLineからrequestUriをparseする
+     * requestLine = method + requestUri + httpVersion
+     *
+     * @param requestLine ex:GET /index.html HTTP/1.1
+     * @return requestUri ex:index.html
+     */
+
+   
 
     /**
      * requestUriからUriPathを抜き出す
@@ -184,9 +201,33 @@ public class HttpRequest {
     }
 
     /**
+     * uriPathにクエリ文字列があったときuriPathとクエリ文字列を分ける
+     *
+     * @param uriPath /index.html?id=1&name=hana
+     * @return queryString
+     */
+    /*
+    public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
+        if (uriPath != null) {
+        String[] uriPathAndQueryString = uriPath.split("\\?",2);
+            if(uriPathAndQueryString.length == 2){
+                uriPath = uriPathAndQueryString[0];
+                queryString = uriPathAndQueryString[1];
+            }
+            if(uriPathAndQueryString.length == 1){
+                uriPath = uriPathAndQueryString[0];
+                queryString = "";
+            }
+        }
+        return uriPathAndQueryString;
+    }
+    */
+
+
+    /**
      * statusCodeを取得する
      *
-     * @return statusCOde
+     * @return statusCode
      */
 
     public int getStatusCode() {
@@ -215,6 +256,7 @@ public class HttpRequest {
     }
 
     /**
+
      * inputStreamからrequestLineを読み取る
      *
      * @return uriPath
@@ -223,6 +265,7 @@ public class HttpRequest {
     public String readRequestLine(InputStream inputStream) throws IOException {
         String requestLine = readLine(inputStream);
         System.out.println(requestLine);
+
 
         return requestLine;
     }

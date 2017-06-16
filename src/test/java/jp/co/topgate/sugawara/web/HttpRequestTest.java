@@ -3,9 +3,11 @@ package jp.co.topgate.sugawara.web;
 
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
+
 import org.junit.runner.RunWith;
 
 import java.io.*;
+
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -31,7 +33,11 @@ public class HttpRequestTest {
 
         @Test
         public void POSTリクエストにはステータスコード501を返すテスト() throws IOException {
+<<<<<<< HEAD
             InputStream inputStream = new ByteArrayInputStream("CONNECT /index.html HTTP/1.1".getBytes("utf-8"));
+=======
+            InputStream inputStream = new ByteArrayInputStream("POST /index.html HTTP/1.1".getBytes("utf-8"));
+>>>>>>> 54b82c1e371e8b1d794e41763f6118f8e94b81ac
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat((httpRequest.getStatusCode()), is(501));
         }
@@ -75,10 +81,30 @@ public class HttpRequestTest {
         }
 
         @Test
+<<<<<<< HEAD
+=======
+        public void リクエストの1行目から日本語のファイル名のrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /日本語のファイル名.txt HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/日本語のファイル名.txt"));
+        }
+
+        @Test
+>>>>>>> 54b82c1e371e8b1d794e41763f6118f8e94b81ac
         public void リクエストの1行目から階層構造に応じたファイルのrequestUriを抜き出すテスト() throws IOException {
             InputStream inputStream = new ByteArrayInputStream("GET /dummyDirectory/sample.txt HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getRequestUri(), is("/dummyDirectory/sample.txt"));
+<<<<<<< HEAD
+=======
+        }
+
+        @Test
+        public void リクエストの1行目から階層構造に応じたスラッシュのrequestUriを抜き出すテスト() throws IOException {
+            InputStream inputStream = new ByteArrayInputStream("GET /dummyDirectory/ HTTP/1.1".getBytes("utf-8"));
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            assertThat(httpRequest.getRequestUri(), is("/dummyDirectory/index.html"));
+>>>>>>> 54b82c1e371e8b1d794e41763f6118f8e94b81ac
         }
 
     }
@@ -97,9 +123,13 @@ public class HttpRequestTest {
             InputStream inputStream = new ByteArrayInputStream("GET http://localhost:8080/index.html HTTP/1.1".getBytes("utf-8"));
             HttpRequest httpRequest = new HttpRequest(inputStream);
             assertThat(httpRequest.getUriPath(), is("/index.html"));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54b82c1e371e8b1d794e41763f6118f8e94b81ac
         }
     }
+
 }
 
 

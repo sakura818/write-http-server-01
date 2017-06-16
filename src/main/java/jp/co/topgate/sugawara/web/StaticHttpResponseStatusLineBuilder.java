@@ -66,4 +66,5 @@ public class StaticHttpResponseStatusLineBuilder {
         }
         return "Unknown Status Code";
     }
+
 }

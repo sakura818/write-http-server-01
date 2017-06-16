@@ -44,10 +44,12 @@ public class HttpServer {
                 HttpRequest httpRequest;
 
                 File file = null;
+
                 int statusCode = 0;
                 StaticHttpResponse staticHttpResponse = null;
                 BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
                 String staticOrDynamic = "";
+
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
@@ -57,6 +59,7 @@ public class HttpServer {
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
                         }
                         Path path = file.toPath();
+
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
                             staticOrDynamic = "dynamic";
 
@@ -69,6 +72,7 @@ public class HttpServer {
                                 statusCode = NOT_FOUND;
                             }
                         }
+
 
                     }
                     if (statusCode != OK) {
@@ -121,20 +125,6 @@ public class HttpServer {
             }
             System.out.println("正常にコネクションできないエラーが発生しました");
         }
-    }
-
-    /**
-     * 200か404のステータスコードを返す
-     *
-     * @param file ex:index.html
-     * @return statusCode ex:200
-     */
-
-    int catchStatusCode(File file) {
-        if (!file.exists()) {
-            return NOT_FOUND;
-        }
-        return OK;
     }
 
 }

@@ -35,6 +35,7 @@ public class StaticHttpResponse {
      * @throws IOException
      */
 
+
     public byte[] createStaticHttpResponseContent(File file, int statusCode) throws IOException {
 
         StaticHttpResponseStatusLineBuilder staticHttpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
@@ -45,12 +46,9 @@ public class StaticHttpResponse {
         byte[] messageHeader = staticHttpResponseMessageHeaderBuilder.build();
         byte[] messageBody = staticHttpResponseMessageBodyBuilder.build();
 
-
         int statusLineLength = statusLine.length;
         int messageHeaderLength = messageHeader.length;
         int messageBodyLength = messageBody.length;
-
-
         byte[] createResponseContents = new byte[statusLineLength + messageHeaderLength + messageBodyLength];
 
         System.arraycopy(statusLine, 0, createResponseContents, 0, statusLineLength);
@@ -59,7 +57,6 @@ public class StaticHttpResponse {
 
         return createResponseContents;
     }
-
 
     /**
      * HttpResponseをOutputStreamに書き込む
@@ -70,9 +67,9 @@ public class StaticHttpResponse {
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
+
         byte[] httpResponseContent = createStaticHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
-
     }
 }

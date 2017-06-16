@@ -20,14 +20,10 @@ public class StaticHttpResponseMessageBodyBuilderTest {
     public static class buildメソッドのテスト {
 
         @Test
-        public void statusCodeが200のときのhtmlファイルのテスト() throws IOException {
-
+        public void ステータスコード200を返すときメッセージボディにindexHtmlを送るテスト() throws IOException {
             File indexHtml = new File("src/test/resources/index.html");
-            byte[] indexHtmlByteActual = new byte[(int) indexHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(indexHtml));
-            bufferedInputStream.read(indexHtmlByteActual);
-            bufferedInputStream.close();
-            assertThat(indexHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(indexHtml);
+            assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
                     "    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" +
@@ -47,18 +43,13 @@ public class StaticHttpResponseMessageBodyBuilderTest {
                     "</p>\n" +
                     "</body>\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
-        public void statusCodeが400のときのhtmlファイルのテスト() throws IOException {
-
+        public void レスポンスにステータスコード400を返すときメッセージボディにbadRequestHtmlを送るテスト() throws IOException {
             File badRequestHtml = new File("src/test/resources/BadRequest.html");
-            byte[] badRequestHtmlByteActual = new byte[(int) badRequestHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(badRequestHtml));
-            bufferedInputStream.read(badRequestHtmlByteActual);
-            bufferedInputStream.close();
-            assertThat(badRequestHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(badRequestHtml);
+            assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
                     "<head>\n" +
@@ -71,18 +62,13 @@ public class StaticHttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
-        public void statusCodeが404のときのhtmlファイルのテスト() throws IOException {
-
+        public void レスポンスにステータスコード404を返すときメッセージボディにnotFoundHtmlを送るテスト() throws IOException {
             File notFoundHtml = new File("src/test/resources/NotFound.html");
-            byte[] notFoundHtmlByteActual = new byte[(int) notFoundHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notFoundHtml));
-            bufferedInputStream.read(notFoundHtmlByteActual);
-            bufferedInputStream.close();
-            assertThat(notFoundHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notFoundHtml);
+            assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
                     "<head>\n" +
@@ -95,19 +81,14 @@ public class StaticHttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
 
         @Test
-        public void statusCodeが501のときのhtmlファイルのテスト() throws IOException {
-
+        public void レスポンスにステータスコード501を返すときメッセージボディにnotImplementedHtmlを送るテスト() throws IOException {
             File notImplementedHtml = new File("src/test/resources/NotImplemented.html");
-            byte[] notImplementedHtmlByteActual = new byte[(int) notImplementedHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(notImplementedHtml));
-            bufferedInputStream.read(notImplementedHtmlByteActual);
-            bufferedInputStream.close();
-            assertThat(notImplementedHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(notImplementedHtml);
+            assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
                     "<head>\n" +
@@ -116,22 +97,17 @@ public class StaticHttpResponseMessageBodyBuilderTest {
                     "\n" +
                     "<body>\n" +
                     "<h1>Not Implemented</h1>\n" +
-                    "<p>リクエストは正しいのですが、このサーバではリクエストされたメソッドをサポートしていません。</p>\n" +
+                    "<p>リクエストは正しいのですが、 このサーバはリクエストを実行するのに必要な機能をサポートしていません。</p>\n" +
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
 
         @Test
-        public void statusCodeが505のときのhtmlファイルのテスト() throws IOException {
-
+        public void レスポンスにステータスコード505を返すときメッセージボディにhttpVersionNotSupportedHtmlを送るテスト() throws IOException {
             File httpVersionNotSupportedHtml = new File("src/test/resources/HttpVersionNotSupported.html");
-            byte[] httpVersionNotSupportedHtmlByteActual = new byte[(int) httpVersionNotSupportedHtml.length()];
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(httpVersionNotSupportedHtml));
-            bufferedInputStream.read(httpVersionNotSupportedHtmlByteActual);
-            bufferedInputStream.close();
-            assertThat(httpVersionNotSupportedHtmlByteActual, is(("<!DOCTYPE html>\n" +
+            HttpResponseMessageBodyBuilder builder = new HttpResponseMessageBodyBuilder(httpVersionNotSupportedHtml);
+            assertThat(builder.build(), is(("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "\n" +
                     "<head>\n" +
@@ -144,7 +120,6 @@ public class StaticHttpResponseMessageBodyBuilderTest {
                     "</body>\n" +
                     "\n" +
                     "</html>\n").getBytes()));
-
         }
     }
 
