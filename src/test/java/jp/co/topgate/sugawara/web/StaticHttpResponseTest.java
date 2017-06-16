@@ -19,15 +19,15 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(Enclosed.class)
-public class HttpResponseTest {
+public class StaticHttpResponseTest {
 
     public static class createHttpResponseContentメソッドのテスト {
         @Test
         public void ステータスコード200かつメッセージボディがhtmlのときレスポンスを適切なシンタックスで生成するテスト() throws IOException {
             File file = new File("src/test/resources/index.html");
             int statusCode = 200;
-            HttpResponse httpResponse = new HttpResponse(file, statusCode);
-            assertThat(httpResponse.createHttpResponseContent(file, statusCode), is(httpResponseExpect()));
+            StaticHttpResponse httpResponse = new StaticHttpResponse(file, statusCode);
+            assertThat(httpResponse.createStaticHttpResponseContent(file, statusCode), is(httpResponseExpect()));
         }
 
         public byte[] httpResponseExpect() throws IOException {

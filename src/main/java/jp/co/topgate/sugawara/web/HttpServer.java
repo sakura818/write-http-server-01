@@ -44,7 +44,12 @@ public class HttpServer {
                 HttpRequest httpRequest;
 
                 File file = null;
-                int statusCode;
+
+                int statusCode = 0;
+                StaticHttpResponse staticHttpResponse = null;
+                BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;
+                String staticOrDynamic = "";
+
                 try {
                     httpRequest = new HttpRequest(inputStream);
                     statusCode = httpRequest.getStatusCode();
@@ -54,12 +59,21 @@ public class HttpServer {
                             file = new File(this.FILEPATH_DIR, httpRequest.getUriPath() + "/index.html");
                         }
                         Path path = file.toPath();
-                        if (!path.normalize().startsWith(FILEPATH_DIR)) {
-                            statusCode = NOT_FOUND;
+
+                        if (httpRequest.getUriPath().startsWith("/program/board/")) {
+                            staticOrDynamic = "dynamic";
+
+                        } else {
+                            staticOrDynamic = "static";
+                            if (!path.normalize().startsWith(FILEPATH_DIR)) {
+                                statusCode = NOT_FOUND;
+                            }
+                            if (!file.exists()) {
+                                statusCode = NOT_FOUND;
+                            }
                         }
-                        if (!file.exists()) {
-                            statusCode = NOT_FOUND;
-                        }
+
+
                     }
                     if (statusCode != OK) {
                         switch (statusCode) {
@@ -82,12 +96,18 @@ public class HttpServer {
                 }
 
                 OutputStream outputStream = this.socket.getOutputStream();
-                HttpResponse httpResponse = new HttpResponse(file, statusCode);
+
                 try {
-                    httpResponse.writeToOutputStream(outputStream);
+                    if (staticOrDynamic.equals("static")) {
+                        staticHttpResponse = new StaticHttpResponse(file, statusCode);
+                        staticHttpResponse.writeToOutputStream(outputStream);
+                    } else if (staticOrDynamic.equals("dynamic")) {
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
 
                 inputStream.close();
                 outputStream.close();
