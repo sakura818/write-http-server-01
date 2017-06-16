@@ -98,7 +98,7 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest,outputStream);
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);

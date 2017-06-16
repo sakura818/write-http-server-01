@@ -1,5 +1,9 @@
 package jp.co.topgate.sugawara.web;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
+import java.io.IOException;
+
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
@@ -12,7 +16,8 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    public BoardHtmlTranslator() {
+    public BoardHtmlTranslator(MessageList messageList) throws IOException{
+        boardTopPageHtml(messageList);
     }
 
 
@@ -23,8 +28,9 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    String boardTopPageHtml() {
-        String toppage = "<!DOCTYPE html>\n" +
+    String boardTopPageHtml(MessageList messageList) throws IOException {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
@@ -54,24 +60,34 @@ public class BoardHtmlTranslator {
                 "        <input type=\"submit\" value=\"検索\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
-                "<section>\n" +
-                "    <h2>投稿一覧</h2>\n" +
-                "    <Hr>\n" +
-                "    <p>[index] Name Date</p>\n" +
+                "<section>\n");
+        stringBuffer.append("    <h2>投稿一覧</h2>\n" +
+                "    <Hr>\n");
+        stringBuffer.append("    <p>[index] Name Date</p>\n" +
                 "    <p>Text</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                "    <Hr>\n" +
-                "    <p>[3] machi Mon Aug 25 12:38:56 JST 2014</p>\n" +
-                "    <p>study</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                "    <Hr>\n" +
-                "    <p>[2] yaya Mon Aug 25 12:35:56 JST 2014</p>\n" +
-                "    <p>guitar</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                "    <Hr>\n" +
-                "    <p>[1] hana Mon Aug 25 12:34:56 JST 2014</p>\n" +
-                "    <p>yosakoi</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                "</section>\n" +
+                "    <Hr>\n");
+        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+            OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+            stringBuffer.append("[" + oneMessage.getIndex()+ "]" + " ");
+            stringBuffer.append(oneMessage.getName()+ " ");
+            stringBuffer.append(oneMessage.getPostTime()+ " ");
+            stringBuffer.append(oneMessage.getText()+ " ");
+            stringBuffer.append(oneMessage.getPassword());
+            stringBuffer.append("<Hr>\n");
+            stringBuffer.append("    <p>[3] machi Mon Aug 25 12:38:56 JST 2014</p>\n" +
+                    "    <p>study</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
+                    "    <Hr>\n" +
+                    "    <p>[2] yaya Mon Aug 25 12:35:56 JST 2014</p>\n" +
+                    "    <p>guitar</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
+                    "    <Hr>\n" +
+                    "    <p>[1] hana Mon Aug 25 12:34:56 JST 2014</p>\n" +
+                    "    <p>yosakoi</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n");
+        }
+        stringBuffer.append("</section>\n" +
                 "</body>\n" +
-                "</html>";
-        return toppage;
+                "</html>");
+
+        return stringBuffer.toString();
     }
 
     /**

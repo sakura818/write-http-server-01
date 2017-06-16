@@ -106,7 +106,7 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-    String parseRequestUri(String requestLine) throws UnsupportedEncodingException{
+    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
         if (requestLine != null) {
             String[] requestLineArray = requestLine.split(" ", 3);
             String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
@@ -306,8 +306,7 @@ public class HttpRequest {
 
         return requestLine;
 
-        }
-
+    }
 
 
     private String header;
@@ -319,6 +318,7 @@ public class HttpRequest {
     }
 
     private InputStream bodyInput;
+
     void setBody(InputStream inputStream) {
         this.bodyInput = inputStream;
     }
@@ -375,7 +375,8 @@ public class HttpRequest {
      * @return
      */
 
-    public boolean getIsQueryString() {return this.isQueryString;
+    public boolean getIsQueryString() {
+        return this.isQueryString;
 
     }
 }

@@ -4,15 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class Message {
+public class MessageList {
 
     int index;
     String name;
@@ -29,7 +27,7 @@ public class Message {
      * @return
      */
 
-    Message() throws IOException {
+    MessageList() throws IOException {
         this.fileName = fileName;
         this.num = num;
 
@@ -44,8 +42,8 @@ public class Message {
      */
 
 
-    public List<BoardData> readSaveBoardCsv() throws IOException {
-        List<BoardData> list = null;
+    public List<OneMessage> readSaveBoardCsv() throws IOException {
+        List<OneMessage> list = null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
@@ -61,9 +59,10 @@ public class Message {
                 String text = saveBoardCsvArray[3];
                 String password = saveBoardCsvArray[4];
 
-                BoardData boardData = new BoardData(index, name, postTime, text, password);
+                OneMessage boardData = new OneMessage(index, name, postTime, text, password);
                 System.out.println(boardData);
-                list = new ArrayList<BoardData>();// これは1件1件投稿の集合体
+                System.out.println(boardData.name);
+                list = new ArrayList<OneMessage>();// これは1件1件投稿の集合体
                 list.add(boardData);// listに1つのBoardDataクラスのインスタンスを追加
 
             }

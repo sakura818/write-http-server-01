@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by haruka.sugawara on 2017/06/15.
  */
-public class BoardData {
+public class OneMessage {
 
     int index;
     String name;
@@ -17,7 +17,7 @@ public class BoardData {
     String password;
 
     //1件の投稿
-    BoardData(int index, String name, String postTime, String text, String password) {
+    OneMessage(int index, String name, String postTime, String text, String password) {
         this.index = index;
         this.name = name;
         this.postTime = postTime;

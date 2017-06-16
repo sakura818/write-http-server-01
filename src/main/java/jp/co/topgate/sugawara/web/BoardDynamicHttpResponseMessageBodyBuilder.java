@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
 public class BoardDynamicHttpResponseMessageBodyBuilder {
+    private String html;
 
     /**
      * コンストラクタ
@@ -18,37 +18,42 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException{
-        if(assort.equals("searchName")) {System.out.println("ねこ");}
-        Message message = new Message();
-        for(int i = 0; i < message.readSaveBoardCsv().size();i++){
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException {
+        if (assort.equals("topPage")) {
+            System.out.println("ねこ");
+        }
+        MessageList messageList = new MessageList();
+        System.out.println(messageList.readSaveBoardCsv());
+        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
+        this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+        /*
+        for (int i = 0; i < message.readSaveBoardCsv().size(); i++) {
             System.out.println(message.readSaveBoardCsv().get(i));
         }
+        */
 
 
     }
 
     /**
-     *
      * @param
      * @return
      */
 
     public byte[] build() {
-        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
-        return boardHtmlTranslator.boardTopPageHtml().getBytes();
+        return getHtml().getBytes();
     }
 
     /**
-     *
      * @param
      * @return
      */
-
+/*
     public byte[] boardShow() {
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
         return boardHtmlTranslator.boardTopPageHtml().getBytes();
     }
+    */
 
 
     /**
@@ -136,4 +141,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     String createMessage() {
         return "";
     }
+
+    String getHtml(){return this.html;}
 }
