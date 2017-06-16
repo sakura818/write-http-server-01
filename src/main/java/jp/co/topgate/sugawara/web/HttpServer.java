@@ -72,8 +72,6 @@ public class HttpServer {
                                 statusCode = NOT_FOUND;
                             }
                         }
-
-
                     }
                     if (statusCode != OK) {
                         switch (statusCode) {
@@ -107,8 +105,6 @@ public class HttpServer {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-
                 inputStream.close();
                 outputStream.close();
             }

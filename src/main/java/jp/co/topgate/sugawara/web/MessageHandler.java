@@ -60,15 +60,5 @@ public class MessageHandler {
         return "";
     }
 
-    /**
-     * 投稿一覧をMessageをリスト化したものから読み取る
-     *
-     * @param
-     * @return
-     */
-
-    String readAllMessageList() {
-        return "";
-    }
 
 }

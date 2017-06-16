@@ -24,19 +24,12 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         if (assort.equals("topPage")) {
             System.out.println("ねこ");
         }
-        analyzePostRequestBody(httpRequest, inputStream);
+        //analyzePostRequestBody(httpRequest, inputStream);
         analyzeQueryString(httpRequest);
         MessageList messageList = new MessageList();
         System.out.println(messageList.readSaveBoardCsv());
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
-        /*
-        for (int i = 0; i < message.readSaveBoardCsv().size(); i++) {
-            System.out.println(message.readSaveBoardCsv().get(i));
-        }
-        */
-
-
     }
 
     /**
@@ -52,19 +45,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-/*
-    public byte[] boardShow() {
-        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
-        return boardHtmlTranslator.boardTopPageHtml().getBytes();
-    }
-    */
-
-
-    /**
-     * @param
-     * @return
-     */
-
 
     String searchMessageByName() {
         return "";
@@ -136,15 +116,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             byteArrayOutputStream.write(buffer, 0, len);
         }
         return byteArrayOutputStream.toByteArray();
-    }
-
-
-    /**
-     * @param
-     * @return
-     */
-    String createMessage() {
-        return "";
     }
 
     String getHtml() {

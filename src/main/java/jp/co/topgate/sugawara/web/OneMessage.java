@@ -72,7 +72,6 @@ public class OneMessage {
      * @return
      */
 
-
     String deleteOneMessage() {
         return "";
     }

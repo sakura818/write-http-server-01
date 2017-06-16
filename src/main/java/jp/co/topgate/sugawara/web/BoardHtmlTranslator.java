@@ -19,11 +19,10 @@ public class BoardHtmlTranslator {
         boardTopPageHtml(messageList);
     }
 
-
     /**
      * 掲示板のトップページのHTMLをつくる
      *
-     * @param
+     * @param messageList
      * @return
      */
 
@@ -60,8 +59,7 @@ public class BoardHtmlTranslator {
                 "    </form>\n" +
                 "</section>\n" +
                 "<section>\n");
-        stringBuffer.append("    <Hr>\n" + "    <h2>投稿一覧</h2>\n" +
-                "    <Hr>\n");
+        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
@@ -71,9 +69,7 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append("<Hr>\n");
         }
-        stringBuffer.append("</section>\n" +
-                "</body>\n" +
-                "</html>");
+        stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
 
         return stringBuffer.toString();
     }
@@ -88,26 +84,5 @@ public class BoardHtmlTranslator {
     String createSearchMessageByName() {
         return "";
     }
-
-    /**
-     * パスワードで削除された結果を表示するHTMLをつくる
-     *
-     * @param
-     * @return
-     */
-    String createDeleteMessageByPassword() {
-        return "";
-    }
-
-    /**
-     * 新たに新規投稿検索した結果を表示するHTMLをつくる
-     *
-     * @param
-     * @return
-     */
-    String createNewPostingHtml() {
-        return "";
-    }
-
 
 }

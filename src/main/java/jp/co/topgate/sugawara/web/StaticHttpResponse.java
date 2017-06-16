@@ -35,7 +35,6 @@ public class StaticHttpResponse {
      * @throws IOException
      */
 
-
     public byte[] createStaticHttpResponseContent(File file, int statusCode) throws IOException {
 
         StaticHttpResponseStatusLineBuilder staticHttpResponseStatusLineBuilder = new StaticHttpResponseStatusLineBuilder(statusCode);
@@ -66,7 +65,6 @@ public class StaticHttpResponse {
      */
 
     public void writeToOutputStream(OutputStream outputStream) throws IOException {
-
 
         byte[] httpResponseContent = createStaticHttpResponseContent(file, statusCode);
         /** HttpResponseをoutputStreamに書き込む */

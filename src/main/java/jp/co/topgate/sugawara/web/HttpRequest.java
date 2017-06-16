@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 
 /**
@@ -172,7 +171,7 @@ public class HttpRequest {
     };
 
     /**
-     * requestLineからUriPathをparseする
+     * requestLineからrequestUriをparseする
      * requestLine = method + requestUri + httpVersion
      *
      * @param requestLine ex:GET /index.html HTTP/1.1
@@ -192,7 +191,7 @@ public class HttpRequest {
     }
 
     /**
-     * requestUriからUriPathを抜き出す
+     * requestUriからUriPathをparseする
      *
      * @param requestUri ex:http://localhost:8080/index.html
      * @return UriPath ex:/index.html
@@ -210,30 +209,6 @@ public class HttpRequest {
     }
 
     /**
-     * uriPathにクエリ文字列があったときuriPathとクエリ文字列を分ける
-     *
-     * @param uriPath /index.html?id=1&name=hana
-     * @return queryString
-     */
-    /*
-    public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
-        if (uriPath != null) {
-        String[] uriPathAndQueryString = uriPath.split("\\?",2);
-            if(uriPathAndQueryString.length == 2){
-                uriPath = uriPathAndQueryString[0];
-                queryString = uriPathAndQueryString[1];
-            }
-            if(uriPathAndQueryString.length == 1){
-                uriPath = uriPathAndQueryString[0];
-                queryString = "";
-            }
-        }
-        return uriPathAndQueryString;
-    }
-    */
-
-
-    /**
      * statusCodeを取得する
      *
      * @return statusCode
@@ -244,9 +219,9 @@ public class HttpRequest {
     }
 
     /**
-     * statusCodeを取得する
+     * requestUriを取得する
      *
-     * @return statusCOde
+     * @return requestUri
      */
 
     public String getRequestUri() {
@@ -265,9 +240,9 @@ public class HttpRequest {
     }
 
     /**
-     * methodを取得する
+     * headerFieldを取得する
      *
-     * @return method
+     * @return headerField
      */
 
     public Map<String, String> getHeaderField() {
@@ -278,23 +253,11 @@ public class HttpRequest {
      * methodを取得する
      *
      * @return method
-
-
-    public InputStream getMessageBody() {
-    return this.messageBofy;
-    }
-     */
-
-    /**
-     * methodを取得する
-     *
-     * @return method
      */
 
     public String getMethod() {
         return this.method;
     }
-
 
     /**
      * inputStreamからmessageHeaderを読み取る
@@ -321,14 +284,27 @@ public class HttpRequest {
         return headerField;
     }
 
+    /**
+     * inputStreamからmessageBodyを読み取る
+     *
+     * @param inputStream
+     * @return messageHeader
+     */
+
     public InputStream readMessageBody(InputStream inputStream) throws IOException {
         InputStream messageBody = inputStream;
         return messageBody;
     }
 
-
     private String header;
     private Map<String, String> headerField = new HashMap<>();
+
+    /**
+     * inputStreamから1行ずつデータをよみとる
+     *
+     * @param inputStream
+     * @return messageHeader
+     */
 
 
     public String readLine(InputStream inputStream) throws IOException {
@@ -377,9 +353,9 @@ public class HttpRequest {
     }
 
     /**
-     * クエリ文字列の有無取得する
+     * クエリ文字列の真偽値を取得する
      *
-     * @return
+     * @return isQueryString
      */
 
     public boolean getIsQueryString() {
