@@ -78,6 +78,18 @@ public class HttpRequest {
     }
 
     /**
+     * inputStreamからrequestLineを読み取る
+     * @param inputStream
+     * @return requestLine
+     */
+
+    public String readRequestLine(InputStream inputStream) throws IOException {
+        String requestLine = readLine(inputStream);
+        System.out.println(requestLine);
+        return requestLine;
+    }
+
+    /**
      * requestLineからstatusCodeをjudgeする
      * requestLine = method + requestUri + httpVersion
      *
@@ -101,26 +113,17 @@ public class HttpRequest {
         return statusCode;
     }
 
-
-
     /**
-     * requestLineからUriPathをparseする
-     * requestLine = method + requestUri + httpVersion
+     * requestLineからmethodをparseする
      *
-     * @param requestLine ex:GET /index.html HTTP/1.1
-     * @return requestUri ex:index.html
+     * @param requestLine
+     * @return method
      */
 
-    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
-        if (requestLine != null) {
-            String[] requestLineArray = requestLine.split(" ", 3);
-            String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
-            requestUri = decodedRequestUri;
-            if (requestUri.equals("/")) {
-                requestUri += "index.html";
-            }
-        }
-        return requestUri;
+    public String parseMethod(String requestLine) {
+        String[] requestLineArray = requestLine.split(" ", 3);
+        String method = requestLineArray[0];
+        return method;
     }
 
 
@@ -173,14 +176,24 @@ public class HttpRequest {
     };
 
     /**
-     * requestLineからrequestUriをparseする
+     * requestLineからUriPathをparseする
      * requestLine = method + requestUri + httpVersion
      *
      * @param requestLine ex:GET /index.html HTTP/1.1
      * @return requestUri ex:index.html
      */
 
-
+    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
+        if (requestLine != null) {
+            String[] requestLineArray = requestLine.split(" ", 3);
+            String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
+            requestUri = decodedRequestUri;
+            if (requestUri.equals("/")) {
+                requestUri += "index.html";
+            }
+        }
+        return requestUri;
+    }
 
     /**
      * requestUriからUriPathを抜き出す
@@ -253,48 +266,6 @@ public class HttpRequest {
 
     public String getUriPath() {
         return this.uriPath;
-    }
-
-    /**
-
-     * inputStreamからrequestLineを読み取る
-     *
-     * @return uriPath
-     */
-
-    public String readRequestLine(InputStream inputStream) throws IOException {
-        String requestLine = readLine(inputStream);
-        System.out.println(requestLine);
-
-
-        return requestLine;
-    }
-
-    /**
-     * inputStreamからmessageheaderを読み取る
-     *
-     * @return uriPath
-     */
-
-    public void readMessageHeader(InputStream inputStream) throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
-        //System.out.println(requestLine);
-    }
-
-
-    /**
-     * requestLineからmethodをparseする
-     *
-     * @param requestLine
-     * @return method
-     */
-
-    public String parseMethod(String requestLine) {
-        String[] requestLineArray = requestLine.split(" ", 3);
-        String method = requestLineArray[0];
-        return method;
     }
 
     /**
