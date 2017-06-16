@@ -16,7 +16,7 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    public BoardHtmlTranslator(MessageList messageList) throws IOException{
+    public BoardHtmlTranslator(MessageList messageList) throws IOException {
         boardTopPageHtml(messageList);
     }
 
@@ -61,27 +61,16 @@ public class BoardHtmlTranslator {
                 "    </form>\n" +
                 "</section>\n" +
                 "<section>\n");
-        stringBuffer.append("    <h2>投稿一覧</h2>\n" +
-                "    <Hr>\n");
-        stringBuffer.append("    <p>[index] Name Date</p>\n" +
-                "    <p>Text</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
+        stringBuffer.append("    <Hr>\n"+"    <h2>投稿一覧</h2>\n" +
                 "    <Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
-            stringBuffer.append("[" + oneMessage.getIndex()+ "]" + " ");
-            stringBuffer.append(oneMessage.getName()+ " ");
-            stringBuffer.append(oneMessage.getPostTime()+ " ");
-            stringBuffer.append(oneMessage.getText()+ " ");
+            stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
+            stringBuffer.append(oneMessage.getName() + " ");
+            stringBuffer.append(oneMessage.getPostTime() + " ");
+            stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append("<Hr>\n");
-            stringBuffer.append("    <p>[3] machi Mon Aug 25 12:38:56 JST 2014</p>\n" +
-                    "    <p>study</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                    "    <Hr>\n" +
-                    "    <p>[2] yaya Mon Aug 25 12:35:56 JST 2014</p>\n" +
-                    "    <p>guitar</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n" +
-                    "    <Hr>\n" +
-                    "    <p>[1] hana Mon Aug 25 12:34:56 JST 2014</p>\n" +
-                    "    <p>yosakoi</p> Password <input type=\"text\" name=\"text\" value=\"\"><br>\n");
         }
         stringBuffer.append("</section>\n" +
                 "</body>\n" +

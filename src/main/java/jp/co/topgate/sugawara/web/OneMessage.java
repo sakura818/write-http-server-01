@@ -23,7 +23,6 @@ public class OneMessage {
         this.postTime = postTime;
         this.text = text;
         this.password = password;
-        System.out.println(index);
     }
 
     /**

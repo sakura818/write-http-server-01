@@ -43,14 +43,13 @@ public class MessageList {
 
 
     public List<OneMessage> readSaveBoardCsv() throws IOException {
-        List<OneMessage> list = null;
+        List<OneMessage> list = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
             System.out.println("csvファイル読み取ることができてる");
 
             while ((csvLine = br.readLine()) != null) {
-                int i = 1;
                 String saveBoardCsvArray[] = csvLine.split(",", 5);
 
                 int index = Integer.parseInt(saveBoardCsvArray[0]);
@@ -59,11 +58,10 @@ public class MessageList {
                 String text = saveBoardCsvArray[3];
                 String password = saveBoardCsvArray[4];
 
-                OneMessage boardData = new OneMessage(index, name, postTime, text, password);
-                System.out.println(boardData);
-                System.out.println(boardData.name);
-                list = new ArrayList<OneMessage>();// これは1件1件投稿の集合体
-                list.add(boardData);// listに1つのBoardDataクラスのインスタンスを追加
+                OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
+                System.out.println(oneMessage);
+                System.out.println(oneMessage.name);
+                list.add(oneMessage);// listに1つのBoardDataクラスのインスタンスを追加
 
             }
 
