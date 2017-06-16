@@ -46,11 +46,9 @@ public class HttpRequest {
 
     public HttpRequest(InputStream inputStream) throws IOException {
         String requestLine = readRequestLine(inputStream);
-        Map<String, String> header = HttpRequestParse(inputStream);
+        Map<String, String> messageHeader = readMessageHeader(inputStream);
+        InputStream messageBody = readMessageBody(inputStream);
 
-
-        //Map<String,String> readMessageHeader(inputStream);
-        //InputStream readMessageBody(inputStream);
         int statusCode = judgeStatusCode(requestLine);
 
         this.statusCode = statusCode;
@@ -58,8 +56,6 @@ public class HttpRequest {
         if (statusCode == 200) {
             String method = parseMethod(requestLine);
             this.method = method;
-
-
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
@@ -274,11 +270,39 @@ public class HttpRequest {
      * @return method
      */
 
+    public Map<String,String> getHeaderField() {
+        return this.headerField;
+    }
+
+    /**
+     * methodを取得する
+     *
+     * @return method
+
+
+    public InputStream getMessageBody() {
+        return this.messageBofy;
+    }
+    */
+
+    /**
+     * methodを取得する
+     *
+     * @return method
+     */
+
     public String getMethod() {
         return this.method;
     }
 
-    public Map<String, String> HttpRequestParse(InputStream inputStream) throws IOException {
+
+    /**
+     * inputStreamからmessageHeaderを読み取る
+     * @param inputStream
+     * @return messageHeader
+     */
+
+    public Map<String, String> readMessageHeader(InputStream inputStream) throws IOException {
         Map<String, String> headerField = new HashMap<String, String>();
 
         String line = readLine(inputStream);
@@ -292,24 +316,18 @@ public class HttpRequest {
             line = readLine(inputStream);
             System.out.println(line);
         }
-        setHeader(header.toString(), headerField);
+
         return headerField;
+    }
+
+    public InputStream readMessageBody(InputStream inputStream) throws IOException{
+        InputStream messageBody = inputStream;
+        return messageBody;
     }
 
 
     private String header;
     private Map<String, String> headerField = new HashMap<>();
-
-    void setHeader(String header, Map<String, String> headerField) {
-        this.header = header;
-        this.headerField = headerField;
-    }
-
-    private InputStream bodyInput;
-
-    void setBody(InputStream inputStream) {
-        this.bodyInput = inputStream;
-    }
 
 
     public String readLine(InputStream inputStream) throws IOException {
