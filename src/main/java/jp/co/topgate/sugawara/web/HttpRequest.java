@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 
-
 /**
  * HttpRequest class
  * inputStreamからHttpRequestを読み込む処理を行う
@@ -75,6 +74,7 @@ public class HttpRequest {
 
     /**
      * inputStreamからrequestLineを読み取る
+     *
      * @param inputStream
      * @return requestLine
      */
@@ -270,7 +270,7 @@ public class HttpRequest {
      * @return method
      */
 
-    public Map<String,String> getHeaderField() {
+    public Map<String, String> getHeaderField() {
         return this.headerField;
     }
 
@@ -281,9 +281,9 @@ public class HttpRequest {
 
 
     public InputStream getMessageBody() {
-        return this.messageBofy;
+    return this.messageBofy;
     }
-    */
+     */
 
     /**
      * methodを取得する
@@ -298,6 +298,7 @@ public class HttpRequest {
 
     /**
      * inputStreamからmessageHeaderを読み取る
+     *
      * @param inputStream
      * @return messageHeader
      */
@@ -320,7 +321,7 @@ public class HttpRequest {
         return headerField;
     }
 
-    public InputStream readMessageBody(InputStream inputStream) throws IOException{
+    public InputStream readMessageBody(InputStream inputStream) throws IOException {
         InputStream messageBody = inputStream;
         return messageBody;
     }

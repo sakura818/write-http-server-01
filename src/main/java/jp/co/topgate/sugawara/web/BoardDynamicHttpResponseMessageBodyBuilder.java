@@ -2,6 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -18,10 +19,11 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest, InputStream inputStream) throws IOException {
         if (assort.equals("topPage")) {
             System.out.println("ねこ");
         }
+        analyzePostRequestBody(httpRequest, inputStream);
         MessageList messageList = new MessageList();
         System.out.println(messageList.readSaveBoardCsv());
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
@@ -116,8 +118,10 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    String analyzePostRequestBody() {
-        return "";
+    String analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+        System.out.println("slack");
+        httpRequest.readMessageBody(inputStream);
+        return "slack";
     }
 
 

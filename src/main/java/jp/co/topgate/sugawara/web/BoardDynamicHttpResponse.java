@@ -2,6 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -20,7 +21,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler) {
+    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler, InputStream inputStream) {
         this.file = file;
         this.statusCode = statusCode;
         this.assort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
@@ -37,11 +38,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public byte[] createDynamicHttpResponseContent(File file, int statusCode) throws IOException {
+    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream) throws IOException {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(file, assort, httpRequest);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(file, assort, httpRequest, inputStream);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -69,9 +70,9 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException {
+    public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream) throws IOException {
 
-        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode);
+        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream);
         /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
 

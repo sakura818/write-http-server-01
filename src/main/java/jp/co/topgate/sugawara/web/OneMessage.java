@@ -47,7 +47,7 @@ public class OneMessage {
      * @return
      */
     void appendOneMessage() throws IOException {
-        BufferedWriter bufferedWriter= new BufferedWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv")));
         bufferedWriter.write("createOneMessage");
         bufferedWriter.close();
     }
