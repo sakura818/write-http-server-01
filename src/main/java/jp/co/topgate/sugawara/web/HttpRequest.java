@@ -45,14 +45,15 @@ public class HttpRequest {
     public HttpRequest(InputStream inputStream) throws IOException {
         String requestLine = readRequestLine(inputStream);
         Map<String, String> messageHeader = readMessageHeader(inputStream);
-        int contentLength;
+        int contentLength = 0;
         if (messageHeader.containsKey("Content-Length")) {
             System.out.println(messageHeader.get("Content-Length"));
             contentLength = Integer.parseInt(messageHeader.get("Content-Length"));
         } else {
             System.out.println("指定したキーは存在しません");
         }
-        InputStream messageBody = readMessageBody(inputStream);
+        //InputStream messageBody = readMessageBody(inputStream);
+        byte[] requestmessageBody = readMessageBody(inputStream, contentLength);
 
         int statusCode = judgeStatusCode(requestLine);
 
@@ -303,16 +304,17 @@ public class HttpRequest {
         return messageBody;
     }
 
-    private byte[] readMessageBody(InputStream inputStream, int length) throws IOException {
+    private byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[length];
+        byte[] buffer = new byte[contentLength];
         while (true) {
             int len = inputStream.read(buffer);
-            if (len < 0) {
+            if (len <= 0) {
                 break;
             }
             byteArrayOutputStream.write(buffer, 0, len);
         }
+        System.out.println(byteArrayOutputStream.toByteArray());
         return byteArrayOutputStream.toByteArray();
     }
 
