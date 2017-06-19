@@ -24,7 +24,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         if (assort.equals("topPage")) {
             System.out.println("ねこ");
         }
-        //analyzePostRequestBody(httpRequest, inputStream);
+        analyzePostRequestBody(httpRequest, inputStream);
         analyzeQueryString(httpRequest);
         MessageList messageList = new MessageList();
         System.out.println(messageList.readSaveBoardCsv());
@@ -102,20 +102,16 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    byte[] analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
-        System.out.println("slack");
-        InputStream bodyInputStream = httpRequest.readMessageBody(inputStream);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        int length = 0;
-        byte[] buffer = new byte[length];
-        while (true) {
-            int len = bodyInputStream.read(buffer);
-            if (len < 0) {
-                break;
-            }
-            byteArrayOutputStream.write(buffer, 0, len);
-        }
-        return byteArrayOutputStream.toByteArray();
+    String analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+        byte[] bodyInputStream = httpRequest.getMessageBody();
+        System.out.println("hana");
+        String messageBodyString = new String(bodyInputStream, "UTF-8");
+        String[] hoge = messageBodyString.split("&");
+        System.out.println(hoge[0]);
+        System.out.println(hoge[1]);
+
+
+        return bodyInputStream.toString();
     }
 
     String getHtml() {

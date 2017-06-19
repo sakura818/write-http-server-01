@@ -307,15 +307,10 @@ public class HttpRequest {
      * inputStreamからmessageBodyを読み取る
      *
      * @param inputStream
-     * @return messageHeader
+     * @return messageBody
      */
 
-    public InputStream readMessageBody(InputStream inputStream) throws IOException {
-        InputStream messageBody = inputStream;
-        return messageBody;
-    }
-
-    private byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
+    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[contentLength];
         while (true) {
@@ -326,7 +321,8 @@ public class HttpRequest {
             byteArrayOutputStream.write(buffer, 0, len);
             break;
         }
-        System.out.println(byteArrayOutputStream.toByteArray());
+        String messageBodyString = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
+        System.out.println(messageBodyString);
         return byteArrayOutputStream.toByteArray();
     }
 
