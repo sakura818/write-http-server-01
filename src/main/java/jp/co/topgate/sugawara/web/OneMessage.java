@@ -15,6 +15,7 @@ public class OneMessage {
     String postTime;
     String text;
     String password;
+    private boolean isPasswordOfFormDataMatch;
 
     //1件の投稿
     OneMessage(int index, String name, String postTime, String text, String password) {
@@ -96,7 +97,7 @@ public class OneMessage {
         return isPasswordOfFormDataMatch;
     }
 
-    private boolean isPasswordOfFormDataMatch;
+
 
     public boolean isPasswordOfFormDataMatch() {
         return this.isPasswordOfFormDataMatch;

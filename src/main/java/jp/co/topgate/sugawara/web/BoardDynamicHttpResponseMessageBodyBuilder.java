@@ -16,6 +16,11 @@ import java.util.Map;
  */
 public class BoardDynamicHttpResponseMessageBodyBuilder {
     private String html;
+    private String nameOfFormData;
+    private String textOfFromData;
+    private String passwordOfFormData;
+    private String queryNameParameter;
+    private Map<String, String> messageBodykey;
 
     /**
      * コンストラクタ
@@ -78,8 +83,12 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         System.out.println(httpRequest.getQueryString());
         System.out.println(query[0]);
         System.out.println(query[1]);
+        queryNameParameter = query[1];
         return query[1];
     }
+
+
+    public String getQueryNameParameter(){return  this.queryNameParameter;}
 
     /**
      * パスワードで投稿を削除する
@@ -131,9 +140,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         return null;
     }
 
-    private String nameOfFormData;
-    private String textOfFromData;
-    private String passwordOfFormData;
+
 
     String getNameOfFormData() {
         return this.nameOfFormData;
@@ -193,7 +200,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
 
     }
 
-    private Map<String, String> messageBodykey;
+
 
     Map<String, String> getMessageBodykey() {
         return this.messageBodykey;
