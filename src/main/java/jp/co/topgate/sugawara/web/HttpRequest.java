@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
-
 
 
 /**
@@ -28,6 +26,7 @@ public class HttpRequest {
     private String requestUri;
     private int statusCode;
     private String queryString;
+    private byte[] messageBody;
 
     private boolean isQueryString;
     private final int OK = 200;
@@ -46,11 +45,17 @@ public class HttpRequest {
 
     public HttpRequest(InputStream inputStream) throws IOException {
         String requestLine = readRequestLine(inputStream);
-        Map<String, String> header = HttpRequestParse(inputStream);
+        Map<String, String> messageHeader = readMessageHeader(inputStream);
+        int contentLength = 0;
+        if (messageHeader.containsKey("Content-Length")) {
+            System.out.println(messageHeader.get("Content-Length"));
+            contentLength = Integer.parseInt(messageHeader.get("Content-Length"));
+        } else {
+            System.out.println("指定したキーは存在しません");
+        }
+        //InputStream messageBody = readMessageBody(inputStream);
+        this.messageBody = readMessageBody(inputStream, contentLength);
 
-
-        //Map<String,String> readMessageHeader(inputStream);
-        //InputStream readMessageBody(inputStream);
         int statusCode = judgeStatusCode(requestLine);
 
         this.statusCode = statusCode;
@@ -58,8 +63,6 @@ public class HttpRequest {
         if (statusCode == 200) {
             String method = parseMethod(requestLine);
             this.method = method;
-
-
             String requestUri = parseRequestUri(requestLine);
             this.requestUri = requestUri;
 
@@ -75,6 +78,19 @@ public class HttpRequest {
 
             }
         }
+    }
+
+    /**
+     * inputStreamからrequestLineを読み取る
+     *
+     * @param inputStream
+     * @return requestLine
+     */
+
+    public String readRequestLine(InputStream inputStream) throws IOException {
+        String requestLine = readLine(inputStream);
+        System.out.println(requestLine);
+        return requestLine;
     }
 
     /**
@@ -101,26 +117,17 @@ public class HttpRequest {
         return statusCode;
     }
 
-
-
     /**
-     * requestLineからUriPathをparseする
-     * requestLine = method + requestUri + httpVersion
+     * requestLineからmethodをparseする
      *
-     * @param requestLine ex:GET /index.html HTTP/1.1
-     * @return requestUri ex:index.html
+     * @param requestLine
+     * @return method
      */
 
-    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
-        if (requestLine != null) {
-            String[] requestLineArray = requestLine.split(" ", 3);
-            String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
-            requestUri = decodedRequestUri;
-            if (requestUri.equals("/")) {
-                requestUri += "index.html";
-            }
-        }
-        return requestUri;
+    public String parseMethod(String requestLine) {
+        String[] requestLineArray = requestLine.split(" ", 3);
+        String method = requestLineArray[0];
+        return method;
     }
 
 
@@ -180,10 +187,20 @@ public class HttpRequest {
      * @return requestUri ex:index.html
      */
 
-
+    String parseRequestUri(String requestLine) throws UnsupportedEncodingException {
+        if (requestLine != null) {
+            String[] requestLineArray = requestLine.split(" ", 3);
+            String decodedRequestUri = URLDecoder.decode(requestLineArray[1], "UTF-8");
+            requestUri = decodedRequestUri;
+            if (requestUri.equals("/")) {
+                requestUri += "index.html";
+            }
+        }
+        return requestUri;
+    }
 
     /**
-     * requestUriからUriPathを抜き出す
+     * requestUriからUriPathをparseする
      *
      * @param requestUri ex:http://localhost:8080/index.html
      * @return UriPath ex:/index.html
@@ -201,30 +218,6 @@ public class HttpRequest {
     }
 
     /**
-     * uriPathにクエリ文字列があったときuriPathとクエリ文字列を分ける
-     *
-     * @param uriPath /index.html?id=1&name=hana
-     * @return queryString
-     */
-    /*
-    public String[] divideUriPathAndQueryString(String uriPath) throws UnsupportedEncodingException {
-        if (uriPath != null) {
-        String[] uriPathAndQueryString = uriPath.split("\\?",2);
-            if(uriPathAndQueryString.length == 2){
-                uriPath = uriPathAndQueryString[0];
-                queryString = uriPathAndQueryString[1];
-            }
-            if(uriPathAndQueryString.length == 1){
-                uriPath = uriPathAndQueryString[0];
-                queryString = "";
-            }
-        }
-        return uriPathAndQueryString;
-    }
-    */
-
-
-    /**
      * statusCodeを取得する
      *
      * @return statusCode
@@ -235,9 +228,9 @@ public class HttpRequest {
     }
 
     /**
-     * statusCodeを取得する
+     * requestUriを取得する
      *
-     * @return statusCOde
+     * @return requestUri
      */
 
     public String getRequestUri() {
@@ -256,45 +249,13 @@ public class HttpRequest {
     }
 
     /**
-
-     * inputStreamからrequestLineを読み取る
+     * headerFieldを取得する
      *
-     * @return uriPath
+     * @return headerField
      */
 
-    public String readRequestLine(InputStream inputStream) throws IOException {
-        String requestLine = readLine(inputStream);
-        System.out.println(requestLine);
-
-
-        return requestLine;
-    }
-
-    /**
-     * inputStreamからmessageheaderを読み取る
-     *
-     * @return uriPath
-     */
-
-    public void readMessageHeader(InputStream inputStream) throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
-        String requestLine = bufferedReader.readLine();
-        //System.out.println(requestLine);
-    }
-
-
-    /**
-     * requestLineからmethodをparseする
-     *
-     * @param requestLine
-     * @return method
-     */
-
-    public String parseMethod(String requestLine) {
-        String[] requestLineArray = requestLine.split(" ", 3);
-        String method = requestLineArray[0];
-        return method;
+    public Map<String, String> getHeaderField() {
+        return this.headerField;
     }
 
     /**
@@ -307,7 +268,24 @@ public class HttpRequest {
         return this.method;
     }
 
-    public Map<String, String> HttpRequestParse(InputStream inputStream) throws IOException {
+    /**
+     * messageBodyを取得する
+     *
+     * @return messageBody
+     */
+
+    public byte[] getMessageBody() {
+        return this.messageBody;
+    }
+
+    /**
+     * inputStreamからmessageHeaderを読み取る
+     *
+     * @param inputStream
+     * @return messageHeader
+     */
+
+    public Map<String, String> readMessageHeader(InputStream inputStream) throws IOException {
         Map<String, String> headerField = new HashMap<String, String>();
 
         String line = readLine(inputStream);
@@ -321,24 +299,42 @@ public class HttpRequest {
             line = readLine(inputStream);
             System.out.println(line);
         }
-        setHeader(header.toString(), headerField);
+
         return headerField;
     }
 
+    /**
+     * inputStreamからmessageBodyを読み取る
+     *
+     * @param inputStream
+     * @return messageBody
+     */
+
+    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[contentLength];
+        while (true) {
+            int len = inputStream.read(buffer);
+            if (len <= 0) {
+                break;
+            }
+            byteArrayOutputStream.write(buffer, 0, len);
+            break;
+        }
+        String messageBodyString = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
+        System.out.println(messageBodyString);
+        return byteArrayOutputStream.toByteArray();
+    }
 
     private String header;
     private Map<String, String> headerField = new HashMap<>();
 
-    void setHeader(String header, Map<String, String> headerField) {
-        this.header = header;
-        this.headerField = headerField;
-    }
-
-    private InputStream bodyInput;
-
-    void setBody(InputStream inputStream) {
-        this.bodyInput = inputStream;
-    }
+    /**
+     * inputStreamから1行ずつデータをよみとる
+     *
+     * @param inputStream
+     * @return messageHeader
+     */
 
 
     public String readLine(InputStream inputStream) throws IOException {
@@ -387,9 +383,9 @@ public class HttpRequest {
     }
 
     /**
-     * クエリ文字列の有無取得する
+     * クエリ文字列の真偽値を取得する
      *
-     * @return
+     * @return isQueryString
      */
 
     public boolean getIsQueryString() {

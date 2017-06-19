@@ -1,9 +1,13 @@
 package jp.co.topgate.sugawara.web;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
@@ -18,21 +22,16 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest, InputStream inputStream) throws IOException {
         if (assort.equals("topPage")) {
             System.out.println("ねこ");
         }
+        analyzePostRequestBody(httpRequest, inputStream);
+        analyzeQueryString(httpRequest);
         MessageList messageList = new MessageList();
         System.out.println(messageList.readSaveBoardCsv());
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
-        /*
-        for (int i = 0; i < message.readSaveBoardCsv().size(); i++) {
-            System.out.println(message.readSaveBoardCsv().get(i));
-        }
-        */
-
-
     }
 
     /**
@@ -48,19 +47,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-/*
-    public byte[] boardShow() {
-        BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator();
-        return boardHtmlTranslator.boardTopPageHtml().getBytes();
-    }
-    */
-
-
-    /**
-     * @param
-     * @return
-     */
-
 
     String searchMessageByName() {
         return "";
@@ -69,11 +55,13 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     /**
      * クエリストリングを解析する
      *
-     * @param queryString クエリストリング
+     * @param httpRequest
      * @return クエリ値
      */
 
-    String analyzeQueryString(String queryString) {
+    String analyzeQueryString(HttpRequest httpRequest) {
+        httpRequest.getQueryString();
+        System.out.println(httpRequest.getQueryString());
         return "";
     }
 
@@ -116,18 +104,39 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    String analyzePostRequestBody() {
-        return "";
+    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+        byte[] bodyInputStream = httpRequest.getMessageBody();
+        System.out.println("hana");
+        String messageBodyString = new String(bodyInputStream, "UTF-8");
+        String[] hoge = messageBodyString.split("&");
+        System.out.println(hoge.length);
+
+        for (int count = 0; count <= hoge.length - 1; count++) {
+            System.out.println(hoge[count]);
+        }
+        Map<String, String> messageBodyKey = new HashMap<String, String>();
+        if(hoge.length != 1) {
+            String[] line = hoge[0].split("=");
+            messageBodyKey.put(line[0], line[1]);
+            System.out.println(line[0]);
+            System.out.println(line[1]);
+            String[] line1 = hoge[1].split("=");
+            messageBodyKey.put(line1[0], line1[1]);
+            System.out.println(line1[0]);
+            System.out.println(line1[1]);
+            String[] line2 = hoge[2].split("=");
+            messageBodyKey.put(line2[0], line2[1]);
+            System.out.println(line2[0]);
+            System.out.println(line2[1]);
+        }
+        this.messageBodykey = messageBodyKey;
+
+        return messageBodyKey;
+
     }
 
-
-    /**
-     * @param
-     * @return
-     */
-    String createMessage() {
-        return "";
-    }
+    private Map<String,String> messageBodykey;
+    Map<String,String> getMessageBodykey(){return this.messageBodykey;}
 
     String getHtml() {
         return this.html;

@@ -72,8 +72,6 @@ public class HttpServer {
                                 statusCode = NOT_FOUND;
                             }
                         }
-
-
                     }
                     if (statusCode != OK) {
                         switch (statusCode) {
@@ -102,13 +100,11 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream);
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream, inputStream);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-
                 inputStream.close();
                 outputStream.close();
             }
