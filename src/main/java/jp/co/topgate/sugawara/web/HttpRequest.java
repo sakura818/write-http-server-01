@@ -26,6 +26,7 @@ public class HttpRequest {
     private String requestUri;
     private int statusCode;
     private String queryString;
+    private byte[] messageBody;
 
     private boolean isQueryString;
     private final int OK = 200;
@@ -53,7 +54,7 @@ public class HttpRequest {
             System.out.println("指定したキーは存在しません");
         }
         //InputStream messageBody = readMessageBody(inputStream);
-        byte[] requestmessageBody = readMessageBody(inputStream, contentLength);
+        this.messageBody = readMessageBody(inputStream, contentLength);
 
         int statusCode = judgeStatusCode(requestLine);
 
@@ -268,6 +269,16 @@ public class HttpRequest {
     }
 
     /**
+     * messageBodyを取得する
+     *
+     * @return messageBody
+     */
+
+    public byte[] getMessageBody() {
+        return this.messageBody;
+    }
+
+    /**
      * inputStreamからmessageHeaderを読み取る
      *
      * @param inputStream
@@ -313,6 +324,7 @@ public class HttpRequest {
                 break;
             }
             byteArrayOutputStream.write(buffer, 0, len);
+            break;
         }
         System.out.println(byteArrayOutputStream.toByteArray());
         return byteArrayOutputStream.toByteArray();
