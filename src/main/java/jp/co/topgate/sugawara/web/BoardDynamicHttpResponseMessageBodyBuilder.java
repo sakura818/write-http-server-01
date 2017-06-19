@@ -74,9 +74,11 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      */
 
     String analyzeQueryString(HttpRequest httpRequest) {
-        httpRequest.getQueryString();
+        String query[] = httpRequest.getQueryString().split("=");
         System.out.println(httpRequest.getQueryString());
-        return "";
+        System.out.println(query[0]);
+        System.out.println(query[1]);
+        return query[1];
     }
 
     /**

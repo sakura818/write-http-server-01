@@ -81,7 +81,7 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    String boardSearchNameHtml(MessageList messageList) throws IOException{
+    String boardSearchNameHtml(MessageList messageList) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<!DOCTYPE html>\n" +
                 "<html>\n" +

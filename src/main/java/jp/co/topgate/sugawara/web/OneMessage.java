@@ -73,10 +73,8 @@ public class OneMessage {
      * @return
      */
 
-    String deleteOneMessage(String passwordOfFormData,boolean isPasswordOfFormDataMatch) {
-        if(isPasswordOfFormDataMatch = true){
-
-
+    String deleteOneMessage(String passwordOfFormData, boolean isPasswordOfFormDataMatch) {
+        if (isPasswordOfFormDataMatch = true) {
 
 
         }
@@ -90,16 +88,19 @@ public class OneMessage {
      * @return
      */
 
-    boolean isPasswordOfFormData(String passwordOfFormData,String csvPassword){
-         boolean isPasswordOfFormDataMatch = false;
-         if(passwordOfFormData.equals(csvPassword)){
-             isPasswordOfFormDataMatch = true;
-         }
+    boolean isPasswordOfFormData(String passwordOfFormData, String csvPassword) {
+        boolean isPasswordOfFormDataMatch = false;
+        if (passwordOfFormData.equals(csvPassword)) {
+            isPasswordOfFormDataMatch = true;
+        }
         return isPasswordOfFormDataMatch;
     }
 
     private boolean isPasswordOfFormDataMatch;
-    public boolean isPasswordOfFormDataMatch() {return  this.isPasswordOfFormDataMatch}
+
+    public boolean isPasswordOfFormDataMatch() {
+        return this.isPasswordOfFormDataMatch;
+    }
 
     /**
      * レス番号indexを取得する
