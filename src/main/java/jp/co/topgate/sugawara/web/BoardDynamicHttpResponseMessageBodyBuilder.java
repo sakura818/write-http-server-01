@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
@@ -102,17 +104,39 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    String analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();
         System.out.println("hana");
         String messageBodyString = new String(bodyInputStream, "UTF-8");
         String[] hoge = messageBodyString.split("&");
-        System.out.println(hoge[0]);
-        System.out.println(hoge[1]);
+        System.out.println(hoge.length);
 
+        for (int count = 0; count <= hoge.length - 1; count++) {
+            System.out.println(hoge[count]);
+        }
+        Map<String, String> messageBodyKey = new HashMap<String, String>();
+        if(hoge.length != 1) {
+            String[] line = hoge[0].split("=");
+            messageBodyKey.put(line[0], line[1]);
+            System.out.println(line[0]);
+            System.out.println(line[1]);
+            String[] line1 = hoge[1].split("=");
+            messageBodyKey.put(line1[0], line1[1]);
+            System.out.println(line1[0]);
+            System.out.println(line1[1]);
+            String[] line2 = hoge[2].split("=");
+            messageBodyKey.put(line2[0], line2[1]);
+            System.out.println(line2[0]);
+            System.out.println(line2[1]);
+        }
+        this.messageBodykey = messageBodyKey;
 
-        return bodyInputStream.toString();
+        return messageBodyKey;
+
     }
+
+    private Map<String,String> messageBodykey;
+    Map<String,String> getMessageBodykey(){return this.messageBodykey;}
 
     String getHtml() {
         return this.html;
