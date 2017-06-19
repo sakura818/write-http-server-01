@@ -28,8 +28,6 @@ public class MessageList {
      */
 
     MessageList() throws IOException {
-        this.fileName = fileName;
-        this.num = num;
 
     }
 
@@ -47,7 +45,6 @@ public class MessageList {
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
-            System.out.println("csvファイル読み取ることができてる");
 
             while ((csvLine = br.readLine()) != null) {
                 String saveBoardCsvArray[] = csvLine.split(",", 5);
