@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Map;
 
 /**
  * Created by haruka.sugawara on 2017/06/15.
@@ -32,8 +33,8 @@ public class OneMessage {
      * @return
      */
 
-    void createOneMessage(int currentIndex, String nameOfFormData, String textOfFormData, String passwordOfFormData) {
-        this.index = currentIndex + 1;
+    void createOneMessage(String nameOfFormData, String textOfFormData, String passwordOfFormData) {
+        this.index = index;
         this.name = nameOfFormData;
         this.postTime = measureNewPostingTime().toString();
         this.text = textOfFormData;
@@ -72,9 +73,33 @@ public class OneMessage {
      * @return
      */
 
-    String deleteOneMessage() {
+    String deleteOneMessage(String passwordOfFormData,boolean isPasswordOfFormDataMatch) {
+        if(isPasswordOfFormDataMatch = true){
+
+
+
+
+        }
         return "";
     }
+
+    /**
+     * パスワードがあってるかどうか
+     *
+     * @param
+     * @return
+     */
+
+    boolean isPasswordOfFormData(String passwordOfFormData,String csvPassword){
+         boolean isPasswordOfFormDataMatch = false;
+         if(passwordOfFormData.equals(csvPassword)){
+             isPasswordOfFormDataMatch = true;
+         }
+        return isPasswordOfFormDataMatch;
+    }
+
+    private boolean isPasswordOfFormDataMatch;
+    public boolean isPasswordOfFormDataMatch() {return  this.isPasswordOfFormDataMatch}
 
     /**
      * レス番号indexを取得する

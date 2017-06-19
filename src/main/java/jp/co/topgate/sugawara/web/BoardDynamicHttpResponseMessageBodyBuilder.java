@@ -108,7 +108,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    OneMessage newPosting() {
+    String newPosting() {
         List<OneMessage> list = new ArrayList<>();
         if (getMessageBodykey().containsKey("name")) {
             System.out.println(getMessageBodykey().get("name"));
@@ -127,6 +127,22 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         }
 
         return null;
+    }
+
+    private String nameOfFormData;
+    private String textOfFromData;
+    private String passwordOfFormData;
+
+    String getNameOfFormData() {
+        return this.nameOfFormData;
+    }
+
+    String getTextOfFromData() {
+        return this.textOfFromData;
+    }
+
+    String getPasswordOfFormData() {
+        return this.passwordOfFormData;
     }
 
     /**
@@ -151,14 +167,17 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             messageBodyKey.put(line[0], line[1]);
             System.out.println(line[0]);
             System.out.println(line[1]);
+            this.nameOfFormData = line[1];
             String[] line1 = hoge[1].split("=");
             messageBodyKey.put(line1[0], line1[1]);
             System.out.println(line1[0]);
             System.out.println(line1[1]);
+            this.textOfFromData = line1[1];
             String[] line2 = hoge[2].split("=");
             messageBodyKey.put(line2[0], line2[1]);
             System.out.println(line2[0]);
             System.out.println(line2[1]);
+            this.passwordOfFormData = line2[1];
 
             for (int i = 0; i <= 1; i++) {
                 String[] neko = hoge[i].split("=");
