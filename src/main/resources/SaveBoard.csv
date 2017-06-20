@@ -1,5 +1,14 @@
-1,hana,Mon Aug 25 12:34:56 JST 2014,yosakoi,mizuiro
-2,yaya,Mon Aug 25 12:35:56 JST 2014,guitar,red
-3,machi,Mon Aug 25 12:38:56 JST 2014,study,yellow
+1,hana,2017-06-20T10:17:33.206+09:00[Asia/Tokyo],yosakoi,blue
+2,yaya,2017-06-20T11:17:33.206+09:00[Asia/Tokyo],guitar,red
+3,machi,2017-06-20T12:17:33.206+09:00[Asia/Tokyo],study,yellow
 4,a,2017-06-20T14:59:52.429+09:00[Asia/Tokyo],b,cc
-5,hana,2017-06-20T15:17:33.206+09:00[Asia/Tokyo],yosakoi,blue
+5,hana,2017-06-20T15:07:33.206+09:00[Asia/Tokyo],yosakoi,blue
+6,hana,2017-06-20T15:17:33.206+09:00[Asia/Tokyo],yosakoiA,blue
+7,hana,2017-06-20T15:27:33.206+09:00[Asia/Tokyo],yosakoiB,blue
+8,hana,2017-06-20T15:37:33.206+09:00[Asia/Tokyo],yosakoiss,blue
+9,hana,2017-06-20T15:47:33.206+09:00[Asia/Tokyo],yosakoiss,blue
+10,hana,2017-06-20T15:57:33.206+09:00[Asia/Tokyo],yosakoaai,blue
+11,hana,2017-06-20T16:17:33.206+09:00[Asia/Tokyo],yosakoi,blue
+12,hana,2017-06-20T17:17:33.206+09:00[Asia/Tokyo],yosakoi,blue
+13,a,2017-06-20T18:18:27.203+09:00[Asia/Tokyo],b,c
+14,a,2017-06-20T18:18:51.866+09:00[Asia/Tokyo],b,c
