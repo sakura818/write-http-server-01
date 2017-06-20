@@ -52,8 +52,8 @@ public class BoardHtmlTranslator {
                 "<section>\n" +
                 "    <Hr>\n" +
                 "    <h2>検索</h2>\n" +
-                "    <p>検索した名前の人だけが行った書き込みだけが抽出されて表示されます</p>\n" +
-                "    <form action=\"\" method=\"post\">\n" +
+                "    <p>検索した名前の人が行った書き込みを抽出して表示します</p>\n" +
+                "    <form action=\"\" method=\"get\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
                 "        <input type=\"submit\" value=\"検索\">\n" +
                 "    </form>\n" +
@@ -67,7 +67,8 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
-            stringBuffer.append(" <form action=\"\" method=\"post\">\n" +
+            stringBuffer.append(" <form action=\"\" method=\"POST\">\n" +
+                            "<input type=\"hidden\" name=\"_method\" value=\"DELETE\">"+ //ここにもう1行追加
                     "パスワード:<input type=\"password\" name=\"password\">" +
                     "<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");

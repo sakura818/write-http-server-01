@@ -26,6 +26,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
         } else if ((httpRequest.getMethod().equals("DELETE"))) {
             responseAssortFlag = "deleteMessage";
         }
+        System.out.println(responseAssortFlag);
         return responseAssortFlag;
     }
 }
