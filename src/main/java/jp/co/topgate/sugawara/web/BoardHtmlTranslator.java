@@ -68,7 +68,7 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append(" <form action=\"\" method=\"POST\">\n" +
-                            "<input type=\"hidden\" name=\"_method\" value=\"DELETE\">"+ //ここにもう1行追加
+                    "<input type=\"hidden\" name=\"_method\" value=\"DELETE\">" + //ここにもう1行追加
                     "パスワード:<input type=\"password\" name=\"password\">" +
                     "<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
@@ -85,7 +85,7 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    String boardSearchNameHtml(MessageList messageList) throws IOException {
+    String boardSearchNameHtml(MessageList messageList, String queryNameParameter) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -119,6 +119,24 @@ public class BoardHtmlTranslator {
                 "</section>\n" +
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
+
+
+
+        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+            OneMessage oneMessage = null;
+            if (queryNameParameter.equals(messageList.readSaveBoardCsv().get(i).getName())) {
+                oneMessage = messageList.readSaveBoardCsv().get(i);
+                stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
+                stringBuffer.append(oneMessage.getName() + " ");
+                stringBuffer.append(oneMessage.getPostTime() + " ");
+                stringBuffer.append(oneMessage.getText() + " ");
+                stringBuffer.append(oneMessage.getPassword());
+                stringBuffer.append("<Hr>\n");
+            }
+        }
+
+
+        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
@@ -126,8 +144,13 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
+            stringBuffer.append(" <form action=\"\" method=\"POST\">\n" +
+                    "<input type=\"hidden\" name=\"_method\" value=\"DELETE\">" + //ここにもう1行追加
+                    "パスワード:<input type=\"password\" name=\"password\">" +
+                    "<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
+
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
 
         return stringBuffer.toString();

@@ -68,8 +68,8 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "searchName":
                 System.out.println("searchName");
-                analyzeQueryString(httpRequest);
-                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList);
+                String queryNameParameter= analyzeQueryString(httpRequest);
+                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList,queryNameParameter);
                 break;
         }
 
@@ -106,7 +106,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         System.out.println(query[0]);
         System.out.println(query[1]);
         queryNameParameter = query[1];
-        return query[0];
+        return queryNameParameter;
     }
 
 
