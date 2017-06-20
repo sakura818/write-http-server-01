@@ -67,6 +67,9 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
+            stringBuffer.append(" <form action=\"\" method=\"post\">\n" +
+                    "パスワード:<input type=\"password\" name=\"password\">" +
+                    "<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");

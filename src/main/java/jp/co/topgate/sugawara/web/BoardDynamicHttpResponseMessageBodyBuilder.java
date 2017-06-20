@@ -63,7 +63,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "deleteMessage":
                 System.out.println("deleteMessage");
-                analyzePostRequestBody(httpRequest);
+                deleteMessageByPassword();
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
             case "searchName":
@@ -137,45 +137,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     }
 
 
-    /**
-     * 名前、本文、パスワードを入力したものを1件の投稿として掲示板に新規投稿する
-     *
-     * @param
-     * @return
-     */
-    String newPosting() {
-        List<OneMessage> list = new ArrayList<>();
-        if (getMessageBodykey().containsKey("name")) {
-            System.out.println(getMessageBodykey().get("name"));
-        } else {
-            System.out.println("指定したキーは存在しません");
-        }
-        if (getMessageBodykey().containsKey("comment")) {
-            System.out.println(getMessageBodykey().get("comment"));
-        } else {
-            System.out.println("指定したキーは存在しません");
-        }
-        if (getMessageBodykey().containsKey("text")) {
-            System.out.println(getMessageBodykey().get("text"));
-        } else {
-            System.out.println("指定したキーは存在しません");
-        }
-
-        return null;
-    }
-
-
-    String getNameOfFormData() {
-        return this.nameOfFormData;
-    }
-
-    String getTextOfFromData() {
-        return this.textOfFromData;
-    }
-
-    String getPasswordOfFormData() {
-        return this.passwordOfFormData;
-    }
 
     /**
      * リクエストのインスタンスのから名前、本文、パスワードを解析する

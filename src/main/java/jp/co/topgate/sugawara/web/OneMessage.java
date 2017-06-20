@@ -26,22 +26,6 @@ public class OneMessage {
         this.password = password;
     }
 
-
-    /**
-     * 解析したデータから新規投稿1件を生成する
-     *
-     * @param
-     * @return
-     */
-
-    void createOneMessage(String nameOfFormData, String textOfFormData, String passwordOfFormData) {
-        this.index = index;
-        this.name = nameOfFormData;
-        this.postTime = measureNewPostingTime().toString();
-        this.text = textOfFormData;
-        this.password = passwordOfFormData;
-    }
-
     /**
      * 新規投稿1件をcsvに書き込む
      *
