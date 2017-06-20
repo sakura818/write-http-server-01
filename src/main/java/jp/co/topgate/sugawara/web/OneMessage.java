@@ -17,11 +17,11 @@ public class OneMessage {
     String password;
     private boolean isPasswordOfFormDataMatch;
 
-    //1件の投稿
+    // 1件の投稿
     OneMessage(int index, String name, String postTime, String text, String password) {
         this.index = index;
         this.name = name;
-        this.postTime = postTime;
+        this.postTime = measureNewPostingTime().toString();
         this.text = text;
         this.password = password;
     }
@@ -49,9 +49,9 @@ public class OneMessage {
      * @return
      */
     void appendOneMessage() throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv")));
-        bufferedWriter.write("createOneMessage");
-        bufferedWriter.close();
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), true));
+        printWriter.write("\n" + this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password);
+        printWriter.close();
     }
 
 

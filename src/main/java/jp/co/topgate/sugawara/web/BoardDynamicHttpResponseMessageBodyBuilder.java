@@ -40,7 +40,25 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "postMessage":
                 System.out.println("postMessage");
-                analyzePostRequestBody(httpRequest);
+                Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
+                String name = bodyValues.get("name");
+                String text = bodyValues.get("text");
+                String password = bodyValues.get("password");
+                int max = 0;
+                for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+                    OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+                    System.out.println(oneMessage.getIndex());
+                    if (max >= oneMessage.getIndex()) {
+                        max = max;
+                    } else if (max < oneMessage.getIndex()) {
+                        max = oneMessage.getIndex();
+                    }
+                }
+                System.out.println("max:" + max);
+                int index = max + 1;
+                System.out.println("id:" + index);
+                OneMessage oneMessage = new OneMessage(index, name, "", text, password);
+                oneMessage.appendOneMessage();
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
             case "deleteMessage":
@@ -169,7 +187,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         byte[] bodyInputStream = httpRequest.getMessageBody();
         System.out.println("hana");
         String messageBodyString = new String(bodyInputStream, "UTF-8");
-        String[] hoge = messageBodyString.split("&");
+        String[] hoge = messageBodyString.split("&");//rename
         System.out.println(hoge.length);
 
         for (int count = 0; count <= hoge.length - 1; count++) {
@@ -193,6 +211,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             System.out.println(line2[1]);
             this.passwordOfFormData = line2[1];
 
+            //上記の冗長な作業をfor文になおす(途中)
             for (int i = 0; i <= 1; i++) {
                 String[] neko = hoge[i].split("=");
                 messageBodyKey.put(line[0], line[1]);
