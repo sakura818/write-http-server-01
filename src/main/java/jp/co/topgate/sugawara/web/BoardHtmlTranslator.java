@@ -67,10 +67,11 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
             stringBuffer.append(oneMessage.getPassword());
-            stringBuffer.append(" <form action=\"\" method=\"POST\">\n" +
-                    "<input type=\"hidden\" name=\"_method\" value=\"DELETE\">" + //ここにもう1行追加
-                    "パスワード:<input type=\"password\" name=\"password\">" +
-                    "<input type=\"submit\" value=\"この投稿を削除する\"></form>");
+            stringBuffer.append("<form action=\"\" method=\"POST\">\n");
+            stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
+            stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i+1).append("\">");
+            stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
+            stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
@@ -119,7 +120,6 @@ public class BoardHtmlTranslator {
                 "</section>\n" +
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
-
 
 
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
