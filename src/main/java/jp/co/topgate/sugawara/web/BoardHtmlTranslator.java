@@ -43,9 +43,9 @@ public class BoardHtmlTranslator {
                 "    <h2>新規投稿</h2>\n" +
                 "    <form action=\"\" method=\"post\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
-                "        Text: <br><textarea name=\"comment\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
+                "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
                 "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
-                "        Password: <br><input type=\"text\" name=\"text\" value=\"\"><br>\n" +
+                "        Password: <br><input type=\"text\" name=\"password\" value=\"\"><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -81,7 +81,7 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    String boardSearchNameHtml(MessageList messageList) throws IOException{
+    String boardSearchNameHtml(MessageList messageList) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -96,7 +96,7 @@ public class BoardHtmlTranslator {
                 "\n" +
                 "<section>\n" +
                 "    <h2>新規投稿</h2>\n" +
-                "    <form action=\"\" method=\"post\">\n" +
+                "    <form action=\"\" method=\"POST\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
                 "        Text: <br><textarea name=\"comment\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
                 "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
@@ -108,7 +108,7 @@ public class BoardHtmlTranslator {
                 "    <Hr>\n" +
                 "    <h2>検索</h2>\n" +
                 "    <p>検索した名前の人だけが行った書き込みだけが抽出されて表示されます</p>\n" +
-                "    <form action=\"\" method=\"post\">\n" +
+                "    <form action=\"\" method=\"GET\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
                 "        <input type=\"submit\" value=\"検索\">\n" +
                 "    </form>\n" +

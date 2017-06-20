@@ -3,6 +3,7 @@ package jp.co.topgate.sugawara.web;
 import java.io.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Map;
 
 /**
  * Created by haruka.sugawara on 2017/06/15.
@@ -14,12 +15,13 @@ public class OneMessage {
     String postTime;
     String text;
     String password;
+    private boolean isPasswordOfFormDataMatch;
 
-    //1件の投稿
+    // 1件の投稿
     OneMessage(int index, String name, String postTime, String text, String password) {
         this.index = index;
         this.name = name;
-        this.postTime = postTime;
+        this.postTime = measureNewPostingTime().toString();
         this.text = text;
         this.password = password;
     }
@@ -32,8 +34,8 @@ public class OneMessage {
      * @return
      */
 
-    void createOneMessage(int currentIndex, String nameOfFormData, String textOfFormData, String passwordOfFormData) {
-        this.index = currentIndex + 1;
+    void createOneMessage(String nameOfFormData, String textOfFormData, String passwordOfFormData) {
+        this.index = index;
         this.name = nameOfFormData;
         this.postTime = measureNewPostingTime().toString();
         this.text = textOfFormData;
@@ -47,9 +49,9 @@ public class OneMessage {
      * @return
      */
     void appendOneMessage() throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv")));
-        bufferedWriter.write("createOneMessage");
-        bufferedWriter.close();
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), true));
+        printWriter.write("\n" + this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password);
+        printWriter.close();
     }
 
 
@@ -72,8 +74,32 @@ public class OneMessage {
      * @return
      */
 
-    String deleteOneMessage() {
+    String deleteOneMessage(String passwordOfFormData, boolean isPasswordOfFormDataMatch) {
+        if (isPasswordOfFormDataMatch = true) {
+
+
+        }
         return "";
+    }
+
+    /**
+     * パスワードがあってるかどうか
+     *
+     * @param
+     * @return
+     */
+
+    boolean isPasswordOfFormData(String passwordOfFormData, String csvPassword) {
+        boolean isPasswordOfFormDataMatch = false;
+        if (passwordOfFormData.equals(csvPassword)) {
+            isPasswordOfFormDataMatch = true;
+        }
+        return isPasswordOfFormDataMatch;
+    }
+
+
+    public boolean isPasswordOfFormDataMatch() {
+        return this.isPasswordOfFormDataMatch;
     }
 
     /**

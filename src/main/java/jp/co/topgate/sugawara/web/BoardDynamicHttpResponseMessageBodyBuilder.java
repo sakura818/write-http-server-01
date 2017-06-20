@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +16,11 @@ import java.util.Map;
  */
 public class BoardDynamicHttpResponseMessageBodyBuilder {
     private String html;
+    private String nameOfFormData;
+    private String textOfFromData;
+    private String passwordOfFormData;
+    private String queryNameParameter;
+    private Map<String, String> messageBodykey;
 
     /**
      * コンストラクタ
@@ -22,16 +29,50 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String assort, HttpRequest httpRequest, InputStream inputStream) throws IOException {
-        if (assort.equals("topPage")) {
-            System.out.println("ねこ");
-        }
-        analyzePostRequestBody(httpRequest, inputStream);
-        analyzeQueryString(httpRequest);
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String responseAssortFlag, HttpRequest httpRequest, InputStream inputStream) throws IOException {
         MessageList messageList = new MessageList();
-        System.out.println(messageList.readSaveBoardCsv());
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
-        this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+
+        switch (responseAssortFlag) {
+            case "topPage":
+                System.out.println("topPage");
+                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
+            case "postMessage":
+                System.out.println("postMessage");
+                Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
+                String name = bodyValues.get("name");
+                String text = bodyValues.get("text");
+                String password = bodyValues.get("password");
+                int max = 0;
+                for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+                    OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+                    System.out.println(oneMessage.getIndex());
+                    if (max >= oneMessage.getIndex()) {
+                        max = max;
+                    } else if (max < oneMessage.getIndex()) {
+                        max = oneMessage.getIndex();
+                    }
+                }
+                System.out.println("max:" + max);
+                int index = max + 1;
+                System.out.println("id:" + index);
+                OneMessage oneMessage = new OneMessage(index, name, "", text, password);
+                oneMessage.appendOneMessage();
+                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
+            case "deleteMessage":
+                System.out.println("deleteMessage");
+                analyzePostRequestBody(httpRequest);
+                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
+            case "searchName":
+                System.out.println("searchName");
+                analyzeQueryString(httpRequest);
+                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList);
+                break;
+        }
+
     }
 
     /**
@@ -60,9 +101,17 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      */
 
     String analyzeQueryString(HttpRequest httpRequest) {
-        httpRequest.getQueryString();
+        String query[] = httpRequest.getQueryString().split("=");
         System.out.println(httpRequest.getQueryString());
-        return "";
+        System.out.println(query[0]);
+        System.out.println(query[1]);
+        queryNameParameter = query[1];
+        return query[0];
+    }
+
+
+    public String getQueryNameParameter() {
+        return this.queryNameParameter;
     }
 
     /**
@@ -95,7 +144,37 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
     String newPosting() {
-        return "";
+        List<OneMessage> list = new ArrayList<>();
+        if (getMessageBodykey().containsKey("name")) {
+            System.out.println(getMessageBodykey().get("name"));
+        } else {
+            System.out.println("指定したキーは存在しません");
+        }
+        if (getMessageBodykey().containsKey("comment")) {
+            System.out.println(getMessageBodykey().get("comment"));
+        } else {
+            System.out.println("指定したキーは存在しません");
+        }
+        if (getMessageBodykey().containsKey("text")) {
+            System.out.println(getMessageBodykey().get("text"));
+        } else {
+            System.out.println("指定したキーは存在しません");
+        }
+
+        return null;
+    }
+
+
+    String getNameOfFormData() {
+        return this.nameOfFormData;
+    }
+
+    String getTextOfFromData() {
+        return this.textOfFromData;
+    }
+
+    String getPasswordOfFormData() {
+        return this.passwordOfFormData;
     }
 
     /**
@@ -104,30 +183,40 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @param
      * @return
      */
-    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest, InputStream inputStream) throws IOException {
+    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();
         System.out.println("hana");
         String messageBodyString = new String(bodyInputStream, "UTF-8");
-        String[] hoge = messageBodyString.split("&");
+        String[] hoge = messageBodyString.split("&");//rename
         System.out.println(hoge.length);
 
         for (int count = 0; count <= hoge.length - 1; count++) {
             System.out.println(hoge[count]);
         }
         Map<String, String> messageBodyKey = new HashMap<String, String>();
-        if(hoge.length != 1) {
+        if (hoge.length != 1) {
             String[] line = hoge[0].split("=");
             messageBodyKey.put(line[0], line[1]);
             System.out.println(line[0]);
             System.out.println(line[1]);
+            this.nameOfFormData = line[1];
             String[] line1 = hoge[1].split("=");
             messageBodyKey.put(line1[0], line1[1]);
             System.out.println(line1[0]);
             System.out.println(line1[1]);
+            this.textOfFromData = line1[1];
             String[] line2 = hoge[2].split("=");
             messageBodyKey.put(line2[0], line2[1]);
             System.out.println(line2[0]);
             System.out.println(line2[1]);
+            this.passwordOfFormData = line2[1];
+
+            //上記の冗長な作業をfor文になおす(途中)
+            for (int i = 0; i <= 1; i++) {
+                String[] neko = hoge[i].split("=");
+                messageBodyKey.put(line[0], line[1]);
+
+            }
         }
         this.messageBodykey = messageBodyKey;
 
@@ -135,8 +224,10 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
 
     }
 
-    private Map<String,String> messageBodykey;
-    Map<String,String> getMessageBodykey(){return this.messageBodykey;}
+
+    Map<String, String> getMessageBodykey() {
+        return this.messageBodykey;
+    }
 
     String getHtml() {
         return this.html;
