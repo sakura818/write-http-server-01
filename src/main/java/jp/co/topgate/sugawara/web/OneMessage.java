@@ -98,7 +98,6 @@ public class OneMessage {
     }
 
 
-
     public boolean isPasswordOfFormDataMatch() {
         return this.isPasswordOfFormDataMatch;
     }

@@ -37,18 +37,22 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             case "topPage":
                 System.out.println("topPage");
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
             case "postMessage":
                 System.out.println("postMessage");
                 analyzePostRequestBody(httpRequest);
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
             case "deleteMessage":
                 System.out.println("deleteMessage");
                 analyzePostRequestBody(httpRequest);
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                break;
             case "searchName":
                 System.out.println("searchName");
                 analyzeQueryString(httpRequest);
                 this.html = boardHtmlTranslator.boardSearchNameHtml(messageList);
+                break;
         }
 
     }
@@ -84,11 +88,13 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         System.out.println(query[0]);
         System.out.println(query[1]);
         queryNameParameter = query[1];
-        return query[1];
+        return query[0];
     }
 
 
-    public String getQueryNameParameter(){return  this.queryNameParameter;}
+    public String getQueryNameParameter() {
+        return this.queryNameParameter;
+    }
 
     /**
      * パスワードで投稿を削除する
@@ -139,7 +145,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
 
         return null;
     }
-
 
 
     String getNameOfFormData() {
@@ -199,7 +204,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         return messageBodyKey;
 
     }
-
 
 
     Map<String, String> getMessageBodykey() {
