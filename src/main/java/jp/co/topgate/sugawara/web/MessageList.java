@@ -12,14 +12,6 @@ import java.util.List;
  */
 public class MessageList {
 
-    int index;
-    String name;
-    String postTime;
-    String text;
-    String password;
-    private String fileName;
-    private int num;
-
     /**
      * コンストラクタ
      *
@@ -28,25 +20,21 @@ public class MessageList {
      */
 
     MessageList() throws IOException {
-
     }
 
-
     /**
-     * csvファイルを読み込む
+     * 投稿全件を読み込む
      *
      * @param
      * @return
      */
 
-
     public List<OneMessage> readSaveBoardCsv() throws IOException {
         List<OneMessage> list = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
-
-            while ((csvLine = br.readLine()) != null) {
+            while ((csvLine = bufferedReader.readLine()) != null) {
                 String saveBoardCsvArray[] = csvLine.split(",", 5);
 
                 int index = Integer.parseInt(saveBoardCsvArray[0]);
@@ -57,16 +45,13 @@ public class MessageList {
 
                 OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
                 list.add(oneMessage);
-
             }
-
-            br.close();
+            bufferedReader.close();
         } catch (NumberFormatException e) {
             System.out.println("フォーマットエラーがありました");
         }
         return list;
     }
-
 }
 
 
