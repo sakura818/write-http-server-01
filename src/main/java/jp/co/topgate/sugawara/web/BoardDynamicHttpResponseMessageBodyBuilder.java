@@ -40,10 +40,9 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "postMessage":
                 System.out.println("postMessage");
-                Map<String, String> bodyValues = requestBody;
-                String name = bodyValues.get("name");
-                String text = bodyValues.get("text");
-                String password = bodyValues.get("password");
+                String name = requestBody.get("name");
+                String text = requestBody.get("text");
+                String password = requestBody.get("password");
                 int max = 0;
                 for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
                     OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
@@ -63,12 +62,10 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "deleteMessage":
                 System.out.println("deleteMessage");
-                Map<String, String> deleteBodyValues = requestBody;
-                String hiddenMethod = deleteBodyValues.get("_method");
-                int resindex = Integer.parseInt(deleteBodyValues.get("index"));
-                password = deleteBodyValues.get("password");
+                int resindex = Integer.parseInt(requestBody.get("index"));
+                password = requestBody.get("password");
 
-                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                this.html = boardHtmlTranslator.boardDeleteHtml(messageList, resindex, password);
                 break;
             case "searchName":
                 System.out.println("searchName");

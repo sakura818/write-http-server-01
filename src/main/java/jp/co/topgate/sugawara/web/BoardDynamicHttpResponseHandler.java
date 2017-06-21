@@ -20,25 +20,25 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
         System.out.println("BoardDynamicHttpResponseHandler constructor");
-        Map<String,String> responseBody = analyzePostRequestBody(httpRequest);
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream,responseBody);
-        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream,responseBody);
+        Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);
+        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
     }
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) throws IOException {
-        String httpRequestMethod=  httpRequest.getMethod();
-        switch (httpRequestMethod){
-            case("GET"):
+        String httpRequestMethod = httpRequest.getMethod();
+        switch (httpRequestMethod) {
+            case ("GET"):
                 responseAssortFlag = "topPage";
                 if (httpRequest.getIsQueryString() == true) {
                     responseAssortFlag = "searchName";
                 }
                 break;
-            case("POST"):
+            case ("POST"):
                 Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
                 String hiddenMethod = bodyValues.get("_method");
                 responseAssortFlag = "postMessage";
-                if(!(hiddenMethod == null)) {
+                if (!(hiddenMethod == null)) {
                     if (hiddenMethod.equals("DELETE")) {
                         responseAssortFlag = "deleteMessage";
                     }

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class DynamicHttpResponse {
 
-    public abstract byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String,String> responseBody) throws IOException;
+    public abstract byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseBody) throws IOException;
     //abstract void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream) throws IOException;
 
 }
