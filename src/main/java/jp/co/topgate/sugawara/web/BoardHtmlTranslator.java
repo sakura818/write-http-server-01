@@ -80,7 +80,7 @@ public class BoardHtmlTranslator {
     }
 
     /**
-     * 掲示板のトップページのHTMLをつくる
+     * 掲示板の削除のHTMLをつくる
      *
      * @param messageList
      * @return
@@ -120,15 +120,18 @@ public class BoardHtmlTranslator {
                 "</section>\n" +
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
+
+        // パスワードあってたら該当の投稿削除
+
+        OneMessage deleteOneMessage = messageList.readSaveBoardCsv().get(resindex);
+        if (deleteOneMessage.getPassword().equals(password)) {
+            System.out.println("パスワードあっています");
+        } else {
+            System.out.println("パスワードが間違っています");
+        }
+
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
-
-            if (oneMessage.getIndex() == resindex) {
-            }
-            if (oneMessage.getPassword().equals(password)) {
-            }
-
-
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
