@@ -123,7 +123,10 @@ public class BoardHtmlTranslator {
 
         // パスワードあってたら該当の投稿削除
 
-        OneMessage deleteOneMessage = messageList.readSaveBoardCsv().get(resindex);
+        OneMessage deleteOneMessage = messageList.readSaveBoardCsv().get(resindex - 1);
+        System.out.println(messageList.readSaveBoardCsv().get(resindex));
+        System.out.println(resindex);
+        System.out.println(deleteOneMessage.getPassword());
         if (deleteOneMessage.getPassword().equals(password)) {
             System.out.println("パスワードあっています");
         } else {
