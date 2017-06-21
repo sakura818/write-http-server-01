@@ -42,11 +42,11 @@ public class BoardHtmlTranslator {
                 "<section>\n" +
                 "    <h2>新規投稿</h2>\n" +
                 "    <form action=\"\" method=\"post\">\n" +
-                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
+                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"required><br>\n" +
                 "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
-                "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
-                "        Password: <br><input type=\"text\" name=\"password\" value=\"\"><br>\n" +
-                "        <input type=\"submit\" value=\"投稿する\">\n" +
+                "                            placeholder=\"80字以内で入力してください \"></textarea><br>\n" +
+                "        Password: <br><input type=\"text\" name=\"password\" value=\"\"required><br>\n" +
+                "        <input type=\"submit\" value=\"投稿する\" required >\n" +
                 "    </form>\n" +
                 "</section>\n" +
                 "<section>\n" +
@@ -55,7 +55,7 @@ public class BoardHtmlTranslator {
                 "    <p>検索した名前の人が行った書き込みを抽出して表示します</p>\n" +
                 "    <form action=\"http://localhost:8080/program/board/search\" method=\"get\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
-                "        <input type=\"submit\" value=\"検索\">\n" +
+                "        <input type=\"submit\" value=\"検索\" required>\n" +
                 "    </form>\n" +
                 "</section>\n" +
                 "<section>\n");
@@ -70,7 +70,7 @@ public class BoardHtmlTranslator {
             stringBuffer.append("<form action=\"\" method=\"POST\">\n");
             stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
             stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
-            stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
+            stringBuffer.append("パスワード:<input type=\"password\" name=\"password\" required>");
             stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
@@ -102,10 +102,10 @@ public class BoardHtmlTranslator {
                 "<section>\n" +
                 "    <h2>新規投稿</h2>\n" +
                 "    <form action=\"\" method=\"post\">\n" +
-                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
+                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
                 "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
-                "        Password: <br><input type=\"text\" name=\"password\" value=\"\"><br>\n" +
+                "        Password: <br><input type=\"text\" name=\"password\" value= required\"\"><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -114,7 +114,7 @@ public class BoardHtmlTranslator {
                 "    <h2>検索</h2>\n" +
                 "    <p>検索した名前の人が行った書き込みを抽出して表示します</p>\n" +
                 "    <form action=\"http://localhost:8080/program/board/search\" method=\"get\">\n" +
-                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
+                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        <input type=\"submit\" value=\"検索\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -175,10 +175,10 @@ public class BoardHtmlTranslator {
                 "<section>\n" +
                 "    <h2>新規投稿</h2>\n" +
                 "    <form action=\"\" method=\"POST\">\n" +
-                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
+                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        Text: <br><textarea name=\"comment\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
                 "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
-                "        Password: <br><input type=\"text\" name=\"text\" value=\"\"><br>\n" +
+                "        Password: <br><input type=\"text\" name=\"text\" value=\"\" required><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -187,7 +187,7 @@ public class BoardHtmlTranslator {
                 "    <h2>検索</h2>\n" +
                 "    <p>検索した名前の人だけが行った書き込みだけが抽出されて表示されます</p>\n" +
                 "    <form action=\"http://localhost:8080/program/board/search\" method=\"GET\">\n" +
-                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"><br>\n" +
+                "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\" required><br>\n" +
                 "        <input type=\"submit\" value=\"検索\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -206,13 +206,13 @@ public class BoardHtmlTranslator {
                 stringBuffer.append(oneMessage.getPassword());
                 stringBuffer.append("<Hr>\n");
 
-                searchResultNumber ++;
+                searchResultNumber++;
             }
         }
         stringBuffer.append("検索結果");
         stringBuffer.append(searchResultNumber);
-        stringBuffer.append("件"+ "<Hr>\n");
-        
+        stringBuffer.append("件" + "<Hr>\n");
+
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
