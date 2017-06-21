@@ -194,7 +194,7 @@ public class BoardHtmlTranslator {
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 
-
+        int searchResultNumber = 0;
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = null;
             if (queryNameParameter.equals(messageList.readSaveBoardCsv().get(i).getName())) {
@@ -205,10 +205,14 @@ public class BoardHtmlTranslator {
                 stringBuffer.append(oneMessage.getText() + " ");
                 stringBuffer.append(oneMessage.getPassword());
                 stringBuffer.append("<Hr>\n");
+
+                searchResultNumber ++;
             }
         }
-
-
+        stringBuffer.append("検索結果");
+        stringBuffer.append(searchResultNumber);
+        stringBuffer.append("件"+ "<Hr>\n");
+        
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
