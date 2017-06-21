@@ -19,7 +19,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     private String nameOfFormData;
     private String textOfFromData;
     private String passwordOfFormData;
-    private String queryNameParameter;
+    private String query;
     private Map<String, String> messageBodykey;
 
     /**
@@ -102,17 +102,17 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      */
 
     String analyzeQueryString(HttpRequest httpRequest) {
-        String query[] = httpRequest.getQueryString().split("=");
+        String queryParams[] = httpRequest.getQueryString().split("=");
         System.out.println(httpRequest.getQueryString());
-        System.out.println(query[0]);
-        System.out.println(query[1]);
-        queryNameParameter = query[1];
-        return queryNameParameter;
+        System.out.println(queryParams[0]);
+        System.out.println(queryParams[1]);
+        query = queryParams[1];
+        return query;
     }
 
 
     public String getQueryNameParameter() {
-        return this.queryNameParameter;
+        return this.query;
     }
 
 
