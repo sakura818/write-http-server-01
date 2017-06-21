@@ -38,9 +38,10 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
                 Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
                 String hiddenMethod = bodyValues.get("_method");
                 responseAssortFlag = "postMessage";
-
-                if(hiddenMethod.equals("DELETE")){
-                    responseAssortFlag = "deleteMessage";
+                if(!(hiddenMethod == null)) {
+                    if (hiddenMethod.equals("DELETE")) {
+                        responseAssortFlag = "deleteMessage";
+                    }
                 }
                 break;
         }
