@@ -16,11 +16,7 @@ import java.util.Map;
  */
 public class BoardDynamicHttpResponseMessageBodyBuilder {
     private String html;
-    private String nameOfFormData;
-    private String textOfFromData;
-    private String passwordOfFormData;
     private String query;
-    private Map<String, String> messageBodykey;
 
     /**
      * コンストラクタ
@@ -32,53 +28,58 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     public BoardDynamicHttpResponseMessageBodyBuilder(File file, String responseAssortFlag, HttpRequest httpRequest, InputStream inputStream, Map<String, String> requestBody) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
+        int index;
+        String name;
+        String text;
+        String password;
 
         switch (responseAssortFlag) {
+            // トップページ 投稿一覧を見ることが出来る
             case "topPage":
-                System.out.println("topPage");
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
+            // 名前、本文、パスワードを入力して投稿を1件追加するとき
             case "postMessage":
-                System.out.println("postMessage");
-                String name = requestBody.get("name");
-                String text = requestBody.get("text");
-                String password = requestBody.get("password");
+                name = requestBody.get("name");
+                text = requestBody.get("text");
+                password = requestBody.get("password");
                 int max = 0;
-                for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
-                    OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+                List<OneMessage> readSaveBoardCsv = messageList.readSaveBoardCsv();
+                for (int i = 0; i < readSaveBoardCsv.size(); i++) {
+                    OneMessage oneMessage = readSaveBoardCsv.get(i);
                     System.out.println(oneMessage.getIndex());
-                    if (max >= oneMessage.getIndex()) {
+                    int currentIndex = oneMessage.getIndex();
+                    if (max >= currentIndex) {
                         max = max;
-                    } else if (max < oneMessage.getIndex()) {
-                        max = oneMessage.getIndex();
+                    } else if (max < currentIndex) {
+                        max = currentIndex;
                     }
                 }
                 System.out.println("max:" + max);
-                int index = max + 1;
+                index = max + 1;
                 System.out.println("id:" + index);
-                OneMessage oneMessage = new OneMessage(index, name, "", text, password);
-                oneMessage.appendOneMessage();
+                OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
+                appendOneMessage.appendOneMessage();
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
+            // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
-                System.out.println("deleteMessage");
-                int resindex = Integer.parseInt(requestBody.get("index"));
+                index = Integer.parseInt(requestBody.get("index"));
                 password = requestBody.get("password");
-
-                this.html = boardHtmlTranslator.boardDeleteHtml(messageList, resindex, password);
+                this.html = boardHtmlTranslator.boardDeleteHtml(messageList, index, password);
                 break;
+            // 入力した名前の人が投稿した投稿一覧を表示するとき
             case "searchName":
-                System.out.println("searchName");
-                String queryNameParameter = analyzeQueryString(httpRequest);
-                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList, queryNameParameter);
+                String query = analyzeQueryString(httpRequest);
+                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList, query);
                 break;
         }
-
     }
 
     /**
-     * @param
-     * @return
+     * MessageBodyを生成する
+     *
+     * @return String型のHTMLをbyte[]型にしたもの
      */
 
     public byte[] build() {
@@ -86,16 +87,18 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
     }
 
     /**
-     * @param
-     * @return
+     * HTMLを取得する
+     *
+     * @return html
      */
 
-    String searchMessageByName() {
-        return "";
+    String getHtml() {
+        return this.html;
     }
 
     /**
      * クエリストリングを解析する
+     * 今回は名前を検索する
      *
      * @param httpRequest
      * @return クエリ値
@@ -108,15 +111,5 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         System.out.println(queryParams[1]);
         query = queryParams[1];
         return query;
-    }
-
-
-    public String getQueryNameParameter() {
-        return this.query;
-    }
-
-
-    String getHtml() {
-        return this.html;
     }
 }
