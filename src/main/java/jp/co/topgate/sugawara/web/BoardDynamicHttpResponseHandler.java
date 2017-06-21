@@ -16,6 +16,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String textOfFromData;
     private String passwordOfFormData;
     private Map<String, String> messageBodykey;
+    private String responseAssortFlag = "responseAssortFlagStart";
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
         System.out.println("BoardDynamicHttpResponseHandler constructor");
@@ -25,23 +26,22 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     }
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) throws IOException {
-        String responseAssortFlag = "responseAssortFlagStart";
         String httpRequestMethod=  httpRequest.getMethod();
         switch (httpRequestMethod){
             case("GET"):
+                responseAssortFlag = "topPage";
                 if (httpRequest.getIsQueryString() == true) {
                     responseAssortFlag = "searchName";
                 }
-                responseAssortFlag = "topPage";
                 break;
             case("POST"):
                 Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
                 String hiddenMethod = bodyValues.get("_method");
-                
+                responseAssortFlag = "postMessage";
+
                 if(hiddenMethod.equals("DELETE")){
                     responseAssortFlag = "deleteMessage";
                 }
-                responseAssortFlag = "postMessage";
                 break;
         }
         System.out.println(responseAssortFlag);

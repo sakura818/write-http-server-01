@@ -118,32 +118,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         return this.queryNameParameter;
     }
 
-    /**
-     * パスワードで投稿を削除する
-     *
-     * @param
-     * @return
-     */
-
-    String deleteMessageByPassword() {
-        return "";
-    }
-
-
-    /**
-     * リクエストのインスタンスからパスワードを解析する
-     *
-     * @param
-     * @return
-     */
-    String analyzePasswordRequestBody() {
-        return "";
-    }
-
-
-    Map<String, String> getMessageBodykey() {
-        return this.messageBodykey;
-    }
 
     String getHtml() {
         return this.html;
