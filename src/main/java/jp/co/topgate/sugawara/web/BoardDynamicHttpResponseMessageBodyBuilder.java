@@ -29,7 +29,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String responseAssortFlag, HttpRequest httpRequest, InputStream inputStream) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String responseAssortFlag, HttpRequest httpRequest, InputStream inputStream, Map<String, String> requestBody) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
 
@@ -40,7 +40,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "postMessage":
                 System.out.println("postMessage");
-                Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
+                Map<String, String> bodyValues = requestBody;
                 String name = bodyValues.get("name");
                 String text = bodyValues.get("text");
                 String password = bodyValues.get("password");
@@ -63,13 +63,17 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             case "deleteMessage":
                 System.out.println("deleteMessage");
-                deleteMessageByPassword();
+                Map<String, String> deleteBodyValues = requestBody;
+                String hiddenMethod = deleteBodyValues.get("_method");
+                int resindex = Integer.parseInt(deleteBodyValues.get("index"));
+                password = deleteBodyValues.get("password");
+
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
             case "searchName":
                 System.out.println("searchName");
-                String queryNameParameter= analyzeQueryString(httpRequest);
-                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList,queryNameParameter);
+                String queryNameParameter = analyzeQueryString(httpRequest);
+                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList, queryNameParameter);
                 break;
         }
 
@@ -134,55 +138,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      */
     String analyzePasswordRequestBody() {
         return "";
-    }
-
-
-
-    /**
-     * リクエストのインスタンスのから名前、本文、パスワードを解析する
-     *
-     * @param
-     * @return
-     */
-    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {
-        byte[] bodyInputStream = httpRequest.getMessageBody();
-        System.out.println("hana");
-        String messageBodyString = new String(bodyInputStream, "UTF-8");
-        String[] hoge = messageBodyString.split("&");//rename
-        System.out.println(hoge.length);
-
-        for (int count = 0; count <= hoge.length - 1; count++) {
-            System.out.println(hoge[count]);
-        }
-        Map<String, String> messageBodyKey = new HashMap<String, String>();
-        if (hoge.length != 1) {
-            String[] line = hoge[0].split("=");
-            messageBodyKey.put(line[0], line[1]);
-            System.out.println(line[0]);
-            System.out.println(line[1]);
-            this.nameOfFormData = line[1];
-            String[] line1 = hoge[1].split("=");
-            messageBodyKey.put(line1[0], line1[1]);
-            System.out.println(line1[0]);
-            System.out.println(line1[1]);
-            this.textOfFromData = line1[1];
-            String[] line2 = hoge[2].split("=");
-            messageBodyKey.put(line2[0], line2[1]);
-            System.out.println(line2[0]);
-            System.out.println(line2[1]);
-            this.passwordOfFormData = line2[1];
-
-            //上記の冗長な作業をfor文になおす(途中)
-            for (int i = 0; i <= 1; i++) {
-                String[] neko = hoge[i].split("=");
-                messageBodyKey.put(line[0], line[1]);
-
-            }
-        }
-        this.messageBodykey = messageBodyKey;
-
-        return messageBodyKey;
-
     }
 
 
