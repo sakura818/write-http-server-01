@@ -131,9 +131,12 @@ public class BoardHtmlTranslator {
             if (resindex - 1 == i) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("パスワードあっています");
-                    flag = 1;
                     messageList.readSaveBoardCsv().remove(i);
                     reMessageList = messageList.readSaveBoardCsv();
+                    stringBuffer.append("レス番号").append(resindex).append("の投稿を削除しました");
+                    stringBuffer.append("<Hr>\n");
+                    oneMessage.deleteOneMessage();
+                    flag = 1;
                     break;
                 } else {
                     System.out.println("パスワードが間違っています");

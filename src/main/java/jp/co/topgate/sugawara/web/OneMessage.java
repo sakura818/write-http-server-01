@@ -40,6 +40,11 @@ public class OneMessage {
         printWriter.close();
     }
 
+
+    private int hoge;
+
+    public
+
     /**
      * 投稿時間を測定する
      *
