@@ -233,10 +233,10 @@ public class BoardHtmlTranslator {
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 
         int searchResultNumber = 0;
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i <  messageList.getList().size(); i++) {
             OneMessage oneMessage = null;
-            if (queryNameParameter.equals(list.get(i).getName())) {
-                oneMessage = list.get(i);
+            if (queryNameParameter.equals( messageList.getList().get(i).getName())) {
+                oneMessage =  messageList.getList().get(i);
                 stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
                 stringBuffer.append(oneMessage.getName() + " ");
                 stringBuffer.append(oneMessage.getPostTime() + " ");
@@ -252,8 +252,8 @@ public class BoardHtmlTranslator {
         stringBuffer.append("件" + "<Hr>\n");
 
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
-        for (int i = 0; i < list.size(); i++) {
-            OneMessage oneMessage = list.get(i);
+        for (int i = 0; i <  messageList.getList().size(); i++) {
+            OneMessage oneMessage =  messageList.getList().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
