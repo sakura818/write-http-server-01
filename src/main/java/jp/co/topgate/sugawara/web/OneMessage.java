@@ -3,6 +3,8 @@ package jp.co.topgate.sugawara.web;
 import java.io.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,10 +35,15 @@ public class OneMessage {
      */
 
     void appendOneMessage() throws IOException {
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), true));
-        printWriter.write("\n" + this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password);
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
+        printWriter.write( this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password + "\n" );
         printWriter.close();
     }
+
+
+    private int hoge;
+
+    public
 
     /**
      * 投稿時間を測定する
@@ -56,7 +63,11 @@ public class OneMessage {
      * @return
      */
 
-    void deleteOneMessage(String passwordOfFormData, boolean isPasswordOfFormDataMatch) {
+    void deleteOneMessage() throws IOException{
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),true));
+        printWriter.write("hogehogehogehogehoge");
+        printWriter.close();
+
     }
 
     /**

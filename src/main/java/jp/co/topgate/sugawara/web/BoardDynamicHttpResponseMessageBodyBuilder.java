@@ -32,6 +32,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
         String name;
         String text;
         String password;
+        OneMessage oneMessage = null;
 
         switch (responseAssortFlag) {
             // トップページ 投稿一覧を見ることが出来る
@@ -43,29 +44,14 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 name = requestBody.get("name");
                 text = requestBody.get("text");
                 password = requestBody.get("password");
-                int max = 0;
-                List<OneMessage> readSaveBoardCsv = messageList.readSaveBoardCsv();
-                for (int i = 0; i < readSaveBoardCsv.size(); i++) {
-                    OneMessage oneMessage = readSaveBoardCsv.get(i);
-                    System.out.println(oneMessage.getIndex());
-                    int currentIndex = oneMessage.getIndex();
-                    if (max >= currentIndex) {
-                        max = max;
-                    } else if (max < currentIndex) {
-                        max = currentIndex;
-                    }
-                }
-                System.out.println("max:" + max);
-                index = max + 1;
-                System.out.println("id:" + index);
-                OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
-                appendOneMessage.appendOneMessage();
+                messageList.appendMessage(name,text,password,oneMessage);
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
                 password = requestBody.get("password");
+                messageList.deleteMessage(index,password,oneMessage);
                 this.html = boardHtmlTranslator.boardDeleteHtml(messageList, index, password);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
