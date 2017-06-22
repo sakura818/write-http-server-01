@@ -64,8 +64,8 @@ public class BoardHtmlTranslator {
                 "</section>\n" +
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
-        for (int i = 0; i < list.size(); i++) {
-            OneMessage oneMessage = list.get(i);
+        for (int i = 0; i < messageList.getList().size(); i++) {
+            OneMessage oneMessage = messageList.getList().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
