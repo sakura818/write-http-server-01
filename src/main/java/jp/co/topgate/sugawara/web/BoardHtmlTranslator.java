@@ -19,7 +19,6 @@ public class BoardHtmlTranslator {
      */
 
     public BoardHtmlTranslator(MessageList messageList) throws IOException {
-        boardTopPageHtml(messageList);
         list = messageList.getList();
     }
 
@@ -129,7 +128,7 @@ public class BoardHtmlTranslator {
         int flag = 2;
         List<OneMessage> reMessageList;
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = list.get(i);
             if (resindex - 1 == i) {
                 if (oneMessage.getPassword().equals(password)) {
