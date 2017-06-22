@@ -44,7 +44,7 @@ public class BoardHtmlTranslator {
                 "    <form action=\"\" method=\"post\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"required><br>\n" +
                 "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
-                "                            placeholder=\"80字以内で入力してください \"></textarea><br>\n" +
+                "                            placeholder=\"80字以内で入力してください \"required></textarea><br>\n" +
                 "        Password: <br><input type=\"text\" name=\"password\" value=\"\"required><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\" required >\n" +
                 "    </form>\n" +
@@ -104,7 +104,7 @@ public class BoardHtmlTranslator {
                 "    <form action=\"\" method=\"post\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
-                "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
+                "                            placeholder=\"80字以内で入力してください。\"required></textarea><br>\n" +
                 "        Password: <br><input type=\"text\" name=\"password\" value= required\"\"><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +
@@ -123,30 +123,45 @@ public class BoardHtmlTranslator {
 
         // パスワードあってたら該当の投稿削除
 
-        OneMessage deleteOneMessage = messageList.readSaveBoardCsv().get(resindex - 1);
-        System.out.println(messageList.readSaveBoardCsv().get(resindex));
-        System.out.println(resindex);
-        System.out.println(deleteOneMessage.getPassword());
-        if (deleteOneMessage.getPassword().equals(password)) {
-            System.out.println("パスワードあっています");
-        } else {
-            System.out.println("パスワードが間違っています");
-        }
-
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
-            stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
-            stringBuffer.append(oneMessage.getName() + " ");
-            stringBuffer.append(oneMessage.getPostTime() + " ");
-            stringBuffer.append(oneMessage.getText() + " ");
-            stringBuffer.append(oneMessage.getPassword());
-            stringBuffer.append("<form action=\"\" method=\"POST\">\n");
-            stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
-            stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
-            stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
-            stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
-            stringBuffer.append("<Hr>\n");
+            if (resindex - 1 == i) {
+                if (oneMessage.getPassword().equals(password)) {
+                    System.out.println("パスワードあっています");
+                    messageList.readSaveBoardCsv().remove(i);
+                    //oneMessage.deleteOneMessage();
+
+                }else {
+                    System.out.println("パスワードが間違っています");
+                    stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
+                    stringBuffer.append(oneMessage.getName() + " ");
+                    stringBuffer.append(oneMessage.getPostTime() + " ");
+                    stringBuffer.append(oneMessage.getText() + " ");
+                    stringBuffer.append(oneMessage.getPassword());
+                    stringBuffer.append("<form action=\"\" method=\"POST\">\n");
+                    stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
+                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
+                    stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
+                    stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
+                    stringBuffer.append("パスワードが間違っています");
+                    stringBuffer.append("<Hr>\n");
+                }
+
+            } else {
+                stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
+                stringBuffer.append(oneMessage.getName() + " ");
+                stringBuffer.append(oneMessage.getPostTime() + " ");
+                stringBuffer.append(oneMessage.getText() + " ");
+                stringBuffer.append(oneMessage.getPassword());
+                stringBuffer.append("<form action=\"\" method=\"POST\">\n");
+                stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
+                stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
+                stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
+                stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
+                stringBuffer.append("<Hr>\n");
+            }
         }
+
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
 
         return stringBuffer.toString();
@@ -177,7 +192,7 @@ public class BoardHtmlTranslator {
                 "    <form action=\"\" method=\"POST\">\n" +
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        Text: <br><textarea name=\"comment\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
-                "                            placeholder=\"80字以内で入力してください。\"></textarea><br>\n" +
+                "                            placeholder=\"80字以内で入力してください。\"required></textarea><br>\n" +
                 "        Password: <br><input type=\"text\" name=\"text\" value=\"\" required><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +

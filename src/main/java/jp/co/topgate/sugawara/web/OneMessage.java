@@ -56,7 +56,11 @@ public class OneMessage {
      * @return
      */
 
-    void deleteOneMessage(String passwordOfFormData, boolean isPasswordOfFormDataMatch) {
+    void deleteOneMessage() throws IOException{
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),true));
+        printWriter.write("hogehogehogehogehoge");
+        printWriter.close();
+
     }
 
     /**
