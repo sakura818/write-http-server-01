@@ -45,24 +45,13 @@ public class MessageList {
             }
         }
         int index = max + 1;
-        OneMessage appendOneMessage = new OneMessage(0, name, "", text, password);
+        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
         appendOneMessage.appendOneMessage();
-        List oneMessageAppendList = new ArrayList();
+        List<OneMessage> oneMessageAppendList = new ArrayList();
+        oneMessageAppendList = readSaveBoardCsv();
 
-        for (int i = 0; i < this.list.size(); i++) {
-            oneMessage = list.get(i);
-            if (oneMessage.getIndex() == index) {
-                if (oneMessage.getPassword().equals(password)) {
-                    System.out.println("password correct");
-                    continue;
-                }else{
-                    System.out.println("password incorrect");
-                }
-            }
-            oneMessageAppendList.add(oneMessage);
-        }
-        list = oneMessageAppendList;
-        return list;
+        this.list = oneMessageAppendList;
+        return this.list;
 
     }
 
