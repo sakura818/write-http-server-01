@@ -52,6 +52,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 index = Integer.parseInt(requestBody.get("index"));
                 password = requestBody.get("password");
                 messageList.deleteMessage(index,password,oneMessage);
+                messageList.newListToNewCsv(messageList.deleteMessage(index,password,oneMessage));
                 this.html = boardHtmlTranslator.boardDeleteHtml(messageList, index, password);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
