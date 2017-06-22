@@ -2,6 +2,7 @@ package jp.co.topgate.sugawara.web;
 
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
@@ -105,7 +106,7 @@ public class BoardHtmlTranslator {
                 "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。required\"><br>\n" +
                 "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
                 "                            placeholder=\"80字以内で入力してください。\"required></textarea><br>\n" +
-                "        Password: <br><input type=\"text\" name=\"password\" value= required\"\"><br>\n" +
+                "        Password: <br><input type=\"text\" name=\"password\" value= \" required\"><br>\n" +
                 "        <input type=\"submit\" value=\"投稿する\">\n" +
                 "    </form>\n" +
                 "</section>\n" +
@@ -122,16 +123,48 @@ public class BoardHtmlTranslator {
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
 
         // パスワードあってたら該当の投稿削除
+        int flag = 2;
+        List<OneMessage> reMessageList;
 
         for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
             OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
             if (resindex - 1 == i) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("パスワードあっています");
+                    flag = 1;
                     messageList.readSaveBoardCsv().remove(i);
-                    //oneMessage.deleteOneMessage();
+                    reMessageList = messageList.readSaveBoardCsv();
+                    break;
+                } else {
+                    System.out.println("パスワードが間違っています");
+                    stringBuffer.append("パスワードが間違っています");
+                    stringBuffer.append("<Hr>\n");
+                    flag = 2;
+                }
+            }
+        }
 
-                }else {
+        switch (flag) {
+            case 1:
+                for (int j = 0; j < messageList.readSaveBoardCsv().size(); j++) {
+                    reMessageList = messageList.readSaveBoardCsv();
+                    OneMessage reOneMessage = reMessageList.get(j);
+                    stringBuffer.append("[" + reOneMessage.getIndex() + "]" + " ");
+                    stringBuffer.append(reOneMessage.getName() + " ");
+                    stringBuffer.append(reOneMessage.getPostTime() + " ");
+                    stringBuffer.append(reOneMessage.getText() + " ");
+                    stringBuffer.append(reOneMessage.getPassword());
+                    stringBuffer.append("<form action=\"\" method=\"POST\">\n");
+                    stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
+                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(j + 1).append("\">");
+                    stringBuffer.append("パスワード:<input type=\"password\" name=\"password\" required>");
+                    stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
+                    stringBuffer.append("<Hr>\n");
+                }
+
+            case 2:
+                for (int k = 0; k < messageList.readSaveBoardCsv().size(); k++) {
+                    OneMessage oneMessage = messageList.readSaveBoardCsv().get(k);
                     System.out.println("パスワードが間違っています");
                     stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
                     stringBuffer.append(oneMessage.getName() + " ");
@@ -140,26 +173,12 @@ public class BoardHtmlTranslator {
                     stringBuffer.append(oneMessage.getPassword());
                     stringBuffer.append("<form action=\"\" method=\"POST\">\n");
                     stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
-                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
-                    stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
+                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(k + 1).append("\">");
+                    stringBuffer.append("パスワード:<input type=\"password\" name=\"password\" required>");
                     stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
-                    stringBuffer.append("パスワードが間違っています");
                     stringBuffer.append("<Hr>\n");
                 }
 
-            } else {
-                stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
-                stringBuffer.append(oneMessage.getName() + " ");
-                stringBuffer.append(oneMessage.getPostTime() + " ");
-                stringBuffer.append(oneMessage.getText() + " ");
-                stringBuffer.append(oneMessage.getPassword());
-                stringBuffer.append("<form action=\"\" method=\"POST\">\n");
-                stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
-                stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
-                stringBuffer.append("パスワード:<input type=\"password\" name=\"password\">");
-                stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
-                stringBuffer.append("<Hr>\n");
-            }
         }
 
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
