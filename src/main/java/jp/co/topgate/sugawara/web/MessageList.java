@@ -19,7 +19,70 @@ public class MessageList {
      * @return
      */
 
+    private List<OneMessage> list;
+
     MessageList() throws IOException {
+        readSaveBoardCsv();
+        this.list = list;
+    }
+
+    public List<OneMessage> getList() {
+        return this.list;
+    }
+
+
+    // 投稿1件追加する
+    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
+        int max = 0;
+        for (int i = 0; i < list.size(); i++) {
+            oneMessage = list.get(i);
+            System.out.println(oneMessage.getIndex());
+            int currentIndex = oneMessage.getIndex();
+            if (max >= currentIndex) {
+                max = max;
+            } else if (max < currentIndex) {
+                max = currentIndex;
+            }
+        }
+        int index = max + 1;
+        OneMessage appendOneMessage = new OneMessage(0, name, "", text, password);
+        appendOneMessage.appendOneMessage();
+        List oneMessageAppendList = new ArrayList();
+
+        for (int i = 0; i < this.list.size(); i++) {
+            oneMessage = list.get(i);
+            if (oneMessage.getIndex() == index) {
+                if (oneMessage.getPassword().equals(password)) {
+                    System.out.println("password correct");
+                    continue;
+                }else{
+                    System.out.println("password incorrect");
+                }
+            }
+            oneMessageAppendList.add(oneMessage);
+        }
+        list = oneMessageAppendList;
+        return list;
+
+    }
+
+    // 投稿1件を削除する
+    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) {
+        List oneMessageDeleteList = new ArrayList();
+        for (int i = 0; i < this.list.size(); i++) {
+            oneMessage = list.get(i);
+            if (oneMessage.getIndex() == index) {
+                if (oneMessage.getPassword().equals(password)) {
+                    System.out.println("password correct");
+                    continue;
+                }else{
+                    System.out.println("password incorrect");
+                }
+            }
+            oneMessageDeleteList.add(oneMessage);
+        }
+        list = oneMessageDeleteList;
+        return list;
     }
 
     /**
@@ -50,7 +113,8 @@ public class MessageList {
         } catch (NumberFormatException e) {
             System.out.println("フォーマットエラーがありました");
         }
-        return list;
+        this.list = list;
+        return this.list;
     }
 }
 

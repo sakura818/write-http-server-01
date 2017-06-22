@@ -35,8 +35,8 @@ public class OneMessage {
      */
 
     void appendOneMessage() throws IOException {
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), true));
-        printWriter.write("\n" + this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password);
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
+        printWriter.write( this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password + "\n" );
         printWriter.close();
     }
 

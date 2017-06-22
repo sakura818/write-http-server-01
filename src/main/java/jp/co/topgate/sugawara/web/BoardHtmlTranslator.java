@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class BoardHtmlTranslator {
 
+    private List<OneMessage> list;
+
     /**
      * コンストラクタ
      *
@@ -18,6 +20,7 @@ public class BoardHtmlTranslator {
 
     public BoardHtmlTranslator(MessageList messageList) throws IOException {
         boardTopPageHtml(messageList);
+        list = messageList.getList();
     }
 
     /**
@@ -61,8 +64,8 @@ public class BoardHtmlTranslator {
                 "</section>\n" +
                 "<section>\n");
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
-        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
-            OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+        for (int i = 0; i < list.size(); i++) {
+            OneMessage oneMessage = list.get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
@@ -126,8 +129,8 @@ public class BoardHtmlTranslator {
         int flag = 2;
         List<OneMessage> reMessageList;
 
-        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
-            OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+        for (int i = 0; i < list.size(); i++) {
+            OneMessage oneMessage = list.get(i);
             if (resindex - 1 == i) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("パスワードあっています");
@@ -149,17 +152,16 @@ public class BoardHtmlTranslator {
 
         switch (flag) {
             case 1:
-                for (int j = 0; j < messageList.readSaveBoardCsv().size(); j++) {
-                    reMessageList = messageList.readSaveBoardCsv();
-                    OneMessage reOneMessage = reMessageList.get(j);
-                    stringBuffer.append("[" + reOneMessage.getIndex() + "]" + " ");
-                    stringBuffer.append(reOneMessage.getName() + " ");
-                    stringBuffer.append(reOneMessage.getPostTime() + " ");
-                    stringBuffer.append(reOneMessage.getText() + " ");
-                    stringBuffer.append(reOneMessage.getPassword());
+                for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+                    OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+                    stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
+                    stringBuffer.append(oneMessage.getName() + " ");
+                    stringBuffer.append(oneMessage.getPostTime() + " ");
+                    stringBuffer.append(oneMessage.getText() + " ");
+                    stringBuffer.append(oneMessage.getPassword());
                     stringBuffer.append("<form action=\"\" method=\"POST\">\n");
                     stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
-                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(j + 1).append("\">");
+                    stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(i + 1).append("\">");
                     stringBuffer.append("パスワード:<input type=\"password\" name=\"password\" required>");
                     stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
                     stringBuffer.append("<Hr>\n");
@@ -232,10 +234,10 @@ public class BoardHtmlTranslator {
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 
         int searchResultNumber = 0;
-        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             OneMessage oneMessage = null;
-            if (queryNameParameter.equals(messageList.readSaveBoardCsv().get(i).getName())) {
-                oneMessage = messageList.readSaveBoardCsv().get(i);
+            if (queryNameParameter.equals(list.get(i).getName())) {
+                oneMessage = list.get(i);
                 stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
                 stringBuffer.append(oneMessage.getName() + " ");
                 stringBuffer.append(oneMessage.getPostTime() + " ");
@@ -251,8 +253,8 @@ public class BoardHtmlTranslator {
         stringBuffer.append("件" + "<Hr>\n");
 
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
-        for (int i = 0; i < messageList.readSaveBoardCsv().size(); i++) {
-            OneMessage oneMessage = messageList.readSaveBoardCsv().get(i);
+        for (int i = 0; i < list.size(); i++) {
+            OneMessage oneMessage = list.get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
