@@ -14,7 +14,6 @@ public class BoardHtmlTranslator {
 
     /**
      * コンストラクタ
-     *
      */
 
     public BoardHtmlTranslator(MessageList messageList) throws IOException {

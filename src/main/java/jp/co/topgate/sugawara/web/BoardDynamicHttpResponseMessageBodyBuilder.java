@@ -38,7 +38,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 name = requestBody.get("name");
                 text = requestBody.get("text");
                 password = requestBody.get("password");
-                messageList.appendMessage(name,text,password,oneMessage);
+                messageList.appendMessage(name, text, password, oneMessage);
                 messageList.newListToNewCsv();
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
@@ -46,7 +46,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
                 password = requestBody.get("password");
-                messageList.deleteMessage(index,password);
+                messageList.deleteMessage(index, password);
                 messageList.newListToNewCsv();
                 this.html = boardHtmlTranslator.boardDeleteHtml(messageList);
                 break;

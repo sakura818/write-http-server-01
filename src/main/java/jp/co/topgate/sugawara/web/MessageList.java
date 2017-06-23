@@ -12,7 +12,6 @@ public class MessageList {
 
     /**
      * コンストラクタ
-     *
      */
 
     MessageList() throws IOException {
