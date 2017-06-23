@@ -19,7 +19,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody,String rawPassword) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;

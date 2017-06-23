@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -25,7 +26,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     }
 
     private String rawPassword;
-
 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
@@ -54,7 +54,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
                 }
                 break;
         }
-        System.out.println(responseAssortFlag);
         return responseAssortFlag;
     }
 
@@ -67,22 +66,20 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      */
     Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();
-        System.out.println("hana");
         String messageBodyString = new String(bodyInputStream, "UTF-8");
-        String[] hoge = messageBodyString.split("&");//rename
+        String[] messageBodyStringParse = messageBodyString.split("&");//rename
 
-        for (int count = 0; count <= hoge.length - 1; count++) {
-            System.out.println(hoge[count]);
+        for (int count = 0; count <= messageBodyStringParse.length - 1; count++) {
         }
         Map<String, String> messageBodyKey = new HashMap<String, String>();
-        if (hoge.length != 1) {
-            String[] line = hoge[0].split("=");
+        if (messageBodyStringParse.length != 1) {
+            String[] line = messageBodyStringParse[0].split("=");
             messageBodyKey.put(line[0], URLDecoder.decode((line[1]), "UTF-8"));
             this.nameOfFormData = URLDecoder.decode(line[1], "UTF-8");
-            String[] line1 = hoge[1].split("=");
+            String[] line1 = messageBodyStringParse[1].split("=");
             messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
             this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
-            String[] line2 = hoge[2].split("=");
+            String[] line2 = messageBodyStringParse[2].split("=");
             this.rawPassword = URLDecoder.decode(line2[1], "UTF-8");
 
             System.out.println(this.passwordOfFormData);
@@ -105,7 +102,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
         return messageBodyKey;
     }
-
 
 
     Map<String, String> getMessageBodykey() {

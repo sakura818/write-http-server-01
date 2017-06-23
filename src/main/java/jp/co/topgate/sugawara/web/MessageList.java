@@ -13,6 +13,13 @@ import java.util.List;
 public class MessageList {
     private List<OneMessage> list;
 
+    public boolean isPasswordMatch() {
+        return passwordMatch;
+    }
+
+    private boolean passwordMatch;
+
+
     /**
      * コンストラクタ
      */
@@ -39,7 +46,6 @@ public class MessageList {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
             oneMessage = list.get(i);
-            System.out.println(oneMessage.getIndex());
             int currentIndex = oneMessage.getIndex();
             if (max >= currentIndex) {
                 max = max;
@@ -74,11 +80,11 @@ public class MessageList {
             OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
                 BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
-                if (bCrypt.matches(password,oneMessage.getPassword())) {
-                    System.out.println("password correct");
+                if (bCrypt.matches(password, oneMessage.getPassword())) {
+                    passwordMatch = true;
                     continue;
                 } else {
-                    System.out.println("password incorrect");
+                    passwordMatch = false;
                 }
             }
             oneMessageDeleteList.add(oneMessage);

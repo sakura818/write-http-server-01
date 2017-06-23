@@ -17,7 +17,6 @@ public class OneMessage {
 
     /**
      * コンストラクタ
-     *
      */
 
     OneMessage(int index, String name, String postTime, String text, String password) {

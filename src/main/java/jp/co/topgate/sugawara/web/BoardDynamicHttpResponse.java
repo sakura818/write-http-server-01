@@ -28,7 +28,6 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
         this.file = file;
         this.statusCode = statusCode;
         this.assort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
-        System.out.println(assort);
         this.httpRequest = httpRequest;
         this.responseBody = responseBody;
         this.rawPassword = boardDynamicHttpResponseHandler.getRawPassword();
@@ -43,11 +42,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseBody,String rawPassword) throws IOException {
+    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseBody, String rawPassword) throws IOException {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(assort, httpRequest, responseBody,rawPassword);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(assort, httpRequest, responseBody, rawPassword);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -75,7 +74,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
     public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream, Map<String, String> responseBody) throws IOException {
 
-        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseBody,rawPassword);
+        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseBody, rawPassword);
         outputStream.write(httpResponseContent);
 
     }
