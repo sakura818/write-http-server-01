@@ -27,7 +27,6 @@ public class HttpServer {
     private final int NOT_IMPLEMENTED = 501;
     private final int HTTP_VERSION_NOT_SUPPORTED = 505;
 
-
     /**
      * クライアントとサーバのデータの入出力を行う
      */
@@ -44,7 +43,6 @@ public class HttpServer {
                 HttpRequest httpRequest;
 
                 File file = null;
-
                 int statusCode = 0;
                 StaticHttpResponse staticHttpResponse = null;
                 BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler = null;

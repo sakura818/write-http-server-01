@@ -27,6 +27,7 @@ public class HttpRequest {
     private int statusCode;
     private String queryString;
     private byte[] messageBody;
+    private Map<String, String> headerField = new HashMap<>();
 
     private boolean isQueryString;
     private final int OK = 200;
@@ -57,7 +58,6 @@ public class HttpRequest {
         this.messageBody = readMessageBody(inputStream, contentLength);
 
         int statusCode = judgeStatusCode(requestLine);
-
         this.statusCode = statusCode;
 
         if (statusCode == 200) {
@@ -75,7 +75,6 @@ public class HttpRequest {
             } else if (uriPathAndQueryString.length == 1) {
                 this.queryString = "";
                 this.isQueryString = false;
-
             }
         }
     }
@@ -299,7 +298,6 @@ public class HttpRequest {
             line = readLine(inputStream);
             System.out.println(line);
         }
-
         return headerField;
     }
 
@@ -326,8 +324,6 @@ public class HttpRequest {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private String header;
-    private Map<String, String> headerField = new HashMap<>();
 
     /**
      * inputStreamから1行ずつデータをよみとる

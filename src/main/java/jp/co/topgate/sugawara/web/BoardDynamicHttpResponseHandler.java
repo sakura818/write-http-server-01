@@ -68,14 +68,14 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
         Map<String, String> messageBodyKey = new HashMap<String, String>();
         if (hoge.length != 1) {
             String[] line = hoge[0].split("=");
-            messageBodyKey.put(line[0], URLDecoder.decode((line[1]),"UTF-8"));
-            this.nameOfFormData = URLDecoder.decode(line[1],"UTF-8");
+            messageBodyKey.put(line[0], URLDecoder.decode((line[1]), "UTF-8"));
+            this.nameOfFormData = URLDecoder.decode(line[1], "UTF-8");
             String[] line1 = hoge[1].split("=");
-            messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]),"UTF-8"));
-            this.textOfFromData = URLDecoder.decode(line1[1],"UTF-8");
+            messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
+            this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
             String[] line2 = hoge[2].split("=");
-            messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]),"UTF-8"));
-            this.passwordOfFormData = URLDecoder.decode(line2[1],"UTF-8");
+            messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]), "UTF-8"));
+            this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
 
             //上記の冗長な作業をfor文になおす(途中)
             /*

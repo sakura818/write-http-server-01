@@ -7,16 +7,13 @@ import java.util.List;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
+
 public class MessageList {
+    private List<OneMessage> list;
 
     /**
      * コンストラクタ
-     *
-     * @param
-     * @return
      */
-
-    private List<OneMessage> list;
 
     MessageList() throws IOException {
         readSaveBoardCsv();
@@ -27,8 +24,15 @@ public class MessageList {
         return this.list;
     }
 
+    /**
+     * 投稿用に新しいリストを作成する
+     *
+     * @param name ブラウザで入力された名前
+     * @param text ブラウザで入力された本文
+     * @param password ブラウザで入力されたパスワード
+     * @return 新しいリスト
+     */
 
-    // 投稿1件追加する
     public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -42,28 +46,35 @@ public class MessageList {
             }
         }
         int index = max + 1;
-        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
-        appendOneMessage.appendOneMessage();
+
         List<OneMessage> oneMessageAppendList = new ArrayList();
-        oneMessageAppendList = readSaveBoardCsv();
-
-        this.list = oneMessageAppendList;
-        return this.list;
-
-    }
-
-    // 投稿1件を削除する
-    // 新しいリストを作成
-    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) throws IOException{
-        List<OneMessage> oneMessageDeleteList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
             oneMessage = list.get(i);
+            oneMessageAppendList.add(oneMessage);
+        }
+        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
+        oneMessageAppendList.add(appendOneMessage);
+        this.list = oneMessageAppendList;
+        return this.list;
+    }
+
+    /**
+     * 削除用に新しいリストを作成する
+     *
+     * @param index リクエストのindex
+     * @param password ブラウザで入力されたパスワード
+     * @return 新しいリスト
+     */
+
+    public List<OneMessage> deleteMessage(int index, String password) throws IOException {
+        List<OneMessage> oneMessageDeleteList = new ArrayList();
+        for (int i = 0; i < this.list.size(); i++) {
+            OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("password correct");
-                    oneMessage.deleteOneMessage();
                     continue;
-                }else{
+                } else {
                     System.out.println("password incorrect");
                 }
             }
@@ -73,12 +84,16 @@ public class MessageList {
         return list;
     }
 
-    // 新しいリストの内容をCSVに上書きして新しいCSVをつくる
-    public void newListToNewCsv() throws IOException{
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),false));
-        List<OneMessage> oneMessageDeleteList = getList();
-        for(int i = 0 ; i< oneMessageDeleteList.size(); i++) {
-            OneMessage oneMessage = oneMessageDeleteList.get(i);
+    /**
+     * 新しいリストの内容をCSVファイルに新しく書き直す
+     *
+     */
+
+    public void newListToNewCsv() throws IOException {
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
+        List<OneMessage> updateList = getList();
+        for (int i = 0; i < updateList.size(); i++) {
+            OneMessage oneMessage = updateList.get(i);
             printWriter.write(String.valueOf(oneMessage.getIndex()));
             String comma = ",";
             printWriter.write(comma);
@@ -95,10 +110,9 @@ public class MessageList {
     }
 
     /**
-     * 投稿全件を読み込む
+     * csvから投稿全件を読み込んでリストにする
      *
-     * @param
-     * @return
+     * @return list
      */
 
     public List<OneMessage> readSaveBoardCsv() throws IOException {

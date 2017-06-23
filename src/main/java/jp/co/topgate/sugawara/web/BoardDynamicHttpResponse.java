@@ -45,7 +45,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(file, assort, httpRequest, inputStream, responseBody);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(assort, httpRequest, responseBody);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -74,7 +74,6 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
     public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream, Map<String, String> responseBody) throws IOException {
 
         byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseBody);
-        /** HttpResponseをoutputStreamに書き込む */
         outputStream.write(httpResponseContent);
 
     }
