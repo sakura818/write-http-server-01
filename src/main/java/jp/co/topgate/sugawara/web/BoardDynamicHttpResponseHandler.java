@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
@@ -18,6 +19,14 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String passwordOfFormData;
     private Map<String, String> messageBodykey;
     private String responseAssortFlag = "responseAssortFlagStart";
+
+    public String getRawPassword() {
+        return rawPassword;
+    }
+
+    private String rawPassword;
+
+
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
         Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
@@ -74,8 +83,14 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
             this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
             String[] line2 = hoge[2].split("=");
-            messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]), "UTF-8"));
-            this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
+            this.rawPassword = URLDecoder.decode(line2[1], "UTF-8");
+
+            System.out.println(this.passwordOfFormData);
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String encodePassword = bCryptPasswordEncoder.encode(rawPassword);
+            this.passwordOfFormData = encodePassword;
+            messageBodyKey.put(line2[0], this.passwordOfFormData);
+
 
             //上記の冗長な作業をfor文になおす(途中)
             /*
@@ -90,6 +105,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
         return messageBodyKey;
     }
+
+
 
     Map<String, String> getMessageBodykey() {
         return this.messageBodykey;
