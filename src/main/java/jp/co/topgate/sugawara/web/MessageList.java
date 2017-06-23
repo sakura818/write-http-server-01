@@ -80,46 +80,19 @@ public class MessageList {
         for(int i = 0 ; i< oneMessageDeleteList.size(); i++) {
             OneMessage oneMessage = oneMessageDeleteList.get(i);
             printWriter.write(String.valueOf(oneMessage.getIndex()));
-            printWriter.write(",");
+            String comma = ",";
+            printWriter.write(comma);
             printWriter.write(oneMessage.getName());
-            printWriter.write(",");
+            printWriter.write(comma);
             printWriter.write(oneMessage.getPostTime());
-            printWriter.write(",");
+            printWriter.write(comma);
             printWriter.write(oneMessage.getText());
-            printWriter.write(",");
+            printWriter.write(comma);
             printWriter.write(oneMessage.getPassword());
             printWriter.write("\n");
         }
         printWriter.close();
     }
-
-    //　新しいCSVから新しいリストを作成する
-    public List<OneMessage> newCSVToNewList() throws  IOException{
-        List<OneMessage> oneMessageDeleteList = new ArrayList<>();
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
-            String csvLine;
-            while ((csvLine = bufferedReader.readLine()) != null) {
-                String saveBoardCsvArray[] = csvLine.split(",", 5);
-
-                int index = Integer.parseInt(saveBoardCsvArray[0]);
-                String name = saveBoardCsvArray[1];
-                String postTime = saveBoardCsvArray[2];
-                String text = saveBoardCsvArray[3];
-                String password = saveBoardCsvArray[4];
-
-                OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
-                list.add(oneMessage);
-            }
-            bufferedReader.close();
-        } catch (NumberFormatException e) {
-            System.out.println("フォーマットエラーがありました");
-        }
-       return this.list = oneMessageDeleteList;
-    }
-
-
-
 
     /**
      * 投稿全件を読み込む
