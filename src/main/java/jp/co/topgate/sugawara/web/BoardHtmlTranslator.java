@@ -34,7 +34,7 @@ public class BoardHtmlTranslator {
             "<section>\n" +
             "    <h2>新規投稿</h2>\n" +
             "    <form action=\"\" method=\"post\">\n" +
-            "        Name: <br><input type=\"text\" name=\"name\" value=\"\" placeholder=\"4字以内で入力してください。\"required><br>\n" +
+            "        Name: <br><input type=\"text\" name=\"name\" value=\"\"\"required><br>\n" +
             "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
             "                            placeholder=\"80字以内で入力してください \"required></textarea><br>\n" +
             "        Password: <br><input type=\"text\" name=\"password\" value=\"\"required><br>\n" +
@@ -90,9 +90,9 @@ public class BoardHtmlTranslator {
         stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         if (messageList.isPasswordMatch() == true) {
-            stringBuffer.append("投稿を削除しました"+ "<Hr>\n");
+            stringBuffer.append("投稿を削除しました" + "<Hr>\n");
         } else if (messageList.isPasswordMatch() == false) {
-            stringBuffer.append("パスワードが間違っています"+ "<Hr>\n");
+            stringBuffer.append("パスワードが間違っています" + "<Hr>\n");
         }
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
