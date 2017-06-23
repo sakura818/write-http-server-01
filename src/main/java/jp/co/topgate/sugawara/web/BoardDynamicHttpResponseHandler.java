@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Created by haruka.sugawara on 2017/06/12.
@@ -77,6 +78,9 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]), "UTF-8"));
             this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
             System.out.println(this.passwordOfFormData);
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String encodePassword = bCryptPasswordEncoder.encode(this.passwordOfFormData);
+            this.passwordOfFormData = encodePassword;
 
 
             //上記の冗長な作業をfor文になおす(途中)
