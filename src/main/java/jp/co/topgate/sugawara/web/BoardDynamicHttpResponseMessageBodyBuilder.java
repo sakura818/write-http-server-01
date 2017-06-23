@@ -1,14 +1,8 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +19,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(File file, String responseAssortFlag, HttpRequest httpRequest, InputStream inputStream, Map<String, String> requestBody) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
@@ -52,9 +46,9 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
                 password = requestBody.get("password");
-                messageList.deleteMessage(index,password,oneMessage);
+                messageList.deleteMessage(index,password);
                 messageList.newListToNewCsv();
-                this.html = boardHtmlTranslator.boardDeleteHtml(messageList, index, password);
+                this.html = boardHtmlTranslator.boardDeleteHtml(messageList);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
             case "searchName":
@@ -94,9 +88,6 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
 
     String analyzeQueryString(HttpRequest httpRequest) {
         String queryParams[] = httpRequest.getQueryString().split("=");
-        System.out.println(httpRequest.getQueryString());
-        System.out.println(queryParams[0]);
-        System.out.println(queryParams[1]);
         query = queryParams[1];
         return query;
     }

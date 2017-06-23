@@ -3,9 +3,6 @@ package jp.co.topgate.sugawara.web;
 import java.io.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Created by haruka.sugawara on 2017/06/15.
@@ -28,24 +25,6 @@ public class OneMessage {
     }
 
     /**
-     * 新規投稿1件をcsvに書き込む
-     *
-     * @param
-     * @return
-     */
-
-    void appendOneMessage() throws IOException {
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),true));
-        printWriter.write(   this.index + "," + this.name + "," + this.postTime + "," + this.text + "," + this.password + "\n" );
-        printWriter.close();
-    }
-
-
-    private int hoge;
-
-    public
-
-    /**
      * 投稿時間を測定する
      *
      * @return postTime
@@ -53,16 +32,9 @@ public class OneMessage {
 
     ZonedDateTime measureNewPostingTime() {
         ZonedDateTime postTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        this.postTime = postTime.toString();
         return postTime;
     }
-
-    /**
-     * CSVファイルから投稿1件を削除する
-     *
-     * @param
-     * @return
-     */
-
 
     /**
      * レス番号indexを取得する

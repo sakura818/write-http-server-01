@@ -8,15 +8,12 @@ import java.util.List;
  * Created by haruka.sugawara on 2017/06/12.
  */
 public class MessageList {
+    private List<OneMessage> list;
 
     /**
      * コンストラクタ
      *
-     * @param
-     * @return
      */
-
-    private List<OneMessage> list;
 
     MessageList() throws IOException {
         readSaveBoardCsv();
@@ -57,10 +54,10 @@ public class MessageList {
 
     // 投稿1件を削除する
     // 新しいリストを作成
-    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) throws IOException {
+    public List<OneMessage> deleteMessage(int index, String password) throws IOException {
         List<OneMessage> oneMessageDeleteList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
-            oneMessage = list.get(i);
+            OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("password correct");

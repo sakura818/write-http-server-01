@@ -10,19 +10,18 @@ import java.util.List;
 public class BoardHtmlTranslator {
 
     private List<OneMessage> list;
+    StringBuffer stringBuffer = new StringBuffer();
 
     /**
      * コンストラクタ
      *
-     * @param
-     * @return
      */
 
     public BoardHtmlTranslator(MessageList messageList) throws IOException {
         list = messageList.getList();
     }
 
-    String zenhan = ("<!DOCTYPE html>\n" +
+    String htmlTenplate = ("<!DOCTYPE html>\n" +
             "<html>\n" +
             "<head>\n" +
             "    <meta charset=\"UTF-8\">\n" +
@@ -63,8 +62,7 @@ public class BoardHtmlTranslator {
      */
 
     String boardTopPageHtml(MessageList messageList) throws IOException {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(zenhan);
+        stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
@@ -81,7 +79,6 @@ public class BoardHtmlTranslator {
             stringBuffer.append("<Hr>\n");
         }
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
-
         return stringBuffer.toString();
     }
 
@@ -92,9 +89,8 @@ public class BoardHtmlTranslator {
      * @return
      */
 
-    String boardDeleteHtml(MessageList messageList, int resindex, String password) throws IOException {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(zenhan);
+    String boardDeleteHtml(MessageList messageList) throws IOException {
+        stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
 
         for (int i = 0; i < messageList.getList().size(); i++) {
@@ -111,10 +107,7 @@ public class BoardHtmlTranslator {
             stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
-
-
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
-
         return stringBuffer.toString();
     }
 
@@ -126,8 +119,7 @@ public class BoardHtmlTranslator {
      */
 
     String boardSearchNameHtml(MessageList messageList, String queryNameParameter) throws IOException {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(zenhan);
+        stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 
         int searchResultNumber = 0;
@@ -141,7 +133,6 @@ public class BoardHtmlTranslator {
                 stringBuffer.append(oneMessage.getText() + " ");
                 stringBuffer.append(oneMessage.getPassword());
                 stringBuffer.append("<Hr>\n");
-
                 searchResultNumber++;
             }
         }
@@ -164,10 +155,7 @@ public class BoardHtmlTranslator {
             stringBuffer.append("<input type=\"submit\" value=\"この投稿を削除する\"></form>");
             stringBuffer.append("<Hr>\n");
         }
-
         stringBuffer.append("</section>\n" + "</body>\n" + "</html>");
-
         return stringBuffer.toString();
     }
-
 }
