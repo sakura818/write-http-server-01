@@ -19,7 +19,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody,String rawPassword) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
@@ -45,7 +45,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
-                password = requestBody.get("password");
+                password = rawPassword;
                 messageList.deleteMessage(index, password);
                 messageList.newListToNewCsv();
                 this.html = boardHtmlTranslator.boardDeleteHtml(messageList);

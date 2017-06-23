@@ -1,5 +1,7 @@
 package jp.co.topgate.sugawara.web;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,8 @@ public class MessageList {
     /**
      * 投稿用に新しいリストを作成する
      *
-     * @param name ブラウザで入力された名前
-     * @param text ブラウザで入力された本文
+     * @param name     ブラウザで入力された名前
+     * @param text     ブラウザで入力された本文
      * @param password ブラウザで入力されたパスワード
      * @return 新しいリスト
      */
@@ -61,7 +63,7 @@ public class MessageList {
     /**
      * 削除用に新しいリストを作成する
      *
-     * @param index リクエストのindex
+     * @param index    リクエストのindex
      * @param password ブラウザで入力されたパスワード
      * @return 新しいリスト
      */
@@ -71,7 +73,8 @@ public class MessageList {
         for (int i = 0; i < this.list.size(); i++) {
             OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
-                if (oneMessage.getPassword().equals(password)) {
+                BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+                if (bCrypt.matches(password,oneMessage.getPassword())) {
                     System.out.println("password correct");
                     continue;
                 } else {
@@ -86,7 +89,6 @@ public class MessageList {
 
     /**
      * 新しいリストの内容をCSVファイルに新しく書き直す
-     *
      */
 
     public void newListToNewCsv() throws IOException {

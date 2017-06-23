@@ -20,6 +20,14 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private Map<String, String> messageBodykey;
     private String responseAssortFlag = "responseAssortFlagStart";
 
+    public String getRawPassword() {
+        return rawPassword;
+    }
+
+    private String rawPassword;
+
+
+
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
         Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
         BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);
@@ -75,10 +83,11 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
             this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
             String[] line2 = hoge[2].split("=");
-            this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
+            this.rawPassword = URLDecoder.decode(line2[1], "UTF-8");
+
             System.out.println(this.passwordOfFormData);
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-            String encodePassword = bCryptPasswordEncoder.encode(this.passwordOfFormData);
+            String encodePassword = bCryptPasswordEncoder.encode(rawPassword);
             this.passwordOfFormData = encodePassword;
             messageBodyKey.put(line2[0], this.passwordOfFormData);
 
@@ -96,6 +105,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
         return messageBodyKey;
     }
+
+
 
     Map<String, String> getMessageBodykey() {
         return this.messageBodykey;
