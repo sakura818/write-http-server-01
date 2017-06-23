@@ -74,11 +74,12 @@ public class MessageList {
     }
 
     // 新しいリストの内容をCSVに上書きして新しいCSVをつくる
-    public void newListToNewCsv(List<OneMessage> oneMessageDeleteList) throws IOException{
+    public void newListToNewCsv() throws IOException{
         PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),false));
+        List<OneMessage> oneMessageDeleteList = getList();
         for(int i = 0 ; i< oneMessageDeleteList.size(); i++) {
             OneMessage oneMessage = oneMessageDeleteList.get(i);
-            printWriter.write(oneMessage.getIndex());
+            printWriter.write(String.valueOf(oneMessage.getIndex()));
             printWriter.write(",");
             printWriter.write(oneMessage.getName());
             printWriter.write(",");
