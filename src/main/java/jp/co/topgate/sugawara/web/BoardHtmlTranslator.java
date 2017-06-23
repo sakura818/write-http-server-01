@@ -57,7 +57,7 @@ public class BoardHtmlTranslator {
      * 掲示板のトップページのHTMLをつくる
      *
      * @param messageList
-     * @return
+     * @return HTMLをString型にしたもの
      */
 
     String boardTopPageHtml(MessageList messageList) throws IOException {
@@ -85,7 +85,7 @@ public class BoardHtmlTranslator {
      * 掲示板の削除のHTMLをつくる
      *
      * @param messageList
-     * @return
+     * @return HTMLをString型にしたもの
      */
 
     String boardDeleteHtml(MessageList messageList) throws IOException {
@@ -114,7 +114,7 @@ public class BoardHtmlTranslator {
      * 名前で検索して合致した投稿結果を表示するHTMLをつくる
      *
      * @param messageList
-     * @return
+     * @return HTMLをString型にしたもの
      */
 
     String boardSearchNameHtml(MessageList messageList, String queryNameParameter) throws IOException {

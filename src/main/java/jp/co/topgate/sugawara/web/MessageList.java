@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
+
 public class MessageList {
     private List<OneMessage> list;
 
@@ -23,9 +24,15 @@ public class MessageList {
         return this.list;
     }
 
+    /**
+     * 投稿用に新しいリストを作成する
+     *
+     * @param name ブラウザで入力された名前
+     * @param text ブラウザで入力された本文
+     * @param password ブラウザで入力されたパスワード
+     * @return 新しいリスト
+     */
 
-    // 投稿1件追加する
-    // 新しいリストを作成
     public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -51,8 +58,14 @@ public class MessageList {
         return this.list;
     }
 
-    // 投稿1件を削除する
-    // 新しいリストを作成
+    /**
+     * 削除用に新しいリストを作成する
+     *
+     * @param index リクエストのindex
+     * @param password ブラウザで入力されたパスワード
+     * @return 新しいリスト
+     */
+
     public List<OneMessage> deleteMessage(int index, String password) throws IOException {
         List<OneMessage> oneMessageDeleteList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
@@ -71,7 +84,11 @@ public class MessageList {
         return list;
     }
 
-    // 新しいリストの内容をCSVに上書きして新しいCSVをつくる
+    /**
+     * 新しいリストの内容をCSVファイルに新しく書き直す
+     *
+     */
+
     public void newListToNewCsv() throws IOException {
         PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
         List<OneMessage> updateList = getList();
@@ -93,10 +110,9 @@ public class MessageList {
     }
 
     /**
-     * 投稿全件を読み込む
+     * csvから投稿全件を読み込んでリストにする
      *
-     * @param
-     * @return
+     * @return list
      */
 
     public List<OneMessage> readSaveBoardCsv() throws IOException {

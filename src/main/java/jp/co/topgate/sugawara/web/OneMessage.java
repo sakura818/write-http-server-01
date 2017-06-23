@@ -15,7 +15,11 @@ public class OneMessage {
     String text;
     String password;
 
-    // 1件の投稿
+    /**
+     * コンストラクタ
+     *
+     */
+
     OneMessage(int index, String name, String postTime, String text, String password) {
         this.index = index;
         this.name = name;
