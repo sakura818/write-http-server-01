@@ -76,6 +76,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             String[] line2 = hoge[2].split("=");
             messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]), "UTF-8"));
             this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
+            System.out.println(this.passwordOfFormData);
+
 
             //上記の冗長な作業をfor文になおす(途中)
             /*
