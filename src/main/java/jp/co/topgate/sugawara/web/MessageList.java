@@ -13,6 +13,14 @@ import java.util.List;
 public class MessageList {
     private List<OneMessage> list;
 
+    public boolean isPasswordMatch() {
+        return passwordMatch;
+    }
+
+    private boolean passwordMatch;
+
+
+
     /**
      * コンストラクタ
      */
@@ -76,9 +84,11 @@ public class MessageList {
                 BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
                 if (bCrypt.matches(password,oneMessage.getPassword())) {
                     System.out.println("password correct");
+                    passwordMatch = true;
                     continue;
                 } else {
                     System.out.println("password incorrect");
+                    passwordMatch = false;
                 }
             }
             oneMessageDeleteList.add(oneMessage);

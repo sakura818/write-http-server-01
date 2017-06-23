@@ -52,7 +52,6 @@ public class BoardHtmlTranslator {
             "</section>\n" +
             "<section>\n");
 
-
     /**
      * 掲示板のトップページのHTMLをつくる
      *
@@ -69,7 +68,6 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
-            stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append("<form action=\"\" method=\"POST\">\n");
             stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
             stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(oneMessage.getIndex()).append("\">");
@@ -91,14 +89,17 @@ public class BoardHtmlTranslator {
     String boardDeleteHtml(MessageList messageList) throws IOException {
         stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
-
+        if (messageList.isPasswordMatch() == true) {
+            stringBuffer.append("投稿を削除しました"+ "<Hr>\n");
+        } else if (messageList.isPasswordMatch() == false) {
+            stringBuffer.append("パスワードが間違っています"+ "<Hr>\n");
+        }
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
-            stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append("<form action=\"\" method=\"POST\">\n");
             stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
             stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(oneMessage.getIndex()).append("\">");
@@ -130,7 +131,6 @@ public class BoardHtmlTranslator {
                 stringBuffer.append(oneMessage.getName() + " ");
                 stringBuffer.append(oneMessage.getPostTime() + " ");
                 stringBuffer.append(oneMessage.getText() + " ");
-                stringBuffer.append(oneMessage.getPassword());
                 stringBuffer.append("<Hr>\n");
                 searchResultNumber++;
             }
@@ -146,7 +146,6 @@ public class BoardHtmlTranslator {
             stringBuffer.append(oneMessage.getName() + " ");
             stringBuffer.append(oneMessage.getPostTime() + " ");
             stringBuffer.append(oneMessage.getText() + " ");
-            stringBuffer.append(oneMessage.getPassword());
             stringBuffer.append("<form action=\"\" method=\"POST\">\n");
             stringBuffer.append("<input type=\"hidden\" name=\"_method\" value=\"DELETE\">");
             stringBuffer.append("<input type=\"hidden\" name=\"index\" value=\"").append(oneMessage.getIndex()).append("\">");
