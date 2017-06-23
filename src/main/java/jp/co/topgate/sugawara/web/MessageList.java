@@ -1,9 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +53,15 @@ public class MessageList {
     }
 
     // 投稿1件を削除する
-    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) {
-        List oneMessageDeleteList = new ArrayList();
+    // 新しいリストを作成
+    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) throws IOException{
+        List<OneMessage> oneMessageDeleteList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
             oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("password correct");
+                    oneMessage.deleteOneMessage();
                     continue;
                 }else{
                     System.out.println("password incorrect");
@@ -70,8 +69,29 @@ public class MessageList {
             }
             oneMessageDeleteList.add(oneMessage);
         }
-        list = oneMessageDeleteList;
+        this.list = oneMessageDeleteList;
         return list;
+    }
+
+    // 新しいリストの内容をCSVに上書きして新しいCSVをつくる
+    public void newListToNewCsv() throws IOException{
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),false));
+        List<OneMessage> oneMessageDeleteList = getList();
+        for(int i = 0 ; i< oneMessageDeleteList.size(); i++) {
+            OneMessage oneMessage = oneMessageDeleteList.get(i);
+            printWriter.write(String.valueOf(oneMessage.getIndex()));
+            String comma = ",";
+            printWriter.write(comma);
+            printWriter.write(oneMessage.getName());
+            printWriter.write(comma);
+            printWriter.write(oneMessage.getPostTime());
+            printWriter.write(comma);
+            printWriter.write(oneMessage.getText());
+            printWriter.write(comma);
+            printWriter.write(oneMessage.getPassword());
+            printWriter.write("\n");
+        }
+        printWriter.close();
     }
 
     /**
