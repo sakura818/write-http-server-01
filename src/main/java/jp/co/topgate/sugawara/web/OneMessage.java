@@ -63,12 +63,6 @@ public class OneMessage {
      * @return
      */
 
-    void deleteOneMessage() throws IOException{
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),true));
-        printWriter.write("hogehogehogehogehoge");
-        printWriter.close();
-
-    }
 
     /**
      * レス番号indexを取得する

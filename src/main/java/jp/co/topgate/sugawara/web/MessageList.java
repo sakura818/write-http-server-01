@@ -29,6 +29,7 @@ public class MessageList {
 
 
     // 投稿1件追加する
+    // 新しいリストを作成
     public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -42,28 +43,29 @@ public class MessageList {
             }
         }
         int index = max + 1;
-        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
-        appendOneMessage.appendOneMessage();
-        List<OneMessage> oneMessageAppendList = new ArrayList();
-        oneMessageAppendList = readSaveBoardCsv();
 
+        List<OneMessage> oneMessageAppendList = new ArrayList();
+        for (int i = 0; i < this.list.size(); i++) {
+            oneMessage = list.get(i);
+            oneMessageAppendList.add(oneMessage);
+        }
+        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
+        oneMessageAppendList.add(appendOneMessage);
         this.list = oneMessageAppendList;
         return this.list;
-
     }
 
     // 投稿1件を削除する
     // 新しいリストを作成
-    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) throws IOException{
+    public List<OneMessage> deleteMessage(int index, String password, OneMessage oneMessage) throws IOException {
         List<OneMessage> oneMessageDeleteList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
             oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
                 if (oneMessage.getPassword().equals(password)) {
                     System.out.println("password correct");
-                    oneMessage.deleteOneMessage();
                     continue;
-                }else{
+                } else {
                     System.out.println("password incorrect");
                 }
             }
@@ -74,11 +76,11 @@ public class MessageList {
     }
 
     // 新しいリストの内容をCSVに上書きして新しいCSVをつくる
-    public void newListToNewCsv() throws IOException{
-        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"),false));
-        List<OneMessage> oneMessageDeleteList = getList();
-        for(int i = 0 ; i< oneMessageDeleteList.size(); i++) {
-            OneMessage oneMessage = oneMessageDeleteList.get(i);
+    public void newListToNewCsv() throws IOException {
+        PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
+        List<OneMessage> updateList = getList();
+        for (int i = 0; i < updateList.size(); i++) {
+            OneMessage oneMessage = updateList.get(i);
             printWriter.write(String.valueOf(oneMessage.getIndex()));
             String comma = ",";
             printWriter.write(comma);

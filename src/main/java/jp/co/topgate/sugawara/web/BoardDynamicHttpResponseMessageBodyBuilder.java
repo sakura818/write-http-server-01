@@ -45,6 +45,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 text = requestBody.get("text");
                 password = requestBody.get("password");
                 messageList.appendMessage(name,text,password,oneMessage);
+                messageList.newListToNewCsv();
                 this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
