@@ -75,12 +75,12 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
             this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
             String[] line2 = hoge[2].split("=");
-            messageBodyKey.put(line2[0], URLDecoder.decode((line2[1]), "UTF-8"));
             this.passwordOfFormData = URLDecoder.decode(line2[1], "UTF-8");
             System.out.println(this.passwordOfFormData);
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             String encodePassword = bCryptPasswordEncoder.encode(this.passwordOfFormData);
             this.passwordOfFormData = encodePassword;
+            messageBodyKey.put(line2[0], this.passwordOfFormData);
 
 
             //上記の冗長な作業をfor文になおす(途中)
