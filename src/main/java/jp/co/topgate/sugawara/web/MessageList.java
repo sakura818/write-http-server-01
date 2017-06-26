@@ -3,6 +3,8 @@ package jp.co.topgate.sugawara.web;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class MessageList {
     private List<OneMessage> list;
+    String postTime;
 
     public boolean isPasswordMatch() {
         return isPasswordMatch;
@@ -60,10 +63,24 @@ public class MessageList {
             oneMessage = list.get(i);
             oneMessageAppendList.add(oneMessage);
         }
-        OneMessage appendOneMessage = new OneMessage(index, name, "", text, password);
+        postTime = measureNewPostingTime();
+
+        OneMessage appendOneMessage = new OneMessage(index, name, postTime, text, password);
         oneMessageAppendList.add(appendOneMessage);
         this.list = oneMessageAppendList;
         return this.list;
+    }
+
+    /**
+     * 投稿時間を測定する
+     *
+     * @return postTime
+     */
+
+    String measureNewPostingTime() {
+        ZonedDateTime postTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        this.postTime = postTime.toString();
+        return this.postTime;
     }
 
     /**
