@@ -28,9 +28,9 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
         String responseAssort = dynamicHttpResponseAssort(httpRequest);
         String rawPassword = getRawPassword();
-        Map<String, String> responseMessageBody = requestBodyParser(httpRequest);
+        Map<String, String> resquestMessageBody = requestMessageBodyParser(httpRequest);
         String queryString = httpRequest.getQueryString();
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, responseAssort, rawPassword, responseMessageBody, queryString);
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, responseAssort, rawPassword, resquestMessageBody, queryString);
         boardDynamicHttpResponse.writeToOutputStream(outputStream);
     }
 
@@ -44,8 +44,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
                 }
                 break;
             case ("POST"):
-                Map<String, String> responseBody = requestBodyParser(httpRequest);
-                String hiddenMethod = responseBody.get("_method");
+                Map<String, String> requestMessageBody = requestMessageBodyParser(httpRequest);
+                String hiddenMethod = requestMessageBody.get("_method");
                 this.responseAssort = "postMessage";
                 if (!(hiddenMethod == null)) {
                     if (hiddenMethod.equals("DELETE")) {
@@ -64,7 +64,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      * @param
      * @return
      */
-    Map<String, String> requestBodyParser(HttpRequest httpRequest) throws IOException {
+    Map<String, String> requestMessageBodyParser(HttpRequest httpRequest) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();// TODO:やっぱりここまでリクエストのボディをInputStream型でもってきたほうがいいのかもしれない
         String messageBody = new String(bodyInputStream, "UTF-8");
         String[] messageBodyParse = messageBody.split("&");
@@ -106,7 +106,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
         return messageBodyKey;
     }
-    
+
 
     public String getRawPassword() {
         return rawPassword;

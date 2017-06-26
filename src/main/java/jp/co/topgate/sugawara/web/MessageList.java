@@ -46,26 +46,17 @@ public class MessageList {
      */
 
     public List<OneMessage> appendMessage(String name, String text, String password) throws IOException {
-        int max = 0;
-        for (int i = 0; i < list.size(); i++) {
-            OneMessage oneMessage = list.get(i);
-            int currentIndex = oneMessage.getIndex();
-            if (max >= currentIndex) {// TODO: ここレス番号(index)がぐちゃぐちゃだったときを想定して書いたけど、実際はCSVファイルだから一番下の行に書いてあるindexをとればいい気もしない　今の処理のままだとこれだと見る人にとってはわかりにくいかも
-                max = max;
-            } else if (max < currentIndex) {
-                max = currentIndex;
-            }
-        }
-        int index = max + 1;
+        OneMessage oneMessage = list.get(list.size() - 1);
+        int appendMessageIndex = oneMessage.getIndex() + 1;
 
         List<OneMessage> messageList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
-            OneMessage oneMessage = list.get(i);
+            oneMessage = list.get(i);
             messageList.add(oneMessage);
         }
         postTime = measurePostTime();
 
-        OneMessage appendOneMessage = new OneMessage(index, name, postTime, text, password);
+        OneMessage appendOneMessage = new OneMessage(appendMessageIndex, name, postTime, text, password);
         messageList.add(appendOneMessage);
         this.list = messageList;
         return this.list;

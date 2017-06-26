@@ -17,7 +17,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, String queryString, Map<String, String> requestBody, String rawPassword) throws IOException {// TODO:引数
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, String queryString, Map<String, String> resquestMessageBody, String rawPassword) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
@@ -32,23 +32,23 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 break;
             // 名前、本文、パスワードを入力して投稿を1件追加するとき
             case "postMessage":
-                name = requestBody.get("name");
-                text = requestBody.get("text");
-                encodePassword = requestBody.get("password");
+                name = resquestMessageBody.get("name");
+                text = resquestMessageBody.get("text");
+                encodePassword = resquestMessageBody.get("password");
                 messageList.appendMessage(name, text, encodePassword);
                 messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.topPageHtmlTranslator(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
-                index = Integer.parseInt(requestBody.get("index"));
+                index = Integer.parseInt(resquestMessageBody.get("index"));
                 messageList.deleteMessageIfPasswordMatches(index, rawPassword);
                 messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.deleteHtmlTranslator(messageList);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
             case "searchName":
-                String query = analyzeQueryString(queryString);
+                String query = parseQueryFromQueryString(queryString);
                 this.html = boardHtmlTranslator.searchNameHtmlTranslator(messageList, query);
                 break;
         }
@@ -82,7 +82,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return クエリ値
      */
 
-    String analyzeQueryString(String queryString) {// TODO:analyze抽象的すぎるかもしれない、加えてこのメソッドの内容だと複数クエリは対処できない（今回は名前１人の検索だから成り立ってる）、analyzeQuerStringってよりはqueryを返すものだから命名
+    String parseQueryFromQueryString(String queryString) {
         String queryParams[] = queryString.split("=");
         query = queryParams[1];
         return query;

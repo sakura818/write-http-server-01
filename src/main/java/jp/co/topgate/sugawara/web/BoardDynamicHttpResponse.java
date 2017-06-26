@@ -13,7 +13,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
     private File file;
     private int statusCode;
     private String dynamicHttpResponseAssort;
-    private Map<String, String> responseMessageBody;
+    private Map<String, String> resquestMessageBody;
     private String rawPassword;
     private String queryString;
 
@@ -23,11 +23,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode, String responseAssort, String rawPassword, Map<String, String> responseMessageBody, String queryString) throws IOException {
+    public BoardDynamicHttpResponse(File file, int statusCode, String responseAssort, String rawPassword, Map<String, String> resquestMessageBody, String queryString) throws IOException {
         this.file = file;
         this.statusCode = statusCode;
         this.dynamicHttpResponseAssort = responseAssort;
-        this.responseMessageBody = responseMessageBody;
+        this.resquestMessageBody = resquestMessageBody;
         this.rawPassword = rawPassword;
         this.queryString = queryString;
     }
@@ -43,7 +43,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, resquestMessageBody, rawPassword);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
