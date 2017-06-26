@@ -25,7 +25,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String rawPassword;
 
 
-    BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
+    BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
+        // TODO:引数
         String responseAssort = dynamicHttpResponseAssort(httpRequest);
         String rawPassword = getRawPassword();
         Map<String, String> resquestMessageBody = requestMessageBodyParser(httpRequest);
@@ -65,7 +66,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      * @return
      */
     Map<String, String> requestMessageBodyParser(HttpRequest httpRequest) throws IOException {
-        byte[] bodyInputStream = httpRequest.getMessageBody();// TODO:やっぱりここまでリクエストのボディをInputStream型でもってきたほうがいいのかもしれない
+        byte[] bodyInputStream = httpRequest.getMessageBody();
+        // TODO:やっぱりここまでリクエストのボディをInputStream型でもってきたほうがいいのかもしれない
         String messageBody = new String(bodyInputStream, "UTF-8");
         String[] messageBodyParse = messageBody.split("&");
 
@@ -82,7 +84,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             String[] line2 = messageBodyParse[2].split("=");
             this.rawPassword = URLDecoder.decode(line2[1], "UTF-8");
 
-            System.out.println(this.passwordOfFormData);
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             String encodePassword = bCryptPasswordEncoder.encode(rawPassword);
             this.passwordOfFormData = encodePassword;

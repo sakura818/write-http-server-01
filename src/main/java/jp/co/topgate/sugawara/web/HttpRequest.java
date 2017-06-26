@@ -49,10 +49,7 @@ public class HttpRequest {
         Map<String, String> messageHeader = readMessageHeader(inputStream);
         int contentLength = 0;
         if (messageHeader.containsKey("Content-Length")) {
-            System.out.println(messageHeader.get("Content-Length"));
             contentLength = Integer.parseInt(messageHeader.get("Content-Length"));
-        } else {
-            System.out.println("指定したキーは存在しません");
         }
         //InputStream messageBody = readMessageBody(inputStream);
         this.messageBody = readMessageBody(inputStream, contentLength);
@@ -308,7 +305,8 @@ public class HttpRequest {
      * @return messageBody
      */
 
-    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException { //TODO:byte[]型ではなくてInputStream型でかえしたほうがいいかもしれない　InputStreamとbyte[]で正直どれほど差があるのかわからずいまいちInputStreamにするのにためらっている
+    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
+        //TODO:byte[]型ではなくてInputStream型でかえしたほうがいいかもしれない　InputStreamとbyte[]で正直どれほど差があるのかわからずいまいちInputStreamにするのにためらっている
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[contentLength];
         while (true) {
@@ -319,7 +317,6 @@ public class HttpRequest {
             byteArrayOutputStream.write(buffer, 0, len);
             break;
         }
-        String messageBodyString = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
         return byteArrayOutputStream.toByteArray();
     }
 

@@ -9,7 +9,8 @@ import java.util.Map;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public abstract class DynamicHttpResponse {  //TODO: 抽象クラスを有効に使えていない
+public abstract class DynamicHttpResponse {
+    //TODO: 抽象クラスを有効に使えていない
 
     public abstract byte[] createDynamicHttpResponseContent() throws IOException;
     //abstract void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream) throws IOException;
