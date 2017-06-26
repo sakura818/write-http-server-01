@@ -71,7 +71,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param outputStream バイト出力ストリーム
      * @throws IOException
      */
-    
+
     public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream, Map<String, String> responseMessageBody) throws IOException {// TODO:引数
 
         byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseMessageBody, rawPassword);// TODO:引数

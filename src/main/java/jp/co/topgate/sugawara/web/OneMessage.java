@@ -24,7 +24,7 @@ public class OneMessage {
         this.text = text;
         this.password = password;
     }
-    
+
 
     /**
      * レス番号indexを取得する
