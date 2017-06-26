@@ -17,7 +17,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, String queryString, Map<String, String> resquestMessageBody, String rawPassword) throws IOException {// TODO:引数
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, String queryString, Map<String, String> resquestMessageBody, String rawPassword) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
