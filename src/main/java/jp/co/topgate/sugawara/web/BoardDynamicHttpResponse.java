@@ -2,7 +2,6 @@ package jp.co.topgate.sugawara.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
     private File file;
     private int statusCode;
     private String dynamicHttpResponseAssort;
-    private HttpRequest httpRequest;
     private Map<String, String> responseMessageBody;
     private String rawPassword;
     private String queryString;
@@ -25,7 +23,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode, String responseAssort, String rawPassword, Map<String, String> responseMessageBody, String queryString) throws IOException { // TODO:引数
+    public BoardDynamicHttpResponse(File file, int statusCode, String responseAssort, String rawPassword, Map<String, String> responseMessageBody, String queryString) throws IOException {
         this.file = file;
         this.statusCode = statusCode;
         this.dynamicHttpResponseAssort = responseAssort;
@@ -38,16 +36,14 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * BoardDynamicHttpResponse
      * BoardDynamicHttpResponse= StatusLine + MessageHeader + MessageBody
      *
-     * @param file
-     * @param statusCode
      * @throws IOException
      */
 
-    public byte[] createDynamicHttpResponseContent(File file, int statusCode, Map<String, String> responseMessageBody, String rawPassword) throws IOException {// TODO:引数
+    public byte[] createDynamicHttpResponseContent() throws IOException {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword);// TODO:引数
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -73,9 +69,9 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(File file, int statusCode,OutputStream outputStream, Map<String, String> responseMessageBody) throws IOException {// TODO:引数
+    public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
-        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, responseMessageBody, rawPassword);// TODO:引数
+        byte[] httpResponseContent = createDynamicHttpResponseContent();
         outputStream.write(httpResponseContent);
 
     }

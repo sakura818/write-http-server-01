@@ -110,7 +110,11 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if ((this.socket != null) || (this.serverSocket != null)) {//TODO:ここの書き方あまり良くない socketのほうがクライアント側だから先に処理した方がいい気がする
+                if ((this.socket != null)) {
+                    this.socket.close();
+                    this.serverSocket.close();
+                }
+                if (this.serverSocket != null) {
                     this.socket.close();
                     this.serverSocket.close();
                 }
