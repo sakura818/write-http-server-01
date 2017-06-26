@@ -45,10 +45,10 @@ public class MessageList {
      * @return 新しいリスト
      */
 
-    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
+    public List<OneMessage> appendMessage(String name, String text, String password) throws IOException {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
-            oneMessage = list.get(i);
+            OneMessage oneMessage = list.get(i);
             int currentIndex = oneMessage.getIndex();
             if (max >= currentIndex) {// TODO: ここレス番号(index)がぐちゃぐちゃだったときを想定して書いたけど、実際はCSVファイルだから一番下の行に書いてあるindexをとればいい気もしない　今の処理のままだとこれだと見る人にとってはわかりにくいかも
                 max = max;
@@ -60,7 +60,7 @@ public class MessageList {
 
         List<OneMessage> messageList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
-            oneMessage = list.get(i);
+            OneMessage oneMessage = list.get(i);
             messageList.add(oneMessage);
         }
         postTime = measurePostTime();

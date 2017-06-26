@@ -1,8 +1,6 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -19,15 +17,13 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {// TODO:引数
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, String queryString, Map<String, String> requestBody, String rawPassword,HttpRequest httpRequest) throws IOException {// TODO:引数
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
         String name;
         String text;
-        String password;
         String encodePassword;
-        OneMessage oneMessage = null;
 
         switch (responseAssort) {
             // トップページ 投稿一覧を見ることが出来る
@@ -38,22 +34,21 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
             case "postMessage":
                 name = requestBody.get("name");
                 text = requestBody.get("text");
-                password = requestBody.get("password");
-                messageList.appendMessage(name, text, password, oneMessage);
+                encodePassword = requestBody.get("password");
+                messageList.appendMessage(name, text, encodePassword);
                 messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.topPageHtmlTranslator(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
-                password = rawPassword;
-                messageList.deleteMessageIfPasswordMatches(index, password);
+                messageList.deleteMessageIfPasswordMatches(index, rawPassword);
                 messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.deleteHtmlTranslator(messageList);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
             case "searchName":
-                String query = analyzeQueryString(httpRequest);
+                String query = analyzeQueryString(queryString);
                 this.html = boardHtmlTranslator.searchNameHtmlTranslator(messageList, query);
                 break;
         }
@@ -87,8 +82,8 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return クエリ値
      */
 
-    String analyzeQueryString(HttpRequest httpRequest) {// TODO:analyze抽象的すぎるかもしれない、加えてこのメソッドの内容だと複数クエリは対処できない（今回は名前１人の検索だから成り立ってる）、analyzeQuerStringってよりはqueryを返すものだから命名
-        String queryParams[] = httpRequest.getQueryString().split("=");
+    String analyzeQueryString(String queryString) {// TODO:analyze抽象的すぎるかもしれない、加えてこのメソッドの内容だと複数クエリは対処できない（今回は名前１人の検索だから成り立ってる）、analyzeQuerStringってよりはqueryを返すものだから命名
+        String queryParams[] = queryString.split("=");
         query = queryParams[1];
         return query;
     }

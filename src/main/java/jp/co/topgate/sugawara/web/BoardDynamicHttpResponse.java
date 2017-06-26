@@ -17,6 +17,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
     private HttpRequest httpRequest;
     private Map<String, String> responseMessageBody;
     private String rawPassword;
+    private String queryString;
 
     /**
      * コンストラクタ
@@ -24,11 +25,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler, InputStream inputStream, Map<String, String> responseMessageBody) throws IOException { // TODO:引数
+    public BoardDynamicHttpResponse(File file, int statusCode, String queryString, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler, InputStream inputStream, Map<String, String> responseMessageBody) throws IOException { // TODO:引数
         this.file = file;
         this.statusCode = statusCode;
-        this.dynamicHttpResponseAssort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
-        this.httpRequest = httpRequest;
+        this.dynamicHttpResponseAssort = boardDynamicHttpResponseHandler.getResponseAssort();
+        this.queryString = queryString;
         this.responseMessageBody = responseMessageBody;
         this.rawPassword = boardDynamicHttpResponseHandler.getRawPassword();
     }
@@ -46,7 +47,7 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, httpRequest, responseMessageBody, rawPassword);// TODO:引数
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword,httpRequest);// TODO:引数
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
