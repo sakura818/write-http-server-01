@@ -106,10 +106,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
         return messageBodyKey;
     }
-
-    Map<String, String> getMessageBodykey() {
-        return this.messageBodykey;
-    }
+    
 
     public String getRawPassword() {
         return rawPassword;

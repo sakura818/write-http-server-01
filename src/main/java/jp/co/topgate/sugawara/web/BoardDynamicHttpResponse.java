@@ -2,7 +2,6 @@ package jp.co.topgate.sugawara.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
@@ -70,9 +69,9 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(OutputStream outputStream) throws IOException {// TODO:引数
+    public void writeToOutputStream(OutputStream outputStream) throws IOException {
 
-        byte[] httpResponseContent = createDynamicHttpResponseContent();// TODO:引数
+        byte[] httpResponseContent = createDynamicHttpResponseContent();
         outputStream.write(httpResponseContent);
 
     }

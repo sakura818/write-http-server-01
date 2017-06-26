@@ -78,7 +78,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * クエリストリングを解析する
      * 今回は名前を検索する
      *
-     * @param httpRequest
+     * @param queryString
      * @return クエリ値
      */
 
