@@ -20,7 +20,7 @@ public class BoardHtmlTranslator {
         list = messageList.getList();
     }
 
-    String htmlTenplate = ("<!DOCTYPE html>\n" +
+    String htmlTenplate = ("<!DOCTYPE html>\n" + //TODO:htmlTemplateという名前　Templateといっても一部（前半）
             "<html>\n" +
             "<head>\n" +
             "    <meta charset=\"UTF-8\">\n" +
@@ -61,7 +61,7 @@ public class BoardHtmlTranslator {
 
     String topPageHtmlTranslator(MessageList messageList) throws IOException {
         stringBuffer.append(htmlTenplate);
-        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
+        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");//TODO:ここ9行くらいの処理を他のメソッドでも似たように処理するが少しずつ違っているのでhtmlTenplateのようにまとめれずリファクタリングに困っている
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");

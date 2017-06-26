@@ -23,9 +23,9 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String rawPassword;
 
 
-    BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
+    BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
         Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);// TODO:引数
         boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
     }
 
@@ -59,8 +59,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      * @param
      * @return
      */
-    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {
-        byte[] bodyInputStream = httpRequest.getMessageBody();
+    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {// TODO:analyze抽象的すぎるかも
+        byte[] bodyInputStream = httpRequest.getMessageBody();// TODO:やっぱりここまでリクエストのボディをInputStream型でもってきたほうがいいのかもしれない
         String messageBody = new String(bodyInputStream, "UTF-8");
         String[] messageBodyParse = messageBody.split("&");//rename
 
@@ -82,6 +82,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             String encodePassword = bCryptPasswordEncoder.encode(rawPassword);
             this.passwordOfFormData = encodePassword;
             messageBodyKey.put(line2[0], this.passwordOfFormData);
+
+            // TODO:上記の冗長な作業をfor文になおす(途中)
 
 
             //上記の冗長な作業をfor文になおす(途中)

@@ -16,7 +16,7 @@ public class MessageList {
     private List<OneMessage> list;
     String postTime;
 
-    public boolean isPasswordMatch() {
+    public boolean isPasswordMatch() { // TODO:rename
         return isPasswordMatch;
     }
 
@@ -45,7 +45,7 @@ public class MessageList {
      * @return 新しいリスト
      */
 
-    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
+    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException { // TODO:rename
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
             oneMessage = list.get(i);
@@ -58,7 +58,7 @@ public class MessageList {
         }
         int index = max + 1;
 
-        List<OneMessage> oneMessageAppendList = new ArrayList();
+        List<OneMessage> oneMessageAppendList = new ArrayList(); // TODO:rename
         for (int i = 0; i < this.list.size(); i++) {
             oneMessage = list.get(i);
             oneMessageAppendList.add(oneMessage);
@@ -77,22 +77,22 @@ public class MessageList {
      * @return postTime
      */
 
-    String measureNewPostingTime() {
+    String measureNewPostingTime() { // TODO:rename
         ZonedDateTime postTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
         this.postTime = postTime.toString();
         return this.postTime;
     }
 
     /**
-     * 削除用に新しいリストを作成する
+     * 投稿1件削除を判断し、削除する場合はその投稿1件を削除した状態のリストを作成する
      *
      * @param index    リクエストのindex
      * @param password ブラウザで入力されたパスワード
      * @return 新しいリスト
      */
 
-    public List<OneMessage> deleteMessage(int index, String password) throws IOException {
-        List<OneMessage> oneMessageDeleteList = new ArrayList();
+    public List<OneMessage> deleteMessage(int index, String password) throws IOException { // TODO:rename
+        List<OneMessage> oneMessageDeleteList = new ArrayList(); // TODO:rename
         for (int i = 0; i < this.list.size(); i++) {
             OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
@@ -111,10 +111,10 @@ public class MessageList {
     }
 
     /**
-     * 新しいリストの内容をCSVファイルに新しく書き直す
+     * 掲示板に1件投稿または1件削除して、その1件分新たに更新されたリストからCSVを新たに作成する
      */
 
-    public void newListToNewCsv() throws IOException {
+    public void newListToNewCsv() throws IOException { // TODO:rename
         PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
         List<OneMessage> updateList = getList();
         for (int i = 0; i < updateList.size(); i++) {
@@ -135,13 +135,13 @@ public class MessageList {
     }
 
     /**
-     * csvから投稿全件を読み込んでリストにする
+     * SaveBoard.csvから投稿全件を読み込んで全件のリストを作成する
      *
      * @return list
      */
 
     public List<OneMessage> readSaveBoardCsv() throws IOException {
-        List<OneMessage> list = new ArrayList<>();
+        List<OneMessage> allMessageList = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
@@ -155,13 +155,13 @@ public class MessageList {
                 String password = saveBoardCsvArray[4];
 
                 OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
-                list.add(oneMessage);
+                allMessageList.add(oneMessage);
             }
             bufferedReader.close();
         } catch (NumberFormatException e) {
             System.out.println("フォーマットエラーがありました");
         }
-        this.list = list;
+        this.list = allMessageList;
         return this.list;
     }
 }

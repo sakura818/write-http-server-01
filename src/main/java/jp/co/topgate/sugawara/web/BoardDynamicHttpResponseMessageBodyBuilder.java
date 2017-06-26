@@ -19,7 +19,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {// TODO:引数
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
@@ -87,7 +87,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return クエリ値
      */
 
-    String analyzeQueryString(HttpRequest httpRequest) {
+    String analyzeQueryString(HttpRequest httpRequest) {// TODO:analyze抽象的すぎるかもしれない、加えてこのメソッドの内容だと複数クエリは対処できない（今回は名前１人の検索だから成り立ってる）、analyzeQuerStringってよりはqueryを返すものだから命名
         String queryParams[] = httpRequest.getQueryString().split("=");
         query = queryParams[1];
         return query;

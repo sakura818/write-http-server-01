@@ -1,12 +1,10 @@
 package jp.co.topgate.sugawara.web;
 
-import java.io.*;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 /**
  * Created by haruka.sugawara on 2017/06/15.
  */
+
 public class OneMessage {
 
     int index;
