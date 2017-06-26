@@ -40,15 +40,15 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 text = requestBody.get("text");
                 password = requestBody.get("password");
                 messageList.appendMessage(name, text, password, oneMessage);
-                messageList.newListToNewCsv();
+                messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.topPageHtmlTranslator(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
                 index = Integer.parseInt(requestBody.get("index"));
                 password = rawPassword;
-                messageList.deleteMessage(index, password);
-                messageList.newListToNewCsv();
+                messageList.deleteMessageIfPasswordMatches(index, password);
+                messageList.createUpdateCsvFromList();
                 this.html = boardHtmlTranslator.deleteHtmlTranslator(messageList);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
