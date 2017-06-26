@@ -24,7 +24,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
-        Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
+        Map<String, String> responseBody = requestBodyParser(httpRequest);
         BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);// TODO:引数
         boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
     }
@@ -39,7 +39,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
                 }
                 break;
             case ("POST"):
-                Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
+                Map<String, String> responseBody = requestBodyParser(httpRequest);
                 String hiddenMethod = responseBody.get("_method");
                 responseAssort = "postMessage";
                 if (!(hiddenMethod == null)) {
@@ -59,10 +59,10 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      * @param
      * @return
      */
-    Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {// TODO:analyze抽象的すぎるかも
+    Map<String, String> requestBodyParser(HttpRequest httpRequest) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();// TODO:やっぱりここまでリクエストのボディをInputStream型でもってきたほうがいいのかもしれない
         String messageBody = new String(bodyInputStream, "UTF-8");
-        String[] messageBodyParse = messageBody.split("&");//rename
+        String[] messageBodyParse = messageBody.split("&");
 
         for (int count = 0; count <= messageBodyParse.length - 1; count++) {
         }
@@ -89,7 +89,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             //上記の冗長な作業をfor文になおす(途中)
             /*
             for (int i = 0; i <= 1; i++) {
-                String[] neko = hoge[i].split("=");
+                String[] linehoge = hoge[i].split("=");
                 messageBodyKey.put(line[0], line[1]);
 
             }

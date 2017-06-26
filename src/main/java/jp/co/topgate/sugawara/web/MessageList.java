@@ -45,12 +45,12 @@ public class MessageList {
      * @return 新しいリスト
      */
 
-    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException { // TODO:rename
+    public List<OneMessage> appendMessage(String name, String text, String password, OneMessage oneMessage) throws IOException {
         int max = 0;
         for (int i = 0; i < list.size(); i++) {
             oneMessage = list.get(i);
             int currentIndex = oneMessage.getIndex();
-            if (max >= currentIndex) {
+            if (max >= currentIndex) {// TODO: ここレス番号(index)がぐちゃぐちゃだったときを想定して書いたけど、実際はCSVファイルだから一番下の行に書いてあるindexをとればいい気もしない　今の処理のままだとこれだと見る人にとってはわかりにくいかも
                 max = max;
             } else if (max < currentIndex) {
                 max = currentIndex;
@@ -58,16 +58,16 @@ public class MessageList {
         }
         int index = max + 1;
 
-        List<OneMessage> oneMessageAppendList = new ArrayList(); // TODO:rename
+        List<OneMessage> messageList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
             oneMessage = list.get(i);
-            oneMessageAppendList.add(oneMessage);
+            messageList.add(oneMessage);
         }
-        postTime = measureNewPostingTime();
+        postTime = measurePostTime();
 
         OneMessage appendOneMessage = new OneMessage(index, name, postTime, text, password);
-        oneMessageAppendList.add(appendOneMessage);
-        this.list = oneMessageAppendList;
+        messageList.add(appendOneMessage);
+        this.list = messageList;
         return this.list;
     }
 
@@ -77,7 +77,7 @@ public class MessageList {
      * @return postTime
      */
 
-    String measureNewPostingTime() { // TODO:rename
+    String measurePostTime() {
         ZonedDateTime postTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
         this.postTime = postTime.toString();
         return this.postTime;
@@ -91,8 +91,8 @@ public class MessageList {
      * @return 新しいリスト
      */
 
-    public List<OneMessage> deleteMessage(int index, String password) throws IOException { // TODO:rename
-        List<OneMessage> oneMessageDeleteList = new ArrayList(); // TODO:rename
+    public List<OneMessage> deleteMessageIfPasswordMatches(int index, String password) throws IOException {
+        List<OneMessage> messageList = new ArrayList();
         for (int i = 0; i < this.list.size(); i++) {
             OneMessage oneMessage = list.get(i);
             if (oneMessage.getIndex() == index) {
@@ -104,9 +104,9 @@ public class MessageList {
                     isPasswordMatch = false;
                 }
             }
-            oneMessageDeleteList.add(oneMessage);
+            messageList.add(oneMessage);
         }
-        this.list = oneMessageDeleteList;
+        this.list = messageList;
         return list;
     }
 
@@ -114,7 +114,7 @@ public class MessageList {
      * 掲示板に1件投稿または1件削除して、その1件分新たに更新されたリストからCSVを新たに作成する
      */
 
-    public void newListToNewCsv() throws IOException { // TODO:rename
+    public void createUpdateCsvFromList() throws IOException {
         PrintWriter printWriter = new PrintWriter(new FileWriter(new File("./src/main/resources/", "SaveBoard.csv"), false));
         List<OneMessage> updateList = getList();
         for (int i = 0; i < updateList.size(); i++) {
@@ -141,7 +141,7 @@ public class MessageList {
      */
 
     public List<OneMessage> readSaveBoardCsv() throws IOException {
-        List<OneMessage> allMessageList = new ArrayList<>();
+        List<OneMessage> messageList = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("./src/main/resources/", "SaveBoard.csv")));
             String csvLine;
@@ -155,13 +155,13 @@ public class MessageList {
                 String password = saveBoardCsvArray[4];
 
                 OneMessage oneMessage = new OneMessage(index, name, postTime, text, password);
-                allMessageList.add(oneMessage);
+                messageList.add(oneMessage);
             }
             bufferedReader.close();
         } catch (NumberFormatException e) {
             System.out.println("フォーマットエラーがありました");
         }
-        this.list = allMessageList;
+        this.list = messageList;
         return this.list;
     }
 }

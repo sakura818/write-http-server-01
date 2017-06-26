@@ -20,7 +20,7 @@ public class BoardHtmlTranslator {
         list = messageList.getList();
     }
 
-    String htmlTenplate = ("<!DOCTYPE html>\n" + //TODO:htmlTemplateという名前　Templateといっても一部（前半）
+    String firstHalfHtmlTenplate = ("<!DOCTYPE html>\n" +
             "<html>\n" +
             "<head>\n" +
             "    <meta charset=\"UTF-8\">\n" +
@@ -60,7 +60,7 @@ public class BoardHtmlTranslator {
      */
 
     String topPageHtmlTranslator(MessageList messageList) throws IOException {
-        stringBuffer.append(htmlTenplate);
+        stringBuffer.append(firstHalfHtmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");//TODO:ここ9行くらいの処理を他のメソッドでも似たように処理するが少しずつ違っているのでhtmlTenplateのようにまとめれずリファクタリングに困っている
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
@@ -87,7 +87,7 @@ public class BoardHtmlTranslator {
      */
 
     String deleteHtmlTranslator(MessageList messageList) throws IOException {
-        stringBuffer.append(htmlTenplate);
+        stringBuffer.append(firstHalfHtmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         if (messageList.isPasswordMatch() == true) {
             stringBuffer.append("投稿を削除しました" + "<Hr>\n");
@@ -119,7 +119,7 @@ public class BoardHtmlTranslator {
      */
 
     String searchNameHtmlTranslator(MessageList messageList, String queryNameParameter) throws IOException {
-        stringBuffer.append(htmlTenplate);
+        stringBuffer.append(firstHalfHtmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 
         int searchResultNumber = 0;
