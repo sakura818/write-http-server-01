@@ -43,11 +43,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, Map<String, String> responseMessageBody, String rawPassword) throws IOException {// TODO:引数
+    public byte[] createDynamicHttpResponseContent(File file, int statusCode, Map<String, String> responseMessageBody, String rawPassword) throws IOException {// TODO:引数
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword, httpRequest);// TODO:引数
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, queryString, responseMessageBody, rawPassword);// TODO:引数
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -73,9 +73,9 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, Map<String, String> responseMessageBody) throws IOException {// TODO:引数
+    public void writeToOutputStream(File file, int statusCode,OutputStream outputStream, Map<String, String> responseMessageBody) throws IOException {// TODO:引数
 
-        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, responseMessageBody, rawPassword);// TODO:引数
+        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, responseMessageBody, rawPassword);// TODO:引数
         outputStream.write(httpResponseContent);
 
     }

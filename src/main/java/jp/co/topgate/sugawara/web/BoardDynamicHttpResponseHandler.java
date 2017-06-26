@@ -26,12 +26,12 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
-        Map<String, String> responseBody = requestBodyParser(httpRequest);
+        Map<String, String> responseMessageBody = requestBodyParser(httpRequest);
         String queryString = httpRequest.getQueryString();
-        String responseAssort = dynamicHttpResponseAssort(httpRequest) ;
+        String responseAssort = dynamicHttpResponseAssort(httpRequest);
         String rawPassword = getRawPassword();
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, queryString, rawPassword,responseAssort, inputStream, responseBody);// TODO:引数
-        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, responseAssort, rawPassword, responseMessageBody, queryString);// TODO:引数
+        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, outputStream, responseMessageBody);
     }
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) throws IOException {
@@ -56,12 +56,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
         }
         return this.responseAssort;
     }
-
-
-    public String getResponseAssort() {
-        return responseAssort;
-    }
-
 
 
     /**
