@@ -34,7 +34,7 @@ public class BoardHtmlTranslator {
             "<section>\n" +
             "    <h2>新規投稿</h2>\n" +
             "    <form action=\"\" method=\"post\">\n" +
-            "        Name: <br><input type=\"text\" name=\"name\" value=\"\"\"required><br>\n" +
+            "        Name: <br><input type=\"text\" name=\"name\" value=\"\"required><br>\n" +
             "        Text: <br><textarea name=\"text\" cols=\"30\" rows=\"3\" maxlength=\"80\" wrap=\"hard\"\n" +
             "                            placeholder=\"80字以内で入力してください \"required></textarea><br>\n" +
             "        Password: <br><input type=\"text\" name=\"password\" value=\"\"required><br>\n" +
