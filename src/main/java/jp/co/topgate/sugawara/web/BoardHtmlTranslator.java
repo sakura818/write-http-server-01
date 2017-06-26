@@ -59,7 +59,7 @@ public class BoardHtmlTranslator {
      * @return HTMLをString型にしたもの
      */
 
-    String boardTopPageHtml(MessageList messageList) throws IOException {
+    String topPageHtmlTranslator(MessageList messageList) throws IOException {
         stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         for (int i = 0; i < messageList.getList().size(); i++) {
@@ -86,7 +86,7 @@ public class BoardHtmlTranslator {
      * @return HTMLをString型にしたもの
      */
 
-    String boardDeleteHtml(MessageList messageList) throws IOException {
+    String deleteHtmlTranslator(MessageList messageList) throws IOException {
         stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
         if (messageList.isPasswordMatch() == true) {
@@ -118,7 +118,7 @@ public class BoardHtmlTranslator {
      * @return HTMLをString型にしたもの
      */
 
-    String boardSearchNameHtml(MessageList messageList, String queryNameParameter) throws IOException {
+    String searchNameHtmlTranslator(MessageList messageList, String queryNameParameter) throws IOException {
         stringBuffer.append(htmlTenplate);
         stringBuffer.append("<Hr>\n" + "<h2>検索結果</h2>\n" + "<Hr>\n");
 

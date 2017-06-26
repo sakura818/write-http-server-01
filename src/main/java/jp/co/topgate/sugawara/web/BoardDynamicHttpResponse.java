@@ -13,9 +13,9 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
 
     private File file;
     private int statusCode;
-    private String assort;
+    private String dynamicHttpResponseAssort;
     private HttpRequest httpRequest;
-    private Map<String, String> responseBody;
+    private Map<String, String> responseMessageBody;
     private String rawPassword;
 
     /**
@@ -24,12 +24,12 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param file,statusCode
      */
 
-    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler, InputStream inputStream, Map<String, String> responseBody) throws IOException {
+    public BoardDynamicHttpResponse(File file, int statusCode, HttpRequest httpRequest, BoardDynamicHttpResponseHandler boardDynamicHttpResponseHandler, InputStream inputStream, Map<String, String> responseMessageBody) throws IOException {
         this.file = file;
         this.statusCode = statusCode;
-        this.assort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
+        this.dynamicHttpResponseAssort = boardDynamicHttpResponseHandler.dynamicHttpResponseAssort(httpRequest);
         this.httpRequest = httpRequest;
-        this.responseBody = responseBody;
+        this.responseMessageBody = responseMessageBody;
         this.rawPassword = boardDynamicHttpResponseHandler.getRawPassword();
     }
 
@@ -42,11 +42,11 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @throws IOException
      */
 
-    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseBody, String rawPassword) throws IOException {
+    public byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseMessageBody, String rawPassword) throws IOException {
 
         BoardDynamicHttpResponseStatusLineBuilder boardDynamicHttpResponseStatusLineBuilder = new BoardDynamicHttpResponseStatusLineBuilder(statusCode);
         BoardDynamicHttpResponseMessageHeaderBuilder boardDynamicHttpResponseMessageHeaderBuilder = new BoardDynamicHttpResponseMessageHeaderBuilder(file);
-        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(assort, httpRequest, responseBody, rawPassword);
+        BoardDynamicHttpResponseMessageBodyBuilder boardDynamicHttpResponseMessageBodyBuilder = new BoardDynamicHttpResponseMessageBodyBuilder(dynamicHttpResponseAssort, httpRequest, responseMessageBody, rawPassword);
 
         byte[] statusLine = boardDynamicHttpResponseStatusLineBuilder.build();
         byte[] messageHeader = boardDynamicHttpResponseMessageHeaderBuilder.build();
@@ -71,10 +71,10 @@ public class BoardDynamicHttpResponse extends DynamicHttpResponse {
      * @param outputStream バイト出力ストリーム
      * @throws IOException
      */
+    
+    public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream, Map<String, String> responseMessageBody) throws IOException {
 
-    public void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, OutputStream outputStream, Map<String, String> responseBody) throws IOException {
-
-        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseBody, rawPassword);
+        byte[] httpResponseContent = createDynamicHttpResponseContent(file, statusCode, httpRequest, inputStream, responseMessageBody, rawPassword);
         outputStream.write(httpResponseContent);
 
     }

@@ -22,22 +22,11 @@ public class OneMessage {
     OneMessage(int index, String name, String postTime, String text, String password) {
         this.index = index;
         this.name = name;
-        this.postTime = measureNewPostingTime().toString();
+        this.postTime = postTime;
         this.text = text;
         this.password = password;
     }
-
-    /**
-     * 投稿時間を測定する
-     *
-     * @return postTime
-     */
-
-    ZonedDateTime measureNewPostingTime() {
-        ZonedDateTime postTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
-        this.postTime = postTime.toString();
-        return postTime;
-    }
+    
 
     /**
      * レス番号indexを取得する
