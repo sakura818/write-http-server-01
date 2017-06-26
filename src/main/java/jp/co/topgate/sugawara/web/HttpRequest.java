@@ -288,9 +288,9 @@ public class HttpRequest {
         Map<String, String> headerField = new HashMap<String, String>();
 
         String line = readLine(inputStream);
-        StringBuffer header = new StringBuffer();
+        StringBuffer messageHeader = new StringBuffer();
         while (line != null && !line.isEmpty()) {
-            header.append(line).append("\n");
+            messageHeader.append(line).append("\n");
             String[] headerLineData = line.split(":", 2);
             if (headerLineData.length == 2) {
                 headerField.put(headerLineData[0], headerLineData[1].trim());
@@ -308,7 +308,7 @@ public class HttpRequest {
      * @return messageBody
      */
 
-    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
+    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException { //TODO:byte[]型ではなくてInputStream型でかえしたほうがいいかもしれない　InputStreamとbyte[]で正直どれほど差があるのかわからずいまいちInputStreamにするのにためらっている
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[contentLength];
         while (true) {
@@ -328,7 +328,7 @@ public class HttpRequest {
      * inputStreamから1行ずつデータをよみとる
      *
      * @param inputStream
-     * @return messageHeader
+     * @return
      */
 
 
@@ -338,17 +338,17 @@ public class HttpRequest {
         }
         int num = 0;
         StringBuffer stringBuffer = new StringBuffer();
-        boolean r = false;
+        boolean lineFeedCodeIsR = false;
         try {
             while ((num = inputStream.read()) >= 0) {
                 stringBuffer.append((char) num);
                 String line = stringBuffer.toString();
                 switch ((char) num) {
                     case '\r':
-                        r = true;
+                        lineFeedCodeIsR = true;
                         break;
                     case '\n':
-                        if (r) {
+                        if (lineFeedCodeIsR) {
                             line = line.replace("\r", "");
                         }
                         line = line.replace("\n", "");

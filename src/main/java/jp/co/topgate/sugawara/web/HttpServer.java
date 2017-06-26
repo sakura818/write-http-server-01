@@ -59,7 +59,7 @@ public class HttpServer {
                         Path path = file.toPath();
 
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
-                            staticOrDynamic = "dynamic";
+                            staticOrDynamic = "dynamic";//TODO: 命名、2値ならboolean値のほうがいいのかもしれない
 
                         } else {
                             staticOrDynamic = "static";
@@ -98,7 +98,7 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream, inputStream);
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream, inputStream);//TODO:staticではwriteToOutPutStreamよびだしてるのにdynamicではよびだしていなくて不均衡 どちらかに統一すべきかもしれない
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -110,7 +110,7 @@ public class HttpServer {
             throw new RuntimeException(e);
         } finally {
             try {
-                if ((this.socket != null) || (this.serverSocket != null)) {
+                if ((this.socket != null) || (this.serverSocket != null)) {//TODO:ここの書き方あまり良くない socketのほうがクライアント側だから先に処理した方がいい気がする
                     this.socket.close();
                     this.serverSocket.close();
                 }
