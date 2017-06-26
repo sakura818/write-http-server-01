@@ -99,7 +99,8 @@ public class HttpServer {
                         staticHttpResponse = new StaticHttpResponse(file, statusCode);
                         staticHttpResponse.writeToOutputStream(outputStream);
                     } else if (staticOrDynamic.equals("dynamic")) {
-                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream, inputStream);//TODO:staticではwriteToOutPutStreamよびだしてるのにdynamicではよびだしていなくて不均衡 どちらかに統一すべきかもしれない
+                        new BoardDynamicHttpResponseHandler(file, statusCode, httpRequest, outputStream, inputStream);
+                        //TODO:staticではwriteToOutPutStreamよびだしてるのにdynamicではよびだしていなくて不均衡 どちらかに統一すべきかもしれない
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
