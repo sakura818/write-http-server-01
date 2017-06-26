@@ -50,7 +50,7 @@ public class HttpRequest {
         int contentLength = 0;
         if (messageHeader.containsKey("Content-Length")) {
             contentLength = Integer.parseInt(messageHeader.get("Content-Length"));
-        } 
+        }
         //InputStream messageBody = readMessageBody(inputStream);
         this.messageBody = readMessageBody(inputStream, contentLength);
 
@@ -316,7 +316,6 @@ public class HttpRequest {
             byteArrayOutputStream.write(buffer, 0, len);
             break;
         }
-        String messageBodyString = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
         return byteArrayOutputStream.toByteArray();
     }
 
