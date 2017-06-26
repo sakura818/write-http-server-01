@@ -29,7 +29,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
         Map<String, String> responseBody = requestBodyParser(httpRequest);
         String queryString = httpRequest.getQueryString();
         String responseAssort = dynamicHttpResponseAssort(httpRequest) ;
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, queryString, this, inputStream, responseBody);// TODO:引数
+        String rawPassword = getRawPassword();
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, queryString, rawPassword,responseAssort, inputStream, responseBody);// TODO:引数
         boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
     }
 
