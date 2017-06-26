@@ -16,7 +16,8 @@ public class MessageList {
     private List<OneMessage> list;
     String postTime;
 
-    public boolean isPasswordMatch() { // TODO:rename
+    public boolean isPasswordMatch() {
+        // TODO:rename
         return isPasswordMatch;
     }
 

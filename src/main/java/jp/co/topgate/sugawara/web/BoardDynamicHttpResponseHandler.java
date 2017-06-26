@@ -26,7 +26,6 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {
-        // TODO:引数
         String responseAssort = dynamicHttpResponseAssort(httpRequest);
         String rawPassword = getRawPassword();
         Map<String, String> resquestMessageBody = requestMessageBodyParser(httpRequest);
