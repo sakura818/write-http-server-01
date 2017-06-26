@@ -320,7 +320,6 @@ public class HttpRequest {
             break;
         }
         String messageBodyString = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
-        System.out.println(messageBodyString);
         return byteArrayOutputStream.toByteArray();
     }
 

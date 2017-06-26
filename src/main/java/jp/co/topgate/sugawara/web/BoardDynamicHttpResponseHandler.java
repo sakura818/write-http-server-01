@@ -19,12 +19,7 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String textOfFromData;
     private String passwordOfFormData;
     private Map<String, String> messageBodykey;
-    private String responseAssortFlag = "responseAssortFlagStart";
-
-    public String getRawPassword() {
-        return rawPassword;
-    }
-
+    private String responseAssort = "responseAssortInitialize";
     private String rawPassword;
 
 
@@ -38,23 +33,23 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
         String httpRequestMethod = httpRequest.getMethod();
         switch (httpRequestMethod) {
             case ("GET"):
-                responseAssortFlag = "topPage";
-                if (httpRequest.getIsQueryString() == true) {
-                    responseAssortFlag = "searchName";
+                responseAssort = "topPage";
+                if (httpRequest.getIsQueryString()) {
+                    responseAssort = "searchName";
                 }
                 break;
             case ("POST"):
-                Map<String, String> bodyValues = analyzePostRequestBody(httpRequest);
-                String hiddenMethod = bodyValues.get("_method");
-                responseAssortFlag = "postMessage";
+                Map<String, String> responseBody = analyzePostRequestBody(httpRequest);
+                String hiddenMethod = responseBody.get("_method");
+                responseAssort = "postMessage";
                 if (!(hiddenMethod == null)) {
                     if (hiddenMethod.equals("DELETE")) {
-                        responseAssortFlag = "deleteMessage";
+                        responseAssort = "deleteMessage";
                     }
                 }
                 break;
         }
-        return responseAssortFlag;
+        return responseAssort;
     }
 
 
@@ -66,20 +61,20 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
      */
     Map<String, String> analyzePostRequestBody(HttpRequest httpRequest) throws IOException {
         byte[] bodyInputStream = httpRequest.getMessageBody();
-        String messageBodyString = new String(bodyInputStream, "UTF-8");
-        String[] messageBodyStringParse = messageBodyString.split("&");//rename
+        String messageBody = new String(bodyInputStream, "UTF-8");
+        String[] messageBodyParse = messageBody.split("&");//rename
 
-        for (int count = 0; count <= messageBodyStringParse.length - 1; count++) {
+        for (int count = 0; count <= messageBodyParse.length - 1; count++) {
         }
         Map<String, String> messageBodyKey = new HashMap<String, String>();
-        if (messageBodyStringParse.length != 1) {
-            String[] line = messageBodyStringParse[0].split("=");
+        if (messageBodyParse.length != 1) {
+            String[] line = messageBodyParse[0].split("=");
             messageBodyKey.put(line[0], URLDecoder.decode((line[1]), "UTF-8"));
             this.nameOfFormData = URLDecoder.decode(line[1], "UTF-8");
-            String[] line1 = messageBodyStringParse[1].split("=");
+            String[] line1 = messageBodyParse[1].split("=");
             messageBodyKey.put(line1[0], URLDecoder.decode((line1[1]), "UTF-8"));
             this.textOfFromData = URLDecoder.decode(line1[1], "UTF-8");
-            String[] line2 = messageBodyStringParse[2].split("=");
+            String[] line2 = messageBodyParse[2].split("=");
             this.rawPassword = URLDecoder.decode(line2[1], "UTF-8");
 
             System.out.println(this.passwordOfFormData);
@@ -106,6 +101,10 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
 
     Map<String, String> getMessageBodykey() {
         return this.messageBodykey;
+    }
+
+    public String getRawPassword() {
+        return rawPassword;
     }
 
 }

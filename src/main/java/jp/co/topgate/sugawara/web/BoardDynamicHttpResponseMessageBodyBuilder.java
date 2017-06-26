@@ -19,19 +19,20 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
      * @return
      */
 
-    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssortFlag, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {
+    public BoardDynamicHttpResponseMessageBodyBuilder(String responseAssort, HttpRequest httpRequest, Map<String, String> requestBody, String rawPassword) throws IOException {
         MessageList messageList = new MessageList();
         BoardHtmlTranslator boardHtmlTranslator = new BoardHtmlTranslator(messageList);
         int index;
         String name;
         String text;
         String password;
+        String encodePassword;
         OneMessage oneMessage = null;
 
-        switch (responseAssortFlag) {
+        switch (responseAssort) {
             // トップページ 投稿一覧を見ることが出来る
             case "topPage":
-                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                this.html = boardHtmlTranslator.topPageHtmlTranslator(messageList);
                 break;
             // 名前、本文、パスワードを入力して投稿を1件追加するとき
             case "postMessage":
@@ -40,7 +41,7 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 password = requestBody.get("password");
                 messageList.appendMessage(name, text, password, oneMessage);
                 messageList.newListToNewCsv();
-                this.html = boardHtmlTranslator.boardTopPageHtml(messageList);
+                this.html = boardHtmlTranslator.topPageHtmlTranslator(messageList);
                 break;
             // パスワードを入力して投稿1件を削除するとき
             case "deleteMessage":
@@ -48,12 +49,12 @@ public class BoardDynamicHttpResponseMessageBodyBuilder {
                 password = rawPassword;
                 messageList.deleteMessage(index, password);
                 messageList.newListToNewCsv();
-                this.html = boardHtmlTranslator.boardDeleteHtml(messageList);
+                this.html = boardHtmlTranslator.deleteHtmlTranslator(messageList);
                 break;
             // 入力した名前の人が投稿した投稿一覧を表示するとき
             case "searchName":
                 String query = analyzeQueryString(httpRequest);
-                this.html = boardHtmlTranslator.boardSearchNameHtml(messageList, query);
+                this.html = boardHtmlTranslator.searchNameHtmlTranslator(messageList, query);
                 break;
         }
     }

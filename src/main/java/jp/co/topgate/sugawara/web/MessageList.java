@@ -14,10 +14,10 @@ public class MessageList {
     private List<OneMessage> list;
 
     public boolean isPasswordMatch() {
-        return passwordMatch;
+        return isPasswordMatch;
     }
 
-    private boolean passwordMatch;
+    private boolean isPasswordMatch;
 
 
     /**
@@ -81,10 +81,10 @@ public class MessageList {
             if (oneMessage.getIndex() == index) {
                 BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
                 if (bCrypt.matches(password, oneMessage.getPassword())) {
-                    passwordMatch = true;
+                    isPasswordMatch = true;
                     continue;
                 } else {
-                    passwordMatch = false;
+                    isPasswordMatch = false;
                 }
             }
             oneMessageDeleteList.add(oneMessage);
