@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class DynamicHttpResponse {  //TODO: 抽象クラスを有効に使えていない
 
-    public abstract byte[] createDynamicHttpResponseContent(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream, Map<String, String> responseBody, String rawPassword) throws IOException;
+    public abstract byte[] createDynamicHttpResponseContent(File file, int statusCode, Map<String, String> responseBody, String rawPassword) throws IOException;
     //abstract void writeToOutputStream(File file, int statusCode, HttpRequest httpRequest, InputStream inputStream) throws IOException;
 
 }

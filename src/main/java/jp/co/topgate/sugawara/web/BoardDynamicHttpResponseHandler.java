@@ -19,37 +19,42 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
     private String textOfFromData;
     private String passwordOfFormData;
     private Map<String, String> messageBodykey;
+
+
     private String responseAssort = "responseAssortInitialize";
     private String rawPassword;
 
 
     BoardDynamicHttpResponseHandler(File file, int statusCode, HttpRequest httpRequest, OutputStream outputStream, InputStream inputStream) throws IOException {// TODO:引数
-        Map<String, String> responseBody = requestBodyParser(httpRequest);
-        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, httpRequest, this, inputStream, responseBody);// TODO:引数
-        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, httpRequest, inputStream, outputStream, responseBody);
+        Map<String, String> responseMessageBody = requestBodyParser(httpRequest);
+        String queryString = httpRequest.getQueryString();
+        String responseAssort = dynamicHttpResponseAssort(httpRequest);
+        String rawPassword = getRawPassword();
+        BoardDynamicHttpResponse boardDynamicHttpResponse = new BoardDynamicHttpResponse(file, statusCode, responseAssort, rawPassword, responseMessageBody, queryString);// TODO:引数
+        boardDynamicHttpResponse.writeToOutputStream(file, statusCode, outputStream, responseMessageBody);
     }
 
     public String dynamicHttpResponseAssort(HttpRequest httpRequest) throws IOException {
         String httpRequestMethod = httpRequest.getMethod();
         switch (httpRequestMethod) {
             case ("GET"):
-                responseAssort = "topPage";
+                this.responseAssort = "topPage";
                 if (httpRequest.getIsQueryString()) {
-                    responseAssort = "searchName";
+                    this.responseAssort = "searchName";
                 }
                 break;
             case ("POST"):
                 Map<String, String> responseBody = requestBodyParser(httpRequest);
                 String hiddenMethod = responseBody.get("_method");
-                responseAssort = "postMessage";
+                this.responseAssort = "postMessage";
                 if (!(hiddenMethod == null)) {
                     if (hiddenMethod.equals("DELETE")) {
-                        responseAssort = "deleteMessage";
+                        this.responseAssort = "deleteMessage";
                     }
                 }
                 break;
         }
-        return responseAssort;
+        return this.responseAssort;
     }
 
 
@@ -90,6 +95,8 @@ public class BoardDynamicHttpResponseHandler extends DynamicHttpResponseHandler 
             /*
             for (int i = 0; i <= 1; i++) {
                 String[] linehoge = hoge[i].split("=");
+                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                String encodePassword = bCryptPasswordEncoder.encode(rawPassword);
                 messageBodyKey.put(line[0], line[1]);
 
             }
