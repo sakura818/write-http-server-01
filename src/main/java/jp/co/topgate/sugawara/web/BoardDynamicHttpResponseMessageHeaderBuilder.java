@@ -8,7 +8,8 @@ import java.util.Map;
 /**
  * Created by haruka.sugawara on 2017/06/12.
  */
-public class BoardDynamicHttpResponseMessageHeaderBuilder { // TODO:Staticと処理同じだから一緒にしたほうがいいのかもしれない(違うかもしれない)　今回たまたま処理を一緒にできるだけで他の動的アプリケーションの場合は一緒にできないかもしれないから処理を継承させずに独立させておくほうが無難?かもしれない
+public class BoardDynamicHttpResponseMessageHeaderBuilder {
+    // TODO:Staticと処理同じだから一緒にしたほうがいいのかもしれない(違うかもしれない)　今回たまたま処理を一緒にできるだけで他の動的アプリケーションの場合は一緒にできないかもしれないから処理を継承させずに独立させておくほうが無難?かもしれない
 
     private File file;
 

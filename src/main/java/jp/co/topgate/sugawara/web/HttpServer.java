@@ -59,7 +59,8 @@ public class HttpServer {
                         Path path = file.toPath();
 
                         if (httpRequest.getUriPath().startsWith("/program/board/")) {
-                            staticOrDynamic = "dynamic";//TODO: 命名、2値ならboolean値のほうがいいのかもしれない
+                            staticOrDynamic = "dynamic";
+                            //TODO: 命名、2値ならboolean値のほうがいいのかもしれない
 
                         } else {
                             staticOrDynamic = "static";

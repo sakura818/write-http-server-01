@@ -61,7 +61,8 @@ public class BoardHtmlTranslator {
 
     String topPageHtmlTranslator(MessageList messageList) throws IOException {
         stringBuffer.append(firstHalfHtmlTenplate);
-        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");//TODO:ここ9行くらいの処理を他のメソッドでも似たように処理するが少しずつ違っているのでhtmlTenplateのようにまとめれずリファクタリングに困っている
+        stringBuffer.append("<Hr>\n" + "<h2>投稿一覧</h2>\n" + "<Hr>\n");
+        //TODO:ここ9行くらいの処理を他のメソッドでも似たように処理するが少しずつ違っているのでhtmlTenplateのようにまとめれずリファクタリングに困っている
         for (int i = 0; i < messageList.getList().size(); i++) {
             OneMessage oneMessage = messageList.getList().get(i);
             stringBuffer.append("[" + oneMessage.getIndex() + "]" + " ");

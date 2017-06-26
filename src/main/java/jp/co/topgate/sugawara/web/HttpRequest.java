@@ -305,7 +305,8 @@ public class HttpRequest {
      * @return messageBody
      */
 
-    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException { //TODO:byte[]型ではなくてInputStream型でかえしたほうがいいかもしれない　InputStreamとbyte[]で正直どれほど差があるのかわからずいまいちInputStreamにするのにためらっている
+    byte[] readMessageBody(InputStream inputStream, int contentLength) throws IOException {
+        //TODO:byte[]型ではなくてInputStream型でかえしたほうがいいかもしれない　InputStreamとbyte[]で正直どれほど差があるのかわからずいまいちInputStreamにするのにためらっている
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[contentLength];
         while (true) {
